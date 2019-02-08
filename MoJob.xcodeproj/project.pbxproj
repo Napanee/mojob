@@ -16,6 +16,8 @@
 		E8211798220E07B2003D7578 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211796220E07B2003D7578 /* MainMenu.xib */; };
 		E82117A4220E07B2003D7578 /* MoJobTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117A3220E07B2003D7578 /* MoJobTests.swift */; };
 		E82117AF220E07B3003D7578 /* MoJobUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117AE220E07B3003D7578 /* MoJobUITests.swift */; };
+		E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117BE220E0B20003D7578 /* MainWindowController.swift */; };
+		E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117C1220E0B71003D7578 /* MainWindowController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		E82117AA220E07B3003D7578 /* MoJobUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoJobUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E82117AE220E07B3003D7578 /* MoJobUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoJobUITests.swift; sourceTree = "<group>"; };
 		E82117B0220E07B3003D7578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E82117BE220E0B20003D7578 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
+		E82117C1220E0B71003D7578 /* MainWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +102,6 @@
 				2627229A5BFC850C21B31561 /* Pods-MoJobUITests.debug.xcconfig */,
 				4005EFA326A0EA4C79840F4B /* Pods-MoJobUITests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -137,6 +140,7 @@
 		E821178E220E07B1003D7578 /* MoJob */ = {
 			isa = PBXGroup;
 			children = (
+				E82117BC220E0AED003D7578 /* layout */,
 				E821178F220E07B1003D7578 /* AppDelegate.swift */,
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
 				E8211796220E07B2003D7578 /* MainMenu.xib */,
@@ -163,6 +167,31 @@
 				E82117B0220E07B3003D7578 /* Info.plist */,
 			);
 			path = MoJobUITests;
+			sourceTree = "<group>";
+		};
+		E82117BC220E0AED003D7578 /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				E82117BD220E0B0C003D7578 /* controller */,
+				E82117C0220E0B49003D7578 /* interfaces */,
+			);
+			path = layout;
+			sourceTree = "<group>";
+		};
+		E82117BD220E0B0C003D7578 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				E82117BE220E0B20003D7578 /* MainWindowController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		E82117C0220E0B49003D7578 /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E82117C1220E0B71003D7578 /* MainWindowController.xib */,
+			);
+			path = interfaces;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8211795220E07B2003D7578 /* Assets.xcassets in Resources */,
+				E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */,
 				E8211798220E07B2003D7578 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,6 +399,7 @@
 			files = (
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
 				E8211793220E07B1003D7578 /* MoJob.xcdatamodeld in Sources */,
+				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
