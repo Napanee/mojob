@@ -143,7 +143,6 @@
 				E82117BC220E0AED003D7578 /* layout */,
 				E821178F220E07B1003D7578 /* AppDelegate.swift */,
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
-				E8211796220E07B2003D7578 /* MainMenu.xib */,
 				E8211799220E07B2003D7578 /* Info.plist */,
 				E821179A220E07B2003D7578 /* MoJob.entitlements */,
 				E8211791220E07B1003D7578 /* MoJob.xcdatamodeld */,
@@ -189,6 +188,7 @@
 		E82117C0220E0B49003D7578 /* interfaces */ = {
 			isa = PBXGroup;
 			children = (
+				E8211796220E07B2003D7578 /* MainMenu.xib */,
 				E82117C1220E0B71003D7578 /* MainWindowController.xib */,
 			);
 			path = interfaces;
