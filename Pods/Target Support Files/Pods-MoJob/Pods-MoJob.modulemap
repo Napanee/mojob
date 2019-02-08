@@ -1,0 +1,6 @@
+framework module Pods_MoJob {
+  umbrella header "Pods-MoJob-umbrella.h"
+
+  export *
+  module * { export * }
+}
