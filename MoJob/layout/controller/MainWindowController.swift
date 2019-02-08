@@ -19,6 +19,10 @@ class MainWindowController: NSWindowController {
 		super.windowDidLoad()
 
 		appDelegate.window = window
+
+		let splitViewController = SplitViewController()
+
+		contentViewController = splitViewController
 	}
 
 }
