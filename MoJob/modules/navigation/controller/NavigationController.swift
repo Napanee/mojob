@@ -1,5 +1,5 @@
 //
-//  SplitViewController.swift
+//  NavigationController.swift
 //  MoJob
 //
 //  Created by Martin Schneider on 08.02.19.
@@ -8,12 +8,14 @@
 
 import Cocoa
 
-class SplitViewController: NSSplitViewController {
+class NavigationController: NSViewController {
 
-    override func viewDidLoad() {
+	@IBAction func trackerView(_ sender: NSButton) {
+		print("hallo")
+	}
+	
+	override func viewDidLoad() {
         super.viewDidLoad()
-
-		splitView.setPosition(70, ofDividerAt: 0)
     }
     
 }

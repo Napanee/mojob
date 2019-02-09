@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="FavoriteItem" customModule="MoJob" customModuleProvider="target">
+            <connections>
+                <outlet property="textField" destination="tn4-s9-zuX" id="da4-QO-jd8"/>
+                <outlet property="view" destination="mHd-3v-Od6" id="z5v-Dt-SRg"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <collectionViewItem id="SRZ-ps-BTj" customClass="FavoriteItem" customModule="MoJob" customModuleProvider="target"/>
+        <customView id="mHd-3v-Od6">
+            <rect key="frame" x="0.0" y="0.0" width="163" height="17"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-s9-zuX">
+                    <rect key="frame" x="0.0" y="0.0" width="163" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" drawsBackground="YES" id="qvk-z9-Bqi">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0093617555430000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="tn4-s9-zuX" firstAttribute="leading" secondItem="mHd-3v-Od6" secondAttribute="leading" id="Hv6-Ie-Jxt"/>
+                <constraint firstAttribute="bottom" secondItem="tn4-s9-zuX" secondAttribute="bottom" id="YNt-h4-3CP"/>
+                <constraint firstItem="tn4-s9-zuX" firstAttribute="top" secondItem="mHd-3v-Od6" secondAttribute="top" id="atn-kk-zJH"/>
+                <constraint firstAttribute="trailing" secondItem="tn4-s9-zuX" secondAttribute="trailing" id="jai-wl-aem"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

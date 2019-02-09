@@ -21,6 +21,10 @@ class MainWindowController: NSWindowController {
 		appDelegate.window = window
 
 		let splitViewController = SplitViewController()
+		let navigation = NavigationController(nibName: nibNames.NavigationController, bundle: nil)
+		let jobList = JobListController(nibName: nibNames.JobListController, bundle: nil)
+		splitViewController.addChild(navigation)
+		splitViewController.addChild(jobList)
 
 		contentViewController = splitViewController
 	}

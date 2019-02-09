@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="JobItem" customModule="MoJob" customModuleProvider="target">
+            <connections>
+                <outlet property="textField" destination="Sua-AP-YZb" id="7z5-Zr-ga9"/>
+                <outlet property="view" destination="c22-O7-iKe" id="7OE-R5-N99"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="17"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sua-AP-YZb">
+                    <rect key="frame" x="-2" y="0.0" width="484" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="zf8-Yt-jsW">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Sua-AP-YZb" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="CI6-t5-KEE"/>
+                <constraint firstAttribute="trailing" secondItem="Sua-AP-YZb" secondAttribute="trailing" id="F9D-tX-Gjf"/>
+                <constraint firstItem="Sua-AP-YZb" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="eyz-5C-5Yu"/>
+                <constraint firstAttribute="bottom" secondItem="Sua-AP-YZb" secondAttribute="bottom" id="w0x-PX-AZd"/>
+            </constraints>
+        </customView>
+        <collectionViewItem id="4zv-ak-26o" customClass="JobItem" customModule="MoJob" customModuleProvider="target"/>
+    </objects>
+</document>

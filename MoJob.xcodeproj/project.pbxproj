@@ -19,7 +19,16 @@
 		E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117BE220E0B20003D7578 /* MainWindowController.swift */; };
 		E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117C1220E0B71003D7578 /* MainWindowController.xib */; };
 		E82117C5220E0FBD003D7578 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117C4220E0FBD003D7578 /* SplitViewController.swift */; };
+		E82117CA220E1169003D7578 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117C9220E1169003D7578 /* NavigationController.swift */; };
+		E82117CD220E119D003D7578 /* NavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117CC220E119D003D7578 /* NavigationController.xib */; };
+		E82117D3220E175D003D7578 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117D2220E175D003D7578 /* NavigationView.swift */; };
+		E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117D4220E1AF6003D7578 /* JobListController.swift */; };
+		E82117D7220E1B04003D7578 /* JobListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117D6220E1B04003D7578 /* JobListController.xib */; };
 		E82117DA220E1B7E003D7578 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117D9220E1B7E003D7578 /* enums.swift */; };
+		E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117DB220E4593003D7578 /* FavoriteItem.xib */; };
+		E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117DD220E470C003D7578 /* FavoriteItem.swift */; };
+		E8211800220F5364003D7578 /* JobItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117FF220F5364003D7578 /* JobItem.swift */; };
+		E8211802220F5384003D7578 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +74,16 @@
 		E82117BE220E0B20003D7578 /* MainWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowController.swift; sourceTree = "<group>"; };
 		E82117C1220E0B71003D7578 /* MainWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
 		E82117C4220E0FBD003D7578 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		E82117C9220E1169003D7578 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		E82117CC220E119D003D7578 /* NavigationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationController.xib; sourceTree = "<group>"; };
+		E82117D2220E175D003D7578 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
+		E82117D4220E1AF6003D7578 /* JobListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobListController.swift; sourceTree = "<group>"; };
+		E82117D6220E1B04003D7578 /* JobListController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JobListController.xib; sourceTree = "<group>"; };
 		E82117D9220E1B7E003D7578 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
+		E82117DB220E4593003D7578 /* FavoriteItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoriteItem.xib; sourceTree = "<group>"; };
+		E82117DD220E470C003D7578 /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItem.swift; sourceTree = "<group>"; };
+		E82117FF220F5364003D7578 /* JobItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItem.swift; sourceTree = "<group>"; };
+		E8211801220F5384003D7578 /* JobItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JobItem.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				E82117D8220E1B55003D7578 /* helper */,
+				E82117C6220E1116003D7578 /* modules */,
 				E82117BC220E0AED003D7578 /* layout */,
 				E821178F220E07B1003D7578 /* AppDelegate.swift */,
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
@@ -198,6 +217,78 @@
 				E82117C1220E0B71003D7578 /* MainWindowController.xib */,
 			);
 			path = interfaces;
+			sourceTree = "<group>";
+		};
+		E82117C6220E1116003D7578 /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				E82117CE220E163F003D7578 /* joblist */,
+				E82117C7220E114D003D7578 /* navigation */,
+			);
+			path = modules;
+			sourceTree = "<group>";
+		};
+		E82117C7220E114D003D7578 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				E82117C8220E1158003D7578 /* controller */,
+				E82117CB220E116E003D7578 /* interfaces */,
+				E82117D1220E173E003D7578 /* views */,
+			);
+			path = navigation;
+			sourceTree = "<group>";
+		};
+		E82117C8220E1158003D7578 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				E82117C9220E1169003D7578 /* NavigationController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		E82117CB220E116E003D7578 /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E82117CC220E119D003D7578 /* NavigationController.xib */,
+			);
+			path = interfaces;
+			sourceTree = "<group>";
+		};
+		E82117CE220E163F003D7578 /* joblist */ = {
+			isa = PBXGroup;
+			children = (
+				E82117CF220E16A3003D7578 /* controller */,
+				E82117D0220E16AC003D7578 /* interfaces */,
+			);
+			path = joblist;
+			sourceTree = "<group>";
+		};
+		E82117CF220E16A3003D7578 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				E82117D4220E1AF6003D7578 /* JobListController.swift */,
+				E82117DD220E470C003D7578 /* FavoriteItem.swift */,
+				E82117FF220F5364003D7578 /* JobItem.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		E82117D0220E16AC003D7578 /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E82117D6220E1B04003D7578 /* JobListController.xib */,
+				E82117DB220E4593003D7578 /* FavoriteItem.xib */,
+				E8211801220F5384003D7578 /* JobItem.xib */,
+			);
+			path = interfaces;
+			sourceTree = "<group>";
+		};
+		E82117D1220E173E003D7578 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				E82117D2220E175D003D7578 /* NavigationView.swift */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 		E82117D8220E1B55003D7578 /* helper */ = {
@@ -316,7 +407,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8211795220E07B2003D7578 /* Assets.xcassets in Resources */,
+				E8211802220F5384003D7578 /* JobItem.xib in Resources */,
+				E82117D7220E1B04003D7578 /* JobListController.xib in Resources */,
+				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
 				E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */,
+				E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */,
 				E8211798220E07B2003D7578 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,8 +508,13 @@
 			files = (
 				E82117DA220E1B7E003D7578 /* enums.swift in Sources */,
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
+				E8211800220F5364003D7578 /* JobItem.swift in Sources */,
 				E8211793220E07B1003D7578 /* MoJob.xcdatamodeld in Sources */,
+				E82117CA220E1169003D7578 /* NavigationController.swift in Sources */,
 				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
+				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
+				E82117D3220E175D003D7578 /* NavigationView.swift in Sources */,
+				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,
 				E82117C5220E0FBD003D7578 /* SplitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
