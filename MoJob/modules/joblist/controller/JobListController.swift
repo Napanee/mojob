@@ -64,16 +64,16 @@ class JobListController: NSViewController, NSTextFieldDelegate {
 	}
 
 	final private func _configureCollectionView(collectionView: NSCollectionView) {
-		let padding = NSEdgeInsets.init(top: 5, left: 0, bottom: 5, right: 0)
+		let padding = NSEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
 		let flowLayout = NSCollectionViewFlowLayout()
 		flowLayout.sectionInset = padding
-		flowLayout.minimumLineSpacing = 5.0
+		flowLayout.minimumLineSpacing = 0
 
 		collectionView.collectionViewLayout = flowLayout
 	}
 
 	@IBAction func addFavorit(_ sender: NSButton) {
-		
+
 	}
 
 }
@@ -82,10 +82,10 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 
 	func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
 		if (collectionView == jobsCollectionView) {
-			return NSSize(width: collectionView.frame.size.width, height: 24)
+			return NSSize(width: collectionView.frame.size.width, height: 30)
 		}
 
-		return NSSize(width: collectionView.frame.size.width, height: 24)
+		return NSSize(width: collectionView.frame.size.width, height: 30)
 	}
 
 }
