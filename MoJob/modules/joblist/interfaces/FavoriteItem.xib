@@ -20,19 +20,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-s9-zuX">
-                    <rect key="frame" x="0.0" y="0.0" width="163" height="17"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" drawsBackground="YES" id="qvk-z9-Bqi">
+                    <rect key="frame" x="28" y="0.0" width="107" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="qvk-z9-Bqi">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0093617555430000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="tn4-s9-zuX" firstAttribute="leading" secondItem="mHd-3v-Od6" secondAttribute="leading" id="Hv6-Ie-Jxt"/>
+                <constraint firstItem="tn4-s9-zuX" firstAttribute="leading" secondItem="mHd-3v-Od6" secondAttribute="leading" constant="30" id="Hv6-Ie-Jxt"/>
                 <constraint firstAttribute="bottom" secondItem="tn4-s9-zuX" secondAttribute="bottom" id="YNt-h4-3CP"/>
                 <constraint firstItem="tn4-s9-zuX" firstAttribute="top" secondItem="mHd-3v-Od6" secondAttribute="top" id="atn-kk-zJH"/>
-                <constraint firstAttribute="trailing" secondItem="tn4-s9-zuX" secondAttribute="trailing" id="jai-wl-aem"/>
+                <constraint firstAttribute="trailing" secondItem="tn4-s9-zuX" secondAttribute="trailing" constant="30" id="jai-wl-aem"/>
             </constraints>
         </customView>
     </objects>

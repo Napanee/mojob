@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sua-AP-YZb">
-                    <rect key="frame" x="-2" y="0.0" width="484" height="17"/>
+                    <rect key="frame" x="28" y="0.0" width="424" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="zf8-Yt-jsW">
                         <font key="font" usesAppearanceFont="YES"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -28,8 +28,8 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="Sua-AP-YZb" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="CI6-t5-KEE"/>
-                <constraint firstAttribute="trailing" secondItem="Sua-AP-YZb" secondAttribute="trailing" id="F9D-tX-Gjf"/>
+                <constraint firstItem="Sua-AP-YZb" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="CI6-t5-KEE"/>
+                <constraint firstAttribute="trailing" secondItem="Sua-AP-YZb" secondAttribute="trailing" constant="30" id="F9D-tX-Gjf"/>
                 <constraint firstItem="Sua-AP-YZb" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="eyz-5C-5Yu"/>
                 <constraint firstAttribute="bottom" secondItem="Sua-AP-YZb" secondAttribute="bottom" id="w0x-PX-AZd"/>
             </constraints>

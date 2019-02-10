@@ -29,6 +29,7 @@
 		E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117DD220E470C003D7578 /* FavoriteItem.swift */; };
 		E8211800220F5364003D7578 /* JobItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117FF220F5364003D7578 /* JobItem.swift */; };
 		E8211802220F5384003D7578 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
+		E8211804220F5991003D7578 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* SearchField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		E82117DD220E470C003D7578 /* FavoriteItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteItem.swift; sourceTree = "<group>"; };
 		E82117FF220F5364003D7578 /* JobItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItem.swift; sourceTree = "<group>"; };
 		E8211801220F5384003D7578 /* JobItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JobItem.xib; sourceTree = "<group>"; };
+		E8211803220F5991003D7578 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +271,7 @@
 				E82117D4220E1AF6003D7578 /* JobListController.swift */,
 				E82117DD220E470C003D7578 /* FavoriteItem.swift */,
 				E82117FF220F5364003D7578 /* JobItem.swift */,
+				E8211803220F5991003D7578 /* SearchField.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -510,6 +513,7 @@
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
 				E8211800220F5364003D7578 /* JobItem.swift in Sources */,
 				E8211793220E07B1003D7578 /* MoJob.xcdatamodeld in Sources */,
+				E8211804220F5991003D7578 /* SearchField.swift in Sources */,
 				E82117CA220E1169003D7578 /* NavigationController.swift in Sources */,
 				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
@@ -691,6 +695,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -711,6 +716,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

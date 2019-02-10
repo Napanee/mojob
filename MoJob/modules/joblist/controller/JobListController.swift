@@ -8,94 +8,106 @@
 
 import Cocoa
 
-class JobListController: NSViewController {
+class JobListController: NSViewController, NSTextFieldDelegate {
 
 	@IBOutlet weak var favoritesCollectionView: NSCollectionView!
 	@IBOutlet weak var jobsCollectionView: NSCollectionView!
 
-	@IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-	@IBOutlet weak var favoritesCollectionheight: NSLayoutConstraint!
+	@IBOutlet weak var filterField: NSTextField!
+	@IBOutlet weak var favoritesCollectionHeight: NSLayoutConstraint!
 	@IBOutlet weak var jobsCollectionHeight: NSLayoutConstraint!
 
 	let favorites: [String] = ["Foo", "bar"]
-	let jobs: [String] = ["Foo", "bar", "Lorem", "Ipsum", "Noch was", "Darunter", "Und....", "noch einer", "damit das", "wirklich hoch", "wird... ;("]
+	let jobsAll: [String] = ["Job2", "Job2 noc", "foo", "ein ander job", "ein großer job2", "Noch was", "Darunter", "Und....", "noch einer", "damit das", "wirklich hoch", "wird... ;("]
+	var jobsFiltered: [String] = []
 
 	override func viewDidLoad() {
         super.viewDidLoad()
 
-		_configureCollectionViewFirst()
-		_configureCollectionViewSecond()
+		jobsCollectionView.isHidden = true
+
+		_configureCollectionView(collectionView: favoritesCollectionView)
+		_configureCollectionView(collectionView: jobsCollectionView)
     }
 
 	override func viewDidAppear() {
-		if let firstHeight = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
-			let secondHeight = jobsCollectionView.collectionViewLayout?.collectionViewContentSize.height {
-			favoritesCollectionheight.constant = firstHeight
-			jobsCollectionHeight.constant = secondHeight
-
-			let diff = view.frame.height - firstHeight - secondHeight
-
-			bottomConstraint.constant = diff
+		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
+			let heightJobsCollection = jobsCollectionView.collectionViewLayout?.collectionViewContentSize.height {
+			favoritesCollectionHeight.constant = heightFavoritesCollection
+			jobsCollectionHeight.constant = heightJobsCollection
 		}
 	}
 
-	final private func _configureCollectionViewFirst() {
-		let padding = NSEdgeInsets.init(top: 5, left: 0, bottom: 5, right: 0)
-		let flowLayout = NSCollectionViewFlowLayout()
-		flowLayout.sectionInset = padding
-		flowLayout.minimumLineSpacing = 5.0
-
-		favoritesCollectionView.collectionViewLayout = flowLayout
+	override func viewWillLayout() {
+		favoritesCollectionView.collectionViewLayout?.invalidateLayout()
+		jobsCollectionView.collectionViewLayout?.invalidateLayout()
 	}
 
-	final private func _configureCollectionViewSecond() {
+	func controlTextDidChange(_ obj: Notification) {
+		if let textField = obj.object as? NSTextField {
+			if (textField.stringValue.count == 0) {
+				jobsCollectionView.isHidden = true
+				jobsFiltered = []
+			} else if (textField.stringValue.count > 0) {
+				jobsCollectionView.isHidden = false
+				jobsFiltered = jobsAll.filter({ $0.lowercased().contains(textField.stringValue.lowercased()) })
+			}
+
+			jobsCollectionView.reloadData()
+
+			if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
+				let heightJobsCollection = jobsCollectionView.collectionViewLayout?.collectionViewContentSize.height {
+				favoritesCollectionHeight.constant = heightFavoritesCollection
+				jobsCollectionHeight.constant = heightJobsCollection
+			}
+		}
+	}
+
+	final private func _configureCollectionView(collectionView: NSCollectionView) {
 		let padding = NSEdgeInsets.init(top: 5, left: 0, bottom: 5, right: 0)
 		let flowLayout = NSCollectionViewFlowLayout()
 		flowLayout.sectionInset = padding
 		flowLayout.minimumLineSpacing = 5.0
 
-		jobsCollectionView.collectionViewLayout = flowLayout
+		collectionView.collectionViewLayout = flowLayout
+	}
+
+	@IBAction func addFavorit(_ sender: NSButton) {
+		
 	}
 
 }
 
 extension JobListController: NSCollectionViewDelegateFlowLayout {
 
-//	func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> NSSize {
-//		return NSSize(width: 1000, height: 29)
-//	}
-
 	func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
 		if (collectionView == jobsCollectionView) {
-			return NSSize(width: collectionView.frame.size.width, height: 46)
+			return NSSize(width: collectionView.frame.size.width, height: 24)
 		}
 
-		return NSSize(width: collectionView.frame.size.width, height: 46)
+		return NSSize(width: collectionView.frame.size.width, height: 24)
 	}
 
 }
 
 extension JobListController: NSCollectionViewDataSource {
 
-	func numberOfSections(in collectionView: NSCollectionView) -> Int {
-		return 1
-	}
-
 	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
 		if (collectionView == jobsCollectionView) {
-			return jobs.count
+			return jobsFiltered.count
 		}
 
 		return favorites.count
 	}
 
 	func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+		print(1)
 		if (collectionView == jobsCollectionView) {
 			let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: nibNames.JobsCollectionItem), for: indexPath)
 
 			guard let collectionViewItem = item as? JobItem else {return item}
 
-			collectionViewItem.textField?.stringValue = jobs[indexPath.item]
+			collectionViewItem.textField?.stringValue = jobsFiltered[indexPath.item]
 
 			return collectionViewItem
 		}
