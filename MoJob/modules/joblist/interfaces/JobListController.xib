@@ -57,7 +57,7 @@
                                                 </connections>
                                             </collectionView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dnW-Mh-5Tt">
-                                                <rect key="frame" x="778" y="30" width="128" height="30"/>
+                                                <rect key="frame" x="748" y="30" width="128" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="ZHD-bw-FKa"/>
                                                 </constraints>
@@ -75,7 +75,7 @@
                                             <constraint firstItem="GLu-Uf-ILT" firstAttribute="leading" secondItem="jx2-FW-tWk" secondAttribute="leading" constant="30" id="Jfa-AL-rwt"/>
                                             <constraint firstItem="r6J-iM-kkg" firstAttribute="top" secondItem="GLu-Uf-ILT" secondAttribute="bottom" constant="10" id="O32-9y-Mft"/>
                                             <constraint firstAttribute="trailing" secondItem="GLu-Uf-ILT" secondAttribute="trailing" constant="30" id="Q9q-7F-UV2"/>
-                                            <constraint firstAttribute="trailing" secondItem="dnW-Mh-5Tt" secondAttribute="trailing" id="UrE-SY-tTv"/>
+                                            <constraint firstAttribute="trailing" secondItem="dnW-Mh-5Tt" secondAttribute="trailing" constant="30" id="UrE-SY-tTv"/>
                                             <constraint firstItem="GLu-Uf-ILT" firstAttribute="top" secondItem="jx2-FW-tWk" secondAttribute="top" constant="30" id="WJD-gA-A8n"/>
                                             <constraint firstAttribute="bottom" secondItem="dnW-Mh-5Tt" secondAttribute="bottom" constant="30" id="jDq-2s-nQE"/>
                                             <constraint firstAttribute="trailing" secondItem="r6J-iM-kkg" secondAttribute="trailing" priority="750" id="n6n-1f-hBg"/>
@@ -178,7 +178,7 @@
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="OXM-dG-GId" secondAttribute="bottom" priority="490" id="hrK-pi-nNj"/>
                 </constraints>
             </clipView>
-            <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="Ztp-C5-PDX">
+            <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Ztp-C5-PDX">
                 <rect key="frame" x="1" y="648" width="891" height="15"/>
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
