@@ -13,6 +13,8 @@ class FavoriteItem: NSCollectionViewItem {
 	override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+
+		view.wantsLayer = true
     }
     
 }
