@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TrackingViewController" customModule="MoJob" customModuleProvider="target">
+            <connections>
+                <outlet property="timeLabel" destination="eyr-qf-dUK" id="ckO-XY-PzN"/>
+                <outlet property="timerCount" destination="fu1-3e-qLE" id="wYN-tk-DtT"/>
+                <outlet property="view" destination="GNv-6l-LWp" id="ezI-B7-KkE"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="GNv-6l-LWp">
+            <rect key="frame" x="0.0" y="0.0" width="674" height="484"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <clipView key="contentView" id="7dH-OW-Idw">
+                <rect key="frame" x="1" y="1" width="672" height="482"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <view translatesAutoresizingMaskIntoConstraints="NO" id="9Ql-d0-e0d">
+                        <rect key="frame" x="0.0" y="0.0" width="672" height="482"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="fu1-3e-qLE" customClass="TimerCount" customModule="MoJob" customModuleProvider="target">
+                                <rect key="frame" x="30" y="252" width="200" height="200"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eyr-qf-dUK">
+                                        <rect key="frame" x="37" y="92" width="127" height="36"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="00:00:00" id="doJ-PP-wk2">
+                                            <font key="font" metaFont="systemThin" size="30"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tNo-i9-B9g">
+                                        <rect key="frame" x="85" y="57" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="0L3-Cn-f4t"/>
+                                            <constraint firstAttribute="height" constant="30" id="WDZ-pU-r4I"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" image="stop" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="9VH-V5-4Q1">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="eyr-qf-dUK" firstAttribute="centerX" secondItem="fu1-3e-qLE" secondAttribute="centerX" id="3VU-RY-9dm"/>
+                                    <constraint firstItem="eyr-qf-dUK" firstAttribute="centerY" secondItem="fu1-3e-qLE" secondAttribute="centerY" constant="-10" id="Hpc-4R-CKk"/>
+                                    <constraint firstItem="tNo-i9-B9g" firstAttribute="top" secondItem="eyr-qf-dUK" secondAttribute="bottom" constant="5" id="NcA-gr-0vv"/>
+                                    <constraint firstAttribute="width" constant="200" id="mFb-t5-gDm"/>
+                                    <constraint firstItem="tNo-i9-B9g" firstAttribute="centerX" secondItem="fu1-3e-qLE" secondAttribute="centerX" id="saI-jN-u7B"/>
+                                    <constraint firstAttribute="height" constant="200" id="scF-BD-3OD"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="circleLineWidth">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="circleSecondsColor">
+                                        <color key="value" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="circleBackgroundColor">
+                                        <color key="value" red="0.90980392156862744" green="0.90980392156862744" blue="0.90980392156862744" alpha="0.2500535102739726" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="fu1-3e-qLE" firstAttribute="top" secondItem="9Ql-d0-e0d" secondAttribute="top" constant="30" id="S88-5u-brB"/>
+                            <constraint firstItem="fu1-3e-qLE" firstAttribute="leading" secondItem="9Ql-d0-e0d" secondAttribute="leading" constant="30" id="n4G-4u-EuY"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9Ql-d0-e0d" secondAttribute="bottom" priority="490" id="ERG-NF-vMu"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9Ql-d0-e0d" secondAttribute="trailing" priority="490" id="JBd-HC-1od"/>
+                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="9Ql-d0-e0d" secondAttribute="trailing" priority="510" id="TE0-6R-3Gn"/>
+                    <constraint firstItem="9Ql-d0-e0d" firstAttribute="centerX" secondItem="7dH-OW-Idw" secondAttribute="centerX" id="cMq-Pu-2Nc"/>
+                    <constraint firstItem="9Ql-d0-e0d" firstAttribute="top" secondItem="7dH-OW-Idw" secondAttribute="top" priority="750" id="iPD-Uc-c8k"/>
+                    <constraint firstItem="9Ql-d0-e0d" firstAttribute="leading" secondItem="7dH-OW-Idw" secondAttribute="leading" priority="750" id="t6x-aT-Xub"/>
+                    <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="9Ql-d0-e0d" secondAttribute="bottom" priority="510" id="tpQ-MI-TMp"/>
+                </constraints>
+            </clipView>
+            <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="v7Q-G8-8Qo">
+                <rect key="frame" x="1" y="467" width="672" height="16"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </scroller>
+            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Woo-AH-mPO">
+                <rect key="frame" x="657" y="1" width="16" height="482"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </scroller>
+            <point key="canvasLocation" x="-5" y="552"/>
+        </scrollView>
+    </objects>
+    <resources>
+        <image name="stop" width="20" height="20"/>
+    </resources>
+</document>

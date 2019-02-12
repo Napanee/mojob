@@ -31,6 +31,11 @@
 		E8211802220F5384003D7578 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
 		E8211804220F5991003D7578 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* SearchField.swift */; };
 		E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270392210A7590030B61C /* CollectionItemView.swift */; };
+		E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A2703E2210BACF0030B61C /* TrackingViewController.swift */; };
+		E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A270402210BAE80030B61C /* TrackingViewController.xib */; };
+		E8A270442210C3100030B61C /* TimerCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270432210C3100030B61C /* TimerCount.swift */; };
+		E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */; };
+		E8CACC782211DE6300675688 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +93,11 @@
 		E8211801220F5384003D7578 /* JobItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JobItem.xib; sourceTree = "<group>"; };
 		E8211803220F5991003D7578 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		E8A270392210A7590030B61C /* CollectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItemView.swift; sourceTree = "<group>"; };
+		E8A2703E2210BACF0030B61C /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
+		E8A270402210BAE80030B61C /* TrackingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackingViewController.xib; sourceTree = "<group>"; };
+		E8A270432210C3100030B61C /* TimerCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCount.swift; sourceTree = "<group>"; };
+		E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath-cgPath.swift"; sourceTree = "<group>"; };
+		E8CACC772211DE6300675688 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +238,7 @@
 			children = (
 				E82117CE220E163F003D7578 /* joblist */,
 				E82117C7220E114D003D7578 /* navigation */,
+				E8A2703B2210BA880030B61C /* tracking */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -301,6 +312,8 @@
 			isa = PBXGroup;
 			children = (
 				E82117D9220E1B7E003D7578 /* enums.swift */,
+				E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */,
+				E8CACC772211DE6300675688 /* functions.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -309,6 +322,40 @@
 			isa = PBXGroup;
 			children = (
 				E8A270392210A7590030B61C /* CollectionItemView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		E8A2703B2210BA880030B61C /* tracking */ = {
+			isa = PBXGroup;
+			children = (
+				E8A270422210C2F70030B61C /* views */,
+				E8A2703C2210BA970030B61C /* controller */,
+				E8A2703D2210BAA00030B61C /* interfaces */,
+			);
+			path = tracking;
+			sourceTree = "<group>";
+		};
+		E8A2703C2210BA970030B61C /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				E8A2703E2210BACF0030B61C /* TrackingViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		E8A2703D2210BAA00030B61C /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E8A270402210BAE80030B61C /* TrackingViewController.xib */,
+			);
+			path = interfaces;
+			sourceTree = "<group>";
+		};
+		E8A270422210C2F70030B61C /* views */ = {
+			isa = PBXGroup;
+			children = (
+				E8A270432210C3100030B61C /* TimerCount.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -425,6 +472,7 @@
 				E82117D7220E1B04003D7578 /* JobListController.xib in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
 				E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */,
+				E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */,
 				E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */,
 				E8211798220E07B2003D7578 /* MainMenu.xib in Resources */,
 			);
@@ -521,13 +569,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				E82117DA220E1B7E003D7578 /* enums.swift in Sources */,
+				E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */,
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
+				E8CACC782211DE6300675688 /* functions.swift in Sources */,
+				E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */,
 				E8211800220F5364003D7578 /* JobItem.swift in Sources */,
 				E8211793220E07B1003D7578 /* MoJob.xcdatamodeld in Sources */,
 				E8211804220F5991003D7578 /* SearchField.swift in Sources */,
 				E82117CA220E1169003D7578 /* NavigationController.swift in Sources */,
 				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
+				E8A270442210C3100030B61C /* TimerCount.swift in Sources */,
 				E82117D3220E175D003D7578 /* NavigationView.swift in Sources */,
 				E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */,
 				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,

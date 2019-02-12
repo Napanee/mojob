@@ -22,7 +22,7 @@
                     <rect key="frame" x="28" y="1" width="43" height="19"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="qvk-z9-Bqi">
                         <font key="font" metaFont="systemThin" size="16"/>
-                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.84705882352941175" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -39,6 +39,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="startTracking:" target="-2" id="41V-QY-mph"/>
+                    </connections>
                 </button>
             </subviews>
             <constraints>
@@ -52,7 +55,7 @@
             </constraints>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                    <color key="value" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    <color key="value" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="262.5" y="269.5"/>

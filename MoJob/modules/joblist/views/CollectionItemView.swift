@@ -29,7 +29,7 @@ class CollectionItemView: NSView, CAAnimationDelegate {
 		backgroundLayer.backgroundColor = CGColor.clear
 		backgroundLayer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
 
-		layer?.addSublayer(backgroundLayer)
+		layer?.insertSublayer(backgroundLayer, at: 0)
     }
 
 	override func mouseEntered(with event: NSEvent) {

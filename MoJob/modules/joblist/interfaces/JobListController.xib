@@ -19,17 +19,17 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="7cr-Zy-Kh6">
-            <rect key="frame" x="0.0" y="0.0" width="908" height="664"/>
+            <rect key="frame" x="0.0" y="0.0" width="908" height="674"/>
             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
             <clipView key="contentView" id="LAG-n3-WYV">
-                <rect key="frame" x="1" y="1" width="891" height="647"/>
+                <rect key="frame" x="1" y="1" width="906" height="672"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <view translatesAutoresizingMaskIntoConstraints="NO" id="OXM-dG-GId">
-                        <rect key="frame" x="0.0" y="-19" width="906" height="666"/>
+                        <rect key="frame" x="0.0" y="0.0" width="906" height="672"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="elv-tW-7wq">
-                                <rect key="frame" x="0.0" y="0.0" width="906" height="666"/>
+                                <rect key="frame" x="0.0" y="6" width="906" height="666"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="jx2-FW-tWk">
                                         <rect key="frame" x="0.0" y="342" width="906" height="324"/>
@@ -178,15 +178,15 @@
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="OXM-dG-GId" secondAttribute="bottom" priority="490" id="hrK-pi-nNj"/>
                 </constraints>
             </clipView>
-            <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Ztp-C5-PDX">
-                <rect key="frame" x="1" y="648" width="891" height="15"/>
+            <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Ztp-C5-PDX">
+                <rect key="frame" x="1" y="657" width="906" height="16"/>
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
-            <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="gOr-wb-4Ed">
-                <rect key="frame" x="892" y="1" width="15" height="647"/>
+            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="gOr-wb-4Ed">
+                <rect key="frame" x="891" y="1" width="16" height="672"/>
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
-            <point key="canvasLocation" x="-750" y="1235"/>
+            <point key="canvasLocation" x="-750" y="1111"/>
         </scrollView>
     </objects>
     <resources>

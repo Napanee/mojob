@@ -16,5 +16,15 @@ class FavoriteItem: NSCollectionViewItem {
 
 		view.wantsLayer = true
     }
+
+	@IBAction func startTracking(_ sender: NSButton) {
+		let vc = TrackingViewController(nibName: nibNames.TrackingViewController, bundle: nil)
+		let animator = CustomAnimator()
+		let window = (NSApp.delegate as! AppDelegate).window
+
+		if let contentViewController = window?.contentViewController as? SplitViewController {
+			contentViewController.showTracking()
+		}
+	}
     
 }
