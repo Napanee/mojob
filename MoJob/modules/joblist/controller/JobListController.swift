@@ -8,7 +8,11 @@
 
 import Cocoa
 
-class JobListController: NSViewController, NSTextFieldDelegate {
+protocol FilterFieldDelegate: NSTextFieldDelegate {
+	func keyDown(keyCode: UInt16)
+}
+
+class JobListController: NSViewController {
 
 	@IBOutlet weak var favoritesCollectionView: NSCollectionView!
 	@IBOutlet weak var jobsCollectionView: NSCollectionView!
@@ -18,13 +22,21 @@ class JobListController: NSViewController, NSTextFieldDelegate {
 	@IBOutlet weak var jobsCollectionHeight: NSLayoutConstraint!
 
 	let favorites: [String] = ["Foo", "bar"]
-	let jobsAll: [String] = ["Job2", "Job2 noc", "foo", "ein ander job", "ein großer job2", "Noch was", "Darunter", "Und....", "noch einer", "damit das", "wirklich hoch", "wird... ;("]
+	let jobsAll: [String] = ["ob2", "Job2 noc", "fjoo", "ein ander job", "ein großer job2", "Noch wasj", "Daruntejr", "Ujnd....", "noch einerj", "damit dasj", "wirklich hochj", "wjird... ;("]
 	var jobsFiltered: [String] = []
+	var jobListSelectedIndex: Int?
+
+	var selectedJobItem: JobItem? {
+		get {
+			return jobsCollectionView.item(at: IndexPath(item: jobListSelectedIndex ?? 0, section: 0)) as? JobItem
+		}
+	}
 
 	override func viewDidLoad() {
         super.viewDidLoad()
 
 		jobsCollectionView.isHidden = true
+		filterField.customDelegate = self
 
 		_configureCollectionView(collectionView: favoritesCollectionView)
 		_configureCollectionView(collectionView: jobsCollectionView)
@@ -53,6 +65,11 @@ class JobListController: NSViewController, NSTextFieldDelegate {
 				jobsFiltered = jobsAll.filter({ $0.lowercased().contains(textField.stringValue.lowercased()) })
 			}
 
+			if let jobListSelectedIndex = jobListSelectedIndex, let item = selectedJobItem {
+				item.isHighlighted = false
+				self.jobListSelectedIndex = nil
+			}
+
 			jobsCollectionView.reloadData()
 
 			if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
@@ -74,6 +91,75 @@ class JobListController: NSViewController, NSTextFieldDelegate {
 
 	@IBAction func addFavorit(_ sender: NSButton) {
 
+	}
+
+}
+
+extension JobListController: FilterFieldDelegate {
+
+	func keyDown(keyCode: UInt16) {
+		guard [125, 126, 36].contains(keyCode) else { return }
+
+		if (keyCode == 36) { // key enter
+			return
+		}
+
+		let maxValues = jobsCollectionView.numberOfItems(inSection: 0)
+
+		if let jobListSelectedIndex = jobListSelectedIndex,
+			let item = jobsCollectionView.item(at: IndexPath(item: jobListSelectedIndex, section: 0)) as? JobItem {
+			item.isHighlighted = false
+		}
+
+		if (keyCode == 125) { // cursor down
+			if let jobListSelectedIndex = jobListSelectedIndex {
+				self.jobListSelectedIndex = min(maxValues - 1, jobListSelectedIndex + 1)
+			} else {
+				self.jobListSelectedIndex = 0
+			}
+
+			if let item = selectedJobItem {
+				item.isHighlighted = true
+			}
+		} else if (keyCode == 126) { // cursor up
+			if let jobListSelectedIndex = jobListSelectedIndex, jobListSelectedIndex > 0 {
+				self.jobListSelectedIndex = jobListSelectedIndex - 1
+
+				if let item = selectedJobItem {
+					item.isHighlighted = true
+				}
+			} else {
+				self.jobListSelectedIndex = nil
+			}
+		}
+
+		if
+			let scrollView = view as? NSScrollView,
+			let item = jobsCollectionView.item(at: IndexPath(item: self.jobListSelectedIndex ?? 0, section: 0)),
+			let window = (NSApp.delegate as! AppDelegate).window
+		{
+			let clipView = scrollView.contentView
+			let clipViewHeight = clipView.bounds.height
+			let currentScrollPos = scrollView.convert(scrollView.bounds, to: clipView).minY
+			let itemPos = item.view.convert(item.view.bounds, to: window.contentView)
+			let itemPosMinY = itemPos.minY
+			let itemPosMaxY = itemPos.maxY
+			var newScrollPos: CGFloat? = nil
+
+			if (itemPosMinY < 0) {
+				newScrollPos = currentScrollPos + itemPosMinY
+			} else if (itemPosMaxY > clipViewHeight) {
+				newScrollPos = currentScrollPos + (itemPosMaxY - clipViewHeight)
+			}
+
+			if let newScrollPos = newScrollPos {
+				NSAnimationContext.beginGrouping()
+				NSAnimationContext.current.duration = 0.5
+				clipView.animator().setBoundsOrigin(NSPoint(x: 0, y: newScrollPos))
+				scrollView.reflectScrolledClipView(clipView)
+				NSAnimationContext.endGrouping()
+			}
+		}
 	}
 
 }
@@ -101,7 +187,6 @@ extension JobListController: NSCollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
-		print(1)
 		if (collectionView == jobsCollectionView) {
 			let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: nibNames.JobsCollectionItem), for: indexPath)
 

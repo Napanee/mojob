@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,26 +13,42 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="17"/>
+        <customView id="c22-O7-iKe" customClass="CollectionItemView" customModule="MoJob" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="20"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sua-AP-YZb">
-                    <rect key="frame" x="28" y="0.0" width="424" height="17"/>
+                    <rect key="frame" x="28" y="1" width="43" height="19"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="zf8-Yt-jsW">
-                        <font key="font" usesAppearanceFont="YES"/>
+                        <font key="font" metaFont="systemThin" size="16"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8O4-ht-4Ph">
+                    <rect key="frame" x="430" y="0.0" width="20" height="20"/>
+                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" image="play" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="rc4-lY-f4Z">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="8O4-ht-4Ph" secondAttribute="bottom" id="566-H9-7Yg"/>
                 <constraint firstItem="Sua-AP-YZb" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="CI6-t5-KEE"/>
-                <constraint firstAttribute="trailing" secondItem="Sua-AP-YZb" secondAttribute="trailing" constant="30" id="F9D-tX-Gjf"/>
-                <constraint firstItem="Sua-AP-YZb" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="eyz-5C-5Yu"/>
-                <constraint firstAttribute="bottom" secondItem="Sua-AP-YZb" secondAttribute="bottom" id="w0x-PX-AZd"/>
+                <constraint firstItem="8O4-ht-4Ph" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="EOr-1V-qsJ"/>
+                <constraint firstItem="8O4-ht-4Ph" firstAttribute="centerY" secondItem="Sua-AP-YZb" secondAttribute="centerY" id="G36-Tm-OXc"/>
+                <constraint firstAttribute="trailing" secondItem="8O4-ht-4Ph" secondAttribute="trailing" constant="30" id="km4-UQ-5nW"/>
             </constraints>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                    <color key="value" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
         </customView>
         <collectionViewItem id="4zv-ak-26o" customClass="JobItem" customModule="MoJob" customModuleProvider="target"/>
     </objects>
+    <resources>
+        <image name="play" width="20" height="20"/>
+    </resources>
 </document>

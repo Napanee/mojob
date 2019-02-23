@@ -10,9 +10,22 @@ import Cocoa
 
 class JobItem: NSCollectionViewItem {
 
+	let backgroundLayer = CALayer()
+	var isHighlighted: Bool! = false {
+		didSet {
+			updateBackground(value: isHighlighted)
+		}
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do view setup here.
+	}
+
+	func updateBackground(value: Bool) {
+		if let view = view as? CollectionItemView {
+			view.highlightBackground(is: value)
+		}
 	}
 
 }
