@@ -13,7 +13,7 @@ class JobListController: NSViewController, NSTextFieldDelegate {
 	@IBOutlet weak var favoritesCollectionView: NSCollectionView!
 	@IBOutlet weak var jobsCollectionView: NSCollectionView!
 
-	@IBOutlet weak var filterField: NSTextField!
+	@IBOutlet weak var filterField: FilterField!
 	@IBOutlet weak var favoritesCollectionHeight: NSLayoutConstraint!
 	@IBOutlet weak var jobsCollectionHeight: NSLayoutConstraint!
 
