@@ -10,11 +10,21 @@ import Cocoa
 
 class SplitViewController: NSSplitViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 
-		splitView.setPosition(70, ofDividerAt: 0)
-    }
+		if (splitViewItems.count == 3) {
+			splitView.autosaveName = "save_divider"
+
+			print(splitView.subviews)
+
+			let left = splitView.subviews[1]
+			let right = splitView.subviews[2]
+
+			left.addConstraint(NSLayoutConstraint(item: left, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .width, multiplier: 1, constant: 300))
+			right.addConstraint(NSLayoutConstraint(item: right, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .width, multiplier: 1, constant: 400))
+		}
+	}
 
 	override func splitView(_ splitView: NSSplitView, effectiveRect proposedEffectiveRect: NSRect, forDrawnRect drawnRect: NSRect, ofDividerAt dividerIndex: Int) -> NSRect {
 		return NSRect(x: drawnRect.minX - 2, y: 0, width: drawnRect.width + 4, height: drawnRect.height)

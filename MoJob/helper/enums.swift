@@ -12,4 +12,5 @@ enum nibNames {
 	static let FavoritesCollectionItem = "FavoriteItem"
 	static let JobsCollectionItem = "JobItem"
 	static let TrackingViewController = "TrackingViewController"
+	static let DayTrackingsController = "DayTrackingsController"
 }

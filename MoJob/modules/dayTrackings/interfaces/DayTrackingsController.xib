@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="DayTrackingsController" customModule="MoJob" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="c22-O7-iKe" id="pvR-14-kDL"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="pCl-Py-OnP">
+                    <rect key="frame" x="30" y="146" width="420" height="96"/>
+                    <subviews>
+                        <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sah-E7-V9C">
+                            <rect key="frame" x="0.0" y="0.0" width="188" height="96"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FYd-kL-Nf8">
+                                    <rect key="frame" x="-2" y="0.0" width="91" height="96"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="24" id="tMb-tO-se6">
+                                        <font key="font" metaFont="systemUltraLight" size="80"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OHA-RX-PJ6">
+                                    <rect key="frame" x="97" y="0.0" width="80" height="96"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="qNj-lU-mgp">
+                                            <rect key="frame" x="-2" y="50" width="59" height="26"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="2019" id="IXK-qX-iVB">
+                                                <font key="font" metaFont="systemThin" size="25"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Qbk-sT-Jo9">
+                                            <rect key="frame" x="-2" y="20" width="84" height="30"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Februar" id="Cdo-jT-hMC">
+                                                <font key="font" metaFont="systemThin" size="25"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                    <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="20" bottom="20"/>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
+                                <box horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="sNX-zq-Gcs">
+                                    <rect key="frame" x="185" y="0.0" width="5" height="96"/>
+                                </box>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="OHA-RX-PJ6" secondAttribute="bottom" id="XkA-Ok-35u"/>
+                                <constraint firstItem="OHA-RX-PJ6" firstAttribute="top" secondItem="Sah-E7-V9C" secondAttribute="top" id="bbF-Ih-QcD"/>
+                                <constraint firstItem="FYd-kL-Nf8" firstAttribute="height" secondItem="Sah-E7-V9C" secondAttribute="height" id="lAm-LP-Wpv"/>
+                            </constraints>
+                            <visibilityPriorities>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                            </visibilityPriorities>
+                            <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                            </customSpacing>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Sah-E7-V9C" secondAttribute="bottom" id="6C6-YR-Di6"/>
+                        <constraint firstItem="Sah-E7-V9C" firstAttribute="leading" secondItem="pCl-Py-OnP" secondAttribute="leading" id="7fA-LA-bcw"/>
+                        <constraint firstItem="Sah-E7-V9C" firstAttribute="top" secondItem="pCl-Py-OnP" secondAttribute="top" id="szy-w4-Ye3"/>
+                    </constraints>
+                </customView>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1am-Hl-nH6">
+                    <rect key="frame" x="30" y="30" width="420" height="86"/>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="1am-Hl-nH6" firstAttribute="top" secondItem="pCl-Py-OnP" secondAttribute="bottom" constant="30" id="0ig-eN-gDR"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1am-Hl-nH6" secondAttribute="bottom" priority="490" constant="30" id="76F-3L-Jt6"/>
+                <constraint firstItem="pCl-Py-OnP" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="MRI-bk-xjk"/>
+                <constraint firstAttribute="trailing" secondItem="pCl-Py-OnP" secondAttribute="trailing" constant="30" id="QHW-ie-ZlD"/>
+                <constraint firstAttribute="trailing" secondItem="1am-Hl-nH6" secondAttribute="trailing" constant="30" id="SKr-8q-ERD"/>
+                <constraint firstItem="1am-Hl-nH6" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="XT2-09-s0N"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="1am-Hl-nH6" secondAttribute="bottom" priority="510" constant="30" id="xAw-qJ-EOx"/>
+                <constraint firstItem="pCl-Py-OnP" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="xk5-ID-DcO"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>
