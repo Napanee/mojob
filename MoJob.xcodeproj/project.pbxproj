@@ -33,6 +33,8 @@
 		E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */; };
 		E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */; };
 		E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */; };
+		E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D8532222E00600DAAA4E /* TrackingItem.xib */; };
+		E895D8562222FCE000DAAA4E /* TrackingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8552222FCE000DAAA4E /* TrackingItem.swift */; };
 		E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270392210A7590030B61C /* CollectionItemView.swift */; };
 		E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A2703E2210BACF0030B61C /* TrackingViewController.swift */; };
 		E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A270402210BAE80030B61C /* TrackingViewController.xib */; };
@@ -98,6 +100,8 @@
 		E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayTrackingsController.swift; path = MoJob/modules/dayTrackings/controller/DayTrackingsController.swift; sourceTree = SOURCE_ROOT; };
 		E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayTrackingsController.xib; sourceTree = "<group>"; };
 		E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTrackingControllerView.swift; sourceTree = "<group>"; };
+		E895D8532222E00600DAAA4E /* TrackingItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackingItem.xib; sourceTree = "<group>"; };
+		E895D8552222FCE000DAAA4E /* TrackingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingItem.swift; sourceTree = "<group>"; };
 		E8A270392210A7590030B61C /* CollectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItemView.swift; sourceTree = "<group>"; };
 		E8A2703E2210BACF0030B61C /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		E8A270402210BAE80030B61C /* TrackingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackingViewController.xib; sourceTree = "<group>"; };
@@ -346,6 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */,
+				E895D8532222E00600DAAA4E /* TrackingItem.xib */,
 			);
 			path = interfaces;
 			sourceTree = "<group>";
@@ -354,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */,
+				E895D8552222FCE000DAAA4E /* TrackingItem.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -509,6 +515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8211795220E07B2003D7578 /* Assets.xcassets in Resources */,
+				E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */,
 				E8211802220F5384003D7578 /* JobItem.xib in Resources */,
 				E82117D7220E1B04003D7578 /* JobListController.xib in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
@@ -624,6 +631,7 @@
 				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
 				E8A270442210C3100030B61C /* TimerCount.swift in Sources */,
+				E895D8562222FCE000DAAA4E /* TrackingItem.swift in Sources */,
 				E82117D3220E175D003D7578 /* NavigationView.swift in Sources */,
 				E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */,
 				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,
