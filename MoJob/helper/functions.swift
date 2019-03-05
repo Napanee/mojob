@@ -6,6 +6,7 @@
 //  Copyright © 2019 Martin Schneider. All rights reserved.
 //
 
+import Foundation
 
 func secondsToHoursMinutesSeconds(sec: Int) -> String {
 	let hours = sec / 3600
@@ -18,4 +19,24 @@ func secondsToHoursMinutesSeconds(sec: Int) -> String {
 	timeString += String(format: "%02d", seconds)
 
 	return timeString
+}
+
+extension Date {
+	var month: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "MMMM"
+		return dateFormatter.string(from: self)
+	}
+
+	var day: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "dd"
+		return dateFormatter.string(from: self)
+	}
+
+	var year: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "YYYY"
+		return dateFormatter.string(from: self)
+	}
 }
