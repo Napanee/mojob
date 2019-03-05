@@ -16,8 +16,6 @@ class SplitViewController: NSSplitViewController {
 		if (splitViewItems.count == 3) {
 			splitView.autosaveName = "save_divider"
 
-			print(splitView.subviews)
-
 			let left = splitView.subviews[1]
 			let right = splitView.subviews[2]
 
