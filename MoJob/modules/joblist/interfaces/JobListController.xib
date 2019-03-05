@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,7 +18,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="7cr-Zy-Kh6">
-            <rect key="frame" x="0.0" y="0.0" width="908" height="674"/>
+            <rect key="frame" x="0.0" y="0.0" width="893" height="674"/>
             <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
             <clipView key="contentView" id="LAG-n3-WYV">
                 <rect key="frame" x="0.0" y="0.0" width="893" height="674"/>
@@ -182,11 +182,11 @@
                 <rect key="frame" x="-100" y="-100" width="906" height="16"/>
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
-            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="gOr-wb-4Ed">
-                <rect key="frame" x="893" y="0.0" width="15" height="674"/>
+            <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="gOr-wb-4Ed">
+                <rect key="frame" x="877" y="0.0" width="16" height="674"/>
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
-            <point key="canvasLocation" x="-750" y="1111"/>
+            <point key="canvasLocation" x="-757.5" y="1188"/>
         </scrollView>
     </objects>
     <resources>
