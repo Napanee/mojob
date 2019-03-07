@@ -40,8 +40,8 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="jzA-X6-Fee">
                     <rect key="frame" x="60" y="0.0" width="457" height="84"/>
                     <subviews>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hhO-zs-Pec">
-                            <rect key="frame" x="8" y="61" width="441" height="18"/>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="hhO-zs-Pec">
+                            <rect key="frame" x="8" y="61" width="219" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="d9e-qt-eN4"/>
                             </constraints>
@@ -51,7 +51,7 @@
                                 <color key="backgroundColor" name="selectedMenuItemTextColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="xpi-Ck-JzY">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xpi-Ck-JzY">
                             <rect key="frame" x="8" y="5" width="441" height="51"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="d0V-cn-9XQ"/>
@@ -65,14 +65,14 @@
                         </textField>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="hhO-zs-Pec" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="0sC-Np-EEf"/>
-                        <constraint firstAttribute="trailing" secondItem="hhO-zs-Pec" secondAttribute="trailing" constant="10" id="3We-b5-i8b"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="DON-7v-RwG"/>
+                        <constraint firstItem="xpi-Ck-JzY" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="FSr-Ab-68D"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hhO-zs-Pec" secondAttribute="trailing" constant="10" id="Qhz-GV-2lU"/>
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="Spj-k3-dai"/>
-                        <constraint firstItem="xpi-Ck-JzY" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="k1X-Cq-h9D"/>
+                        <constraint firstItem="hhO-zs-Pec" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="cmu-z6-45t"/>
                         <constraint firstAttribute="bottom" secondItem="xpi-Ck-JzY" secondAttribute="bottom" constant="5" id="k20-0H-DVn"/>
+                        <constraint firstAttribute="trailing" secondItem="xpi-Ck-JzY" secondAttribute="trailing" constant="10" id="npq-tn-Lj0"/>
                         <constraint firstItem="xpi-Ck-JzY" firstAttribute="top" secondItem="hhO-zs-Pec" secondAttribute="bottom" constant="5" id="sSl-sA-bIY"/>
-                        <constraint firstAttribute="trailing" secondItem="xpi-Ck-JzY" secondAttribute="trailing" constant="10" id="son-R0-wDi"/>
                     </constraints>
                 </customView>
             </subviews>
@@ -91,7 +91,7 @@
                     <color key="value" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
-            <point key="canvasLocation" x="64.5" y="1187"/>
+            <point key="canvasLocation" x="234.5" y="1187"/>
         </customView>
     </objects>
 </document>
