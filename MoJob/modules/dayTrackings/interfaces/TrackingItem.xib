@@ -71,7 +71,7 @@
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="Spj-k3-dai"/>
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="cmu-z6-45t"/>
                         <constraint firstAttribute="bottom" secondItem="xpi-Ck-JzY" secondAttribute="bottom" constant="5" id="k20-0H-DVn"/>
-                        <constraint firstAttribute="trailing" secondItem="xpi-Ck-JzY" secondAttribute="trailing" constant="10" id="npq-tn-Lj0"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xpi-Ck-JzY" secondAttribute="trailing" constant="10" id="npq-tn-Lj0"/>
                         <constraint firstItem="xpi-Ck-JzY" firstAttribute="top" secondItem="hhO-zs-Pec" secondAttribute="bottom" constant="5" id="sSl-sA-bIY"/>
                     </constraints>
                 </customView>
