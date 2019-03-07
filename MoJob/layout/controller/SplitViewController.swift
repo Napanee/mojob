@@ -15,12 +15,6 @@ class SplitViewController: NSSplitViewController {
 
 		if (splitViewItems.count == 3) {
 			splitView.autosaveName = "save_divider"
-
-			let left = splitView.subviews[1]
-			let right = splitView.subviews[2]
-
-			left.addConstraint(NSLayoutConstraint(item: left, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .width, multiplier: 1, constant: 300))
-			right.addConstraint(NSLayoutConstraint(item: right, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .width, multiplier: 1, constant: 400))
 		}
 	}
 
