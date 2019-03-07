@@ -27,6 +27,8 @@ class SplitViewController: NSSplitViewController {
 			let trackingViewController = TrackingViewController(nibName: nibNames.TrackingViewController, bundle: nil)
 			let splitViewItem = splitViewItems[jobListViewControllerIndex]
 
+			trackingViewController.view.addConstraint(NSLayoutConstraint(item: trackingViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: trackingViewController.view.superview, attribute: .width, multiplier: 1, constant: 300))
+
 			removeSplitViewItem(splitViewItem)
 			insertChild(trackingViewController, at: jobListViewControllerIndex)
 		}
