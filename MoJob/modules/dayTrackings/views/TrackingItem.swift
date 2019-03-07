@@ -13,6 +13,7 @@ class TrackingItem: NSView {
 	@IBOutlet var contentView: NSView!
 	@IBOutlet weak var textView: NSView!
 	@IBOutlet var startTimeLabel: NSTextField!
+	@IBOutlet var endTimeLabel: NSTextField!
 	@IBOutlet var titleLabel: NSTextField!
 	@IBOutlet var commentLabel: NSTextField!
 

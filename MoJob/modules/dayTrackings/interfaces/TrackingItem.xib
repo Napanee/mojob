@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="commentLabel" destination="xpi-Ck-JzY" id="Jic-lN-r2A"/>
                 <outlet property="contentView" destination="osv-QK-7DM" id="em9-MF-Iug"/>
+                <outlet property="endTimeLabel" destination="ZN9-Kc-rzr" id="daS-Vo-SyV"/>
                 <outlet property="startTimeLabel" destination="NuU-cB-96b" id="zF5-wI-rlu"/>
                 <outlet property="textView" destination="jzA-X6-Fee" id="hD1-2n-lCB"/>
                 <outlet property="titleLabel" destination="hhO-zs-Pec" id="ILl-Cj-YN0"/>

@@ -70,28 +70,7 @@ class DayTrackingsController: NSViewController {
 		var endTime: Date?
 
 		for tracking in trackings {
-			let trackingView = TrackingItem()
-
-			trackingsStackView.addView(trackingView, in: .bottom)
-			trackingView.startTimeLabel.stringValue = formatter2.string(from: tracking.start)
-			trackingView.titleLabel.stringValue = tracking.job
-
-			if let text = tracking.text {
-				print(text)
-				trackingView.commentLabel.stringValue = text
-			} else {
-				trackingView.commentLabel.removeFromSuperview()
-				print(trackingView.titleLabel.constraints)
-
-				if let superview = trackingView.titleLabel.superview {
-					let constraint = NSLayoutConstraint(item: superview, attribute: .bottom, relatedBy: .equal, toItem: trackingView.titleLabel, attribute: .bottom, multiplier: 1, constant: 5)
-					superview.addConstraint(constraint)
-				}
-			}
-
 			if let endTime = endTime, tracking.start.timeIntervalSince(endTime) > 60 {
-				print(tracking.job)
-				print(tracking.start.timeIntervalSince(endTime))
 				let addButtonBeforeAll = NSButton()
 				addButtonBeforeAll.title = "add"
 				addButtonBeforeAll.isBordered = false
@@ -107,6 +86,24 @@ class DayTrackingsController: NSViewController {
 					NSLayoutConstraint(item: addButtonBeforeAll, attribute: .leading, relatedBy: .equal, toItem: addButtonBeforeAll.superview, attribute: .leading, multiplier: 1, constant: 60)
 				]
 				view.addConstraints(buttonContraints)
+			}
+
+			let trackingView = TrackingItem()
+
+			trackingsStackView.addView(trackingView, in: .bottom)
+			trackingView.startTimeLabel.stringValue = formatter2.string(from: tracking.start)
+			trackingView.endTimeLabel.stringValue = formatter2.string(from: tracking.end)
+			trackingView.titleLabel.stringValue = tracking.job
+
+			if let text = tracking.text {
+				trackingView.commentLabel.stringValue = text
+			} else {
+				trackingView.commentLabel.removeFromSuperview()
+
+				if let superview = trackingView.titleLabel.superview {
+					let constraint = NSLayoutConstraint(item: superview, attribute: .bottom, relatedBy: .equal, toItem: trackingView.titleLabel, attribute: .bottom, multiplier: 1, constant: 5)
+					superview.addConstraint(constraint)
+				}
 			}
 
 			endTime = tracking.end
