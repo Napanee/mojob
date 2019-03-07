@@ -89,10 +89,6 @@ class DayTrackingsController: NSViewController {
 				}
 			}
 
-			trackingView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 250), for: NSLayoutConstraint.Orientation.horizontal)
-			trackingView.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(750), for: NSLayoutConstraint.Orientation.horizontal)
-			trackingsStackView.addConstraint(NSLayoutConstraint(item: trackingView, attribute: .width, relatedBy: .equal, toItem: trackingView.superview, attribute: .width, multiplier: 1, constant: 0))
-
 			if let endTime = endTime, tracking.start.timeIntervalSince(endTime) > 60 {
 				print(tracking.job)
 				print(tracking.start.timeIntervalSince(endTime))
@@ -115,11 +111,6 @@ class DayTrackingsController: NSViewController {
 
 			endTime = tracking.end
 		}
-
-		print(trackingsStackView.constraints)
-//
-//		print(innerClipView.bounds)
-//		print(clipView.bounds)
 	}
 
 }
