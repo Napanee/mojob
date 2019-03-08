@@ -19,16 +19,23 @@ class MainWindowController: NSWindowController {
 		super.windowDidLoad()
 
 		appDelegate.window = window
+		window?.backgroundColor = NSColor.controlBackgroundColor
 
 		let splitViewController = SplitViewController()
 		let navigation = NavigationController(nibName: nibNames.NavigationController, bundle: nil)
 		let jobList = JobListController(nibName: nibNames.JobListController, bundle: nil)
 		jobList.view.addConstraint(NSLayoutConstraint(item: jobList.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: jobList.view.superview, attribute: .width, multiplier: 1, constant: 300))
+
+		let verticalSplitViewController = NSSplitViewController()
+		verticalSplitViewController.view.addConstraint(NSLayoutConstraint(item: verticalSplitViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: verticalSplitViewController.view.superview, attribute: .width, multiplier: 1, constant: 400))
 		let dayTrackings = DayTrackingsController(nibName: nibNames.DayTrackingsController, bundle: nil)
-		dayTrackings.view.addConstraint(NSLayoutConstraint(item: dayTrackings.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: dayTrackings.view.superview, attribute: .width, multiplier: 1, constant: 400))
+
+		verticalSplitViewController.splitView.isVertical = false
+		verticalSplitViewController.addChild(dayTrackings)
+
 		splitViewController.addChild(navigation)
 		splitViewController.addChild(jobList)
-		splitViewController.addChild(dayTrackings)
+		splitViewController.addChild(verticalSplitViewController)
 
 		contentViewController = splitViewController
 	}
