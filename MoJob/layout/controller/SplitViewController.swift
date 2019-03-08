@@ -29,8 +29,14 @@ class SplitViewController: NSSplitViewController {
 
 			trackingViewController.view.addConstraint(NSLayoutConstraint(item: trackingViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: trackingViewController.view.superview, attribute: .width, multiplier: 1, constant: 300))
 
-			removeSplitViewItem(splitViewItem)
-			insertChild(trackingViewController, at: jobListViewControllerIndex)
+			NSAnimationContext.runAnimationGroup({ (context) -> Void in
+				splitViewItem.viewController.view.animator().alphaValue = 0
+			}, completionHandler: { () -> Void in
+				trackingViewController.view.alphaValue = 0
+				self.removeSplitViewItem(splitViewItem)
+				self.insertChild(trackingViewController, at: jobListViewControllerIndex)
+				trackingViewController.view.animator().alphaValue = 1.0
+			})
 		}
 	}
 
