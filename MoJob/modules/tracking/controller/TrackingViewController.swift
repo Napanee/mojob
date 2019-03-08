@@ -18,10 +18,10 @@ class TrackingViewController: NSViewController {
 	@IBOutlet weak var timeLabel: NSTextField!
 
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
 
 		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-    }
+	}
 
 	@objc func updateTime() {
 		counter = counter + 1
@@ -34,5 +34,26 @@ class TrackingViewController: NSViewController {
 		timerCount.counter = counter
 		timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: timeInSec)
 	}
-    
+
+	@IBAction func stopTracking(_ sender: NSButton) {
+		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+
+		fetchRequest.predicate = NSPredicate(format: "exported == nil")
+		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_start", ascending: false)]
+
+		let resultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		do {
+			try resultController.performFetch()
+
+			let currentTracking = resultController.fetchedObjects?.first
+			currentTracking?.date_end = Date()
+
+			try context.save()
+		} catch let error {
+			print(error)
+		}
+	}
+
 }

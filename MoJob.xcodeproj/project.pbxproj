@@ -186,6 +186,7 @@
 		E821178E220E07B1003D7578 /* MoJob */ = {
 			isa = PBXGroup;
 			children = (
+				E8E950842231B3DD0070F57E /* CoreData */,
 				E82117D8220E1B55003D7578 /* helper */,
 				E82117C6220E1116003D7578 /* modules */,
 				E82117BC220E0AED003D7578 /* layout */,
@@ -193,7 +194,6 @@
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
 				E8211799220E07B2003D7578 /* Info.plist */,
 				E821179A220E07B2003D7578 /* MoJob.entitlements */,
-				E8211791220E07B1003D7578 /* MoJob.xcdatamodeld */,
 			);
 			path = MoJob;
 			sourceTree = "<group>";
@@ -405,6 +405,14 @@
 				E8A270432210C3100030B61C /* TimerCount.swift */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		E8E950842231B3DD0070F57E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				E8211791220E07B1003D7578 /* MoJob.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -17,60 +17,48 @@ class DayTrackingsController: NSViewController {
 	@IBOutlet weak var trackingsStackView: NSStackView!
 
 	@IBOutlet weak var btn: NSButton!
-	struct Tracking {
-		var id: String
-		var start: Date
-		var end: Date
-		var job: String
-		var text: String? = nil
 
-		init(id: String, start: Date, end: Date, job: String) {
-			self.id = id
-			self.start = start
-			self.end = end
-			self.job = job
+	var _fetchedResultsControllerTrackings: NSFetchedResultsController<Tracking>? = nil
+	var fetchedResultControllerTrackings: NSFetchedResultsController<Tracking> {
+		if (_fetchedResultsControllerTrackings != nil) {
+			return _fetchedResultsControllerTrackings!
 		}
 
-		init(id: String, start: Date, end: Date, job: String, text: String) {
-			self.id = id
-			self.start = start
-			self.end = end
-			self.job = job
-			self.text = text
+		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+
+		fetchRequest.predicate = NSPredicate(format: "date_end != nil")
+
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "job_id", ascending: false),
+			NSSortDescriptor(key: "date_start", ascending: false)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerTrackings = resultsController
+
+		do {
+			try _fetchedResultsControllerTrackings!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
 		}
+
+		return _fetchedResultsControllerTrackings!
 	}
-
-	var trackings: [Tracking]! = []
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		dateDay.stringValue = Date().day
-		dateMonth.stringValue = Date().month
-		dateYear.stringValue = Date().year
-
 		let formatter = DateFormatter()
-		formatter.dateFormat = "yyyy/MM/dd HH:mm"
-		let startDate1 = formatter.date(from: "2019/02/24 10:02")
-		let endDate1 = formatter.date(from: "2019/02/24 10:58")
-		trackings.append(Tracking(id: "lor-2747", start: startDate1!, end: endDate1!, job: "foo", text: "1 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero "))
-
-		let startDate2 = formatter.date(from: "2019/02/24 11:30")
-		let endDate2 = formatter.date(from: "2019/02/24 12:42")
-		trackings.append(Tracking(id: "lor-2747", start: startDate2!, end: endDate2!, job: "lor2026 - Loreal Maintanance with more text to longer long long"))
-
-		let startDate3 = formatter.date(from: "2019/02/24 12:43")
-		let endDate3 = formatter.date(from: "2019/02/24 14:42")
-		trackings.append(Tracking(id: "int-2214", start: startDate3!, end: endDate3!, job: "foo bazzz"))
-
-
-		let formatter2 = DateFormatter()
-		formatter2.dateFormat = "HH:mm"
+		formatter.dateFormat = "HH:mm"
 
 		var endTime: Date?
+		guard let trackings = fetchedResultControllerTrackings.fetchedObjects else { return }
 
 		for tracking in trackings {
-			if let endTime = endTime, tracking.start.timeIntervalSince(endTime) > 60 {
+			if let endTime = endTime, tracking.date_start!.timeIntervalSince(endTime) > 60 {
 				let addButtonBeforeAll = NSButton()
 				addButtonBeforeAll.title = "add"
 				addButtonBeforeAll.isBordered = false
@@ -91,11 +79,11 @@ class DayTrackingsController: NSViewController {
 			let trackingView = TrackingItem()
 
 			trackingsStackView.addView(trackingView, in: .bottom)
-			trackingView.startTimeLabel.stringValue = formatter2.string(from: tracking.start)
-			trackingView.endTimeLabel.stringValue = formatter2.string(from: tracking.end)
-			trackingView.titleLabel.stringValue = tracking.job
+			trackingView.startTimeLabel.stringValue = formatter.string(from: tracking.date_start!)
+			trackingView.endTimeLabel.stringValue = formatter.string(from: tracking.date_end!)
+			trackingView.titleLabel.stringValue = tracking.custom_job!
 
-			if let text = tracking.text {
+			if let text = tracking.comment {
 				trackingView.commentLabel.stringValue = text
 			} else {
 				trackingView.commentLabel.removeFromSuperview()
@@ -106,7 +94,7 @@ class DayTrackingsController: NSViewController {
 				}
 			}
 
-			endTime = tracking.end
+			endTime = tracking.date_end
 		}
 	}
 

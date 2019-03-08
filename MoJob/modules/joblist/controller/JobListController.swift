@@ -33,14 +33,14 @@ class JobListController: NSViewController {
 	}
 
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
 
 		jobsCollectionView.isHidden = true
 		filterField.customDelegate = self
 
 		_configureCollectionView(collectionView: favoritesCollectionView)
 		_configureCollectionView(collectionView: jobsCollectionView)
-    }
+	}
 
 	override func viewDidAppear() {
 		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
@@ -65,7 +65,7 @@ class JobListController: NSViewController {
 				jobsFiltered = jobsAll.filter({ $0.lowercased().contains(textField.stringValue.lowercased()) })
 			}
 
-			if let jobListSelectedIndex = jobListSelectedIndex, let item = selectedJobItem {
+			if let item = selectedJobItem {
 				item.isHighlighted = false
 				self.jobListSelectedIndex = nil
 			}
@@ -101,7 +101,25 @@ extension JobListController: FilterFieldDelegate {
 		guard [125, 126, 36].contains(keyCode) else { return }
 
 		if (keyCode == 36) { // key enter
-			return
+			let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
+			let tracking = NSManagedObject(entity: entity!, insertInto: context)
+			let trackingValues = [
+				"date_start": Date() as Any,
+				"custom_job": filterField.stringValue as Any
+			]
+			tracking.setValuesForKeys(trackingValues)
+
+			do {
+				try context.save()
+
+				let window = (NSApp.delegate as! AppDelegate).window
+				if let contentViewController = window?.contentViewController as? SplitViewController {
+					contentViewController.showTracking()
+				}
+			} catch let error {
+				print(error)
+			}
 		}
 
 		let maxValues = jobsCollectionView.numberOfItems(inSection: 0)
