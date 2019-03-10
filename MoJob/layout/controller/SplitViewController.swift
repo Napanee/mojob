@@ -40,4 +40,15 @@ class SplitViewController: NSSplitViewController {
 		}
 	}
 
+	func showEditor(with tracking: Tracking) {
+		if let verticalSplitViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is NSSplitViewController }) {
+			let editorViewController = EditorController(nibName: nibNames.EditorController, bundle: nil)
+			let splitViewItem = splitViewItems[verticalSplitViewControllerIndex]
+
+			editorViewController.tracking = tracking
+
+			splitViewItem.viewController.insertChild(editorViewController, at: 0)
+		}
+	}
+
 }

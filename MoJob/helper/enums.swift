@@ -13,4 +13,5 @@ enum nibNames {
 	static let JobsCollectionItem = "JobItem"
 	static let TrackingViewController = "TrackingViewController"
 	static let DayTrackingsController = "DayTrackingsController"
+	static let EditorController = "EditorController"
 }
