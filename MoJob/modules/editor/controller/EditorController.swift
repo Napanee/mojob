@@ -114,6 +114,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 
 		do {
 			try context.save()
+			removeFromParent()
 		} catch let error {
 			print(error)
 		}
@@ -122,6 +123,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	@IBAction func cancel(_ sender: NSButton) {
 		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 		context.refresh(tracking, mergeChanges: false)
+		removeFromParent()
 	}
 
 	@IBAction func save(_ sender: NSButton) {
@@ -129,6 +131,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 
 		do {
 			try context.save()
+			removeFromParent()
 		} catch let error {
 			print(error)
 		}
