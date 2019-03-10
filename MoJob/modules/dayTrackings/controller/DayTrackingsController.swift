@@ -59,21 +59,7 @@ class DayTrackingsController: NSViewController {
 
 		for tracking in trackings {
 			if let endTime = endTime, tracking.date_start!.timeIntervalSince(endTime) > 60 {
-				let addButtonBeforeAll = NSButton()
-				addButtonBeforeAll.title = "add"
-				addButtonBeforeAll.isBordered = false
-				addButtonBeforeAll.wantsLayer = true
-				addButtonBeforeAll.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-				addButtonBeforeAll.translatesAutoresizingMaskIntoConstraints = false
-				addButtonBeforeAll.addConstraint(NSLayoutConstraint(item: addButtonBeforeAll, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30))
-
-				trackingsStackView.addView(addButtonBeforeAll, in: NSStackView.Gravity.bottom)
-
-				let buttonContraints = [
-					NSLayoutConstraint(item: addButtonBeforeAll, attribute: .trailing, relatedBy: .equal, toItem: addButtonBeforeAll.superview, attribute: .trailing, multiplier: 1, constant: 0),
-					NSLayoutConstraint(item: addButtonBeforeAll, attribute: .leading, relatedBy: .equal, toItem: addButtonBeforeAll.superview, attribute: .leading, multiplier: 1, constant: 60)
-				]
-				view.addConstraints(buttonContraints)
+				trackingsStackView.insertAddButton()
 			}
 
 			let trackingView = TrackingItem()
