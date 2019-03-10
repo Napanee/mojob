@@ -144,7 +144,7 @@
                             <view translatesAutoresizingMaskIntoConstraints="NO" id="JFJ-Pk-ecZ">
                                 <rect key="frame" x="0.0" y="0.0" width="356" height="75"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqR-5L-Ybc">
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqR-5L-Ybc" customClass="TrackingsStackView" customModule="MoJob" customModuleProvider="target">
                                         <rect key="frame" x="30" y="75" width="296" height="0.0"/>
                                     </stackView>
                                 </subviews>

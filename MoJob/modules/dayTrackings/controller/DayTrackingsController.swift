@@ -14,7 +14,7 @@ class DayTrackingsController: NSViewController {
 	@IBOutlet weak var dateMonth: NSTextField!
 	@IBOutlet weak var dateYear: NSTextField!
 	@IBOutlet weak var totalTimeForDay: NSTextField!
-	@IBOutlet weak var trackingsStackView: NSStackView!
+	@IBOutlet weak var trackingsStackView: TrackingsStackView!
 
 	@IBOutlet weak var btn: NSButton!
 
