@@ -41,6 +41,11 @@
 		E8A270442210C3100030B61C /* TimerCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270432210C3100030B61C /* TimerCount.swift */; };
 		E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */; };
 		E8CACC782211DE6300675688 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
+		E8E950892232C09F0070F57E /* EditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950882232C09F0070F57E /* EditorController.swift */; };
+		E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E9508A2232C0AF0070F57E /* EditorController.xib */; };
+		E8E9508F2232D62A0070F57E /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9508E2232D62A0070F57E /* TextField.swift */; };
+		E8E9509D223482940070F57E /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509C223482940070F57E /* AddButton.swift */; };
+		E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509E223526DB0070F57E /* TrackingsStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +113,11 @@
 		E8A270432210C3100030B61C /* TimerCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCount.swift; sourceTree = "<group>"; };
 		E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath-cgPath.swift"; sourceTree = "<group>"; };
 		E8CACC772211DE6300675688 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
+		E8E950882232C09F0070F57E /* EditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorController.swift; sourceTree = "<group>"; };
+		E8E9508A2232C0AF0070F57E /* EditorController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorController.xib; sourceTree = "<group>"; };
+		E8E9508E2232D62A0070F57E /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		E8E9509C223482940070F57E /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
+		E8E9509E223526DB0070F57E /* TrackingsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingsStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +200,7 @@
 				E82117D8220E1B55003D7578 /* helper */,
 				E82117C6220E1116003D7578 /* modules */,
 				E82117BC220E0AED003D7578 /* layout */,
+				E8E9508C2232D5AF0070F57E /* generic */,
 				E821178F220E07B1003D7578 /* AppDelegate.swift */,
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
 				E8211799220E07B2003D7578 /* Info.plist */,
@@ -246,6 +257,7 @@
 		E82117C6220E1116003D7578 /* modules */ = {
 			isa = PBXGroup;
 			children = (
+				E8E950852232BC110070F57E /* editor */,
 				E895D8452221BB3D00DAAA4E /* dayTrackings */,
 				E82117CE220E163F003D7578 /* joblist */,
 				E82117C7220E114D003D7578 /* navigation */,
@@ -360,6 +372,8 @@
 			children = (
 				E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */,
 				E895D8552222FCE000DAAA4E /* TrackingItem.swift */,
+				E8E9509C223482940070F57E /* AddButton.swift */,
+				E8E9509E223526DB0070F57E /* TrackingsStackView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -413,6 +427,47 @@
 				E8211791220E07B1003D7578 /* MoJob.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E8E950852232BC110070F57E /* editor */ = {
+			isa = PBXGroup;
+			children = (
+				E8E950862232BC230070F57E /* controller */,
+				E8E950872232BC2B0070F57E /* interfaces */,
+			);
+			path = editor;
+			sourceTree = "<group>";
+		};
+		E8E950862232BC230070F57E /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				E8E950882232C09F0070F57E /* EditorController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		E8E950872232BC2B0070F57E /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9508A2232C0AF0070F57E /* EditorController.xib */,
+			);
+			path = interfaces;
+			sourceTree = "<group>";
+		};
+		E8E9508C2232D5AF0070F57E /* generic */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9508D2232D5C30070F57E /* views */,
+			);
+			path = generic;
+			sourceTree = "<group>";
+		};
+		E8E9508D2232D5C30070F57E /* views */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9508E2232D62A0070F57E /* TextField.swift */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -524,6 +579,7 @@
 			files = (
 				E8211795220E07B2003D7578 /* Assets.xcassets in Resources */,
 				E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */,
+				E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */,
 				E8211802220F5384003D7578 /* JobItem.xib in Resources */,
 				E82117D7220E1B04003D7578 /* JobListController.xib in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
@@ -626,8 +682,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */,
+				E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */,
 				E82117DA220E1B7E003D7578 /* enums.swift in Sources */,
 				E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */,
+				E8E9508F2232D62A0070F57E /* TextField.swift in Sources */,
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
 				E8CACC782211DE6300675688 /* functions.swift in Sources */,
 				E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */,
@@ -637,9 +695,11 @@
 				E8211804220F5991003D7578 /* FilterField.swift in Sources */,
 				E82117CA220E1169003D7578 /* NavigationController.swift in Sources */,
 				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
+				E8E950892232C09F0070F57E /* EditorController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
 				E8A270442210C3100030B61C /* TimerCount.swift in Sources */,
 				E895D8562222FCE000DAAA4E /* TrackingItem.swift in Sources */,
+				E8E9509D223482940070F57E /* AddButton.swift in Sources */,
 				E82117D3220E175D003D7578 /* NavigationView.swift in Sources */,
 				E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */,
 				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,
