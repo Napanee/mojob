@@ -18,6 +18,7 @@ class DayTrackingsController: NSViewController {
 
 	@IBOutlet weak var btn: NSButton!
 
+	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 	var _fetchedResultsControllerTrackings: NSFetchedResultsController<Tracking>? = nil
 	var fetchedResultControllerTrackings: NSFetchedResultsController<Tracking> {
 		if (_fetchedResultsControllerTrackings != nil) {
@@ -25,13 +26,11 @@ class DayTrackingsController: NSViewController {
 		}
 
 		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 
 		fetchRequest.predicate = NSPredicate(format: "date_end != nil")
 
 		fetchRequest.sortDescriptors = [
-			NSSortDescriptor(key: "job_id", ascending: false),
-			NSSortDescriptor(key: "date_start", ascending: false)
+			NSSortDescriptor(key: "date_start", ascending: true)
 		]
 
 		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
@@ -51,9 +50,6 @@ class DayTrackingsController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let formatter = DateFormatter()
-		formatter.dateFormat = "HH:mm"
-
 		var endTime: Date?
 		guard let trackings = fetchedResultControllerTrackings.fetchedObjects else { return }
 
@@ -63,20 +59,10 @@ class DayTrackingsController: NSViewController {
 			}
 
 			let trackingView = TrackingItem()
+			trackingView.tracking = tracking
 
 			trackingsStackView.addView(trackingView, in: .bottom)
-			trackingView.startTimeLabel.stringValue = formatter.string(from: tracking.date_start!)
-			trackingView.endTimeLabel.stringValue = formatter.string(from: tracking.date_end!)
-			trackingView.titleLabel.stringValue = tracking.custom_job!
 
-			if let text = tracking.comment {
-				trackingView.commentLabel.stringValue = text
-			} else {
-				trackingView.commentLabel.removeFromSuperview()
-
-				if let superview = trackingView.titleLabel.superview {
-					let constraint = NSLayoutConstraint(item: superview, attribute: .bottom, relatedBy: .equal, toItem: trackingView.titleLabel, attribute: .bottom, multiplier: 1, constant: 5)
-					superview.addConstraint(constraint)
 				}
 			}
 

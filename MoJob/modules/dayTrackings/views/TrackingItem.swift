@@ -17,6 +17,29 @@ class TrackingItem: NSView {
 	@IBOutlet var titleLabel: NSTextField!
 	@IBOutlet var commentLabel: NSTextField!
 
+	var tracking: Tracking? {
+		didSet {
+			guard let tracking = tracking else { return }
+			let formatter = DateFormatter()
+			formatter.dateFormat = "HH:mm"
+
+			startTimeLabel.stringValue = formatter.string(from: tracking.date_start!)
+			endTimeLabel.stringValue = formatter.string(from: tracking.date_end!)
+			titleLabel.stringValue = tracking.custom_job!
+
+			if let text = tracking.comment {
+				commentLabel.stringValue = text
+			} else {
+				commentLabel.removeFromSuperview()
+
+				if let superview = titleLabel.superview {
+					let constraint = NSLayoutConstraint(item: superview, attribute: .bottom, relatedBy: .equal, toItem: titleLabel, attribute: .bottom, multiplier: 1, constant: 5)
+					superview.addConstraint(constraint)
+				}
+			}
+		}
+	}
+
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
 
@@ -60,6 +83,17 @@ class TrackingItem: NSView {
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
+	}
+
+	override func mouseDown(with event: NSEvent) {
+//		if let theHitView = view.window?.contentView?.hitTest((view.window?.mouseLocationOutsideOfEventStream)!) {
+			if (event.clickCount == 2) {
+				let window = (NSApp.delegate as! AppDelegate).window
+				if let tracking = tracking, let contentViewController = window?.contentViewController as? SplitViewController {
+					contentViewController.showEditor(with: tracking)
+				}
+			}
+//		}
 	}
 
 }
