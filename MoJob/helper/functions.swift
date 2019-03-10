@@ -21,6 +21,17 @@ func secondsToHoursMinutesSeconds(sec: Int) -> String {
 	return timeString
 }
 
+func maxDays(month: Int, year: Int) -> Int {
+	let dateComponents = DateComponents(year: year, month: month)
+	let calendar = Calendar.current
+	let date = calendar.date(from: dateComponents)!
+
+	let range = calendar.range(of: .day, in: .month, for: date)!
+	let numDays = range.count
+
+	return numDays
+}
+
 extension Date {
 	var month: String {
 		let dateFormatter = DateFormatter()
