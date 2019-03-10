@@ -7,11 +7,13 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="EditorController" customModule="MoJob" customModuleProvider="target">
             <connections>
+                <outlet property="comment" destination="XcE-nf-wbv" id="KFf-yO-U9D"/>
                 <outlet property="fromDay" destination="pwd-lG-4Ll" id="Qym-x6-L03"/>
                 <outlet property="fromHour" destination="PWX-Cr-K1r" id="epd-v0-zZi"/>
                 <outlet property="fromMinute" destination="imT-nJ-o00" id="KPy-8v-Abg"/>
                 <outlet property="fromMonth" destination="imz-oH-pr6" id="ReE-DD-LeQ"/>
                 <outlet property="fromYear" destination="ef2-mf-82k" id="Ls0-7n-cDY"/>
+                <outlet property="job" destination="hDM-6a-NRn" id="EYJ-hR-BRa"/>
                 <outlet property="jobWrapper" destination="y2i-Cw-VB2" id="nrg-UI-5Bu"/>
                 <outlet property="untilDay" destination="6Gk-B7-Zib" id="8et-hj-jFi"/>
                 <outlet property="untilHour" destination="t3e-Cf-nTC" id="lrk-7Z-8SL"/>
@@ -133,7 +135,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <outlet property="nextKeyView" destination="pwd-lG-4Ll" id="xSZ-lF-tkQ"/>
+                                <outlet property="nextKeyView" destination="pwd-lG-4Ll" id="Ieh-Oh-eDh"/>
                             </connections>
                         </textField>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="D7U-NT-K5Y">
@@ -142,7 +144,7 @@
                                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uar-eH-r9y">
                                     <rect key="frame" x="20" y="8" width="126" height="29"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pwd-lG-4Ll">
+                                        <textField identifier="fromDay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pwd-lG-4Ll" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="33" height="29"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="33" id="eKz-fT-lWo"/>
@@ -153,7 +155,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <outlet property="nextKeyView" destination="imz-oH-pr6" id="zAb-1E-O0q"/>
+                                                <outlet property="nextKeyView" destination="imz-oH-pr6" id="Osh-7S-PJo"/>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UfZ-if-Zug">
@@ -164,7 +166,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imz-oH-pr6">
+                                        <textField identifier="fromMonth" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imz-oH-pr6" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="37" y="0.0" width="33" height="29"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="05" drawsBackground="YES" id="DdW-Wc-lid">
                                                 <font key="font" metaFont="systemThin" size="20"/>
@@ -172,7 +174,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <outlet property="nextKeyView" destination="ef2-mf-82k" id="YUp-xF-8Kh"/>
+                                                <outlet property="nextKeyView" destination="ef2-mf-82k" id="lbx-TB-4Ke"/>
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z7f-N7-xBA">
@@ -183,7 +185,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ef2-mf-82k">
+                                        <textField identifier="fromYear" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ef2-mf-82k" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="74" y="0.0" width="52" height="29"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="52" id="TWR-uf-ftF"/>
@@ -194,7 +196,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
-                                                <outlet property="nextKeyView" destination="PWX-Cr-K1r" id="gN4-va-HWc"/>
+                                                <outlet property="nextKeyView" destination="PWX-Cr-K1r" id="jxV-8n-r2Z"/>
                                             </connections>
                                         </textField>
                                     </subviews>
@@ -229,7 +231,7 @@
                                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Ud-0R-4Bu">
                                     <rect key="frame" x="166" y="8" width="70" height="29"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PWX-Cr-K1r">
+                                        <textField identifier="fromHour" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PWX-Cr-K1r" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="33" height="29"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="33" id="kml-Xj-idR"/>
@@ -251,7 +253,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imT-nJ-o00">
+                                        <textField identifier="fromMinute" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imT-nJ-o00" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="37" y="0.0" width="33" height="29"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" title="00" drawsBackground="YES" id="Fzy-Ln-Nro">
                                                 <font key="font" metaFont="systemThin" size="20"/>
@@ -287,7 +289,7 @@
                                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ige-yA-2s3">
                                     <rect key="frame" x="418" y="8" width="126" height="29"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Gk-B7-Zib">
+                                        <textField identifier="untilDay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Gk-B7-Zib" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="33" height="29"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="33" id="Ffv-xt-LF7"/>
@@ -309,7 +311,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rdN-jF-jMm">
+                                        <textField identifier="untilMonth" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rdN-jF-jMm" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="37" y="0.0" width="33" height="29"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="05" drawsBackground="YES" id="0Cg-EJ-KNw">
                                                 <font key="font" metaFont="systemThin" size="20"/>
@@ -328,7 +330,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Fb-IL-gb3">
+                                        <textField identifier="untilYear" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Fb-IL-gb3" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="74" y="0.0" width="52" height="29"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="52" id="SOA-jg-R7m"/>
@@ -370,7 +372,7 @@
                                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0pp-DH-GjH">
                                     <rect key="frame" x="328" y="8" width="70" height="29"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t3e-Cf-nTC">
+                                        <textField identifier="untilHour" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t3e-Cf-nTC" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="33" height="29"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="33" id="OKI-ik-QyY"/>
@@ -392,7 +394,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hzB-Th-6oG">
+                                        <textField identifier="untilMinute" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hzB-Th-6oG" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="37" y="0.0" width="33" height="29"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="left" title="00" drawsBackground="YES" id="ipR-2d-tea">
                                                 <font key="font" metaFont="systemThin" size="20"/>

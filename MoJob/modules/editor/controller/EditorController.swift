@@ -8,35 +8,35 @@
 
 import Cocoa
 
-class EditorController: NSViewController, NSTextFieldDelegate {
+protocol DateFieldDelegate {
+	func getFromMonth() -> Int?
+	func getFromYear() -> Int?
+	func getUntilMonth() -> Int?
+	func getUntilYear() -> Int?
+}
 
+class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate {
 	var tracking: Tracking!
 	var currentValue: String! = ""
 	@IBOutlet weak var jobWrapper: NSView!
-	@IBOutlet weak var fromDay: NSTextField!
-	@IBOutlet weak var fromMonth: NSTextField!
-	@IBOutlet weak var fromYear: NSTextField!
-	@IBOutlet weak var fromHour: NSTextField!
-	@IBOutlet weak var fromMinute: NSTextField!
-	@IBOutlet weak var untilHour: NSTextField!
-	@IBOutlet weak var untilMinute: NSTextField!
-	@IBOutlet weak var untilDay: NSTextField!
-	@IBOutlet weak var untilMonth: NSTextField!
-	@IBOutlet weak var untilYear: NSTextField!
-
+	@IBOutlet weak var fromDay: NumberField!
+	@IBOutlet weak var fromMonth: NumberField!
+	@IBOutlet weak var fromYear: NumberField!
+	@IBOutlet weak var fromHour: NumberField!
+	@IBOutlet weak var fromMinute: NumberField!
+	@IBOutlet weak var untilHour: NumberField!
+	@IBOutlet weak var untilMinute: NumberField!
+	@IBOutlet weak var untilDay: NumberField!
+	@IBOutlet weak var untilMonth: NumberField!
+	@IBOutlet weak var untilYear: NumberField!
+	@IBOutlet weak var job: NSTextField!
+	@IBOutlet weak var comment: NSTextField!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		fromDay.delegate = self
-		fromMonth.delegate = self
-		fromYear.delegate = self
-		fromHour.delegate = self
-		fromMinute.delegate = self
-		untilHour.delegate = self
-		untilMinute.delegate = self
-		untilDay.delegate = self
-		untilMonth.delegate = self
-		untilYear.delegate = self
+		fromDay.dateDelegate = self
+		untilDay.dateDelegate = self
 
 		if let dateStart = Calendar.current.date(bySetting: .second, value: 0, of: tracking.date_start!) {
 			let day = Calendar.current.component(.day, from: dateStart)
@@ -67,55 +67,27 @@ class EditorController: NSViewController, NSTextFieldDelegate {
 		}
 	}
 
-	func controlTextDidBeginEditing(_ obj: Notification) {
-		if let textField = obj.object as? NSTextField {
-			currentValue = textField.stringValue
-		}
+	func getFromMonth() -> Int? {
+		return Int(fromMonth.stringValue)
 	}
 
-	func controlTextDidChange(_ obj: Notification) {
-		if let textField = obj.object as? NSTextField {
-			print(textField.stringValue)
-		}
+	func getFromYear() -> Int? {
+		return Int(fromYear.stringValue)
+	}
+
+	func getUntilMonth() -> Int? {
+		return Int(untilMonth.stringValue)
+	}
+
+	func getUntilYear() -> Int? {
+		return Int(untilYear.stringValue)
 	}
 
 	func controlTextDidEndEditing(_ obj: Notification) {
 		guard let textField = obj.object as? NSTextField else { return }
-		guard var value = Int(textField.stringValue) else {
-			textField.stringValue = self.currentValue
-			return
-		}
 
 		let formatter = DateFormatter()
 		formatter.dateFormat = "YYYY/MM/dd HH:mm"
-
-		switch true {
-		case textField == fromMonth || textField == untilMonth:
-			value = min(12, value)
-			break
-		case textField == fromDay:
-			guard let year = Int(fromYear.stringValue), let month = Int(fromMonth.stringValue) else {
-				break
-			}
-			value = min(maxDays(month: month, year: year), value)
-			break
-		case textField == untilDay:
-			guard let year = Int(untilYear.stringValue), let month = Int(untilMonth.stringValue) else {
-				break
-			}
-			value = min(maxDays(month: month, year: year), value)
-			break
-		case textField == fromHour || textField == untilHour:
-			value = min(23, value)
-			break
-		case textField == fromMinute || textField == untilMinute:
-			value = min(59, value)
-			break
-		default:
-			break
-		}
-
-		textField.stringValue = String(format: "%02d", value)
 
 		if (textField == fromMinute || textField == fromHour || textField == fromDay || textField == fromMonth || textField == fromYear) {
 			if let oldDate = tracking.date_start,
