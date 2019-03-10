@@ -63,10 +63,78 @@ class DayTrackingsController: NSViewController {
 
 			trackingsStackView.addView(trackingView, in: .bottom)
 
-				}
-			}
-
 			endTime = tracking.date_end
+		}
+
+		if let appDelegate = (NSApp.delegate as? AppDelegate) {
+			let context = appDelegate.persistentContainer.viewContext
+			let notificationCenter = NotificationCenter.default
+			notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
+			notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
+		}
+	}
+
+	// MARK: - Observer
+
+	@objc func managedObjectContextObjectsDidChange(notification: NSNotification) {
+		guard let userInfo = notification.userInfo else { return }
+
+		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+
+		}
+	}
+
+	@objc func managedObjectContextDidSave(notification: NSNotification) {
+		guard let userInfo = notification.userInfo else { return }
+
+		if
+			let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>,
+			inserts.count > 0
+		{
+
+		}
+
+		if
+			let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>,
+			updates.count > 0
+		{
+			for update in updates {
+				if let updateData = update as? Tracking {
+					trackingsStackView.updateTrackingItem(withData: updateData)
+
+					let dateStart = updateData.date_start
+					let dateEnd = updateData.date_end
+					let compoundPredicates = [
+						NSPredicate(format: "date_start >= %@", argumentArray: [dateStart]),
+						NSPredicate(format: "date_end <= %@", argumentArray: [dateEnd]),
+						NSPredicate(format:"NOT (self IN %@)",[updateData.objectID])
+					]
+					fetchedResultControllerTrackings.fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
+
+					do {
+						try fetchedResultControllerTrackings.performFetch()
+
+						if let trackings = fetchedResultControllerTrackings.fetchedObjects {
+							for tracking in trackings {
+								context.delete(tracking)
+								try context.save()
+							}
+						}
+					} catch {
+						print("Fetching Failed")
+					}
+				}
+
+				trackingsStackView.checkButtonsForRemovable()
+				trackingsStackView.insertAddButtonsIfNeeded()
+			}
+		}
+
+		if
+			let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>,
+			deletes.count > 0
+		{
+
 		}
 	}
 

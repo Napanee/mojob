@@ -105,7 +105,7 @@ extension JobListController: FilterFieldDelegate {
 			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
 			let tracking = NSManagedObject(entity: entity!, insertInto: context)
 			let trackingValues = [
-				"date_start": Date() as Any,
+				"date_start": Calendar.current.date(bySetting: .second, value: 0, of: Date()) as Any,
 				"custom_job": filterField.stringValue as Any
 			]
 			tracking.setValuesForKeys(trackingValues)
