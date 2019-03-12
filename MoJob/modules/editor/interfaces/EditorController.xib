@@ -155,6 +155,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="88h-bm-mNm"/>
                                                 <outlet property="nextKeyView" destination="imz-oH-pr6" id="Osh-7S-PJo"/>
                                             </connections>
                                         </textField>
@@ -174,6 +175,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="DS4-JS-SL8"/>
                                                 <outlet property="nextKeyView" destination="ef2-mf-82k" id="lbx-TB-4Ke"/>
                                             </connections>
                                         </textField>
@@ -196,6 +198,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="I4Z-DK-uJ9"/>
                                                 <outlet property="nextKeyView" destination="PWX-Cr-K1r" id="jxV-8n-r2Z"/>
                                             </connections>
                                         </textField>
@@ -242,6 +245,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="e8x-mf-f1O"/>
                                                 <outlet property="nextKeyView" destination="imT-nJ-o00" id="p45-jH-p9v"/>
                                             </connections>
                                         </textField>
@@ -261,6 +265,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="v8s-hV-y13"/>
                                                 <outlet property="nextKeyView" destination="t3e-Cf-nTC" id="W0z-ys-1DH"/>
                                             </connections>
                                         </textField>
@@ -300,6 +305,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="LxE-au-3nw"/>
                                                 <outlet property="nextKeyView" destination="rdN-jF-jMm" id="v3l-px-hJx"/>
                                             </connections>
                                         </textField>
@@ -319,6 +325,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="Fct-Jc-NEy"/>
                                                 <outlet property="nextKeyView" destination="5Fb-IL-gb3" id="HgU-2i-lVq"/>
                                             </connections>
                                         </textField>
@@ -341,6 +348,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="mZE-fP-zzg"/>
                                                 <outlet property="nextKeyView" destination="SJk-dW-6EJ" id="bnI-eE-t2Q"/>
                                             </connections>
                                         </textField>
@@ -383,6 +391,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="FV0-QC-db6"/>
                                                 <outlet property="nextKeyView" destination="hzB-Th-6oG" id="0y5-aI-cYS"/>
                                             </connections>
                                         </textField>
@@ -402,6 +411,7 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <outlet property="delegate" destination="-2" id="jru-bQ-0eA"/>
                                                 <outlet property="nextKeyView" destination="6Gk-B7-Zib" id="mFi-kY-MfV"/>
                                             </connections>
                                         </textField>
