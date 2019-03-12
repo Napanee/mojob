@@ -10,100 +10,41 @@ import Cocoa
 
 class TrackingsStackView: NSStackView {
 
-	private func timeStartForItem(at index: Int) -> Date? {
-		guard index >= 0 else { return nil }
-		guard index < subviews.count else { return nil }
+	func reloadData(with trackings: [Tracking]) {
+		subviews.removeAll()
 
-		if let trackingItem = subviews[index] as? TrackingItem {
-			return trackingItem.tracking?.date_start
-		}
+		insertAddButton()
 
-		return nil
-	}
+		var endTime: Date?
 
-	private func timeEndForItem(at index: Int) -> Date? {
-		guard index >= 0 else { return nil }
-		guard index < subviews.count else { return nil }
-
-		if let trackingItem = subviews[index] as? TrackingItem {
-			return trackingItem.tracking?.date_end
-		}
-
-		return nil
-	}
-
-	func updateTrackingItem(withData data: Tracking) {
-		if let item = subviews.first(where: {
-			if let item = $0 as? TrackingItem {
-				return item.tracking?.objectID == data.objectID
+		for tracking in trackings {
+			if let endTime = endTime, tracking.date_start!.timeIntervalSince(endTime) > 60 {
+				insertAddButton()
 			}
 
-			return false
-		}) as? TrackingItem {
-			item.tracking = data
+			insertTrackingView(with: tracking)
+
+			endTime = tracking.date_end
 		}
+
+		insertAddButton()
 	}
 
-	func removeTrackingsIfBetweenDateRange(in tracking: Tracking) {
-		
-	}
+	func insertTrackingView(with tracking: Tracking) {
+		let trackingView = TrackingItem()
+		trackingView.tracking = tracking
 
-	func checkButtonsForRemovable() {
-		for addButton in subviews.filter({ $0.isKind(of: AddButton.self) }) {
-			let addButton = addButton as! AddButton
-
-			if
-				let index = subviews.firstIndex(of: addButton),
-				let start = timeStartForItem(at: subviews.index(after: index)),
-				let end = timeEndForItem(at: subviews.index(before: index)),
-				[ComparisonResult.orderedDescending, ComparisonResult.orderedSame].contains(end.compare(start))
-			{
-				NSAnimationContext.runAnimationGroup({ context in
-					context.duration = 0.25
-					context.allowsImplicitAnimation = true
-
-					addButton.constraint!.constant = 0
-					layoutSubtreeIfNeeded()
-				}, completionHandler: {
-					self.removeView(addButton)
-				})
-			}
-		}
-	}
-
-	func insertAddButtonsIfNeeded() {
-		for trackingItem in subviews.filter({ $0.isKind(of: TrackingItem.self) }) {
-			let trackingItem = trackingItem as! TrackingItem
-
-			if
-				let index = subviews.firstIndex(of: trackingItem),
-				let start = trackingItem.tracking?.date_start,
-				let end = timeEndForItem(at: subviews.index(before: index)),
-				start.timeIntervalSince(end) > 60
-			{
-				insertAddButton(at: index)
-			}
-		}
+		addView(trackingView, in: .bottom)
 	}
 
 	func insertAddButton() {
-		insertAddButton(at: nil)
-	}
-
-	func insertAddButton(at index: Int?) {
 		let addButton = AddButton()
+		addView(addButton, in: .bottom)
 
-		if let index = index {
-			insertView(addButton, at: index, in: .bottom)
-		} else {
-			addView(addButton, in: .bottom)
-		}
-
-		let buttonContraints = [
-			NSLayoutConstraint(item: addButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0),
-			NSLayoutConstraint(item: addButton, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 60)
-		]
-		addConstraints(buttonContraints)
+		addConstraints([
+			NSLayoutConstraint(item: addButton, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 60),
+			NSLayoutConstraint(item: addButton, attribute: .trailing, relatedBy: .greaterThanOrEqual, toItem: self, attribute: .trailing, multiplier: 1, constant: 0)
+		])
 	}
 
 }
