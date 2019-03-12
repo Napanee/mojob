@@ -48,9 +48,14 @@ class TrackingViewController: NSViewController {
 			try resultController.performFetch()
 
 			let currentTracking = resultController.fetchedObjects?.first
-			currentTracking?.date_end = Date()
+			currentTracking?.date_end = Calendar.current.date(bySetting: .second, value: 0, of: Date())
 
 			try context.save()
+
+			let window = (NSApp.delegate as! AppDelegate).window
+			if let contentViewController = window?.contentViewController as? SplitViewController {
+				contentViewController.showJobList()
+			}
 		} catch let error {
 			print(error)
 		}
