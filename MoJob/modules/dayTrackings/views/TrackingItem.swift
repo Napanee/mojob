@@ -73,7 +73,6 @@ class TrackingItem: NSView {
 		textView.wantsLayer = true
 		textView.layer?.backgroundColor = color.withAlphaComponent(0.5).cgColor
 
-		let sublayer = textView.layer?.sublayers?.count
 		let indicatorLayer = CALayer()
 		indicatorLayer.frame = CGRect(x: 0, y: 0, width: 5, height: 200)
 		indicatorLayer.backgroundColor = color.cgColor
