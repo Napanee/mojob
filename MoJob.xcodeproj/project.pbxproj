@@ -30,6 +30,7 @@
 		E8211800220F5364003D7578 /* JobItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117FF220F5364003D7578 /* JobItem.swift */; };
 		E8211802220F5384003D7578 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
 		E8211804220F5991003D7578 /* FilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* FilterField.swift */; };
+		E83447742236735900621617 /* AddButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E83447732236735900621617 /* AddButton.xib */; };
 		E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */; };
 		E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */; };
 		E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */; };
@@ -103,6 +104,7 @@
 		E82117FF220F5364003D7578 /* JobItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItem.swift; sourceTree = "<group>"; };
 		E8211801220F5384003D7578 /* JobItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JobItem.xib; sourceTree = "<group>"; };
 		E8211803220F5991003D7578 /* FilterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterField.swift; sourceTree = "<group>"; };
+		E83447732236735900621617 /* AddButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddButton.xib; sourceTree = "<group>"; };
 		E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayTrackingsController.swift; path = MoJob/modules/dayTrackings/controller/DayTrackingsController.swift; sourceTree = SOURCE_ROOT; };
 		E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayTrackingsController.xib; sourceTree = "<group>"; };
 		E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTrackingControllerView.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			children = (
 				E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */,
 				E895D8532222E00600DAAA4E /* TrackingItem.xib */,
+				E83447732236735900621617 /* AddButton.xib */,
 			);
 			path = interfaces;
 			sourceTree = "<group>";
@@ -392,9 +395,9 @@
 		E8A2703B2210BA880030B61C /* tracking */ = {
 			isa = PBXGroup;
 			children = (
-				E8A270422210C2F70030B61C /* views */,
 				E8A2703C2210BA970030B61C /* controller */,
 				E8A2703D2210BAA00030B61C /* interfaces */,
+				E8A270422210C2F70030B61C /* views */,
 			);
 			path = tracking;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				E82117D7220E1B04003D7578 /* JobListController.xib in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
 				E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */,
+				E83447742236735900621617 /* AddButton.xib in Resources */,
 				E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */,
 				E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */,
 				E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */,

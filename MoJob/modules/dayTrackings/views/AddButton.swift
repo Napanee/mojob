@@ -8,8 +8,9 @@
 
 import Cocoa
 
-class AddButton: NSButton {
+class AddButton: NSView {
 
+	@IBOutlet var contentView: NSView!
 	var constraint: NSLayoutConstraint?
 
 	override init(frame frameRect: NSRect) {
@@ -25,14 +26,17 @@ class AddButton: NSButton {
 	}
 
 	private func commonInit() {
-		title = "add"
-		isBordered = false
-		wantsLayer = true
-		layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-		translatesAutoresizingMaskIntoConstraints = false
+		Bundle.main.loadNibNamed("AddButton", owner: self, topLevelObjects: nil)
+		addSubview(contentView)
 
-		constraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30)
-		addConstraint(constraint!)
+		contentView.frame = self.bounds
+		contentView.autoresizingMask = [.width, .height]
+		contentView.wantsLayer = true
+		contentView.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+
+		addConstraints([
+			NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30)
+		])
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
