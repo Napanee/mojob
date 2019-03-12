@@ -68,4 +68,22 @@ class SplitViewController: NSSplitViewController {
 		}
 	}
 
+	func showJobList() {
+		if let trackingViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is TrackingViewController }) {
+			let jobListViewControllerIndex = JobListController(nibName: nibNames.JobListController, bundle: nil)
+			let splitViewItem = splitViewItems[trackingViewControllerIndex]
+
+			jobListViewControllerIndex.view.addConstraint(NSLayoutConstraint(item: jobListViewControllerIndex.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: jobListViewControllerIndex.view.superview, attribute: .width, multiplier: 1, constant: 300))
+
+			NSAnimationContext.runAnimationGroup({ (context) -> Void in
+				splitViewItem.viewController.view.animator().alphaValue = 0
+			}, completionHandler: { () -> Void in
+				jobListViewControllerIndex.view.alphaValue = 0
+				self.removeSplitViewItem(splitViewItem)
+				self.insertChild(jobListViewControllerIndex, at: trackingViewControllerIndex)
+				jobListViewControllerIndex.view.animator().alphaValue = 1.0
+			})
+		}
+	}
+
 }
