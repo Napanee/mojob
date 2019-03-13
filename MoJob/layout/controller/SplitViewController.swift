@@ -58,13 +58,16 @@ class SplitViewController: NSSplitViewController {
 	}
 
 	func showEditor(with tracking: Tracking) {
-		if let verticalSplitViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is NSSplitViewController }) {
+		if let verticalSplitViewController = splitViewItems.first(where: { $0.viewController.isKind(of: NSSplitViewController.self) })?.viewController as? NSSplitViewController {
 			let editorViewController = EditorController(nibName: nibNames.EditorController, bundle: nil)
-			let splitViewItem = splitViewItems[verticalSplitViewControllerIndex]
+
+			if let currentEditorIndex = verticalSplitViewController.splitViewItems.firstIndex(where: { $0.viewController.isKind(of: EditorController.self) }) {
+				verticalSplitViewController.splitViewItems.remove(at: currentEditorIndex)
+			}
 
 			editorViewController.tracking = tracking
 
-			splitViewItem.viewController.insertChild(editorViewController, at: 0)
+			verticalSplitViewController.insertChild(editorViewController, at: 0)
 		}
 	}
 
