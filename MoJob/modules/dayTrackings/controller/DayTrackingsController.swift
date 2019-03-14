@@ -78,6 +78,7 @@ class DayTrackingsController: NSViewController {
 
 	@objc func managedObjectContextDidSave(notification: NSNotification) {
 		guard let userInfo = notification.userInfo else { return }
+		try! fetchedResultControllerTrackings.performFetch()
 		guard let trackings = fetchedResultControllerTrackings.fetchedObjects else { return }
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
