@@ -8,8 +8,9 @@
 
 import Cocoa
 
-protocol FilterFieldDelegate: NSTextFieldDelegate {
-	func keyDown(keyCode: UInt16)
+protocol FilterFieldDelegate {
+	func onKeyDown(keyCode: UInt16)
+	func onTextChange(with string: String)
 }
 
 class JobListController: NSViewController {
@@ -55,28 +56,26 @@ class JobListController: NSViewController {
 		jobsCollectionView.collectionViewLayout?.invalidateLayout()
 	}
 
-	func controlTextDidChange(_ obj: Notification) {
-		if let textField = obj.object as? NSTextField {
-			if (textField.stringValue.count == 0) {
-				jobsCollectionView.isHidden = true
-				jobsFiltered = []
-			} else if (textField.stringValue.count > 0) {
-				jobsCollectionView.isHidden = false
-				jobsFiltered = jobsAll.filter({ $0.lowercased().contains(textField.stringValue.lowercased()) })
-			}
+	func onTextChange(with string: String) {
+		if (string.count > 0) {
+			jobsCollectionView.isHidden = false
+			jobsFiltered = jobsAll.filter({ $0.lowercased().contains(string.lowercased()) })
+		} else {
+			jobsCollectionView.isHidden = true
+			jobsFiltered = []
+		}
 
-			if let item = selectedJobItem {
-				item.isHighlighted = false
-				self.jobListSelectedIndex = nil
-			}
+		if let item = selectedJobItem {
+			item.isHighlighted = false
+			self.jobListSelectedIndex = nil
+		}
 
-			jobsCollectionView.reloadData()
+		jobsCollectionView.reloadData()
 
-			if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
-				let heightJobsCollection = jobsCollectionView.collectionViewLayout?.collectionViewContentSize.height {
-				favoritesCollectionHeight.constant = heightFavoritesCollection
-				jobsCollectionHeight.constant = heightJobsCollection
-			}
+		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
+			let heightJobsCollection = jobsCollectionView.collectionViewLayout?.collectionViewContentSize.height {
+			favoritesCollectionHeight.constant = heightFavoritesCollection
+			jobsCollectionHeight.constant = heightJobsCollection
 		}
 	}
 
@@ -97,7 +96,7 @@ class JobListController: NSViewController {
 
 extension JobListController: FilterFieldDelegate {
 
-	func keyDown(keyCode: UInt16) {
+	func onKeyDown(keyCode: UInt16) {
 		guard [125, 126, 36].contains(keyCode) else { return }
 
 		if (keyCode == 36) { // key enter
