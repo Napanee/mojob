@@ -49,6 +49,22 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		taskWrapper.addSubview(taskComboBox, positioned: .below, relativeTo: task)
 		activityWrapper.addSubview(activityComboBox, positioned: .below, relativeTo: activity)
 
+		if let jobString = tracking.job_id ?? tracking.custom_job {
+			job.stringValue = jobString
+		}
+
+		if let taskString = tracking.task_id {
+			task.stringValue = taskString
+		}
+
+		if let activityString = tracking.activity_id {
+			activity.stringValue = activityString
+		}
+
+		if let commentString = tracking.comment {
+			comment.stringValue = commentString
+		}
+
 		if let dateStart = Calendar.current.date(bySetting: .second, value: 0, of: tracking.date_start!) {
 			let day = Calendar.current.component(.day, from: dateStart)
 			fromDay.stringValue = String(format: "%02d", day)
