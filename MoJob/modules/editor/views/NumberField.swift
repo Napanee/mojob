@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class NumberField: NSTextField {
+class NumberField: TextField {
 
 	var dateDelegate: DateFieldDelegate?
 	var currentValue: String! = ""
