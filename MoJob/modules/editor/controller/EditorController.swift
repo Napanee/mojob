@@ -18,9 +18,6 @@ protocol DateFieldDelegate {
 class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate {
 	var tracking: Tracking!
 	var currentValue: String! = ""
-	@IBOutlet weak var jobWrapper: NSView!
-	@IBOutlet weak var taskWrapper: NSView!
-	@IBOutlet weak var activityWrapper: NSView!
 	@IBOutlet weak var fromDay: NumberField!
 	@IBOutlet weak var fromMonth: NumberField!
 	@IBOutlet weak var fromYear: NumberField!
@@ -34,9 +31,6 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	@IBOutlet weak var job: NSTextField!
 	@IBOutlet weak var task: NSTextField!
 	@IBOutlet weak var activity: NSTextField!
-	@IBOutlet weak var jobComboBox: NSComboBox!
-	@IBOutlet weak var taskComboBox: NSComboBox!
-	@IBOutlet weak var activityComboBox: NSComboBox!
 	@IBOutlet weak var comment: NSTextField!
 	
 	override func viewDidLoad() {
@@ -44,10 +38,6 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 
 		fromDay.dateDelegate = self
 		untilDay.dateDelegate = self
-
-		jobWrapper.addSubview(jobComboBox, positioned: .below, relativeTo: job)
-		taskWrapper.addSubview(taskComboBox, positioned: .below, relativeTo: task)
-		activityWrapper.addSubview(activityComboBox, positioned: .below, relativeTo: activity)
 
 		if let jobString = tracking.job_id ?? tracking.custom_job {
 			job.stringValue = jobString

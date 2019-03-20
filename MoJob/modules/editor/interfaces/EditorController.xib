@@ -8,8 +8,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="EditorController" customModule="MoJob" customModuleProvider="target">
             <connections>
                 <outlet property="activity" destination="Bjj-Q8-Skz" id="oer-Vk-lYQ"/>
-                <outlet property="activityComboBox" destination="PzC-h1-1ke" id="bw6-9C-pv4"/>
-                <outlet property="activityWrapper" destination="M29-dE-Y6T" id="Jqj-jJ-sx7"/>
                 <outlet property="comment" destination="XcE-nf-wbv" id="KFf-yO-U9D"/>
                 <outlet property="fromDay" destination="pwd-lG-4Ll" id="Qym-x6-L03"/>
                 <outlet property="fromHour" destination="PWX-Cr-K1r" id="epd-v0-zZi"/>
@@ -17,11 +15,7 @@
                 <outlet property="fromMonth" destination="imz-oH-pr6" id="ReE-DD-LeQ"/>
                 <outlet property="fromYear" destination="ef2-mf-82k" id="Ls0-7n-cDY"/>
                 <outlet property="job" destination="hDM-6a-NRn" id="EYJ-hR-BRa"/>
-                <outlet property="jobComboBox" destination="MHr-Oy-iSJ" id="Vps-tQ-1NR"/>
-                <outlet property="jobWrapper" destination="y2i-Cw-VB2" id="nrg-UI-5Bu"/>
                 <outlet property="task" destination="Kjh-sA-XQn" id="RA8-MS-RDp"/>
-                <outlet property="taskComboBox" destination="Byo-9g-Wz9" id="3JE-kd-ubP"/>
-                <outlet property="taskWrapper" destination="rZe-9X-3c3" id="wgC-0e-y69"/>
                 <outlet property="untilDay" destination="6Gk-B7-Zib" id="8et-hj-jFi"/>
                 <outlet property="untilHour" destination="t3e-Cf-nTC" id="lrk-7Z-8SL"/>
                 <outlet property="untilMinute" destination="hzB-Th-6oG" id="qGC-DF-YGL"/>
@@ -85,78 +79,51 @@
                                 <constraint firstItem="uEk-6f-4PP" firstAttribute="top" secondItem="81b-du-VQj" secondAttribute="top" constant="20" id="rqy-6A-aZf"/>
                             </constraints>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="y2i-Cw-VB2">
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hDM-6a-NRn" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                             <rect key="frame" x="30" y="212" width="584" height="29"/>
-                            <subviews>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hDM-6a-NRn" customClass="TextField" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="29"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Job" drawsBackground="YES" id="kMa-oH-fTU">
-                                        <font key="font" metaFont="systemThin" size="20"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                    <connections>
-                                        <outlet property="delegate" destination="-2" id="egy-pz-Ord"/>
-                                        <outlet property="nextKeyView" destination="Kjh-sA-XQn" id="Ggu-iP-pvt"/>
-                                    </connections>
-                                </textField>
-                            </subviews>
                             <constraints>
-                                <constraint firstItem="hDM-6a-NRn" firstAttribute="top" secondItem="y2i-Cw-VB2" secondAttribute="top" id="65h-lq-sz9"/>
-                                <constraint firstAttribute="trailing" secondItem="hDM-6a-NRn" secondAttribute="trailing" id="FwN-Du-sFf"/>
-                                <constraint firstAttribute="height" constant="29" id="eN5-NP-oKR"/>
-                                <constraint firstItem="hDM-6a-NRn" firstAttribute="leading" secondItem="y2i-Cw-VB2" secondAttribute="leading" id="fVb-m7-liC"/>
-                                <constraint firstAttribute="bottom" secondItem="hDM-6a-NRn" secondAttribute="bottom" id="ja9-NN-146"/>
+                                <constraint firstAttribute="height" constant="29" id="6iz-Jf-MFR"/>
                             </constraints>
-                        </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="rZe-9X-3c3">
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Job" drawsBackground="YES" id="kMa-oH-fTU">
+                                <font key="font" metaFont="systemThin" size="20"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <outlet property="delegate" destination="-2" id="egy-pz-Ord"/>
+                                <outlet property="nextKeyView" destination="Kjh-sA-XQn" id="Ggu-iP-pvt"/>
+                            </connections>
+                        </textField>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kjh-sA-XQn" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                             <rect key="frame" x="30" y="175" width="584" height="29"/>
-                            <subviews>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kjh-sA-XQn" customClass="TextField" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="29"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Aufgabe" drawsBackground="YES" id="Zon-wn-pbL">
-                                        <font key="font" metaFont="systemThin" size="20"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                    <connections>
-                                        <outlet property="delegate" destination="-2" id="yFp-mI-6lh"/>
-                                        <outlet property="nextKeyView" destination="Bjj-Q8-Skz" id="367-ak-k6C"/>
-                                    </connections>
-                                </textField>
-                            </subviews>
                             <constraints>
-                                <constraint firstItem="Kjh-sA-XQn" firstAttribute="leading" secondItem="rZe-9X-3c3" secondAttribute="leading" id="Fj9-7Q-jrm"/>
-                                <constraint firstAttribute="bottom" secondItem="Kjh-sA-XQn" secondAttribute="bottom" id="I8R-Km-OtZ"/>
-                                <constraint firstItem="Kjh-sA-XQn" firstAttribute="top" secondItem="rZe-9X-3c3" secondAttribute="top" id="flT-f7-rAN"/>
-                                <constraint firstAttribute="height" constant="29" id="jjY-8n-DSe"/>
-                                <constraint firstAttribute="trailing" secondItem="Kjh-sA-XQn" secondAttribute="trailing" id="sBa-lg-Mjd"/>
+                                <constraint firstAttribute="height" constant="29" id="97K-6E-JeS"/>
                             </constraints>
-                        </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="M29-dE-Y6T">
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Aufgabe" drawsBackground="YES" id="Zon-wn-pbL">
+                                <font key="font" metaFont="systemThin" size="20"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <outlet property="delegate" destination="-2" id="yFp-mI-6lh"/>
+                                <outlet property="nextKeyView" destination="Bjj-Q8-Skz" id="367-ak-k6C"/>
+                            </connections>
+                        </textField>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bjj-Q8-Skz" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                             <rect key="frame" x="30" y="138" width="584" height="29"/>
-                            <subviews>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bjj-Q8-Skz" customClass="TextField" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="584" height="29"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Tätigkeit" drawsBackground="YES" id="3cP-aH-MYe">
-                                        <font key="font" metaFont="systemThin" size="20"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                    <connections>
-                                        <outlet property="delegate" destination="-2" id="wfn-yQ-ohP"/>
-                                        <outlet property="nextKeyView" destination="XcE-nf-wbv" id="Hjq-eC-akw"/>
-                                    </connections>
-                                </textField>
-                            </subviews>
                             <constraints>
-                                <constraint firstItem="Bjj-Q8-Skz" firstAttribute="top" secondItem="M29-dE-Y6T" secondAttribute="top" id="0Lo-c0-CjK"/>
-                                <constraint firstAttribute="bottom" secondItem="Bjj-Q8-Skz" secondAttribute="bottom" id="QRO-Cs-XUj"/>
-                                <constraint firstAttribute="height" constant="29" id="bId-LN-6E4"/>
-                                <constraint firstAttribute="trailing" secondItem="Bjj-Q8-Skz" secondAttribute="trailing" id="nu1-x4-sUq"/>
-                                <constraint firstItem="Bjj-Q8-Skz" firstAttribute="leading" secondItem="M29-dE-Y6T" secondAttribute="leading" id="zyj-Y5-KcG"/>
+                                <constraint firstAttribute="height" constant="29" id="WcG-F3-xVC"/>
                             </constraints>
-                        </customView>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Tätigkeit" drawsBackground="YES" id="3cP-aH-MYe">
+                                <font key="font" metaFont="systemThin" size="20"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <outlet property="delegate" destination="-2" id="wfn-yQ-ohP"/>
+                                <outlet property="nextKeyView" destination="XcE-nf-wbv" id="Hjq-eC-akw"/>
+                            </connections>
+                        </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XcE-nf-wbv" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                             <rect key="frame" x="30" y="50" width="584" height="80"/>
                             <constraints>
@@ -495,16 +462,16 @@
                         </customView>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="Kjh-sA-XQn" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="0GS-88-Jwb"/>
                         <constraint firstItem="81b-du-VQj" firstAttribute="width" secondItem="c7j-df-kS2" secondAttribute="width" id="2KT-zi-hPo"/>
-                        <constraint firstItem="M29-dE-Y6T" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="IdT-ss-afM"/>
-                        <constraint firstAttribute="trailing" secondItem="M29-dE-Y6T" secondAttribute="trailing" constant="30" id="KTx-8l-5jB"/>
-                        <constraint firstAttribute="trailing" secondItem="y2i-Cw-VB2" secondAttribute="trailing" constant="30" id="OuU-rR-gev"/>
+                        <constraint firstAttribute="trailing" secondItem="Bjj-Q8-Skz" secondAttribute="trailing" constant="30" id="GCq-pL-MtJ"/>
                         <constraint firstAttribute="trailing" secondItem="XcE-nf-wbv" secondAttribute="trailing" constant="30" id="RMs-RY-D84"/>
-                        <constraint firstItem="rZe-9X-3c3" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="XQn-yt-5WJ"/>
-                        <constraint firstItem="y2i-Cw-VB2" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="XfE-Qs-yeC"/>
                         <constraint firstItem="XcE-nf-wbv" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="aWU-bK-YUX"/>
-                        <constraint firstAttribute="trailing" secondItem="rZe-9X-3c3" secondAttribute="trailing" constant="30" id="bHW-my-pkm"/>
                         <constraint firstItem="D7U-NT-K5Y" firstAttribute="width" secondItem="c7j-df-kS2" secondAttribute="width" id="eLo-D8-IDK"/>
+                        <constraint firstAttribute="trailing" secondItem="hDM-6a-NRn" secondAttribute="trailing" constant="30" id="eeR-BI-ZO7"/>
+                        <constraint firstAttribute="trailing" secondItem="Kjh-sA-XQn" secondAttribute="trailing" constant="30" id="fih-0c-Oii"/>
+                        <constraint firstItem="hDM-6a-NRn" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="gUH-j9-7Wh"/>
+                        <constraint firstItem="Bjj-Q8-Skz" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="mjH-ZO-OrK"/>
                     </constraints>
                     <visibilityPriorities>
                         <integer value="1000"/>
@@ -532,50 +499,5 @@
             </constraints>
         </customView>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <comboBox hidden="YES" verticalHuggingPriority="750" id="MHr-Oy-iSJ">
-            <rect key="frame" x="0.0" y="0.0" width="99" height="26"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" buttonBordered="NO" completes="NO" numberOfVisibleItems="5" id="4g6-H0-HqA">
-                <font key="font" metaFont="system"/>
-                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                <objectValues>
-                    <string>Item 1</string>
-                    <string>Item 2</string>
-                    <string>Item 3</string>
-                </objectValues>
-            </comboBoxCell>
-            <point key="canvasLocation" x="-135" y="-10"/>
-        </comboBox>
-        <comboBox hidden="YES" verticalHuggingPriority="750" id="PzC-h1-1ke">
-            <rect key="frame" x="0.0" y="0.0" width="99" height="26"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" buttonBordered="NO" completes="NO" numberOfVisibleItems="5" id="SqY-fn-hIe">
-                <font key="font" metaFont="system"/>
-                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                <objectValues>
-                    <string>Item 1</string>
-                    <string>Item 2</string>
-                    <string>Item 3</string>
-                </objectValues>
-            </comboBoxCell>
-            <point key="canvasLocation" x="13" y="-10"/>
-        </comboBox>
-        <comboBox hidden="YES" verticalHuggingPriority="750" id="Byo-9g-Wz9">
-            <rect key="frame" x="0.0" y="0.0" width="99" height="26"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" buttonBordered="NO" completes="NO" numberOfVisibleItems="5" id="Lds-I4-oCX">
-                <font key="font" metaFont="system"/>
-                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                <objectValues>
-                    <string>Item 1</string>
-                    <string>Item 2</string>
-                    <string>Item 3</string>
-                </objectValues>
-            </comboBoxCell>
-            <point key="canvasLocation" x="161" y="-10"/>
-        </comboBox>
     </objects>
 </document>
