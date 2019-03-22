@@ -32,9 +32,12 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	@IBOutlet weak var task: NSTextField!
 	@IBOutlet weak var activity: NSTextField!
 	@IBOutlet weak var comment: NSTextField!
-	
+	@IBOutlet weak var colorPicker: NSPopUpButton!
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		initColorPicker()
 
 		fromDay.dateDelegate = self
 		untilDay.dateDelegate = self
@@ -123,6 +126,58 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 				tracking.date_end = newDate
 			}
 		}
+	}
+
+	private func initColorPicker() {
+		let menu = NSMenu()
+		let size = NSSize(width: 50, height: 19)
+
+		if let crayons = NSColorList.init(named: "Crayons") {
+			for key in crayons.allKeys.filter({
+				if
+					let color = crayons.color(withKey: $0),
+					let red = color.usingColorSpace(.deviceRGB)?.redComponent,
+					let green = color.usingColorSpace(.deviceRGB)?.greenComponent,
+					let blue = color.usingColorSpace(.deviceRGB)?.blueComponent
+				{
+					return round(red * 100) != round(green * 100) || round(red * 100) != round(blue * 100)
+				}
+
+				return false
+			}) {
+				let item = NSMenuItem(title: key, action: nil, keyEquivalent: "")
+				item.image = swatch(size: size, color: crayons.color(withKey: key) ?? .red)
+				menu.addItem(item)
+			}
+		}
+
+		colorPicker.menu = menu
+		colorPicker.imagePosition = .imageOnly
+		colorPicker.wantsLayer = true
+		colorPicker.selectItem(at: 5)
+
+		let lineWidth: CGFloat = 1
+		let posTop = colorPicker.bounds.maxY - (lineWidth / 2)
+		let lineColor = NSColor.quaternaryLabelColor.cgColor
+
+		let path = NSBezierPath()
+		path.move(to: NSPoint(x: colorPicker.bounds.width, y: posTop))
+		path.line(to: NSPoint(x: 0, y: posTop))
+		let underscore = CAShapeLayer()
+		underscore.strokeColor = lineColor
+		underscore.lineWidth = lineWidth
+		underscore.path = path.cgPath
+
+		colorPicker.layer?.addSublayer(underscore)
+	}
+
+	private func swatch(size: NSSize, color: NSColor) -> NSImage {
+		let image = NSImage(size: size)
+		image.lockFocus()
+		color.drawSwatch(in: NSMakeRect(0, 0, size.width, size.height))
+		image.unlockFocus()
+
+		return image
 	}
 
 	@IBAction func deleteTracking(_ sender: NSButton) {
