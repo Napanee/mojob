@@ -8,29 +8,13 @@
 
 import Cocoa
 
-class FilterField: NSTextField, NSTextFieldDelegate {
-
-	var _borderColor: CGColor?
-	@IBInspectable weak var borderColor: NSColor! = NSColor.clear
+class FilterField: TextField, NSTextFieldDelegate {
 
 	var customDelegate: FilterFieldDelegate?
 	var keyDownEventMonitor: Any?
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
-	}
-
-	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
-		focusRingType = NSFocusRingType.none
-
-		let border = CALayer()
-		border.frame = CGRect(x: 0, y: bounds.maxY - 1, width: bounds.width, height: 1)
-		border.backgroundColor = CGColor.clear // borderColor.cgColor
-
-		wantsLayer = true
-		layer?.addSublayer(border)
 	}
 
 	override func mouseDown(with event: NSEvent) {
