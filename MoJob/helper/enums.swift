@@ -6,6 +6,9 @@
 //  Copyright © 2019 Martin Schneider. All rights reserved.
 //
 
+import Cocoa
+
+
 enum nibNames {
 	static let NavigationController = "NavigationController"
 	static let JobListController = "JobListController"
@@ -14,4 +17,10 @@ enum nibNames {
 	static let TrackingViewController = "TrackingViewController"
 	static let DayTrackingsController = "DayTrackingsController"
 	static let EditorController = "EditorController"
+}
+
+extension NSImage.Name {
+	static let delete = NSImage.Name("delete")
+	static let play = NSImage.Name("play")
+	static let stop = NSImage.Name("stop")
 }
