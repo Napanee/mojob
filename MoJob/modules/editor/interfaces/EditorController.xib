@@ -27,14 +27,14 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="1060" height="313"/>
+            <rect key="frame" x="0.0" y="0.0" width="1060" height="316"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c7j-df-kS2">
-                    <rect key="frame" x="0.0" y="0.0" width="1060" height="313"/>
+                    <rect key="frame" x="0.0" y="0.0" width="1060" height="316"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="81b-du-VQj">
-                            <rect key="frame" x="0.0" y="249" width="1060" height="64"/>
+                            <rect key="frame" x="0.0" y="252" width="1060" height="64"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Am-V5-hJa">
                                     <rect key="frame" x="30" y="20" width="131" height="24"/>
@@ -81,10 +81,10 @@
                             </constraints>
                         </customView>
                         <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGR-ie-qcI">
-                            <rect key="frame" x="30" y="212" width="1000" height="29"/>
+                            <rect key="frame" x="30" y="212" width="1000" height="32"/>
                             <subviews>
                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="2bi-3y-qE4">
-                                    <rect key="frame" x="0.0" y="0.0" width="70" height="29"/>
+                                    <rect key="frame" x="0.0" y="2" width="70" height="29"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="29" id="Csa-qn-wOQ"/>
                                     </constraints>
@@ -101,7 +101,7 @@
                                     </popUpButtonCell>
                                 </popUpButton>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hDM-6a-NRn" customClass="TextField" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="80" y="0.0" width="920" height="29"/>
+                                    <rect key="frame" x="80" y="2" width="920" height="29"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="29" id="6iz-Jf-MFR"/>
                                     </constraints>
@@ -130,7 +130,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="97K-6E-JeS"/>
                             </constraints>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Aufgabe" drawsBackground="YES" id="Zon-wn-pbL">
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Aufgabe" drawsBackground="YES" id="Zon-wn-pbL">
                                 <font key="font" metaFont="systemThin" size="20"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
