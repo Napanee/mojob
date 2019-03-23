@@ -8,6 +8,10 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TrackingViewController" customModule="MoJob" customModuleProvider="target">
             <connections>
+                <outlet property="activityLabel" destination="V87-TT-nBE" id="mn7-dB-N5F"/>
+                <outlet property="commentLabel" destination="6ph-FO-APw" id="Ad9-Gq-pcS"/>
+                <outlet property="jobLabel" destination="fUC-I3-CY5" id="r9M-Ib-JhH"/>
+                <outlet property="taskLabel" destination="bYk-72-6mF" id="Jtx-zq-F7h"/>
                 <outlet property="timeLabel" destination="eyr-qf-dUK" id="ckO-XY-PzN"/>
                 <outlet property="timerCount" destination="fu1-3e-qLE" id="wYN-tk-DtT"/>
                 <outlet property="view" destination="GNv-6l-LWp" id="ezI-B7-KkE"/>
@@ -72,65 +76,57 @@
                                 </userDefinedRuntimeAttributes>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="z97-CG-Oyg">
-                                <rect key="frame" x="30" y="65" width="356" height="292"/>
+                                <rect key="frame" x="30" y="50" width="356" height="307"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dQ8-dy-mO0">
-                                        <rect key="frame" x="-2" y="275" width="111" height="17"/>
+                                        <rect key="frame" x="-2" y="290" width="111" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Job und Aufgabe:" id="jK1-by-ZNy">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="fUC-I3-CY5">
-                                        <rect key="frame" x="-2" y="244" width="360" height="31"/>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="fUC-I3-CY5" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="254" width="356" height="36"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="QBN-3w-n9O"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="yCH-8j-y40"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" title="lor-2371 (retainerl2-l'orealistar-club-influencer-datenbank)" id="8yN-L2-FaK">
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" borderStyle="bezel" title="lor-2371 (retainerl2-l'orealistar-club-influencer-datenbank)" drawsBackground="YES" id="8yN-L2-FaK">
                                             <font key="font" metaFont="systemThin" size="26"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="bYk-72-6mF">
-                                        <rect key="frame" x="-2" y="215" width="360" height="24"/>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="bYk-72-6mF" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="220" width="356" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="U4q-PK-RBA"/>
+                                            <constraint firstAttribute="height" constant="29" id="c7Y-lI-l0x"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" title="laufende Arbeit" id="u3i-kb-f01">
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" borderStyle="bezel" title="laufende Arbeit" drawsBackground="YES" id="u3i-kb-f01">
                                             <font key="font" metaFont="systemThin" size="20"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ytt-a6-ynY">
-                                        <rect key="frame" x="-2" y="178" width="60" height="17"/>
+                                        <rect key="frame" x="-2" y="183" width="60" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Tätigkeit:" id="C4a-HL-NP6">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="V87-TT-nBE">
-                                        <rect key="frame" x="-2" y="142" width="360" height="31"/>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="V87-TT-nBE" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="142" width="356" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="1yn-GX-7oB"/>
+                                            <constraint firstAttribute="height" constant="36" id="vfu-w5-dHt"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Community Management (Professional) (Professional) (Professional)" id="oZ9-JT-dQa">
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" borderStyle="bezel" title="Community Management (Professional) (Professional) (Professional)" drawsBackground="YES" id="oZ9-JT-dQa">
                                             <font key="font" metaFont="systemThin" size="26"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="6ph-FO-APw">
-                                        <rect key="frame" x="0.0" y="0.0" width="356" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="jKl-4R-J2d"/>
-                                        </constraints>
-                                        <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="urD-Sn-kVI">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -139,6 +135,17 @@
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Bemerkung:" id="yUp-qn-T76">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="6ph-FO-APw" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="356" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="jKl-4R-J2d"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="urD-Sn-kVI">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>

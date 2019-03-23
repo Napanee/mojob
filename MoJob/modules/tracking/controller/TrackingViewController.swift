@@ -16,6 +16,10 @@ class TrackingViewController: NSViewController {
 
 	@IBOutlet weak var timerCount: TimerCount!
 	@IBOutlet weak var timeLabel: NSTextField!
+	@IBOutlet weak var jobLabel: TextField!
+	@IBOutlet weak var taskLabel: TextField!
+	@IBOutlet weak var activityLabel: TextField!
+	@IBOutlet weak var commentLabel: TextField!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
