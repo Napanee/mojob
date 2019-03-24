@@ -103,7 +103,7 @@ class DayTrackingsController: NSViewController {
 
 	func showWarning(error: String) {
 		errorMessage.stringValue = error
-		warningView.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.75).cgColor
+		warningView.layer?.backgroundColor = NSColor.systemYellow.withAlphaComponent(0.75).cgColor
 		stackView.insertView(warningView, at: 1, in: .top)
 
 		let leftConstraint = NSLayoutConstraint(item: warningView, attribute: .leading, relatedBy: .equal, toItem: warningView.superview, attribute: .leading, multiplier: 1, constant: 0)
