@@ -13,6 +13,7 @@ import Network
 class DayTrackingsController: NSViewController {
 
 	@IBOutlet weak var stackView: NSStackView!
+	@IBOutlet weak var errorMessage: NSTextField!
 	@IBOutlet weak var warningView: NSView!
 	@IBOutlet weak var dateDay: NSTextField!
 	@IBOutlet weak var dateMonth: NSTextField!
@@ -22,6 +23,7 @@ class DayTrackingsController: NSViewController {
 
 	@IBOutlet weak var btn: NSButton!
 
+	let monitor = NWPathMonitor()
 	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 	var _fetchedResultsControllerTrackings: NSFetchedResultsController<Tracking>? = nil
 	var fetchedResultControllerTrackings: NSFetchedResultsController<Tracking> {
@@ -65,14 +67,9 @@ class DayTrackingsController: NSViewController {
 			notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 		}
 
-		let monitor = NWPathMonitor()
 		monitor.pathUpdateHandler = { path in
 			DispatchQueue.main.sync {
-				if path.status == .satisfied {
-					self.hideOfflineWarning()
-				} else {
-					self.showOfflineWarning()
-				}
+				self.networkChanged()
 			}
 
 //			print(path.isExpensive)
@@ -82,10 +79,31 @@ class DayTrackingsController: NSViewController {
 		monitor.start(queue: queue)
 
 		warningView.wantsLayer = true
-		warningView.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.75).cgColor
 	}
 
-	func showOfflineWarning() {
+	private func networkChanged() {
+		let status = monitor.currentPath.status
+
+		if (status == .satisfied) { // online
+			hideWarning()
+
+			QuoJob.isLoggedIn(
+				success: { self.hideWarning() },
+				failed: { errorCode in
+					self.showWarning(error: "Fehlerecode: \(errorCode)")
+				},
+				err: { error in
+					self.showWarning(error: error)
+				}
+			)
+		} else {
+			showWarning(error: "Du bist offline. Deine Trackings werden nicht an QuoJob übertragen.")
+		}
+	}
+
+	func showWarning(error: String) {
+		errorMessage.stringValue = error
+		warningView.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.75).cgColor
 		stackView.insertView(warningView, at: 1, in: .top)
 
 		let leftConstraint = NSLayoutConstraint(item: warningView, attribute: .leading, relatedBy: .equal, toItem: warningView.superview, attribute: .leading, multiplier: 1, constant: 0)
@@ -93,7 +111,7 @@ class DayTrackingsController: NSViewController {
 		stackView.addConstraints([leftConstraint, rightConstraint])
 	}
 
-	func hideOfflineWarning() {
+	func hideWarning() {
 		if let warningView = stackView.subviews.first(where: { $0.isEqual(warningView) }) {
 			warningView.removeFromSuperview()
 		}

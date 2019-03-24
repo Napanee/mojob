@@ -10,6 +10,7 @@
                 <outlet property="dateDay" destination="FYd-kL-Nf8" id="odh-Bl-qJm"/>
                 <outlet property="dateMonth" destination="Qbk-sT-Jo9" id="NuR-4G-RAz"/>
                 <outlet property="dateYear" destination="qNj-lU-mgp" id="3Y1-H6-ytu"/>
+                <outlet property="errorMessage" destination="Vbb-37-aEx" id="yun-6c-Eac"/>
                 <outlet property="stackView" destination="DaL-Sq-CR7" id="kuW-Wu-ct3"/>
                 <outlet property="totalTimeForDay" destination="S9W-PJ-CWf" id="OmK-RX-Gbb"/>
                 <outlet property="trackingsStackView" destination="eqR-5L-Ybc" id="iC7-zj-ZUJ"/>
