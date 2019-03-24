@@ -7,9 +7,13 @@
 //
 
 import Cocoa
+import Network
+
 
 class DayTrackingsController: NSViewController {
 
+	@IBOutlet weak var stackView: NSStackView!
+	@IBOutlet weak var warningView: NSView!
 	@IBOutlet weak var dateDay: NSTextField!
 	@IBOutlet weak var dateMonth: NSTextField!
 	@IBOutlet weak var dateYear: NSTextField!
@@ -59,6 +63,39 @@ class DayTrackingsController: NSViewController {
 			let notificationCenter = NotificationCenter.default
 			notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
 			notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
+		}
+
+		let monitor = NWPathMonitor()
+		monitor.pathUpdateHandler = { path in
+			DispatchQueue.main.sync {
+				if path.status == .satisfied {
+					self.hideOfflineWarning()
+				} else {
+					self.showOfflineWarning()
+				}
+			}
+
+//			print(path.isExpensive)
+		}
+
+		let queue = DispatchQueue(label: "Monitor")
+		monitor.start(queue: queue)
+
+		warningView.wantsLayer = true
+		warningView.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.75).cgColor
+	}
+
+	func showOfflineWarning() {
+		stackView.insertView(warningView, at: 1, in: .top)
+
+		let leftConstraint = NSLayoutConstraint(item: warningView, attribute: .leading, relatedBy: .equal, toItem: warningView.superview, attribute: .leading, multiplier: 1, constant: 0)
+		let rightConstraint = NSLayoutConstraint(item: warningView, attribute: .trailing, relatedBy: .equal, toItem: warningView.superview, attribute: .trailing, multiplier: 1, constant: 0)
+		stackView.addConstraints([leftConstraint, rightConstraint])
+	}
+
+	func hideOfflineWarning() {
+		if let warningView = stackView.subviews.first(where: { $0.isEqual(warningView) }) {
+			warningView.removeFromSuperview()
 		}
 	}
 
