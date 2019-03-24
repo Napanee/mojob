@@ -32,6 +32,7 @@
 		E8211804220F5991003D7578 /* FilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* FilterField.swift */; };
 		E83447742236735900621617 /* AddButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E83447732236735900621617 /* AddButton.xib */; };
 		E863305D2245863600A8E946 /* PopUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305C2245863600A8E946 /* PopUpCell.swift */; };
+		E86330602247AC1B00A8E946 /* QuoJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305F2247AC1B00A8E946 /* QuoJob.swift */; };
 		E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */; };
 		E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */; };
 		E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */; };
@@ -107,6 +108,7 @@
 		E8211803220F5991003D7578 /* FilterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterField.swift; sourceTree = "<group>"; };
 		E83447732236735900621617 /* AddButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddButton.xib; sourceTree = "<group>"; };
 		E863305C2245863600A8E946 /* PopUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCell.swift; sourceTree = "<group>"; };
+		E863305F2247AC1B00A8E946 /* QuoJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJob.swift; sourceTree = "<group>"; };
 		E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayTrackingsController.swift; path = MoJob/modules/dayTrackings/controller/DayTrackingsController.swift; sourceTree = SOURCE_ROOT; };
 		E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayTrackingsController.xib; sourceTree = "<group>"; };
 		E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTrackingControllerView.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		E821178E220E07B1003D7578 /* MoJob */ = {
 			isa = PBXGroup;
 			children = (
+				E863305E2247AB3B00A8E946 /* api */,
 				E8E950842231B3DD0070F57E /* CoreData */,
 				E82117D8220E1B55003D7578 /* helper */,
 				E82117C6220E1116003D7578 /* modules */,
@@ -344,6 +347,14 @@
 				E8CACC772211DE6300675688 /* functions.swift */,
 			);
 			path = helper;
+			sourceTree = "<group>";
+		};
+		E863305E2247AB3B00A8E946 /* api */ = {
+			isa = PBXGroup;
+			children = (
+				E863305F2247AC1B00A8E946 /* QuoJob.swift */,
+			);
+			path = api;
 			sourceTree = "<group>";
 		};
 		E895D8452221BB3D00DAAA4E /* dayTrackings */ = {
@@ -498,6 +509,7 @@
 				E8211788220E07B1003D7578 /* Sources */,
 				E8211789220E07B1003D7578 /* Frameworks */,
 				E821178A220E07B1003D7578 /* Resources */,
+				709109543FB4E546A9F47017 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -626,6 +638,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		709109543FB4E546A9F47017 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MoJob/Pods-MoJob-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoJob/Pods-MoJob-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9B8E0F4855C67B29D0A6F3CE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -718,6 +752,7 @@
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
 				E8A270442210C3100030B61C /* TimerCount.swift in Sources */,
 				E8E950A2223591910070F57E /* NumberField.swift in Sources */,
+				E86330602247AC1B00A8E946 /* QuoJob.swift in Sources */,
 				E895D8562222FCE000DAAA4E /* TrackingItem.swift in Sources */,
 				E8E9509D223482940070F57E /* AddButton.swift in Sources */,
 				E82117D3220E175D003D7578 /* NavigationView.swift in Sources */,
