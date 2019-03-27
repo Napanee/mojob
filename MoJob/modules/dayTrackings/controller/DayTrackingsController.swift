@@ -15,13 +15,13 @@ class DayTrackingsController: NSViewController {
 	@IBOutlet weak var stackView: NSStackView!
 	@IBOutlet weak var errorMessage: NSTextField!
 	@IBOutlet weak var warningView: NSView!
+	@IBOutlet weak var warningStackView: NSStackView!
 	@IBOutlet weak var dateDay: NSTextField!
 	@IBOutlet weak var dateMonth: NSTextField!
 	@IBOutlet weak var dateYear: NSTextField!
 	@IBOutlet weak var totalTimeForDay: NSTextField!
 	@IBOutlet weak var trackingsStackView: TrackingsStackView!
-
-	@IBOutlet weak var btn: NSButton!
+	@IBOutlet weak var loginButton: NSButton!
 
 	let monitor = NWPathMonitor()
 	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
@@ -71,14 +71,14 @@ class DayTrackingsController: NSViewController {
 			DispatchQueue.main.sync {
 				self.networkChanged()
 			}
-
-//			print(path.isExpensive)
 		}
 
 		let queue = DispatchQueue(label: "Monitor")
 		monitor.start(queue: queue)
 
 		warningView.wantsLayer = true
+
+		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
 	}
 
 	private func networkChanged() {
@@ -87,16 +87,19 @@ class DayTrackingsController: NSViewController {
 		if (status == .satisfied) { // online
 			hideWarning()
 
-			QuoJob.isLoggedIn(
+			let quoJob = QuoJob()
+
+			quoJob.checkLoginStatus(
 				success: { self.hideWarning() },
-				failed: { errorCode in
-					self.showWarning(error: "Fehlerecode: \(errorCode)")
+				failed: { error in
+					self.loginButton.isHidden = false
+					self.showWarning(error: error)
 				},
 				err: { error in
 					self.showWarning(error: error)
 				}
 			)
-		} else {
+		} else { // offline
 			showWarning(error: "Du bist offline. Deine Trackings werden nicht an QuoJob übertragen.")
 		}
 	}
@@ -112,9 +115,22 @@ class DayTrackingsController: NSViewController {
 	}
 
 	func hideWarning() {
+		loginButton.isHidden = true
+
 		if let warningView = stackView.subviews.first(where: { $0.isEqual(warningView) }) {
 			warningView.removeFromSuperview()
 		}
+	}
+
+	@objc private func onSessionUpdate(notification: NSNotification) {
+		hideWarning()
+	}
+
+	@IBAction func loginButton(_ sender: NSButton) {
+		let loginVC = Login(nibName: "Login", bundle: nil)
+
+		let appDelegate = (NSApp.delegate as! AppDelegate)
+		appDelegate.window.contentViewController?.presentAsSheet(loginVC)
 	}
 
 	// MARK: - Observer

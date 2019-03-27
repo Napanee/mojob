@@ -11,10 +11,12 @@
                 <outlet property="dateMonth" destination="Qbk-sT-Jo9" id="NuR-4G-RAz"/>
                 <outlet property="dateYear" destination="qNj-lU-mgp" id="3Y1-H6-ytu"/>
                 <outlet property="errorMessage" destination="Vbb-37-aEx" id="yun-6c-Eac"/>
+                <outlet property="loginButton" destination="IIU-Z4-HS7" id="IXS-vn-HPl"/>
                 <outlet property="stackView" destination="DaL-Sq-CR7" id="kuW-Wu-ct3"/>
                 <outlet property="totalTimeForDay" destination="S9W-PJ-CWf" id="OmK-RX-Gbb"/>
                 <outlet property="trackingsStackView" destination="eqR-5L-Ybc" id="iC7-zj-ZUJ"/>
                 <outlet property="view" destination="c22-O7-iKe" id="pvR-14-kDL"/>
+                <outlet property="warningStackView" destination="UVX-eR-ieW" id="fg8-9r-Tx3"/>
                 <outlet property="warningView" destination="rTM-dW-6dB" id="KnN-uj-W6v"/>
             </connections>
         </customObject>
@@ -210,24 +212,53 @@
             <point key="canvasLocation" x="225" y="1001"/>
         </customView>
         <customView id="rTM-dW-6dB">
-            <rect key="frame" x="0.0" y="0.0" width="356" height="56"/>
+            <rect key="frame" x="0.0" y="0.0" width="356" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Vbb-37-aEx">
-                    <rect key="frame" x="8" y="10" width="340" height="36"/>
-                    <textFieldCell key="cell" selectable="YES" alignment="left" title="Du bist offline. Deine Trackings werden nicht an QuoJob übertragen." id="Zcg-2t-3r4">
-                        <font key="font" metaFont="systemThin" size="14"/>
-                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
+                <stackView distribution="fill" orientation="vertical" alignment="trailing" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UVX-eR-ieW">
+                    <rect key="frame" x="10" y="10" width="336" height="50"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Vbb-37-aEx">
+                            <rect key="frame" x="-2" y="32" width="340" height="18"/>
+                            <textFieldCell key="cell" selectable="YES" alignment="left" title="Fehlercode: 2003" id="Zcg-2t-3r4">
+                                <font key="font" metaFont="systemThin" size="14"/>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IIU-Z4-HS7">
+                            <rect key="frame" x="224" y="0.0" width="112" height="17"/>
+                            <buttonCell key="cell" type="bevel" title="Jetzt einloggen" bezelStyle="rounded" image="login" imagePosition="left" alignment="center" imageScaling="proportionallyDown" inset="2" id="JnM-Wf-ryf">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="loginButton:" target="-2" id="we1-Em-r4c"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Vbb-37-aEx" firstAttribute="width" secondItem="UVX-eR-ieW" secondAttribute="width" id="l9q-0s-1Jb"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Vbb-37-aEx" secondAttribute="trailing" constant="10" id="5ot-Dg-7ds"/>
-                <constraint firstItem="Vbb-37-aEx" firstAttribute="leading" secondItem="rTM-dW-6dB" secondAttribute="leading" constant="10" id="Dpq-cE-zeR"/>
-                <constraint firstItem="Vbb-37-aEx" firstAttribute="top" secondItem="rTM-dW-6dB" secondAttribute="top" constant="10" id="PbG-Ev-Eom"/>
-                <constraint firstAttribute="bottom" secondItem="Vbb-37-aEx" secondAttribute="bottom" constant="10" id="dQS-H9-AoB"/>
+                <constraint firstAttribute="bottom" secondItem="UVX-eR-ieW" secondAttribute="bottom" constant="10" id="V0P-tc-Zv5"/>
+                <constraint firstAttribute="trailing" secondItem="UVX-eR-ieW" secondAttribute="trailing" constant="10" id="oBm-AQ-ruM"/>
+                <constraint firstItem="UVX-eR-ieW" firstAttribute="top" secondItem="rTM-dW-6dB" secondAttribute="top" constant="10" id="p6o-Ph-5v0"/>
+                <constraint firstItem="UVX-eR-ieW" firstAttribute="leading" secondItem="rTM-dW-6dB" secondAttribute="leading" constant="10" id="uoV-w5-NaK"/>
             </constraints>
         </customView>
     </objects>
+    <resources>
+        <image name="login" width="14" height="16"/>
+    </resources>
 </document>
