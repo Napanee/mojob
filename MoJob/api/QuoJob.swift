@@ -30,7 +30,7 @@ class QuoJob {
 
 	func checkLoginStatus(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void, err: @escaping (_ error: String) -> Void) {
 		if (sessionId == "") {
-			loginWithKeyChain(success: success, failed: failed)
+			loginWithKeyChain(success: success, failed: failed, err: err)
 			return
 		}
 
@@ -59,7 +59,7 @@ class QuoJob {
 					*/
 					switch statusCode {
 						case 2003, 2004:
-							self.loginWithKeyChain(success: success, failed: failed)
+							self.loginWithKeyChain(success: success, failed: failed, err: err)
 						default:
 							err("Fehlercode: \(statusCode) - Bitte an Martin wenden.")
 					}
@@ -119,11 +119,11 @@ class QuoJob {
 		}
 	}
 
-	private func loginWithKeyChain(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void) -> Void {
+	private func loginWithKeyChain(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void, err: @escaping (_ error: String) -> Void) {
 		keychain = Keychain(service: "de.mojobapp-dev.login")
 
 		guard keychain.allKeys().count > 0 else {
-			failed("Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
+			failed("Error 1001: Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
 			return
 		}
 
@@ -131,7 +131,7 @@ class QuoJob {
 			let name = keychain.allKeys().first,
 			let pass = try? keychain.get(name)
 		else {
-			failed("Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
+			failed("Error 1002: Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
 			return
 		}
 
@@ -175,8 +175,13 @@ class QuoJob {
 						success()
 					}
 				case .failure(let error):
-					print("Request failed with error: \(error)")
-					failed("Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
+					let errorMessage = error.localizedDescription
+
+					if ((errorMessage.range(of:"A server with the specified hostname could not be found.")) != nil) {
+						err("Du bist nicht per VPN mit dem Moccu-Netzwerk verbunden. Deine Trackings werden nicht an QuoJob übertragen.")
+					} else {
+						failed(errorMessage)
+					}
 			}
 		}
 	}
