@@ -83,10 +83,9 @@ class DayTrackingsController: NSViewController {
 
 	private func networkChanged() {
 		let status = monitor.currentPath.status
+		hideWarning()
 
 		if (status == .satisfied) { // online
-			hideWarning()
-
 			let quoJob = QuoJob()
 
 			quoJob.checkLoginStatus(
