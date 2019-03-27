@@ -8,6 +8,7 @@
 
 import Alamofire
 import Foundation
+import KeychainAccess
 
 
 #if DEVELOPMENT
@@ -20,6 +21,7 @@ import Foundation
 class QuoJob {
 
 	var sessionId: String! = ""
+	var keychain: Keychain!
 
 	static func isLoggedIn(success: @escaping () -> Void, failed: @escaping (_ error: Int) -> Void, err: @escaping (_ error: String) -> Void) {
 		let verifyParams: [String: Any] = [
@@ -60,6 +62,68 @@ class QuoJob {
 				} else {
 					err(errorMessage)
 				}
+			}
+		}
+	}
+
+	private func loginWithKeyChain(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void) -> Void {
+		keychain = Keychain(service: "de.mojobapp-dev.login")
+
+		guard keychain.allKeys().count > 0 else {
+			failed("Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
+			return
+		}
+
+		guard
+			let name = keychain.allKeys().first,
+			let pass = try? keychain.get(name)
+		else {
+			failed("Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
+			return
+		}
+
+		let parameters: [String: Any] = [
+			"jsonrpc": "2.0",
+			"method": "session.login",
+			"id": "1",
+			"params": [
+				"user": name,
+				"device_id": "foo",
+				"client_type": "MoJobApp",
+				"language": "de",
+				"password": pass!.MD5 as Any,
+				"min_version": 1,
+				"max_version": 6
+			]
+		]
+
+		Alamofire.request(API_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+			switch response.result {
+				case .success(let JSON):
+					let response = JSON as! NSDictionary
+
+					if (response.allKeys.contains(where: { ($0 as! String) == "error" })) {
+						let error = (response.object(forKey: "error")! as! NSDictionary)
+						let statusCode = (error.object(forKey: "code") as! NSString).intValue
+
+						/*
+						* 1000: No right for the requestes action
+						*/
+						if ([1000].contains(statusCode)) {
+							failed("Dein QuoJob-Account ist nicht für die API freigeschaltet. Bitte wende dich an den QuoJob-Verantwortlichen.")
+						}
+					} else if let result = response.object(forKey: "result") as? NSDictionary {
+						self.userId = result.object(forKey: "user_id")! as? String
+						self.sessionId = result.object(forKey: "session")! as? String
+
+	//							Crashlytics.sharedInstance().setUserName(name)
+	//							Answers.logLogin(withMethod: "keyChain", success: true, customAttributes: [:])
+
+						success()
+					}
+				case .failure(let error):
+					print("Request failed with error: \(error)")
+					failed("Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
 			}
 		}
 	}
