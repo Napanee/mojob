@@ -20,16 +20,27 @@ import KeychainAccess
 
 class QuoJob {
 
-	var sessionId: String! = ""
 	var keychain: Keychain!
+	var userId: String!
+	var sessionId: String! = "" {
+		didSet {
+			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSession"), object: nil)
+		}
+	}
 
-	static func isLoggedIn(success: @escaping () -> Void, failed: @escaping (_ error: Int) -> Void, err: @escaping (_ error: String) -> Void) {
+	func checkLoginStatus(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void, err: @escaping (_ error: String) -> Void) {
+		if (sessionId == "") {
+			loginWithKeyChain(success: success, failed: failed)
+			return
+		}
+
+		let params: [String: String] = [
+			"session": sessionId
+		]
 		let verifyParams: [String: Any] = [
 			"jsonrpc": "2.0",
 			"method": "session.get_current_user",
-			"params": [
-				"session": "sessionId"
-			],
+			"params": params,
 			"id": 1
 		]
 
@@ -43,13 +54,14 @@ class QuoJob {
 					let statusCode = error.object(forKey: "code")! as! Int
 
 					/*
-					* 2001 User NOT found
-					* 2002 Wrong password
 					* 2003 No session given
 					* 2004 Invalid session
 					*/
-					if ([2000, 2001, 2002, 2003, 2004].contains(statusCode)) {
-						failed(statusCode)
+					switch statusCode {
+						case 2003, 2004:
+							self.loginWithKeyChain(success: success, failed: failed)
+						default:
+							err("Fehlercode: \(statusCode) - Bitte an Martin wenden.")
 					}
 				} else if (response.allKeys.contains(where: { ($0 as! String) == "result" })) {
 					success()
@@ -62,6 +74,47 @@ class QuoJob {
 				} else {
 					err(errorMessage)
 				}
+			}
+		}
+	}
+
+	func loginWithUserData(userName: String, password: String, success: @escaping () -> Void, failed: @escaping (_ statusCode: Int) -> Void) {
+		let parameters: [String: Any] = [
+			"jsonrpc": "2.0",
+			"method": "session.login",
+			"id": "1",
+			"params": [
+				"user": userName,
+				"device_id": "foo",
+				"client_type": "MoJobApp",
+				"language": "de",
+				"password": password.MD5 as Any,
+				"min_version": 1,
+				"max_version": 6
+			]
+		]
+
+		Alamofire.request(API_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+			.responseJSON { response in switch response.result {
+				case .success(let JSON):
+					let response = JSON as! NSDictionary
+					if (response.allKeys.contains(where: { ($0 as! String) == "error" })) {
+						if let error = response.object(forKey: "error")! as? NSDictionary, let statusCode = error.object(forKey: "code")! as? String {
+							print(statusCode)
+							failed(Int(statusCode)!)
+						}
+					} else if let result = response.object(forKey: "result")! as? NSDictionary {
+						self.userId = result.object(forKey: "user_id")! as? String
+						self.sessionId = result.object(forKey: "session")! as? String
+
+	//					Crashlytics.sharedInstance().setUserName(userName)
+	//					Answers.logLogin(withMethod: "userData", success: true, customAttributes: [:])
+
+						success()
+					}
+				case .failure(let error):
+	//				Answers.logLogin(withMethod: "userData", success: false, customAttributes: [:])
+					print("Request failed with error: \(error)")
 			}
 		}
 	}
