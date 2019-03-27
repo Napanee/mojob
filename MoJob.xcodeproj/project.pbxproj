@@ -109,10 +109,10 @@
 		E82117FF220F5364003D7578 /* JobItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItem.swift; sourceTree = "<group>"; };
 		E8211801220F5384003D7578 /* JobItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JobItem.xib; sourceTree = "<group>"; };
 		E8211803220F5991003D7578 /* FilterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterField.swift; sourceTree = "<group>"; };
+		E82B2E6D224C1AF6001CCAC8 /* Mojob-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mojob-Bridging-Header.h"; sourceTree = "<group>"; };
 		E83447732236735900621617 /* AddButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddButton.xib; sourceTree = "<group>"; };
 		E863305C2245863600A8E946 /* PopUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCell.swift; sourceTree = "<group>"; };
 		E863305F2247AC1B00A8E946 /* QuoJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJob.swift; sourceTree = "<group>"; };
-		E863306B2248F42000A8E946 /* MoJob-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MoJob-Bridging-Header.h"; sourceTree = "<group>"; };
 		E863306422481BED00A8E946 /* Login.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
 		E863306622481E2C00A8E946 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		E86330692248232F00A8E946 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
@@ -221,6 +221,7 @@
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
 				E8211799220E07B2003D7578 /* Info.plist */,
 				E821179A220E07B2003D7578 /* MoJob.entitlements */,
+				E82B2E6D224C1AF6001CCAC8 /* Mojob-Bridging-Header.h */,
 			);
 			path = MoJob;
 			sourceTree = "<group>";
