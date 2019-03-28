@@ -10,19 +10,24 @@ import Cocoa
 
 class FavoriteItem: NSCollectionViewItem {
 
+	@IBOutlet weak var deleteButton: NSButton!
+	@IBOutlet weak var startButton: NSButton!
+
 	override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
+		super.viewDidLoad()
 
 		view.wantsLayer = true
-    }
+	}
 
-	@IBAction func startTracking(_ sender: NSButton) {
+	@IBAction func deleteButton(_ sender: NSButton) {
+	}
+
+	@IBAction func startButton(_ sender: NSButton) {
 		let window = (NSApp.delegate as! AppDelegate).window
 
 		if let contentViewController = window?.contentViewController as? SplitViewController {
 			contentViewController.showTracking()
 		}
 	}
-    
+
 }

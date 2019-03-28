@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FavoriteItem" customModule="MoJob" customModuleProvider="target">
             <connections>
+                <outlet property="deleteButton" destination="6pU-LA-Kym" id="g4w-8j-rda"/>
+                <outlet property="startButton" destination="cs7-FA-gmg" id="aDR-HB-PHl"/>
                 <outlet property="textField" destination="tn4-s9-zuX" id="da4-QO-jd8"/>
                 <outlet property="view" destination="mHd-3v-Od6" id="z5v-Dt-SRg"/>
             </connections>
@@ -32,6 +34,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="deleteButton:" target="-2" id="k5c-2P-a5L"/>
+                    </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cs7-FA-gmg">
                     <rect key="frame" x="359" y="0.0" width="20" height="20"/>
@@ -40,7 +45,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="startTracking:" target="-2" id="41V-QY-mph"/>
+                        <action selector="startButton:" target="-2" id="f0u-Ne-2X5"/>
                     </connections>
                 </button>
             </subviews>
