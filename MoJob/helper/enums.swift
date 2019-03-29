@@ -19,6 +19,17 @@ enum nibNames {
 	static let EditorController = "EditorController"
 }
 
+enum errorMessages {
+	static let missingRights = "Dein QuoJob-Account ist nicht für die API freigeschaltet. Bitte wende dich an den QuoJob-Verantwortlichen."
+	static let notFound = "User nicht gefunden"
+	static let wrongPassword = "Userdaten nicht korrekt"
+	static let sessionProblem = "Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können."
+	static let disabled = "Dein QuoJob-Account ist gesperrt. Bitte wende dich an den QuoJob-Verantwortlichen."
+	static let unknown = "Unbekannter Fehler. Bitte wende dich an Martin."
+	static let vpnProblem = "Du bist nicht per VPN mit dem Moccu-Netzwerk verbunden. Deine Trackings werden nicht an QuoJob übertragen."
+	static let offline = "Du bist offline. Deine Trackings werden nicht an QuoJob übertragen."
+}
+
 extension NSImage.Name {
 	static let delete = NSImage.Name("delete")
 	static let play = NSImage.Name("play")
