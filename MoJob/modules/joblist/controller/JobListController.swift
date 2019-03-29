@@ -18,6 +18,12 @@ class JobListController: NSViewController {
 	@IBOutlet weak var favoritesCollectionView: NSCollectionView!
 	@IBOutlet weak var jobsCollectionView: NSCollectionView!
 
+	@IBOutlet weak var stackView: NSStackView!
+	@IBOutlet weak var errorMessage: NSTextField!
+	@IBOutlet weak var warningView: NSView!
+	@IBOutlet weak var warningStackView: NSStackView!
+	@IBOutlet weak var warningButton: NSButton!
+
 	@IBOutlet weak var filterField: FilterField!
 	@IBOutlet weak var favoritesCollectionHeight: NSLayoutConstraint!
 	@IBOutlet weak var jobsCollectionHeight: NSLayoutConstraint!
@@ -33,6 +39,33 @@ class JobListController: NSViewController {
 		}
 	}
 
+	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+	var _fetchedResultsControllerJobs: NSFetchedResultsController<Job>? = nil
+	var fetchedResultControllerJobs: NSFetchedResultsController<Job> {
+		if (_fetchedResultsControllerJobs != nil) {
+			return _fetchedResultsControllerJobs!
+		}
+
+		let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
+
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "type", ascending: true)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerJobs = resultsController
+
+		do {
+			try _fetchedResultsControllerJobs!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
+		}
+
+		return _fetchedResultsControllerJobs!
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -41,6 +74,16 @@ class JobListController: NSViewController {
 
 		_configureCollectionView(collectionView: favoritesCollectionView)
 		_configureCollectionView(collectionView: jobsCollectionView)
+
+		warningView.wantsLayer = true
+		warningButton.target = self
+		warningButton.action = #selector(onSync)
+
+		if (fetchedResultControllerJobs.fetchedObjects?.count == 0) {
+			showWarning(error: "Es sind keine Jobs vorhanden. Jetzt mit QuoJob synchronisieren?")
+		}
+
+		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
 	}
 
 	override func viewDidAppear() {
@@ -54,6 +97,28 @@ class JobListController: NSViewController {
 	override func viewWillLayout() {
 		favoritesCollectionView.collectionViewLayout?.invalidateLayout()
 		jobsCollectionView.collectionViewLayout?.invalidateLayout()
+	}
+
+	func showWarning(error: String) {
+		if (QuoJob.shared.sessionId == "") {
+			warningButton.image = NSImage(named: "login")
+			warningButton.title = "Jetzt einloggen"
+			warningButton.action = #selector(onLogin)
+		}
+
+		errorMessage.stringValue = error
+		warningView.layer?.backgroundColor = NSColor.systemYellow.withAlphaComponent(0.75).cgColor
+		stackView.insertView(warningView, at: 1, in: .top)
+
+		let leftConstraint = NSLayoutConstraint(item: warningView, attribute: .leading, relatedBy: .equal, toItem: warningView.superview, attribute: .leading, multiplier: 1, constant: 0)
+		let rightConstraint = NSLayoutConstraint(item: warningView, attribute: .trailing, relatedBy: .equal, toItem: warningView.superview, attribute: .trailing, multiplier: 1, constant: 0)
+		stackView.addConstraints([leftConstraint, rightConstraint])
+	}
+
+	func hideWarning() {
+		if let warningView = stackView.subviews.first(where: { $0.isEqual(warningView) }) {
+			warningView.removeFromSuperview()
+		}
 	}
 
 	func onTextChange(with string: String) {
@@ -90,6 +155,32 @@ class JobListController: NSViewController {
 
 	@IBAction func addFavorit(_ sender: NSButton) {
 
+	}
+
+	@objc func onLogin() {
+		let loginVC = Login(nibName: "Login", bundle: nil)
+
+		let appDelegate = (NSApp.delegate as! AppDelegate)
+		appDelegate.window.contentViewController?.presentAsSheet(loginVC)
+	}
+
+	@objc func onSync() {
+		QuoJob.shared.syncData()
+			.done {
+				print("done!")
+			}
+			.catch { error in
+				//Handle error or give feedback to the user
+				print(error.localizedDescription)
+			}
+	}
+
+	@objc private func onSessionUpdate(notification: NSNotification) {
+		if (warningView.isHidden == false) {
+			warningButton.image = NSImage(named: "reload")
+			warningButton.title = "Jetzt synchronisieren"
+			warningButton.action = #selector(onSync)
+		}
 	}
 
 }
