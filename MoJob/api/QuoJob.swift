@@ -6,6 +6,7 @@
 //  Copyright © 2019 Martin Schneider. All rights reserved.
 //
 
+import PromiseKit
 import Alamofire
 import Foundation
 import KeychainAccess
@@ -14,13 +15,39 @@ import KeychainAccess
 #if DEVELOPMENT
 	let API_URL = "https://mojob-test.moccu/index.php?rpc=1"
 #else
-	let API_URL = "https://mojob.moccu/index.php?rpc=1"
+	let API_URL = "https://mojob-test.moccu/index.php?rpc=1"
 #endif
+
+enum ApiError: Error {
+	case invalidSession
+	case noSession
+	case missingRights
+	case other(Int)
+}
+
+extension ApiError {
+	var localizedDescription: String {
+		switch self {
+		case .invalidSession:
+			return "Nicht eingeloggt"
+		case .noSession:
+			return "Nicht eingeloggt"
+		case .missingRights:
+			return "keine Rechte"
+		case .other(let statusCode):
+			return "Fehlercode: \(statusCode)"
+		}
+	}
+}
 
 
 class QuoJob {
 
 	static let shared = QuoJob()
+
+	let dateFormatter = DateFormatter()
+
+	var lastSync: Sync? = nil
 	var keychain: Keychain!
 	var userId: String!
 	var sessionId: String! = "" {
@@ -29,7 +56,136 @@ class QuoJob {
 		}
 	}
 
+	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+	var _fetchedResultsControllerSync: NSFetchedResultsController<Sync>? = nil
+	var fetchedResultControllerSync: NSFetchedResultsController<Sync> {
+		if (_fetchedResultsControllerSync != nil) {
+			return _fetchedResultsControllerSync!
+		}
+
+		let fetchRequest: NSFetchRequest<Sync> = Sync.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "jobs", ascending: false)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerSync = resultsController
+
+		do {
+			try _fetchedResultsControllerSync!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
+		}
+
+		return _fetchedResultsControllerSync!
+	}
+
+	var _fetchedResultsControllerActivity: NSFetchedResultsController<Activity>? = nil
+	var fetchedResultControllerActivity: NSFetchedResultsController<Activity> {
+		if (_fetchedResultsControllerActivity != nil) {
+			return _fetchedResultsControllerActivity!
+		}
+
+		let fetchRequest: NSFetchRequest<Activity> = Activity.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "title", ascending: false)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerActivity = resultsController
+
+		do {
+			try _fetchedResultsControllerActivity!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
+		}
+
+		return _fetchedResultsControllerActivity!
+	}
+
+	var _fetchedResultsControllerJob: NSFetchedResultsController<Job>? = nil
+	var fetchedResultControllerJob: NSFetchedResultsController<Job> {
+		if (_fetchedResultsControllerJob != nil) {
+			return _fetchedResultsControllerJob!
+		}
+
+		let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "title", ascending: false)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerJob = resultsController
+
+		do {
+			try _fetchedResultsControllerJob!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
+		}
+
+		return _fetchedResultsControllerJob!
+	}
+
+	var _fetchedResultsControllerTask: NSFetchedResultsController<Task>? = nil
+	var fetchedResultControllerTask: NSFetchedResultsController<Task> {
+		if (_fetchedResultsControllerTask != nil) {
+			return _fetchedResultsControllerTask!
+		}
+
+		let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "title", ascending: false)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerTask = resultsController
+
+		do {
+			try _fetchedResultsControllerTask!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
+		}
+
+		return _fetchedResultsControllerTask!
+	}
+
+	var _fetchedResultsControllerType: NSFetchedResultsController<Type>? = nil
+	var fetchedResultControllerType: NSFetchedResultsController<Type> {
+		if (_fetchedResultsControllerType != nil) {
+			return _fetchedResultsControllerType!
+		}
+
+		let fetchRequest: NSFetchRequest<Type> = Type.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "title", ascending: false)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerType = resultsController
+
+		do {
+			try _fetchedResultsControllerType!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
+		}
+
+		return _fetchedResultsControllerType!
+	}
+
 	private init() {
+		lastSync = fetchedResultControllerSync.fetchedObjects?.first
+
+		dateFormatter.dateFormat = "YYYYMMddHHmmss"
 	}
 
 	func checkLoginStatus(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void, err: @escaping (_ error: String) -> Void) {
@@ -186,6 +342,414 @@ class QuoJob {
 					} else {
 						failed(errorMessage)
 					}
+			}
+		}
+	}
+
+}
+
+// MARK: - fetch Data from QuoJob
+
+extension QuoJob {
+
+	func syncData() -> Promise<Void> {
+		lastSync = fetchedResultControllerSync.fetchedObjects?.first
+		
+		return fetchJobTypes().then { result -> Promise<Void> in
+			self.handleJobTypes(with: result)
+			try? self.fetchedResultControllerType.performFetch()
+
+			return Promise { seal in
+				firstly {
+					when(fulfilled: self.fetchJobs(), self.fetchActivities())
+				}.done { resultJobs, resultActivities in
+					self.handleJobs(with: resultJobs)
+					self.handleActivities(with: resultActivities)
+
+					try? self.fetchedResultControllerJob.performFetch()
+					try? self.fetchedResultControllerActivity.performFetch()
+
+					self.fetchTasks().done { result in
+						self.handleTasks(with: result)
+						seal.fulfill_()
+					}.catch { error in
+						print(error)
+					}
+				}.catch { error in
+					print(error)
+				}
+			}
+		}
+	}
+
+	func fetch(params: [String: Any]) -> Promise<[String: Any]> {
+		return Promise { seal in
+			Alamofire.request(API_URL, method: .post, parameters: params, encoding: JSONEncoding.default)
+				.responseJSON { response in
+					switch response.result {
+					case .success(let json):
+						guard let json = json as? [String: Any] else {
+							return seal.reject(AFError.responseValidationFailed(reason: .dataFileNil))
+						}
+
+						if let error = json["error"] as? [String: Any], let statusCode = error["code"] as? Int {
+							switch statusCode {
+							case 1000:
+								seal.reject(ApiError.missingRights)
+							case 2003:
+								seal.reject(ApiError.noSession)
+							default:
+								seal.reject(ApiError.other(statusCode))
+							}
+						} else if let result = json["result"] as? [String: Any] {
+							seal.fulfill(result)
+						}
+					case .failure(let error):
+						seal.reject(error)
+					}
+			}
+		}
+	}
+
+	func fetchJobTypes() -> Promise<[String: Any]> {
+		var lastSyncString: String! = nil
+		if let lastSyncTime = lastSync?.tasks {
+			lastSyncString = dateFormatter.string(from: lastSyncTime)
+		}
+
+		let parameters: [String: Any] = [
+			"jsonrpc": "2.0",
+			"method": "job.get_jobtypes",
+			"params": [
+				"session": sessionId,
+				"last_sync": lastSyncString
+			],
+			"id": 1
+		]
+
+		return fetch(params: parameters)
+	}
+
+	func fetchJobs() -> Promise<[String: Any]> {
+		var lastSyncString: String! = nil
+		if let lastSyncTime = lastSync?.jobs {
+			lastSyncString = dateFormatter.string(from: lastSyncTime)
+		}
+
+		let parameters: [String: Any] = [
+			"jsonrpc": "2.0",
+			"method": "job.get_jobs",
+			"params": [
+				"session": sessionId,
+				"last_sync": lastSyncString
+			],
+			"id": 1
+		]
+
+		return fetch(params: parameters)
+	}
+
+	func fetchActivities() -> Promise<[String: Any]> {
+		var lastSyncString: String! = nil
+		if let lastSyncTime = lastSync?.activities {
+			lastSyncString = dateFormatter.string(from: lastSyncTime)
+		}
+
+		let parameters: [String: Any] = [
+			"jsonrpc": "2.0",
+			"method": "common.get_activities",
+			"params": [
+				"session": sessionId,
+				"last_sync": lastSyncString
+			],
+			"id": 1
+		]
+
+		return fetch(params: parameters)
+	}
+
+	func fetchTasks() -> Promise<[String: Any]> {
+		var lastSyncString: String! = nil
+		if let lastSyncTime = lastSync?.tasks {
+			lastSyncString = dateFormatter.string(from: lastSyncTime)
+		}
+
+		let parameters: [String: Any] = [
+			"jsonrpc": "2.0",
+			"method": "job.get_jobtasks",
+			"params": [
+				"session": sessionId,
+				"last_sync": lastSyncString
+			],
+			"id": 1
+		]
+
+		return fetch(params: parameters)
+	}
+
+	private func handleJobTypes(with result: [String: Any]) {
+		if var typeItems = result["jobtypes"] as? [[String: Any]], let timestamp = result["timestamp"] as? String {
+			var types: [Type]?
+
+			if (typeItems.count > 0) {
+				types = self.fetchedResultControllerType.fetchedObjects
+			}
+
+			typeItems = typeItems.filter({
+				if let active = $0["active"] as? Bool {
+					return active
+				}
+
+				return false
+			})
+
+			for item in typeItems {
+				let id = item["id"] as! String
+				let title = item["name"] as! String
+				let active = item["active"] as! Bool
+				let internalService = item["internal"] as! Bool
+				let productiveService = item["productive"] as! Bool
+
+				if let type = types?.first(where: { $0.id == id }) {
+					type.title = title
+					type.active = active
+					type.internal_service = internalService
+					type.productive_service = productiveService
+				} else {
+					let entity = NSEntityDescription.entity(forEntityName: "Type", in: self.context)
+					let type = NSManagedObject(entity: entity!, insertInto: self.context)
+					let typeValues: [String: Any] = [
+						"id": id,
+						"title": title,
+						"active": active,
+						"internal_service": internalService,
+						"productive_service": productiveService
+					]
+					type.setValuesForKeys(typeValues)
+				}
+			}
+
+			let newSyncDate = self.dateFormatter.date(from: timestamp)
+
+			if (self.lastSync == nil) {
+				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
+				self.lastSync = NSManagedObject(entity: entity!, insertInto: self.context) as? Sync
+			}
+
+			self.lastSync?.types = newSyncDate
+
+			do {
+				try self.context.save()
+			} catch let error {
+				print(error)
+			}
+		}
+	}
+
+	private func handleJobs(with result: [String: Any]) {
+		if var jobItems = result["jobs"] as? [[String: Any]], let timestamp = result["timestamp"] as? String {
+			var jobs: [Job]?
+
+			if (jobItems.count > 0) {
+				jobs = fetchedResultControllerJob.fetchedObjects
+			}
+
+			var typeIds: [String] = []
+			if let types = fetchedResultControllerType.fetchedObjects {
+				typeIds = types.map({ $0.id! })
+			}
+
+			jobItems = jobItems.filter({
+				if let bookable = $0["bookable"] as? Bool {
+					return bookable && typeIds.contains($0["job_type_id"] as! String)
+				}
+
+				return false
+			})
+
+			for item in jobItems {
+				let id = item["id"] as! String
+				let number = item["number"] as! String
+				let title = item["title"] as! String
+				let typeId = item["job_type_id"] as! String
+				let assigned_user_ids = item["assigned_user_ids"] as! [String]
+				let type = fetchedResultControllerType.fetchedObjects?.first(where: { $0.id == typeId })
+
+				if let job = jobs?.first(where: { $0.id == id }) {
+					job.assigned = assigned_user_ids.contains(self.userId)
+					job.number = number
+					job.title = title
+					job.type = type
+				} else {
+					let entity = NSEntityDescription.entity(forEntityName: "Job", in: self.context)
+					let job = NSManagedObject(entity: entity!, insertInto: self.context)
+					let jobValues: [String: Any] = [
+						"id": id,
+						"title": title,
+						"number": number,
+						"assigned": assigned_user_ids.contains(self.userId),
+						"type": type!
+					]
+					job.setValuesForKeys(jobValues)
+				}
+			}
+
+			let newSyncDate = self.dateFormatter.date(from: timestamp)
+
+			if (self.lastSync == nil) {
+				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
+				self.lastSync = NSManagedObject(entity: entity!, insertInto: self.context) as? Sync
+			}
+
+			self.lastSync?.jobs = newSyncDate
+
+			do {
+				try self.context.save()
+			} catch let error {
+				print(error)
+			}
+		}
+	}
+
+	private func handleActivities(with result: [String: Any]) {
+		if var activityItems = result["activities"] as? [[String: Any]], let timestamp = result["timestamp"] as? String {
+			var activities: [Activity]?
+
+			if (activityItems.count > 0) {
+				activities = self.fetchedResultControllerActivity.fetchedObjects
+			}
+
+			activityItems = activityItems.filter({
+				if let active = $0["active"] as? Bool {
+					return active
+				}
+
+				return false
+			})
+
+			for item in activityItems {
+				let id = item["id"] as! String
+				let title = item["name"] as! String
+				let internal_service = item["internal"] as! Bool
+				let external_service = item["external_service"] as! Bool
+
+				if let activity = activities?.first(where: { $0.id == id }) {
+					activity.title = title
+					activity.internal_service = internal_service
+					activity.external_service = external_service
+				} else {
+					let entity = NSEntityDescription.entity(forEntityName: "Activity", in: self.context)
+					let activity = NSManagedObject(entity: entity!, insertInto: self.context)
+					let activityValues: [String: Any] = [
+						"id": id,
+						"title": title,
+						"internal_service": internal_service,
+						"external_service": external_service
+					]
+					activity.setValuesForKeys(activityValues)
+				}
+			}
+
+			let newSyncDate = self.dateFormatter.date(from: timestamp)
+
+			if (self.lastSync == nil) {
+				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
+				self.lastSync = NSManagedObject(entity: entity!, insertInto: self.context) as? Sync
+			}
+
+			self.lastSync?.activities = newSyncDate
+
+			do {
+				try self.context.save()
+			} catch let error {
+				print(error)
+			}
+		}
+	}
+
+	private func handleTasks(with result: [String: Any]) {
+		if var taskItems = result["jobtasks"] as? [[String: Any]], let timestamp = result["timestamp"] as? String {
+			var tasks: [Task]?
+
+			if (taskItems.count > 0) {
+				tasks = self.fetchedResultControllerTask.fetchedObjects
+			}
+
+			var jobIds: [String] = []
+			if let jobs = fetchedResultControllerJob.fetchedObjects {
+				jobIds = jobs.map({ $0.id! })
+			}
+
+			taskItems = taskItems.filter({
+				if let status = $0["status"] as? String {
+					return status == "active" && jobIds.contains($0["job_id"] as! String)
+				}
+
+				return false
+			})
+
+			for item in taskItems {
+				let id = item["id"] as! String
+				let title = item["subject"] as! String
+
+				var jobObject: Job? = nil
+				if let jobId = item["job_id"] as? String, let job = fetchedResultControllerJob.fetchedObjects?.first(where: { $0.id == jobId }) {
+					jobObject = job
+				}
+
+				var activityObject: Activity? = nil
+				if let activityId = item["activity_id"] as? String, let activity = fetchedResultControllerActivity.fetchedObjects?.first(where: { $0.id == activityId }) {
+					activityObject = activity
+				}
+
+				var hoursPlaned = Double()
+				if let hours_planed = item["hours_planed"] as? NSString {
+					hoursPlaned = hours_planed.doubleValue
+				} else if let hours_planed = item["hours_planed"] as? Double {
+					hoursPlaned = hours_planed
+				}
+
+				var hoursBooked = Double()
+				if let hours_booked = item["hours_booked"] as? NSString {
+					hoursBooked = hours_booked.doubleValue
+				} else if let hours_booked = item["hours_booked"] as? Double {
+					hoursBooked = hours_booked
+				}
+
+				if let task = tasks?.first(where: { $0.id == id }) {
+					task.title = title
+					task.hours_planed = hoursPlaned
+					task.hours_booked = hoursBooked
+					task.job = jobObject
+					task.activity = activityObject
+				} else {
+					let entity = NSEntityDescription.entity(forEntityName: "Task", in: self.context)
+					let task = NSManagedObject(entity: entity!, insertInto: self.context)
+					let taskValues: [String: Any] = [
+						"id": id,
+						"title": title,
+						"hours_planed": hoursPlaned,
+						"hours_booked": hoursBooked,
+						"job": jobObject as Any,
+						"activity": activityObject as Any
+					]
+					task.setValuesForKeys(taskValues)
+				}
+			}
+
+			let newSyncDate = self.dateFormatter.date(from: timestamp)
+
+			if (self.lastSync == nil) {
+				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
+				self.lastSync = NSManagedObject(entity: entity!, insertInto: self.context) as? Sync
+			}
+
+			self.lastSync?.tasks = newSyncDate
+
+			do {
+				try self.context.save()
+			} catch let error {
+				print(error)
 			}
 		}
 	}
