@@ -182,54 +182,17 @@ class QuoJob {
 		dateFormatter.dateFormat = "YYYYMMddHHmmss"
 	}
 
-	func checkLoginStatus(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void, err: @escaping (_ error: String) -> Void) {
-		if (sessionId == "") {
-			loginWithKeyChain(success: success, failed: failed, err: err)
-			return
-		}
-
-		let params: [String: String] = [
-			"session": sessionId
-		]
+	func checkLoginStatus() -> Promise<[String: Any]> {
 		let verifyParams: [String: Any] = [
 			"jsonrpc": "2.0",
 			"method": "session.get_current_user",
-			"params": params,
+			"params": [
+				"session": sessionId
+			],
 			"id": 1
 		]
 
-		Alamofire.request(API_URL, method: .post, parameters: verifyParams, encoding: JSONEncoding.default)
-			.responseJSON { response in switch response.result {
-			case .success(let JSON):
-				let response = JSON as! NSDictionary
-
-				if (response.allKeys.contains(where: { ($0 as! String) == "error" })) {
-					let error = (response.object(forKey: "error")! as! NSDictionary)
-					let statusCode = error.object(forKey: "code")! as! Int
-
-					/*
-					* 2003 No session given
-					* 2004 Invalid session
-					*/
-					switch statusCode {
-						case 2003, 2004:
-							self.loginWithKeyChain(success: success, failed: failed, err: err)
-						default:
-							err("Fehlercode: \(statusCode) - Bitte an Martin wenden.")
-					}
-				} else if (response.allKeys.contains(where: { ($0 as! String) == "result" })) {
-					success()
-				}
-			case .failure(let error):
-				let errorMessage = error.localizedDescription
-
-				if ((errorMessage.range(of:"A server with the specified hostname could not be found.")) != nil) {
-					err("Du bist nicht per VPN mit dem Moccu-Netzwerk verbunden. Deine Trackings werden nicht an QuoJob übertragen.")
-				} else {
-					err(errorMessage)
-				}
-			}
-		}
+		return fetch(params: verifyParams)
 	}
 
 	func loginWithUserData(userName: String, password: String) -> Promise<Void> {
@@ -257,20 +220,18 @@ class QuoJob {
 		}
 	}
 
-	private func loginWithKeyChain(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void, err: @escaping (_ error: String) -> Void) {
+	func loginWithKeyChain() -> Promise<Void> {
 		keychain = Keychain(service: "de.mojobapp-dev.login")
 
 		guard keychain.allKeys().count > 0 else {
-			failed("Error 1001: Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
-			return
+			return Promise { $0.reject(ApiError.withMessage(errorMessages.sessionProblem)) }
 		}
 
 		guard
 			let name = keychain.allKeys().first,
 			let pass = try? keychain.get(name)
 		else {
-			failed("Error 1002: Du bist ausgeloggt. Logge dich bei QuoJob ein, um deine Trackings übertragen zu können.")
-			return
+			return Promise { $0.reject(ApiError.withMessage(errorMessages.sessionProblem)) }
 		}
 
 		let parameters: [String: Any] = [
@@ -288,39 +249,12 @@ class QuoJob {
 			]
 		]
 
-		Alamofire.request(API_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-			switch response.result {
-				case .success(let JSON):
-					let response = JSON as! NSDictionary
+		return fetch(params: parameters).done { result in
+			self.userId = result["user_id"] as? String
+			self.sessionId = result["session"] as? String
 
-					if (response.allKeys.contains(where: { ($0 as! String) == "error" })) {
-						let error = (response.object(forKey: "error")! as! NSDictionary)
-						let statusCode = (error.object(forKey: "code") as! NSString).intValue
-
-						/*
-						* 1000: No right for the requestes action
-						*/
-						if ([1000].contains(statusCode)) {
-							failed("Dein QuoJob-Account ist nicht für die API freigeschaltet. Bitte wende dich an den QuoJob-Verantwortlichen.")
-						}
-					} else if let result = response.object(forKey: "result") as? NSDictionary {
-						self.userId = result.object(forKey: "user_id")! as? String
-						self.sessionId = result.object(forKey: "session")! as? String
-
-	//							Crashlytics.sharedInstance().setUserName(name)
-	//							Answers.logLogin(withMethod: "keyChain", success: true, customAttributes: [:])
-
-						success()
-					}
-				case .failure(let error):
-					let errorMessage = error.localizedDescription
-
-					if ((errorMessage.range(of:"A server with the specified hostname could not be found.")) != nil) {
-						err("Du bist nicht per VPN mit dem Moccu-Netzwerk verbunden. Deine Trackings werden nicht an QuoJob übertragen.")
-					} else {
-						failed(errorMessage)
-					}
-			}
+//			Crashlytics.sharedInstance().setUserName(name)
+//			Answers.logLogin(withMethod: "keyChain", success: true, customAttributes: [:])
 		}
 	}
 
@@ -372,17 +306,15 @@ extension QuoJob {
 
 							switch statusCode {
 							case 1000: // No right for the requestes action
-								seal.reject(ApiError.withMessage("Dein QuoJob-Account ist nicht für die API freigeschaltet. Bitte wende dich an den QuoJob-Verantwortlichen."))
+								seal.reject(ApiError.withMessage(errorMessages.missingRights))
 							case 2001: // User NOT found
-								seal.reject(ApiError.withMessage("User nicht gefunden"))
+								seal.reject(ApiError.withMessage(errorMessages.notFound))
 							case 2002: // Wrong password
-								seal.reject(ApiError.withMessage("Userdaten nicht korrekt"))
-							case 2003: // No session given
-								seal.reject(ApiError.withMessage(""))
-							case 2004: // Invalid session
-								seal.reject(ApiError.withMessage(""))
+								seal.reject(ApiError.withMessage(errorMessages.wrongPassword))
+							case 2003, 2004: // No session given, Invalid session
+								seal.reject(ApiError.withMessage(errorMessages.sessionProblem))
 							case 2011: // User account is disabled
-								seal.reject(ApiError.withMessage("Dein QuoJob-Account ist gesperrt. Bitte wende dich an den QuoJob-Verantwortlichen."))
+								seal.reject(ApiError.withMessage(errorMessages.disabled))
 							default:
 								seal.reject(ApiError.other(statusCode))
 							}
@@ -390,9 +322,14 @@ extension QuoJob {
 							seal.fulfill(result)
 						}
 
-						seal.reject(ApiError.withMessage("Unbekannter Fehler. Bitte wende dich an Martin."))
+						seal.reject(ApiError.withMessage(errorMessages.unknown))
 					case .failure(let error):
-						seal.reject(error)
+						switch error.localizedDescription {
+							case "A server with the specified hostname could not be found.":
+								seal.reject(ApiError.withMessage(errorMessages.vpnProblem))
+							default:
+								seal.reject(ApiError.withMessage(error.localizedDescription))
+						}
 					}
 			}
 		}

@@ -86,18 +86,17 @@ class DayTrackingsController: NSViewController {
 		hideWarning()
 
 		if (status == .satisfied) { // online
-			QuoJob.shared.checkLoginStatus(
-				success: { self.hideWarning() },
-				failed: { error in
-					self.loginButton.isHidden = false
-					self.showWarning(error: error)
-				},
-				err: { error in
-					self.showWarning(error: error)
+			QuoJob.shared.checkLoginStatus().catch { error in
+				if (error.localizedDescription == errorMessages.sessionProblem) {
+					QuoJob.shared.loginWithKeyChain().catch { error in
+						self.loginButton.isHidden = false
+					}
 				}
-			)
+
+				self.showWarning(error: error.localizedDescription)
+			}
 		} else { // offline
-			showWarning(error: "Du bist offline. Deine Trackings werden nicht an QuoJob übertragen.")
+			showWarning(error: errorMessages.offline)
 		}
 	}
 
