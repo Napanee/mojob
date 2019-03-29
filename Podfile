@@ -3,6 +3,7 @@ platform :osx, '10.12'
 
 def shared_pods
 	pod 'Alamofire', '~> 4.8'
+	pod 'PromiseKit/Alamofire', '~> 6.0'
 	pod 'KeychainAccess', '~> 3.1'
 end
 
