@@ -42,15 +42,15 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		fromDay.dateDelegate = self
 		untilDay.dateDelegate = self
 
-		if let jobString = tracking.job_id ?? tracking.custom_job {
+		if let jobString = tracking.job?.title ?? tracking.custom_job {
 			job.stringValue = jobString
 		}
 
-		if let taskString = tracking.task_id {
+		if let taskString = tracking.task?.title {
 			task.stringValue = taskString
 		}
 
-		if let activityString = tracking.activity_id {
+		if let activityString = tracking.activity?.title {
 			activity.stringValue = activityString
 		}
 
