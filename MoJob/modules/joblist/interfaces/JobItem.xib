@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,16 +17,19 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="20"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sua-AP-YZb">
-                    <rect key="frame" x="28" y="1" width="43" height="19"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="zf8-Yt-jsW">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sua-AP-YZb">
+                    <rect key="frame" x="28" y="1" width="394" height="19"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="zf8-Yt-jsW">
                         <font key="font" metaFont="systemThin" size="16"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8O4-ht-4Ph">
+                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8O4-ht-4Ph">
                     <rect key="frame" x="430" y="0.0" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="Qnu-K0-14J"/>
+                    </constraints>
                     <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" image="play" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="rc4-lY-f4Z">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -34,6 +37,7 @@
                 </button>
             </subviews>
             <constraints>
+                <constraint firstItem="8O4-ht-4Ph" firstAttribute="leading" secondItem="Sua-AP-YZb" secondAttribute="trailing" constant="10" id="4Hp-ta-wrM"/>
                 <constraint firstAttribute="bottom" secondItem="8O4-ht-4Ph" secondAttribute="bottom" id="566-H9-7Yg"/>
                 <constraint firstItem="Sua-AP-YZb" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="CI6-t5-KEE"/>
                 <constraint firstItem="8O4-ht-4Ph" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="EOr-1V-qsJ"/>
