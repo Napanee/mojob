@@ -19,23 +19,17 @@ import KeychainAccess
 #endif
 
 enum ApiError: Error {
-	case invalidSession
-	case noSession
-	case missingRights
+	case withMessage(String)
 	case other(Int)
 }
 
-extension ApiError {
-	var localizedDescription: String {
+extension ApiError: LocalizedError {
+	public var errorDescription: String? {
 		switch self {
-		case .invalidSession:
-			return "Nicht eingeloggt"
-		case .noSession:
-			return "Nicht eingeloggt"
-		case .missingRights:
-			return "keine Rechte"
+		case .withMessage(let message):
+			return NSLocalizedString(message, comment: "")
 		case .other(let statusCode):
-			return "Fehlercode: \(statusCode)"
+			return NSLocalizedString("Fehlercode: \(statusCode)", comment: "")
 		}
 	}
 }
