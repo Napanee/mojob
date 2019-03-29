@@ -354,32 +354,24 @@ extension QuoJob {
 
 	func syncData() -> Promise<Void> {
 		lastSync = fetchedResultControllerSync.fetchedObjects?.first
-		
-		return fetchJobTypes().then { result -> Promise<Void> in
-			self.handleJobTypes(with: result)
-			try? self.fetchedResultControllerType.performFetch()
 
-			return Promise { seal in
-				firstly {
-					when(fulfilled: self.fetchJobs(), self.fetchActivities())
-				}.done { resultJobs, resultActivities in
-					self.handleJobs(with: resultJobs)
-					self.handleActivities(with: resultActivities)
+		return when(fulfilled: fetchJobTypes(), fetchActivities())
+			.then { (resultTypes, resultActivities) -> Promise<[String: Any]> in
+				self.handleJobTypes(with: resultTypes)
+				try? self.fetchedResultControllerType.performFetch()
 
-					try? self.fetchedResultControllerJob.performFetch()
-					try? self.fetchedResultControllerActivity.performFetch()
+				self.handleActivities(with: resultActivities)
+				try? self.fetchedResultControllerActivity.performFetch()
 
-					self.fetchTasks().done { result in
-						self.handleTasks(with: result)
-						seal.fulfill_()
-					}.catch { error in
-						print(error)
-					}
-				}.catch { error in
-					print(error)
-				}
+				return self.fetchJobs()
+			}.then { resultJobs -> Promise<[String: Any]> in
+				self.handleJobs(with: resultJobs)
+				try? self.fetchedResultControllerJob.performFetch()
+
+				return self.fetchTasks()
+			}.done { resultTasks in
+				self.handleTasks(with: resultTasks)
 			}
-		}
 	}
 
 	func fetch(params: [String: Any]) -> Promise<[String: Any]> {
