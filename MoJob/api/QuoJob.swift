@@ -232,7 +232,7 @@ class QuoJob {
 		}
 	}
 
-	func loginWithUserData(userName: String, password: String, success: @escaping () -> Void, failed: @escaping (_ statusCode: Int) -> Void) {
+	func loginWithUserData(userName: String, password: String) -> Promise<Void> {
 		let parameters: [String: Any] = [
 			"jsonrpc": "2.0",
 			"method": "session.login",
@@ -248,28 +248,12 @@ class QuoJob {
 			]
 		]
 
-		Alamofire.request(API_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-			.responseJSON { response in switch response.result {
-				case .success(let JSON):
-					let response = JSON as! NSDictionary
-					if (response.allKeys.contains(where: { ($0 as! String) == "error" })) {
-						if let error = response.object(forKey: "error")! as? NSDictionary, let statusCode = error.object(forKey: "code")! as? String {
-							print(statusCode)
-							failed(Int(statusCode)!)
-						}
-					} else if let result = response.object(forKey: "result")! as? NSDictionary {
-						self.userId = result.object(forKey: "user_id")! as? String
-						self.sessionId = result.object(forKey: "session")! as? String
+		return fetch(params: parameters).done { result in
+			self.userId = result["user_id"] as? String
+			self.sessionId = result["session"] as? String
 
-	//					Crashlytics.sharedInstance().setUserName(userName)
-	//					Answers.logLogin(withMethod: "userData", success: true, customAttributes: [:])
-
-						success()
-					}
-				case .failure(let error):
-	//				Answers.logLogin(withMethod: "userData", success: false, customAttributes: [:])
-					print("Request failed with error: \(error)")
-			}
+//			Crashlytics.sharedInstance().setUserName(userName)
+//			Answers.logLogin(withMethod: "userData", success: true, customAttributes: [:])
 		}
 	}
 
@@ -378,18 +362,35 @@ extension QuoJob {
 							return seal.reject(AFError.responseValidationFailed(reason: .dataFileNil))
 						}
 
-						if let error = json["error"] as? [String: Any], let statusCode = error["code"] as? Int {
+						if let error = json["error"] as? [String: Any] {
+							var statusCode: Int = 0
+							if let statusCodeString = error["code"] as? NSString {
+								statusCode = statusCodeString.integerValue
+							} else if let statusCodeInt = error["code"] as? Int {
+								statusCode = statusCodeInt
+							}
+
 							switch statusCode {
-							case 1000:
-								seal.reject(ApiError.missingRights)
-							case 2003:
-								seal.reject(ApiError.noSession)
+							case 1000: // No right for the requestes action
+								seal.reject(ApiError.withMessage("Dein QuoJob-Account ist nicht für die API freigeschaltet. Bitte wende dich an den QuoJob-Verantwortlichen."))
+							case 2001: // User NOT found
+								seal.reject(ApiError.withMessage("User nicht gefunden"))
+							case 2002: // Wrong password
+								seal.reject(ApiError.withMessage("Userdaten nicht korrekt"))
+							case 2003: // No session given
+								seal.reject(ApiError.withMessage(""))
+							case 2004: // Invalid session
+								seal.reject(ApiError.withMessage(""))
+							case 2011: // User account is disabled
+								seal.reject(ApiError.withMessage("Dein QuoJob-Account ist gesperrt. Bitte wende dich an den QuoJob-Verantwortlichen."))
 							default:
 								seal.reject(ApiError.other(statusCode))
 							}
 						} else if let result = json["result"] as? [String: Any] {
 							seal.fulfill(result)
 						}
+
+						seal.reject(ApiError.withMessage("Unbekannter Fehler. Bitte wende dich an Martin."))
 					case .failure(let error):
 						seal.reject(error)
 					}

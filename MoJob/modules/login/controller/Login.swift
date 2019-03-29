@@ -74,35 +74,16 @@ class Login: NSViewController {
 			return
 		}
 
-		QuoJob.shared.loginWithUserData(
-			userName: name,
-			password: pass,
-			success: self.loginSuccess,
-			failed: { statusCode in
+		QuoJob.shared.loginWithUserData(userName: name, password: pass)
+			.done {
+				self.loginSuccess()
+			}.catch { error in
 				NSAnimationContext.beginGrouping()
 				NSAnimationContext.current.duration = 0.5
-
-				switch statusCode {
-					case 2001:
-						self.usernameErrorLabel.stringValue = "User nicht gefunden"
-						self.usernameErrorLabel.animator().isHidden = false
-					case 2002:
-						self.passwordErrorLabel.stringValue = "Password falsch"
-						self.passwordErrorLabel.animator().isHidden = false
-					case 2011:
-						self.generalErrorLabel.stringValue = "Account gesperrt. Bitte an den QuoJob-Verantwortlichen wenden."
-						self.generalErrorLabel.animator().isHidden = false
-					case 1000:
-						self.generalErrorLabel.stringValue = "Dein QuoJob-Account ist nicht für die API freigeschaltet. Bitte wende dich an den QuoJob-Verantwortlichen."
-						self.generalErrorLabel.animator().isHidden = false
-					default:
-						self.generalErrorLabel.stringValue = "Fehler: \(statusCode)"
-						self.generalErrorLabel.animator().isHidden = false
-				}
-
+				self.generalErrorLabel.stringValue = error.localizedDescription
+				self.generalErrorLabel.animator().isHidden = false
 				NSAnimationContext.endGrouping()
 			}
-		)
 	}
 
 	@IBAction func cancel(_ sender: NSButton) {
