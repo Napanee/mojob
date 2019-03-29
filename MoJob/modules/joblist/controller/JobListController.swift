@@ -29,8 +29,7 @@ class JobListController: NSViewController {
 	@IBOutlet weak var jobsCollectionHeight: NSLayoutConstraint!
 
 	let favorites: [String] = ["Foo", "bar"]
-	let jobsAll: [String] = ["ob2", "Job2 noc", "fjoo", "ein ander job", "ein großer job2", "Noch wasj", "Daruntejr", "Ujnd....", "noch einerj", "damit dasj", "wirklich hochj", "wjird... ;("]
-	var jobsFiltered: [String] = []
+	var jobsFiltered: [Job] = []
 	var jobListSelectedIndex: Int?
 
 	var selectedJobItem: JobItem? {
@@ -47,6 +46,7 @@ class JobListController: NSViewController {
 		}
 
 		let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
+		fetchRequest.predicate = NSPredicate(format: "assigned == true")
 
 		fetchRequest.sortDescriptors = [
 			NSSortDescriptor(key: "type", ascending: true)
@@ -84,6 +84,7 @@ class JobListController: NSViewController {
 		}
 
 		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 	}
 
 	override func viewDidAppear() {
@@ -97,6 +98,10 @@ class JobListController: NSViewController {
 	override func viewWillLayout() {
 		favoritesCollectionView.collectionViewLayout?.invalidateLayout()
 		jobsCollectionView.collectionViewLayout?.invalidateLayout()
+	}
+
+	@objc func managedObjectContextDidSave(notification: NSNotification) {
+		try! fetchedResultControllerJobs.performFetch()
 	}
 
 	func showWarning(error: String) {
@@ -122,9 +127,11 @@ class JobListController: NSViewController {
 	}
 
 	func onTextChange(with string: String) {
+		guard let jobs = fetchedResultControllerJobs.fetchedObjects else { return }
+
 		if (string.count > 0) {
 			jobsCollectionView.isHidden = false
-			jobsFiltered = jobsAll.filter({ $0.lowercased().contains(string.lowercased()) })
+			jobsFiltered = jobs.filter({ $0.title!.lowercased().contains(string.lowercased()) })
 		} else {
 			jobsCollectionView.isHidden = true
 			jobsFiltered = []
@@ -300,7 +307,7 @@ extension JobListController: NSCollectionViewDataSource {
 
 			guard let collectionViewItem = item as? JobItem else {return item}
 
-			collectionViewItem.textField?.stringValue = jobsFiltered[indexPath.item]
+			collectionViewItem.textField?.stringValue = jobsFiltered[indexPath.item].title!
 
 			return collectionViewItem
 		}
