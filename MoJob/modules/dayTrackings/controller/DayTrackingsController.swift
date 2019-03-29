@@ -86,9 +86,7 @@ class DayTrackingsController: NSViewController {
 		hideWarning()
 
 		if (status == .satisfied) { // online
-			let quoJob = QuoJob()
-
-			quoJob.checkLoginStatus(
+			QuoJob.shared.checkLoginStatus(
 				success: { self.hideWarning() },
 				failed: { error in
 					self.loginButton.isHidden = false

@@ -20,12 +20,16 @@ import KeychainAccess
 
 class QuoJob {
 
+	static let shared = QuoJob()
 	var keychain: Keychain!
 	var userId: String!
 	var sessionId: String! = "" {
 		didSet {
 			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSession"), object: nil)
 		}
+	}
+
+	private init() {
 	}
 
 	func checkLoginStatus(success: @escaping () -> Void, failed: @escaping (_ error: String) -> Void, err: @escaping (_ error: String) -> Void) {

@@ -74,9 +74,7 @@ class Login: NSViewController {
 			return
 		}
 
-		let quoJob = QuoJob()
-
-		quoJob.loginWithUserData(
+		QuoJob.shared.loginWithUserData(
 			userName: name,
 			password: pass,
 			success: self.loginSuccess,
