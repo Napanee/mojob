@@ -30,6 +30,12 @@ enum errorMessages {
 	static let offline = "Du bist offline. Deine Trackings werden nicht an QuoJob übertragen."
 }
 
+enum SyncStatus: String {
+	case pending = "pending"
+	case error = "error"
+	case success = "success"
+}
+
 extension NSImage.Name {
 	static let delete = NSImage.Name("delete")
 	static let play = NSImage.Name("play")
