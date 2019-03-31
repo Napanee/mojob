@@ -11,6 +11,7 @@
                 <outlet property="activitySelect" destination="7F7-jP-V9e" id="fIf-Id-9az"/>
                 <outlet property="commentLabel" destination="6ph-FO-APw" id="Ad9-Gq-pcS"/>
                 <outlet property="jobSelect" destination="PL2-uz-BXc" id="QCY-MF-9Ga"/>
+                <outlet property="stopTracking" destination="tNo-i9-B9g" id="wPb-wd-qC8"/>
                 <outlet property="taskSelect" destination="snq-4k-rTw" id="cW2-iw-ABk"/>
                 <outlet property="timeLabel" destination="eyr-qf-dUK" id="ckO-XY-PzN"/>
                 <outlet property="timerCount" destination="fu1-3e-qLE" id="wYN-tk-DtT"/>

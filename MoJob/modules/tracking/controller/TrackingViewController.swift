@@ -53,6 +53,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 	@IBOutlet weak var jobSelect: NSPopUpButton!
 	@IBOutlet weak var taskSelect: NSPopUpButton!
 	@IBOutlet weak var activitySelect: NSPopUpButton!
+	@IBOutlet weak var stopTracking: NSButton!
 
 	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 	var _fetchedResultsControllerTrackings: NSFetchedResultsController<Tracking>? = nil
@@ -93,6 +94,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		activitySelect.wantsLayer = true
 		activitySelect.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5).cgColor
 		commentLabel.delegate = self
+		stopTracking.isEnabled = false
 
 		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
 	}
@@ -162,6 +164,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 				activitySelect.selectItem(at: currentIndex)
 			} else {
 				activitySelect.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5).cgColor
+				stopTracking.isEnabled = false
 			}
 		}
 	}
@@ -186,6 +189,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		guard let activity = QuoJob.shared.activities?.first(where: { $0.title == title }) else { return }
 
 		activitySelect.layer?.backgroundColor = CGColor.clear
+		stopTracking.isEnabled = true
 		currentTracking.activity = activity
 
 		do {
