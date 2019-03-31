@@ -11,8 +11,7 @@ import Cocoa
 class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
 	var timer = Timer()
-	var timeInSec = 0
-	var counter: CGFloat = 0
+	var startDate = Date()
 	var currentTracking: Tracking! {
 		didSet {
 			if let jobs = QuoJob.shared.jobs {
@@ -114,15 +113,12 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 	}
 
 	@objc func updateTime() {
-		counter = counter + 1
+		let currentDate = Date()
+		let diff = currentDate.timeIntervalSince(startDate)
+		let restSeconds = diff.remainder(dividingBy: 60)
 
-		if (counter > 60) {
-			counter = 1
-		}
-
-		timeInSec = timeInSec + 1
-		timerCount.counter = counter
-		timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: timeInSec)
+		timerCount.counter = round(CGFloat(restSeconds))
+		timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: Int(round(diff)))
 	}
 
 	@IBAction func jobSelect(_ sender: NSPopUpButton) {
