@@ -12,6 +12,7 @@
                 <outlet property="contentView" destination="osv-QK-7DM" id="em9-MF-Iug"/>
                 <outlet property="endTimeLabel" destination="ZN9-Kc-rzr" id="daS-Vo-SyV"/>
                 <outlet property="startTimeLabel" destination="NuU-cB-96b" id="zF5-wI-rlu"/>
+                <outlet property="statusImage" destination="Rg2-9i-4Ly" id="YQF-R6-7EZ"/>
                 <outlet property="textView" destination="jzA-X6-Fee" id="hD1-2n-lCB"/>
                 <outlet property="titleLabel" destination="hhO-zs-Pec" id="ILl-Cj-YN0"/>
             </connections>
@@ -19,11 +20,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="osv-QK-7DM">
-            <rect key="frame" x="0.0" y="0.0" width="517" height="84"/>
+            <rect key="frame" x="0.0" y="0.0" width="517" height="82"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NuU-cB-96b">
-                    <rect key="frame" x="18" y="62" width="39" height="17"/>
+                    <rect key="frame" x="18" y="60" width="39" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="08:07" id="R43-j4-Tze">
                         <font key="font" metaFont="systemThin" size="13"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -39,10 +40,10 @@
                     </textFieldCell>
                 </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="jzA-X6-Fee">
-                    <rect key="frame" x="60" y="0.0" width="457" height="84"/>
+                    <rect key="frame" x="60" y="0.0" width="457" height="82"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="hhO-zs-Pec">
-                            <rect key="frame" x="8" y="61" width="219" height="18"/>
+                            <rect key="frame" x="8" y="61" width="219" height="16"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="d9e-qt-eN4"/>
                             </constraints>
@@ -64,16 +65,28 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rg2-9i-4Ly">
+                            <rect key="frame" x="422" y="61" width="35" height="16"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="6sM-wD-DCQ"/>
+                                <constraint firstAttribute="height" constant="16" id="MAN-mP-Gtz"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="nFZ-WH-0EZ"/>
+                        </imageView>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="DON-7v-RwG"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="490" constant="60" id="DON-7v-RwG"/>
                         <constraint firstItem="xpi-Ck-JzY" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="FSr-Ab-68D"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hhO-zs-Pec" secondAttribute="trailing" constant="10" id="Qhz-GV-2lU"/>
+                        <constraint firstItem="Rg2-9i-4Ly" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hhO-zs-Pec" secondAttribute="trailing" constant="10" id="Qhz-GV-2lU"/>
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="Spj-k3-dai"/>
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="cmu-z6-45t"/>
+                        <constraint firstItem="Rg2-9i-4Ly" firstAttribute="centerY" secondItem="hhO-zs-Pec" secondAttribute="centerY" id="fbc-yb-e2v"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" priority="510" constant="60" id="gRX-25-ubh"/>
+                        <constraint firstItem="Rg2-9i-4Ly" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="goT-Xn-bAc"/>
                         <constraint firstAttribute="bottom" secondItem="xpi-Ck-JzY" secondAttribute="bottom" constant="5" id="k20-0H-DVn"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xpi-Ck-JzY" secondAttribute="trailing" constant="10" id="npq-tn-Lj0"/>
                         <constraint firstItem="xpi-Ck-JzY" firstAttribute="top" secondItem="hhO-zs-Pec" secondAttribute="bottom" constant="5" id="sSl-sA-bIY"/>
+                        <constraint firstAttribute="trailing" secondItem="Rg2-9i-4Ly" secondAttribute="trailing" id="vkB-Ve-Koy"/>
                     </constraints>
                 </customView>
             </subviews>

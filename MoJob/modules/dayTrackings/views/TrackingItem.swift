@@ -16,6 +16,20 @@ class TrackingItem: NSView {
 	@IBOutlet var endTimeLabel: NSTextField!
 	@IBOutlet var titleLabel: NSTextField!
 	@IBOutlet var commentLabel: NSTextField!
+	@IBOutlet weak var statusImage: NSImageView!
+
+	var exportStatus: SyncStatus {
+		didSet {
+			switch exportStatus {
+			case .success:
+				statusImage.image = NSImage(named: "sync-success")
+			case .error:
+				statusImage.image = NSImage(named: "sync-error")
+			case .pending:
+				statusImage.image = NSImage(named: "sync-pending")
+			}
+		}
+	}
 
 	var tracking: Tracking? {
 		didSet {
@@ -38,7 +52,7 @@ class TrackingItem: NSView {
 				commentLabel.removeFromSuperview()
 
 				if let superview = titleLabel.superview {
-					let constraint = NSLayoutConstraint(item: superview, attribute: .bottom, relatedBy: .equal, toItem: titleLabel, attribute: .bottom, multiplier: 1, constant: 5)
+					let constraint = NSLayoutConstraint(item: superview, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: titleLabel, attribute: .bottom, multiplier: 1, constant: 5)
 					superview.addConstraint(constraint)
 				}
 			}
@@ -46,12 +60,16 @@ class TrackingItem: NSView {
 	}
 
 	override init(frame frameRect: NSRect) {
+		exportStatus = .pending
+
 		super.init(frame: frameRect)
 
 		commonInit()
 	}
 
 	required init?(coder decoder: NSCoder) {
+		exportStatus = .pending
+
 		super.init(coder: decoder)
 
 		commonInit()

@@ -210,6 +210,8 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 			guard let currentTracking = resultController.fetchedObjects?.first else { return }
 
 			currentTracking.date_end = Calendar.current.date(bySetting: .second, value: 0, of: Date())
+			currentTracking.exported = SyncStatus.pending.rawValue
+			try? context.save()
 
 			QuoJob.shared.exportTracking(tracking: currentTracking).done { result in
 				if
@@ -218,11 +220,13 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 					let id = hourbooking["id"] as? String
 				{
 					currentTracking.id = id
+					currentTracking.exported = SyncStatus.success.rawValue
 					try context.save()
 				}
 			}.catch { error in
-				print(error)
+				currentTracking.exported = SyncStatus.error.rawValue
 				try? context.save()
+				print(error)
 			}
 
 			let window = (NSApp.delegate as! AppDelegate).window

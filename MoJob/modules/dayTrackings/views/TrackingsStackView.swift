@@ -34,6 +34,10 @@ class TrackingsStackView: NSStackView {
 		let trackingView = TrackingItem()
 		trackingView.tracking = tracking
 
+		if let syncStatus = SyncStatus(rawValue: tracking.exported!) {
+			trackingView.exportStatus = syncStatus
+		}
+
 		addView(trackingView, in: .bottom)
 	}
 
