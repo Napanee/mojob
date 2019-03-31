@@ -39,7 +39,29 @@ class QuoJob {
 
 	static let shared = QuoJob()
 
-	let dateFormatter = DateFormatter()
+	let dateFormatterFull = DateFormatter()
+	let dateFormatterTime = DateFormatter()
+
+	var jobs: [Job]? {
+		get {
+			try? fetchedResultControllerJob.performFetch()
+			return fetchedResultControllerJob.fetchedObjects?.filter({ $0.assigned })
+		}
+	}
+
+	var activities: [Activity]? {
+		get {
+			try? fetchedResultControllerActivity.performFetch()
+			return fetchedResultControllerActivity.fetchedObjects
+		}
+	}
+
+	var tasks: [Task]? {
+		get {
+			try? fetchedResultControllerTask.performFetch()
+			return fetchedResultControllerTask.fetchedObjects
+		}
+	}
 
 	var lastSync: Sync? = nil
 	var keychain: Keychain!
@@ -179,8 +201,105 @@ class QuoJob {
 	private init() {
 		lastSync = fetchedResultControllerSync.fetchedObjects?.first
 
-		dateFormatter.dateFormat = "YYYYMMddHHmmss"
+		dateFormatterFull.dateFormat = "YYYYMMddHHmmss"
+		dateFormatterTime.dateFormat = "HHmm"
 	}
+
+	func fetch(params: [String: Any]) -> Promise<[String: Any]> {
+		return Promise { seal in
+			Alamofire.request(API_URL, method: .post, parameters: params, encoding: JSONEncoding.default)
+				.responseJSON { response in
+					switch response.result {
+					case .success(let json):
+						guard let json = json as? [String: Any] else {
+							return seal.reject(AFError.responseValidationFailed(reason: .dataFileNil))
+						}
+
+						if let error = json["error"] as? [String: Any] {
+							var statusCode: Int = 0
+							if let statusCodeString = error["code"] as? NSString {
+								statusCode = statusCodeString.integerValue
+							} else if let statusCodeInt = error["code"] as? Int {
+								statusCode = statusCodeInt
+							}
+
+							switch statusCode {
+							case 1000: // No right for the requestes action
+								seal.reject(ApiError.withMessage(errorMessages.missingRights))
+							case 2001: // User NOT found
+								seal.reject(ApiError.withMessage(errorMessages.notFound))
+							case 2002: // Wrong password
+								seal.reject(ApiError.withMessage(errorMessages.wrongPassword))
+							case 2003, 2004: // No session given, Invalid session
+								seal.reject(ApiError.withMessage(errorMessages.sessionProblem))
+							case 2011: // User account is disabled
+								seal.reject(ApiError.withMessage(errorMessages.disabled))
+							case 4001: // Hourbooking is NOT editable
+								seal.reject(ApiError.withMessage("Hourbooking is NOT editable"))
+							default:
+								seal.reject(ApiError.other(statusCode))
+							}
+						} else if let result = json["result"] as? [String: Any] {
+							seal.fulfill(result)
+						}
+
+						seal.reject(ApiError.withMessage(errorMessages.unknown))
+					case .failure(let error):
+						switch error.localizedDescription {
+							case "A server with the specified hostname could not be found.":
+								seal.reject(ApiError.withMessage(errorMessages.vpnProblem))
+							default:
+								seal.reject(ApiError.withMessage(error.localizedDescription))
+						}
+					}
+			}
+		}
+	}
+
+	func exportTracking(tracking: Tracking) -> Promise<[String: Any]> {
+		var bookingType: Type? = nil
+		var activityId: String? = "$Cg4GAVw@"
+		var taskId: String? = nil
+
+		if let types = fetchedResultControllerType.fetchedObjects {
+			bookingType = types.first(where: { $0.id == tracking.type?.id })
+		}
+
+		if let activity = tracking.activity {
+			activityId = activity.id
+		}
+
+		if let task = tracking.task {
+			taskId = task.id
+		}
+
+		let parameters: [String: Any] = [
+			"jsonrpc": "2.0",
+			"method": "mytime.put_hourbooking",
+			"params": [
+				"session": sessionId,
+				"hourbooking": [
+					"date": dateFormatterFull.string(from: tracking.date_start! as Date),
+					"time_from": dateFormatterTime.string(from: tracking.date_start! as Date),
+					"time_until": dateFormatterTime.string(from: tracking.date_end! as Date),
+					"job_id": tracking.job!.id as Any,
+					"activity_id": activityId as Any,
+					"jobtask_id": taskId as Any,
+					"text": tracking.comment as Any,
+					"booking_type": (bookingType?.internal_service ?? false) ? "int" : "prod"
+				] as [String: Any]
+			] as [String: Any],
+			"id": 1
+		]
+
+		return fetch(params: parameters)
+	}
+
+}
+
+// MARK: - login
+
+extension QuoJob {
 
 	func checkLoginStatus() -> Promise<[String: Any]> {
 		let verifyParams: [String: Any] = [
@@ -215,8 +334,8 @@ class QuoJob {
 			self.userId = result["user_id"] as? String
 			self.sessionId = result["session"] as? String
 
-//			Crashlytics.sharedInstance().setUserName(userName)
-//			Answers.logLogin(withMethod: "userData", success: true, customAttributes: [:])
+			//			Crashlytics.sharedInstance().setUserName(userName)
+			//			Answers.logLogin(withMethod: "userData", success: true, customAttributes: [:])
 		}
 	}
 
@@ -253,8 +372,8 @@ class QuoJob {
 			self.userId = result["user_id"] as? String
 			self.sessionId = result["session"] as? String
 
-//			Crashlytics.sharedInstance().setUserName(name)
-//			Answers.logLogin(withMethod: "keyChain", success: true, customAttributes: [:])
+			//			Crashlytics.sharedInstance().setUserName(name)
+			//			Answers.logLogin(withMethod: "keyChain", success: true, customAttributes: [:])
 		}
 	}
 
@@ -286,59 +405,10 @@ extension QuoJob {
 			}
 	}
 
-	func fetch(params: [String: Any]) -> Promise<[String: Any]> {
-		return Promise { seal in
-			Alamofire.request(API_URL, method: .post, parameters: params, encoding: JSONEncoding.default)
-				.responseJSON { response in
-					switch response.result {
-					case .success(let json):
-						guard let json = json as? [String: Any] else {
-							return seal.reject(AFError.responseValidationFailed(reason: .dataFileNil))
-						}
-
-						if let error = json["error"] as? [String: Any] {
-							var statusCode: Int = 0
-							if let statusCodeString = error["code"] as? NSString {
-								statusCode = statusCodeString.integerValue
-							} else if let statusCodeInt = error["code"] as? Int {
-								statusCode = statusCodeInt
-							}
-
-							switch statusCode {
-							case 1000: // No right for the requestes action
-								seal.reject(ApiError.withMessage(errorMessages.missingRights))
-							case 2001: // User NOT found
-								seal.reject(ApiError.withMessage(errorMessages.notFound))
-							case 2002: // Wrong password
-								seal.reject(ApiError.withMessage(errorMessages.wrongPassword))
-							case 2003, 2004: // No session given, Invalid session
-								seal.reject(ApiError.withMessage(errorMessages.sessionProblem))
-							case 2011: // User account is disabled
-								seal.reject(ApiError.withMessage(errorMessages.disabled))
-							default:
-								seal.reject(ApiError.other(statusCode))
-							}
-						} else if let result = json["result"] as? [String: Any] {
-							seal.fulfill(result)
-						}
-
-						seal.reject(ApiError.withMessage(errorMessages.unknown))
-					case .failure(let error):
-						switch error.localizedDescription {
-							case "A server with the specified hostname could not be found.":
-								seal.reject(ApiError.withMessage(errorMessages.vpnProblem))
-							default:
-								seal.reject(ApiError.withMessage(error.localizedDescription))
-						}
-					}
-			}
-		}
-	}
-
 	func fetchJobTypes() -> Promise<[String: Any]> {
 		var lastSyncString: String! = nil
 		if let lastSyncTime = lastSync?.tasks {
-			lastSyncString = dateFormatter.string(from: lastSyncTime)
+			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
 		}
 
 		let parameters: [String: Any] = [
@@ -357,7 +427,7 @@ extension QuoJob {
 	func fetchJobs() -> Promise<[String: Any]> {
 		var lastSyncString: String! = nil
 		if let lastSyncTime = lastSync?.jobs {
-			lastSyncString = dateFormatter.string(from: lastSyncTime)
+			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
 		}
 
 		let parameters: [String: Any] = [
@@ -376,7 +446,7 @@ extension QuoJob {
 	func fetchActivities() -> Promise<[String: Any]> {
 		var lastSyncString: String! = nil
 		if let lastSyncTime = lastSync?.activities {
-			lastSyncString = dateFormatter.string(from: lastSyncTime)
+			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
 		}
 
 		let parameters: [String: Any] = [
@@ -395,7 +465,7 @@ extension QuoJob {
 	func fetchTasks() -> Promise<[String: Any]> {
 		var lastSyncString: String! = nil
 		if let lastSyncTime = lastSync?.tasks {
-			lastSyncString = dateFormatter.string(from: lastSyncTime)
+			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
 		}
 
 		let parameters: [String: Any] = [
@@ -453,7 +523,7 @@ extension QuoJob {
 				}
 			}
 
-			let newSyncDate = self.dateFormatter.date(from: timestamp)
+			let newSyncDate = self.dateFormatterFull.date(from: timestamp)
 
 			if (self.lastSync == nil) {
 				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
@@ -518,7 +588,7 @@ extension QuoJob {
 				}
 			}
 
-			let newSyncDate = self.dateFormatter.date(from: timestamp)
+			let newSyncDate = self.dateFormatterFull.date(from: timestamp)
 
 			if (self.lastSync == nil) {
 				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
@@ -574,7 +644,7 @@ extension QuoJob {
 				}
 			}
 
-			let newSyncDate = self.dateFormatter.date(from: timestamp)
+			let newSyncDate = self.dateFormatterFull.date(from: timestamp)
 
 			if (self.lastSync == nil) {
 				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
@@ -661,7 +731,7 @@ extension QuoJob {
 				}
 			}
 
-			let newSyncDate = self.dateFormatter.date(from: timestamp)
+			let newSyncDate = self.dateFormatterFull.date(from: timestamp)
 
 			if (self.lastSync == nil) {
 				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
