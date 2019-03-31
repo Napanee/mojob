@@ -11,6 +11,7 @@ import Cocoa
 class JobItem: NSCollectionViewItem {
 
 	let backgroundLayer = CALayer()
+	var job: Job! = nil
 	var isHighlighted: Bool! = false {
 		didSet {
 			updateBackground(value: isHighlighted)

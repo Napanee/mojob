@@ -31,6 +31,7 @@ class JobListController: NSViewController {
 	let favorites: [String] = ["Foo", "bar"]
 	var jobsFiltered: [Job] = []
 	var jobListSelectedIndex: Int?
+	var currentItem: JobItem? = nil
 
 	var selectedJobItem: JobItem? {
 		get {
@@ -201,10 +202,17 @@ extension JobListController: FilterFieldDelegate {
 			let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
 			let tracking = NSManagedObject(entity: entity!, insertInto: context)
-			let trackingValues = [
+			var trackingValues = [
 				"date_start": Calendar.current.date(bySetting: .second, value: 0, of: Date()) as Any,
 				"custom_job": filterField.stringValue as Any
 			]
+
+			if let job = currentItem?.job {
+				trackingValues["job"] = job
+				trackingValues["type"] = job.type
+				trackingValues["custom_job"] = nil
+			}
+
 			tracking.setValuesForKeys(trackingValues)
 
 			do {
@@ -234,6 +242,7 @@ extension JobListController: FilterFieldDelegate {
 			}
 
 			if let item = selectedJobItem {
+				currentItem = item
 				item.isHighlighted = true
 			}
 		} else if (keyCode == 126) { // cursor up
@@ -307,7 +316,9 @@ extension JobListController: NSCollectionViewDataSource {
 
 			guard let collectionViewItem = item as? JobItem else {return item}
 
-			collectionViewItem.textField?.stringValue = jobsFiltered[indexPath.item].title!
+			let job = jobsFiltered[indexPath.item]
+			collectionViewItem.job = job
+			collectionViewItem.textField?.stringValue = job.title!
 
 			return collectionViewItem
 		}
