@@ -33,7 +33,18 @@ class DayTrackingsController: NSViewController {
 
 		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
-		fetchRequest.predicate = NSPredicate(format: "date_end != nil")
+		var compoundPredicates = [NSPredicate]()
+		compoundPredicates.append(NSPredicate(format: "date_end != nil"))
+
+		if
+			let todayStart = Date().startOfDay,
+			let todayEnd = Date().endOfDay
+		{
+			compoundPredicates.append(NSPredicate(format: "date_start >= %@", argumentArray: [todayStart]))
+			compoundPredicates.append(NSPredicate(format: "date_start <= %@", argumentArray: [todayEnd]))
+		}
+
+		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
 
 		fetchRequest.sortDescriptors = [
 			NSSortDescriptor(key: "date_start", ascending: true)
