@@ -58,6 +58,9 @@ class DayTrackingsController: NSViewController {
 
 		if let trackings = fetchedResultControllerTrackings.fetchedObjects {
 			trackingsStackView.reloadData(with: trackings)
+
+			let sum = trackings.map({ $0.date_end!.timeIntervalSince($0.date_start!) }).reduce(0.0, { $0 + $1 })
+			totalTimeForDay.stringValue = secondsToHoursMinutesSeconds(sec: Int(sum))
 		}
 
 		if let appDelegate = (NSApp.delegate as? AppDelegate) {
