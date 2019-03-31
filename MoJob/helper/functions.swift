@@ -53,18 +53,21 @@ extension Date {
 	var month: String {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "MMMM"
+		dateFormatter.locale = Locale(identifier: "de_DE")
 		return dateFormatter.string(from: self)
 	}
 
 	var day: String {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "dd"
+		dateFormatter.locale = Locale(identifier: "de_DE")
 		return dateFormatter.string(from: self)
 	}
 
 	var year: String {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "YYYY"
+		dateFormatter.locale = Locale(identifier: "de_DE")
 		return dateFormatter.string(from: self)
 	}
 }
