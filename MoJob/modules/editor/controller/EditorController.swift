@@ -58,7 +58,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 			comment.stringValue = commentString
 		}
 
-		if let dateStart = Calendar.current.date(bySetting: .second, value: 0, of: tracking.date_start!) {
+		if let dateStart = tracking.date_start {
 			let day = Calendar.current.component(.day, from: dateStart)
 			fromDay.stringValue = String(format: "%02d", day)
 			let month = Calendar.current.component(.month, from: dateStart)
@@ -72,7 +72,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 			fromMinute.stringValue = String(format: "%02d", minute)
 		}
 
-		if let dateEnd = Calendar.current.date(bySetting: .second, value: 0, of: tracking.date_end!) {
+		if let dateEnd = tracking.date_end {
 			let day = Calendar.current.component(.day, from: dateEnd)
 			untilDay.stringValue = String(format: "%02d", day)
 			let month = Calendar.current.component(.month, from: dateEnd)
