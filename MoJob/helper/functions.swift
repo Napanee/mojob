@@ -70,4 +70,12 @@ extension Date {
 		dateFormatter.locale = Locale(identifier: "de_DE")
 		return dateFormatter.string(from: self)
 	}
+
+	var startOfDay: Date? {
+		return Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)
+	}
+
+	var endOfDay: Date? {
+		return Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: self)
+	}
 }
