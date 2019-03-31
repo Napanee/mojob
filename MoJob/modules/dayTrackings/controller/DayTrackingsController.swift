@@ -78,6 +78,11 @@ class DayTrackingsController: NSViewController {
 
 		warningView.wantsLayer = true
 
+		let today = Date()
+		dateDay.stringValue = today.day
+		dateMonth.stringValue = today.month
+		dateYear.stringValue = today.year
+
 		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
 	}
 
