@@ -16,7 +16,8 @@ protocol DateFieldDelegate {
 }
 
 class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate {
-	var tracking: Tracking!
+	var data: BaseData?
+	var tracking: Tracking?
 	var currentValue: String! = ""
 	@IBOutlet weak var fromDay: NumberField!
 	@IBOutlet weak var fromMonth: NumberField!
@@ -42,23 +43,23 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		fromDay.dateDelegate = self
 		untilDay.dateDelegate = self
 
-		if let jobString = tracking.job?.title ?? tracking.custom_job {
+		if let jobString = tracking?.job?.title ?? tracking?.custom_job {
 			job.stringValue = jobString
 		}
 
-		if let taskString = tracking.task?.title {
+		if let taskString = tracking?.task?.title {
 			task.stringValue = taskString
 		}
 
-		if let activityString = tracking.activity?.title {
+		if let activityString = tracking?.activity?.title {
 			activity.stringValue = activityString
 		}
 
-		if let commentString = tracking.comment {
+		if let commentString = tracking?.comment {
 			comment.stringValue = commentString
 		}
 
-		if let dateStart = tracking.date_start {
+		if let dateStart = tracking?.date_start ?? data?.from {
 			let day = Calendar.current.component(.day, from: dateStart)
 			fromDay.stringValue = String(format: "%02d", day)
 			let month = Calendar.current.component(.month, from: dateStart)
@@ -72,7 +73,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 			fromMinute.stringValue = String(format: "%02d", minute)
 		}
 
-		if let dateEnd = tracking.date_end {
+		if let dateEnd = tracking?.date_end ?? data?.until {
 			let day = Calendar.current.component(.day, from: dateEnd)
 			untilDay.stringValue = String(format: "%02d", day)
 			let month = Calendar.current.component(.month, from: dateEnd)
@@ -110,20 +111,20 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		formatter.dateFormat = "YYYY/MM/dd HH:mm"
 
 		if (textField == fromMinute || textField == fromHour || textField == fromDay || textField == fromMonth || textField == fromYear) {
-			if let oldDate = tracking.date_start,
+			if let oldDate = tracking?.date_start,
 				let newDate = formatter.date(from: "\(fromYear.stringValue)/\(fromMonth.stringValue)/\(fromDay.stringValue) \(fromHour.stringValue):\(fromMinute.stringValue)"),
 				oldDate.compare(newDate) != .orderedSame
 			{
-				tracking.date_start = newDate
+				tracking?.date_start = newDate
 			}
 		}
 
 		if (textField == untilMinute || textField == untilHour || textField == untilDay || textField == untilMonth || textField == untilYear) {
-			if let oldDate = tracking.date_end,
+			if let oldDate = tracking?.date_end,
 				let newDate = formatter.date(from: "\(untilYear.stringValue)/\(untilMonth.stringValue)/\(untilDay.stringValue) \(untilHour.stringValue):\(untilMinute.stringValue)"),
 				oldDate.compare(newDate) != .orderedSame
 			{
-				tracking.date_end = newDate
+				tracking?.date_end = newDate
 			}
 		}
 	}
@@ -181,6 +182,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	}
 
 	@IBAction func deleteTracking(_ sender: NSButton) {
+		guard let tracking = tracking else { return }
 		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 		context.delete(tracking)
 
@@ -193,6 +195,8 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	}
 	
 	@IBAction func cancel(_ sender: NSButton) {
+		guard let tracking = tracking else { return }
+
 		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 		context.refresh(tracking, mergeChanges: false)
 		removeFromParent()
@@ -200,6 +204,17 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 
 	@IBAction func save(_ sender: NSButton) {
 		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+
+		if (tracking == nil) {
+			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
+			let tracking = NSManagedObject(entity: entity!, insertInto: context)
+			let trackingValues = [
+				"date_start": Calendar.current.date(bySetting: .second, value: 0, of: Date()) as Any,
+				"date_end": Calendar.current.date(bySetting: .second, value: 0, of: Date()) as Any
+			]
+
+			tracking.setValuesForKeys(trackingValues)
+		}
 
 		do {
 			try context.save()
