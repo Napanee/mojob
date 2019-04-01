@@ -353,28 +353,7 @@ extension QuoJob {
 			return Promise { $0.reject(ApiError.withMessage(errorMessages.sessionProblem)) }
 		}
 
-		let parameters: [String: Any] = [
-			"jsonrpc": "2.0",
-			"method": "session.login",
-			"id": "1",
-			"params": [
-				"user": name,
-				"device_id": "foo",
-				"client_type": "MoJobApp",
-				"language": "de",
-				"password": pass!.MD5 as Any,
-				"min_version": 1,
-				"max_version": 6
-			]
-		]
-
-		return fetch(params: parameters).done { result in
-			self.userId = result["user_id"] as? String
-			self.sessionId = result["session"] as? String
-
-			//			Crashlytics.sharedInstance().setUserName(name)
-			//			Answers.logLogin(withMethod: "keyChain", success: true, customAttributes: [:])
-		}
+		return loginWithUserData(userName: name, password: pass!)
 	}
 
 }
