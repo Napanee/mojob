@@ -358,10 +358,10 @@
 			isa = PBXGroup;
 			children = (
 				E82117D9220E1B7E003D7578 /* enums.swift */,
-				E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */,
+				E8138A2522525BBF008DAA62 /* extensions.swift */,
 				E8CACC772211DE6300675688 /* functions.swift */,
 				E8138A2322525B99008DAA62 /* structs.swift */,
-				E8138A2522525BBF008DAA62 /* extensions.swift */,
+				E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
