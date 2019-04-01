@@ -6,8 +6,6 @@
 //  Copyright © 2019 Martin Schneider. All rights reserved.
 //
 
-import Cocoa
-
 
 enum nibNames {
 	static let NavigationController = "NavigationController"
@@ -34,10 +32,4 @@ enum SyncStatus: String {
 	case pending = "pending"
 	case error = "error"
 	case success = "success"
-}
-
-extension NSImage.Name {
-	static let delete = NSImage.Name("delete")
-	static let play = NSImage.Name("play")
-	static let stop = NSImage.Name("stop")
 }
