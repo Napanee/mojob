@@ -8,6 +8,7 @@
 
 import Cocoa
 
+
 class SplitViewController: NSSplitViewController {
 
 	var prevWidth: CGFloat?
@@ -66,6 +67,20 @@ class SplitViewController: NSSplitViewController {
 			}
 
 			editorViewController.tracking = tracking
+
+			verticalSplitViewController.insertChild(editorViewController, at: 0)
+		}
+	}
+
+	func showEditor(with data: BaseData) {
+		if let verticalSplitViewController = splitViewItems.first(where: { $0.viewController.isKind(of: NSSplitViewController.self) })?.viewController as? NSSplitViewController {
+			let editorViewController = EditorController(nibName: nibNames.EditorController, bundle: nil)
+
+			if let currentEditorIndex = verticalSplitViewController.splitViewItems.firstIndex(where: { $0.viewController.isKind(of: EditorController.self) }) {
+				verticalSplitViewController.splitViewItems.remove(at: currentEditorIndex)
+			}
+
+			editorViewController.data = data
 
 			verticalSplitViewController.insertChild(editorViewController, at: 0)
 		}

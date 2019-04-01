@@ -13,21 +13,19 @@ class TrackingsStackView: NSStackView {
 	func reloadData(with trackings: [Tracking]) {
 		subviews.removeAll()
 
-		insertAddButton()
-
-		var endTime: Date?
+		var endTime: Date = Date().startOfDay!
 
 		for tracking in trackings {
-			if let endTime = endTime, tracking.date_start!.timeIntervalSince(endTime) > 60 {
-				insertAddButton()
+			if tracking.date_start!.timeIntervalSince(endTime) > 60 {
+				insertAddButton(from: endTime, until: tracking.date_start!)
 			}
 
 			insertTrackingView(with: tracking)
 
-			endTime = tracking.date_end
+			endTime = tracking.date_end!
 		}
 
-		insertAddButton()
+		insertAddButton(from: endTime, until: Date())
 	}
 
 	func insertTrackingView(with tracking: Tracking) {
@@ -41,8 +39,10 @@ class TrackingsStackView: NSStackView {
 		addView(trackingView, in: .bottom)
 	}
 
-	func insertAddButton() {
+	func insertAddButton(from: Date, until: Date) {
 		let addButton = AddButton()
+		addButton.from = from
+		addButton.until = until
 		addView(addButton, in: .bottom)
 
 		addConstraints([

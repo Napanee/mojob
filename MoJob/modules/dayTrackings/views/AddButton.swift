@@ -12,6 +12,8 @@ class AddButton: NSView {
 
 	@IBOutlet var contentView: NSView!
 	var constraint: NSLayoutConstraint?
+	var from: Date = Date()
+	var until: Date = Date()
 
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -41,6 +43,14 @@ class AddButton: NSView {
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
+	}
+
+	@IBAction func addTracking(_ sender: NSButton) {
+		let window = (NSApp.delegate as! AppDelegate).window
+		if let contentViewController = window?.contentViewController as? SplitViewController {
+			let data = BaseData(from: from, until: until)
+			contentViewController.showEditor(with: data)
+		}
 	}
 
 }
