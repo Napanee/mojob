@@ -46,7 +46,7 @@ class Login: NSViewController {
 		let pass = passwordTextField.stringValue
 
 		if (storeInKeyChain.state == .on) {
-			keychain = Keychain(service: "de.mojobapp-dev.login")
+			keychain = Keychain(service: KEYCHAIN_NAMESPACE)
 			keychain[name] = pass
 		}
 

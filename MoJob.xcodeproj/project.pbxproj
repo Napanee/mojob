@@ -38,6 +38,7 @@
 		E863306522481BED00A8E946 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E863306422481BED00A8E946 /* Login.xib */; };
 		E863306722481E2C00A8E946 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863306622481E2C00A8E946 /* Login.swift */; };
 		E863306A2248232F00A8E946 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86330692248232F00A8E946 /* Password.swift */; };
+		E8731AE5225952B1006947B0 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8731AE4225952B1006947B0 /* constants.swift */; };
 		E877EC83224FCA8C002C3828 /* PopUpCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877EC82224FCA8C002C3828 /* PopUpCellText.swift */; };
 		E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */; };
 		E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */; };
@@ -121,6 +122,7 @@
 		E863306422481BED00A8E946 /* Login.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
 		E863306622481E2C00A8E946 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		E86330692248232F00A8E946 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
+		E8731AE4225952B1006947B0 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		E877EC82224FCA8C002C3828 /* PopUpCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCellText.swift; sourceTree = "<group>"; };
 		E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayTrackingsController.swift; path = MoJob/modules/dayTrackings/controller/DayTrackingsController.swift; sourceTree = SOURCE_ROOT; };
 		E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayTrackingsController.xib; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				E8CACC772211DE6300675688 /* functions.swift */,
 				E8138A2322525B99008DAA62 /* structs.swift */,
 				E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */,
+				E8731AE4225952B1006947B0 /* constants.swift */,
 			);
 			path = helper;
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				E8E9508F2232D62A0070F57E /* TextField.swift in Sources */,
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
 				E8CACC782211DE6300675688 /* functions.swift in Sources */,
+				E8731AE5225952B1006947B0 /* constants.swift in Sources */,
 				E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */,
 				E863305D2245863600A8E946 /* PopUpCell.swift in Sources */,
 				E8211800220F5364003D7578 /* JobItem.swift in Sources */,

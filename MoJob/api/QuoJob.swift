@@ -12,12 +12,6 @@ import Foundation
 import KeychainAccess
 
 
-#if DEVELOPMENT
-	let API_URL = "https://mojob-test.moccu/index.php?rpc=1"
-#else
-	let API_URL = "https://mojob-test.moccu/index.php?rpc=1"
-#endif
-
 enum ApiError: Error {
 	case withMessage(String)
 	case other(Int)
@@ -340,7 +334,7 @@ extension QuoJob {
 	}
 
 	func loginWithKeyChain() -> Promise<Void> {
-		keychain = Keychain(service: "de.mojobapp-dev.login")
+		keychain = Keychain(service: KEYCHAIN_NAMESPACE)
 
 		guard keychain.allKeys().count > 0 else {
 			return Promise { $0.reject(ApiError.withMessage(errorMessages.sessionProblem)) }
