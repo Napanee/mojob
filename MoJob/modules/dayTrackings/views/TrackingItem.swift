@@ -38,13 +38,13 @@ class TrackingItem: NSView {
 			formatter.dateFormat = "HH:mm"
 
 			var title = tracking.custom_job
-			if let job = tracking.job {
-				title = job.title
+			if let job = tracking.job, let jobTitle = job.title {
+				title = jobTitle
 			}
 
 			startTimeLabel.stringValue = formatter.string(from: tracking.date_start!)
 			endTimeLabel.stringValue = formatter.string(from: tracking.date_end!)
-			titleLabel.stringValue = title!
+			titleLabel.stringValue = title ?? "kein Job!"
 
 			if let text = tracking.comment {
 				commentLabel.stringValue = text
