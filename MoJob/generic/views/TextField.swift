@@ -53,9 +53,6 @@ class TextField: NSTextField {
 	override func becomeFirstResponder() -> Bool {
 		super.becomeFirstResponder()
 
-		let curEditor = self.currentEditor()
-		curEditor?.selectedRange = NSRange(location: 0, length: 0)
-
 		setFocused()
 
 		return true
