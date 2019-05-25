@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="EditorController" customModule="MoJob" customModuleProvider="target">
             <connections>
-                <outlet property="activity" destination="Bjj-Q8-Skz" id="oer-Vk-lYQ"/>
+                <outlet property="activitySelect" destination="Lt3-1U-KhP" id="Qql-zU-GHa"/>
                 <outlet property="colorPicker" destination="2bi-3y-qE4" id="BAO-xL-2ID"/>
                 <outlet property="comment" destination="XcE-nf-wbv" id="KFf-yO-U9D"/>
                 <outlet property="fromDay" destination="pwd-lG-4Ll" id="Qym-x6-L03"/>
@@ -15,8 +15,8 @@
                 <outlet property="fromMinute" destination="imT-nJ-o00" id="KPy-8v-Abg"/>
                 <outlet property="fromMonth" destination="imz-oH-pr6" id="ReE-DD-LeQ"/>
                 <outlet property="fromYear" destination="ef2-mf-82k" id="Ls0-7n-cDY"/>
-                <outlet property="job" destination="hDM-6a-NRn" id="EYJ-hR-BRa"/>
-                <outlet property="task" destination="Kjh-sA-XQn" id="RA8-MS-RDp"/>
+                <outlet property="jobSelect" destination="hg2-CK-HXt" id="psW-d3-Ucs"/>
+                <outlet property="taskSelect" destination="NWP-W7-dZN" id="uZx-O6-DpZ"/>
                 <outlet property="untilDay" destination="6Gk-B7-Zib" id="8et-hj-jFi"/>
                 <outlet property="untilHour" destination="t3e-Cf-nTC" id="lrk-7Z-8SL"/>
                 <outlet property="untilMinute" destination="hzB-Th-6oG" id="qGC-DF-YGL"/>
@@ -54,7 +54,7 @@
                                         <font key="font" metaFont="systemThin" size="20"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="cancel:" target="-2" id="ixO-dO-ZwM"/>
+                                        <action selector="cancel:" target="-2" id="c39-SI-CWA"/>
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SJk-dW-6EJ">
@@ -64,7 +64,7 @@
                                         <font key="font" metaFont="systemThin" size="20"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="save:" target="-2" id="tVU-Gm-qc8"/>
+                                        <action selector="save:" target="-2" id="cw0-8y-oeF"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -99,62 +99,80 @@
                                             </items>
                                         </menu>
                                     </popUpButtonCell>
+                                    <connections>
+                                        <action selector="colorSelect:" target="-2" id="oiW-rl-Qjf"/>
+                                    </connections>
                                 </popUpButton>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hDM-6a-NRn" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                                <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hg2-CK-HXt">
                                     <rect key="frame" x="80" y="0.0" width="530" height="29"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="29" id="6iz-Jf-MFR"/>
+                                        <constraint firstAttribute="height" constant="29" id="MQK-G2-07m"/>
                                     </constraints>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Job" drawsBackground="YES" id="kMa-oH-fTU">
+                                    <popUpButtonCell key="cell" type="bevel" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="6z5-LE-uSo" id="T6y-p5-AHU">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="systemThin" size="20"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
+                                        <menu key="menu" id="I1J-uT-G0d">
+                                            <items>
+                                                <menuItem title="Item 1" state="on" id="6z5-LE-uSo"/>
+                                                <menuItem title="Item 2" id="QNx-zg-86F"/>
+                                                <menuItem title="Item 3" id="dvu-rY-Zbj"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
                                     <connections>
-                                        <outlet property="delegate" destination="-2" id="egy-pz-Ord"/>
-                                        <outlet property="nextKeyView" destination="Kjh-sA-XQn" id="Ggu-iP-pvt"/>
+                                        <action selector="jobSelect:" target="-2" id="oJF-t0-8bW"/>
                                     </connections>
-                                </textField>
+                                </popUpButton>
                             </subviews>
                             <visibilityPriorities>
                                 <integer value="1000"/>
-                                <real value="1000"/>
+                                <integer value="1000"/>
                             </visibilityPriorities>
                             <customSpacing>
                                 <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>
-                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kjh-sA-XQn" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                        <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="NWP-W7-dZN">
                             <rect key="frame" x="30" y="175" width="610" height="29"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="29" id="97K-6E-JeS"/>
+                                <constraint firstAttribute="height" constant="29" id="as6-dp-iJF"/>
                             </constraints>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Aufgabe" drawsBackground="YES" id="Zon-wn-pbL">
+                            <popUpButtonCell key="cell" type="bevel" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="nrH-3w-8gV" id="Mpd-lG-YF3">
+                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="systemThin" size="20"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
+                                <menu key="menu" id="pqo-fS-591">
+                                    <items>
+                                        <menuItem title="Item 1" state="on" id="nrH-3w-8gV"/>
+                                        <menuItem title="Item 2" id="lG9-2v-QOr"/>
+                                        <menuItem title="Item 3" id="tlG-M7-vcO"/>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
                             <connections>
-                                <outlet property="delegate" destination="-2" id="yFp-mI-6lh"/>
-                                <outlet property="nextKeyView" destination="Bjj-Q8-Skz" id="367-ak-k6C"/>
+                                <action selector="taskSelect:" target="-2" id="Wwu-2B-VnT"/>
                             </connections>
-                        </textField>
-                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Bjj-Q8-Skz" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                        </popUpButton>
+                        <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="Lt3-1U-KhP">
                             <rect key="frame" x="30" y="138" width="610" height="29"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="29" id="WcG-F3-xVC"/>
+                                <constraint firstAttribute="height" constant="29" id="MIo-Xt-V5v"/>
                             </constraints>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Tätigkeit" drawsBackground="YES" id="3cP-aH-MYe">
+                            <popUpButtonCell key="cell" type="bevel" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="a4o-CG-cx2" id="bLD-jQ-r1N">
+                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="systemThin" size="20"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
+                                <menu key="menu" id="d1u-NY-Jba">
+                                    <items>
+                                        <menuItem title="Item 1" state="on" id="a4o-CG-cx2"/>
+                                        <menuItem title="Item 2" id="QM2-gb-Kxh"/>
+                                        <menuItem title="Item 3" id="El1-MI-azs"/>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
                             <connections>
-                                <outlet property="delegate" destination="-2" id="wfn-yQ-ohP"/>
-                                <outlet property="nextKeyView" destination="XcE-nf-wbv" id="Hjq-eC-akw"/>
+                                <action selector="activitySelect:" target="-2" id="ep8-GV-ZGS"/>
                             </connections>
-                        </textField>
+                        </popUpButton>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XcE-nf-wbv" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                             <rect key="frame" x="30" y="50" width="610" height="80"/>
                             <constraints>
@@ -493,15 +511,15 @@
                         </customView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="Kjh-sA-XQn" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="0GS-88-Jwb"/>
+                        <constraint firstItem="NWP-W7-dZN" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="1fB-PW-wpP"/>
                         <constraint firstItem="81b-du-VQj" firstAttribute="width" secondItem="c7j-df-kS2" secondAttribute="width" id="2KT-zi-hPo"/>
-                        <constraint firstAttribute="trailing" secondItem="Bjj-Q8-Skz" secondAttribute="trailing" constant="30" id="GCq-pL-MtJ"/>
+                        <constraint firstAttribute="trailing" secondItem="NWP-W7-dZN" secondAttribute="trailing" constant="30" id="ADM-Xm-RpQ"/>
                         <constraint firstAttribute="trailing" secondItem="XcE-nf-wbv" secondAttribute="trailing" constant="30" id="RMs-RY-D84"/>
                         <constraint firstItem="XcE-nf-wbv" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="aWU-bK-YUX"/>
                         <constraint firstItem="D7U-NT-K5Y" firstAttribute="width" secondItem="c7j-df-kS2" secondAttribute="width" id="eLo-D8-IDK"/>
-                        <constraint firstAttribute="trailing" secondItem="Kjh-sA-XQn" secondAttribute="trailing" constant="30" id="fih-0c-Oii"/>
                         <constraint firstItem="HGR-ie-qcI" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="hQa-Ld-BS8"/>
-                        <constraint firstItem="Bjj-Q8-Skz" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="mjH-ZO-OrK"/>
+                        <constraint firstItem="Lt3-1U-KhP" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="o40-UZ-84S"/>
+                        <constraint firstAttribute="trailing" secondItem="Lt3-1U-KhP" secondAttribute="trailing" constant="30" id="tBM-ep-bee"/>
                         <constraint firstAttribute="trailing" secondItem="HGR-ie-qcI" secondAttribute="trailing" constant="30" id="xN6-PZ-6k5"/>
                     </constraints>
                     <visibilityPriorities>
@@ -528,7 +546,7 @@
                 <constraint firstAttribute="trailing" secondItem="c7j-df-kS2" secondAttribute="trailing" id="soW-HV-uCw"/>
                 <constraint firstAttribute="bottom" secondItem="c7j-df-kS2" secondAttribute="bottom" id="tKg-FL-LZP"/>
             </constraints>
-            <point key="canvasLocation" x="-834" y="83"/>
+            <point key="canvasLocation" x="-834" y="87"/>
         </customView>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
     </objects>
