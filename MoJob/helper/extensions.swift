@@ -38,6 +38,12 @@ extension Date {
 		return dateFormatter.string(from: self)
 	}
 
+	var fullDateString: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "YYYYMMddHHmmss"
+		return dateFormatter.string(from: self)
+	}
+
 	var startOfDay: Date? {
 		return Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)
 	}
