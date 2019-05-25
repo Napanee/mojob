@@ -251,9 +251,14 @@ class QuoJob {
 	}
 
 	func exportTracking(tracking: Tracking) -> Promise<[String: Any]> {
+		var id: String? = nil
 		var bookingType: Type? = nil
-		var activityId: String? = "$Cg4GAVw@"
-		var taskId: String? = nil
+		var activityId: String! = nil
+		var taskId: String! = nil
+
+		if let trackingId = tracking.id {
+			id = trackingId
+		}
 
 		if let types = fetchedResultControllerType.fetchedObjects {
 			bookingType = types.first(where: { $0.id == tracking.type?.id })
@@ -271,12 +276,13 @@ class QuoJob {
 			"jsonrpc": "2.0",
 			"method": "mytime.put_hourbooking",
 			"params": [
-				"session": sessionId,
+				"session": sessionId!,
 				"hourbooking": [
+					"id": id as Any,
 					"date": dateFormatterFull.string(from: tracking.date_start! as Date),
 					"time_from": dateFormatterTime.string(from: tracking.date_start! as Date),
 					"time_until": dateFormatterTime.string(from: tracking.date_end! as Date),
-					"job_id": tracking.job!.id as Any,
+					"job_id": tracking.job!.id! as Any,
 					"activity_id": activityId as Any,
 					"jobtask_id": taskId as Any,
 					"text": tracking.comment as Any,
