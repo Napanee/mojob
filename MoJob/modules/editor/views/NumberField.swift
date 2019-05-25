@@ -18,13 +18,9 @@ class NumberField: TextField {
 		currentValue = self.stringValue
 	}
 
-	override func textDidChange(_ notification: Notification) {
-		super.textDidChange(notification)
-		print(self.stringValue)
-	}
-
 	override func textDidEndEditing(_ notification: Notification) {
 		super.textDidEndEditing(notification)
+
 		guard var value = Int(self.stringValue) else {
 			self.stringValue = self.currentValue
 			return
