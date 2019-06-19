@@ -132,7 +132,7 @@ class JobListController: NSViewController {
 
 		if (string.count > 0) {
 			jobsCollectionView.isHidden = false
-			jobsFiltered = jobs.filter({ $0.title!.lowercased().contains(string.lowercased()) })
+			jobsFiltered = jobs.filter({ $0.title!.lowercased().contains(string.lowercased()) || $0.number!.lowercased().contains(string.lowercased()) })
 		} else {
 			jobsCollectionView.isHidden = true
 			jobsFiltered = []
@@ -318,7 +318,7 @@ extension JobListController: NSCollectionViewDataSource {
 
 			let job = jobsFiltered[indexPath.item]
 			collectionViewItem.job = job
-			collectionViewItem.textField?.stringValue = job.title!
+			collectionViewItem.textField?.stringValue = "\(job.number!) - \(job.title!)"
 
 			return collectionViewItem
 		}
