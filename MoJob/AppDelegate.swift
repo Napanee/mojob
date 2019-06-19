@@ -18,6 +18,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
+
+		QuoJob.shared.checkLoginStatus().done { _ in
+			self.syncData()
+		}.catch { error in
+			QuoJob.shared.loginWithKeyChain().done { _ in
+				self.syncData()
+			}
+		}
+	}
+
+	func syncData() {
+		QuoJob.shared.syncData()
+			.done {
+				print("done!")
+			}
+			.catch { error in
+				//Handle error or give feedback to the user
+				print(error.localizedDescription)
+		}
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {
