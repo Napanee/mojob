@@ -114,25 +114,6 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 			self.currentTracking = currentTracking
 		}
 
-		if let jobs = QuoJob.shared.jobs {
-			let type = currentTracking?.job?.type
-
-			if let activities = QuoJob.shared.activities {
-				let activityTitles = activities.filter({
-					(type?.internal_service ?? true && $0.internal_service) ||
-						(type?.productive_service ?? true && $0.external_service)
-				}).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
-				activitySelect.addItem(withTitle: "Leistungsart wählen")
-				activitySelect.addItems(withTitles: activityTitles as! [String])
-
-				if let index = activityTitles.firstIndex(of: currentTracking?.activity?.title) {
-					activitySelect.selectItem(at: index + 1)
-				}
-			}
-		}
-
-		activitySelect.wantsLayer = true
-		activitySelect.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5).cgColor
 		commentLabel.delegate = self
 		stopTracking.isEnabled = false
 
