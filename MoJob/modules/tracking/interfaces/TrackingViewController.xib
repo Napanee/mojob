@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -80,25 +80,25 @@
                                 <rect key="frame" x="30" y="94" width="337" height="263"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dQ8-dy-mO0">
-                                        <rect key="frame" x="-2" y="246" width="111" height="17"/>
+                                        <rect key="frame" x="-2" y="246" width="116" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Job und Aufgabe:" id="jK1-by-ZNy">
-                                            <font key="font" metaFont="system"/>
+                                            <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ytt-a6-ynY">
-                                        <rect key="frame" x="-2" y="173" width="60" height="17"/>
+                                        <rect key="frame" x="-2" y="173" width="63" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Tätigkeit:" id="C4a-HL-NP6">
-                                            <font key="font" metaFont="system"/>
+                                            <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MvS-Wm-cSc">
-                                        <rect key="frame" x="-2" y="105" width="77" height="17"/>
+                                        <rect key="frame" x="-2" y="105" width="81" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Bemerkung:" id="yUp-qn-T76">
-                                            <font key="font" metaFont="system"/>
+                                            <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
