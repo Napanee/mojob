@@ -48,8 +48,15 @@ class AddButton: NSView {
 	@IBAction func addTracking(_ sender: NSButton) {
 		let window = (NSApp.delegate as! AppDelegate).window
 		if let contentViewController = window?.contentViewController as? SplitViewController {
-			let data = BaseData(from: from, until: until)
-			contentViewController.showEditor(with: data)
+			let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
+
+			if let tracking = NSManagedObject(entity: entity!, insertInto: context) as? Tracking {
+				tracking.date_start = from
+				tracking.date_end = until
+
+				contentViewController.showEditor(with: tracking)
+			}
 		}
 	}
 

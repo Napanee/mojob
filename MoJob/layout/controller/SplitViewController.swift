@@ -40,6 +40,12 @@ class SplitViewController: NSSplitViewController {
 		return NSRect(x: drawnRect.minX - 2, y: 0, width: drawnRect.width + 4, height: drawnRect.height)
 	}
 
+	override func splitViewDidResizeSubviews(_ notification: Notification) {
+		if let splitViews = (notification.object as? NSSplitView)?.subviews {
+			print(splitViews)
+		}
+	}
+
 	func showTracking() {
 		if let jobListViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is JobListController }) {
 			let trackingViewController = TrackingViewController(nibName: nibNames.TrackingViewController, bundle: nil)

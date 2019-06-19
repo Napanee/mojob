@@ -32,7 +32,7 @@ class TrackingsStackView: NSStackView {
 		let trackingView = TrackingItem()
 		trackingView.tracking = tracking
 
-		if let syncStatus = SyncStatus(rawValue: tracking.exported!) {
+		if let syncStatus = SyncStatus(rawValue: tracking.exported ?? "error") {
 			trackingView.exportStatus = syncStatus
 		}
 

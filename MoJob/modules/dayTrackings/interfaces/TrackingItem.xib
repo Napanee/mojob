@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +12,7 @@
                 <outlet property="contentView" destination="osv-QK-7DM" id="em9-MF-Iug"/>
                 <outlet property="endTimeLabel" destination="ZN9-Kc-rzr" id="daS-Vo-SyV"/>
                 <outlet property="startTimeLabel" destination="NuU-cB-96b" id="zF5-wI-rlu"/>
-                <outlet property="statusImage" destination="Rg2-9i-4Ly" id="YQF-R6-7EZ"/>
+                <outlet property="statusImage" destination="s40-uR-V2y" id="9GY-uK-STQ"/>
                 <outlet property="textView" destination="jzA-X6-Fee" id="hD1-2n-lCB"/>
                 <outlet property="titleLabel" destination="hhO-zs-Pec" id="ILl-Cj-YN0"/>
             </connections>
@@ -65,28 +65,34 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rg2-9i-4Ly">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s40-uR-V2y">
                             <rect key="frame" x="422" y="61" width="35" height="16"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="35" id="6sM-wD-DCQ"/>
-                                <constraint firstAttribute="height" constant="16" id="MAN-mP-Gtz"/>
+                                <constraint firstAttribute="height" constant="16" id="CXW-so-N14"/>
+                                <constraint firstAttribute="width" constant="35" id="TtP-0R-Vrj"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="nFZ-WH-0EZ"/>
-                        </imageView>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="sync-success" imagePosition="overlaps" alignment="center" inset="2" id="paO-Uh-Wd4">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="statusImage:" target="-2" id="zgP-Si-oCh"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="490" constant="60" id="DON-7v-RwG"/>
+                        <constraint firstItem="s40-uR-V2y" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="33n-8W-dwT"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="510" constant="60" id="DON-7v-RwG"/>
                         <constraint firstItem="xpi-Ck-JzY" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="FSr-Ab-68D"/>
-                        <constraint firstItem="Rg2-9i-4Ly" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hhO-zs-Pec" secondAttribute="trailing" constant="10" id="Qhz-GV-2lU"/>
+                        <constraint firstItem="s40-uR-V2y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hhO-zs-Pec" secondAttribute="trailing" constant="10" id="Huo-b1-Vgj"/>
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="Spj-k3-dai"/>
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="cmu-z6-45t"/>
-                        <constraint firstItem="Rg2-9i-4Ly" firstAttribute="centerY" secondItem="hhO-zs-Pec" secondAttribute="centerY" id="fbc-yb-e2v"/>
-                        <constraint firstAttribute="height" relation="lessThanOrEqual" priority="510" constant="60" id="gRX-25-ubh"/>
-                        <constraint firstItem="Rg2-9i-4Ly" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="goT-Xn-bAc"/>
+                        <constraint firstItem="s40-uR-V2y" firstAttribute="centerY" secondItem="hhO-zs-Pec" secondAttribute="centerY" id="gPY-tT-02j"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" priority="490" constant="60" id="gRX-25-ubh"/>
                         <constraint firstAttribute="bottom" secondItem="xpi-Ck-JzY" secondAttribute="bottom" constant="5" id="k20-0H-DVn"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xpi-Ck-JzY" secondAttribute="trailing" constant="10" id="npq-tn-Lj0"/>
                         <constraint firstItem="xpi-Ck-JzY" firstAttribute="top" secondItem="hhO-zs-Pec" secondAttribute="bottom" constant="5" id="sSl-sA-bIY"/>
-                        <constraint firstAttribute="trailing" secondItem="Rg2-9i-4Ly" secondAttribute="trailing" id="vkB-Ve-Koy"/>
+                        <constraint firstAttribute="trailing" secondItem="s40-uR-V2y" secondAttribute="trailing" id="tEN-sb-eox"/>
                     </constraints>
                 </customView>
             </subviews>
@@ -108,4 +114,7 @@
             <point key="canvasLocation" x="234.5" y="1187"/>
         </customView>
     </objects>
+    <resources>
+        <image name="sync-success" width="27" height="15"/>
+    </resources>
 </document>
