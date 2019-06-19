@@ -10,6 +10,7 @@ import Cocoa
 
 class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
+	var userDefaults = UserDefaults()
 	var timer = Timer()
 	var startDate = Date()
 	var currentTracking: Tracking! {
@@ -47,8 +48,20 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
 						return (type.internal_service && activity.internal_service) || (type.productive_service && activity.external_service)
 					}).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
+
 					activitySelect.addItems(withTitles: activityTitles as! [String])
+					activitySelect.wantsLayer = true
 					activitySelect.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5).cgColor
+
+					if
+						let activityId = userDefaults.object(forKey: "activity") as? String,
+						let title = activities.first(where: { $0.id == activityId })?.title,
+						let index = activityTitles.firstIndex(of: title)
+					{
+						activitySelect.selectItem(at: index + 1)
+						activitySelect.layer?.backgroundColor = CGColor.clear
+						stopTracking.isEnabled = true
+					}
 				}
 			}
 		}
@@ -218,6 +231,8 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
 		do {
 			try context.save()
+
+			userDefaults.set(activity.id, forKey: "activity")
 		} catch let error {
 			print(error)
 		}
