@@ -16,9 +16,10 @@ protocol DateFieldDelegate {
 }
 
 class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate {
-	var data: BaseData?
-	var tracking: Tracking?
-	var currentValue: String! = ""
+	var tracking: Tracking!
+
+	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+
 	@IBOutlet weak var fromDay: NumberField!
 	@IBOutlet weak var fromMonth: NumberField!
 	@IBOutlet weak var fromYear: NumberField!
@@ -29,11 +30,11 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	@IBOutlet weak var untilDay: NumberField!
 	@IBOutlet weak var untilMonth: NumberField!
 	@IBOutlet weak var untilYear: NumberField!
-	@IBOutlet weak var job: NSTextField!
-	@IBOutlet weak var task: NSTextField!
-	@IBOutlet weak var activity: NSTextField!
 	@IBOutlet weak var comment: NSTextField!
 	@IBOutlet weak var colorPicker: NSPopUpButton!
+	@IBOutlet weak var jobSelect: NSPopUpButton!
+	@IBOutlet weak var taskSelect: NSPopUpButton!
+	@IBOutlet weak var activitySelect: NSPopUpButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -43,23 +44,61 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		fromDay.dateDelegate = self
 		untilDay.dateDelegate = self
 
-		if let jobString = tracking?.job?.title ?? tracking?.custom_job {
-			job.stringValue = jobString
-		}
+		jobSelect.removeAllItems()
+		taskSelect.removeAllItems()
+		activitySelect.removeAllItems()
 
-		if let taskString = tracking?.task?.title {
-			task.stringValue = taskString
-		}
+		if let jobs = QuoJob.shared.jobs {
+			let jobTitles = jobs.sorted(by: { $0.title! < $1.title! }).map({ job -> String in
+				guard let title = job.title, let number = job.number else { return "" }
 
-		if let activityString = tracking?.activity?.title {
-			activity.stringValue = activityString
+				return "\(number) - \(title)"
+			})
+			let type = tracking?.job?.type
+			jobSelect.addItem(withTitle: "Job wählen")
+			jobSelect.addItems(withTitles: jobTitles)
+
+			if let job = tracking.job, let title = job.title, let number = job.number {
+				let fullJobTitle = "\(number) - \(title)"
+				if let index = jobTitles.firstIndex(of: fullJobTitle) {
+					jobSelect.selectItem(at: index + 1)
+				}
+			}
+
+			if let tasks = QuoJob.shared.tasks {
+				let taskTitles = tasks.filter({ $0.job!.id == tracking?.job?.id }).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
+
+				if (taskTitles.count > 0) {
+					taskSelect.addItem(withTitle: "Aufgabe wählen")
+					taskSelect.addItems(withTitles: taskTitles as! [String])
+
+					if let index = taskTitles.firstIndex(of: tracking?.task?.title) {
+						taskSelect.selectItem(at: index + 1)
+					}
+				} else {
+					taskSelect.isEnabled = false
+				}
+			}
+
+			if let activities = QuoJob.shared.activities {
+				let activityTitles = activities.filter({
+					(type?.internal_service ?? true && $0.internal_service) ||
+					(type?.productive_service ?? true && $0.external_service)
+				}).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
+				activitySelect.addItem(withTitle: "Leistungsart wählen")
+				activitySelect.addItems(withTitles: activityTitles as! [String])
+
+				if let index = activityTitles.firstIndex(of: tracking?.activity?.title) {
+					activitySelect.selectItem(at: index + 1)
+				}
+			}
 		}
 
 		if let commentString = tracking?.comment {
 			comment.stringValue = commentString
 		}
 
-		if let dateStart = tracking?.date_start ?? data?.from {
+		if let dateStart = tracking?.date_start {
 			let day = Calendar.current.component(.day, from: dateStart)
 			fromDay.stringValue = String(format: "%02d", day)
 			let month = Calendar.current.component(.month, from: dateStart)
@@ -73,7 +112,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 			fromMinute.stringValue = String(format: "%02d", minute)
 		}
 
-		if let dateEnd = tracking?.date_end ?? data?.until {
+		if let dateEnd = tracking?.date_end {
 			let day = Calendar.current.component(.day, from: dateEnd)
 			untilDay.stringValue = String(format: "%02d", day)
 			let month = Calendar.current.component(.month, from: dateEnd)
@@ -104,7 +143,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		return Int(untilYear.stringValue)
 	}
 
-	func controlTextDidEndEditing(_ obj: Notification) {
+	func controlTextDidChange(_ obj: Notification) {
 		guard let textField = obj.object as? NSTextField else { return }
 
 		let formatter = DateFormatter()
@@ -127,6 +166,18 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 				tracking?.date_end = newDate
 			}
 		}
+	}
+
+	private func validateData() -> Bool {
+		guard let dateEnd = tracking.date_end, let dateStart = tracking.date_start else {
+			return false
+		}
+
+		if (dateStart.compare(dateEnd) == .orderedDescending) {
+			return false
+		}
+
+		return true
 	}
 
 	private func initColorPicker() {
@@ -181,9 +232,93 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		return image
 	}
 
+	@IBAction func colorSelect(_ sender: NSPopUpButton) {
+		if
+			let title = sender.titleOfSelectedItem,
+			let crayons = NSColorList.init(named: "Crayons"),
+			let color = crayons.color(withKey: title)
+		{
+			print(title)
+//			let colorData = NSKeyedArchiver.archivedData(withRootObject: color)
+//			userDefaults.set(colorData, forKey: "backgroundColorActiveTracking")
+//			tracking.color = title
+
+//			.filter({
+//				if
+//					let color = crayons.color(withKey: $0),
+//					let red = color.usingColorSpace(.deviceRGB)?.redComponent,
+//					let green = color.usingColorSpace(.deviceRGB)?.greenComponent,
+//					let blue = color.usingColorSpace(.deviceRGB)?.blueComponent
+//				{
+//					return round(red * 100) != round(green * 100) || round(red * 100) != round(blue * 100)
+//				}
+//
+//				return false
+//			}) {
+//				let item = NSMenuItem(title: key, action: nil, keyEquivalent: "")
+//				item.image = swatch(size: size, color: crayons.color(withKey: key) ?? .red)
+//				menu.addItem(item)
+//			}
+		}
+	}
+
+	@IBAction func jobSelect(_ sender: NSPopUpButton) {
+		let title = sender.titleOfSelectedItem
+		let currentActivity = activitySelect.titleOfSelectedItem
+		guard let job = QuoJob.shared.jobs?.first(where: { $0.title == title }) else { return }
+
+		let type = job.type
+
+		tracking.type = type
+		tracking.job = job
+
+		taskSelect.removeAllItems()
+		activitySelect.removeAllItems()
+
+		if let tasks = QuoJob.shared.tasks {
+			let taskTitles = tasks.filter({ $0.job!.id == job.id }).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
+
+			if (taskTitles.count > 0) {
+				taskSelect.addItem(withTitle: "Aufgabe wählen")
+				taskSelect.addItems(withTitles: taskTitles as! [String])
+				taskSelect.isEnabled = true
+			} else {
+				taskSelect.isEnabled = false
+			}
+		}
+
+		if let activities = QuoJob.shared.activities {
+			let activityTitles = activities.filter({ ((type?.internal_service)! && $0.internal_service) || ((type?.productive_service)! && $0.external_service) }).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
+			activitySelect.addItem(withTitle: "Leistungsart wählen")
+			activitySelect.addItems(withTitles: activityTitles as! [String])
+
+			if let currentActivity = currentActivity, let currentIndex = activitySelect.itemTitles.firstIndex(of: currentActivity) {
+				activitySelect.selectItem(at: currentIndex)
+			} else {
+				activitySelect.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5).cgColor
+			}
+		}
+	}
+
+	@IBAction func taskSelect(_ sender: NSPopUpButton) {
+		let title = sender.titleOfSelectedItem
+		if let task = QuoJob.shared.tasks?.first(where: { $0.title == title }) {
+			tracking.task = task
+		} else {
+			tracking.task = nil
+		}
+	}
+
+	@IBAction func activitySelect(_ sender: NSPopUpButton) {
+		let title = sender.titleOfSelectedItem
+		guard let activity = QuoJob.shared.activities?.first(where: { $0.title == title }) else { return }
+
+		activitySelect.layer?.backgroundColor = CGColor.clear
+		tracking.activity = activity
+	}
+
 	@IBAction func deleteTracking(_ sender: NSButton) {
 		guard let tracking = tracking else { return }
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 		context.delete(tracking)
 
 		do {
@@ -197,28 +332,33 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	@IBAction func cancel(_ sender: NSButton) {
 		guard let tracking = tracking else { return }
 
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 		context.refresh(tracking, mergeChanges: false)
 		removeFromParent()
 	}
 
 	@IBAction func save(_ sender: NSButton) {
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
-
-		if (tracking == nil) {
-			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-			let tracking = NSManagedObject(entity: entity!, insertInto: context)
-			let trackingValues = [
-				"date_start": Calendar.current.date(bySetting: .second, value: 0, of: Date()) as Any,
-				"date_end": Calendar.current.date(bySetting: .second, value: 0, of: Date()) as Any
-			]
-
-			tracking.setValuesForKeys(trackingValues)
-		}
+		tracking.exported = SyncStatus.pending.rawValue
 
 		do {
-			try context.save()
+			try self.context.save()
 			removeFromParent()
+
+			QuoJob.shared.exportTracking(tracking: tracking).done { result in
+				if
+					let hourbooking = result["hourbooking"] as? [String: Any],
+					let id = hourbooking["id"] as? String
+				{
+					self.tracking.id = id
+					self.tracking.exported = SyncStatus.success.rawValue
+				} else {
+					self.tracking.exported = SyncStatus.error.rawValue
+				}
+
+				try self.context.save()
+			}.catch { error in
+				self.tracking.exported = SyncStatus.error.rawValue
+				try? self.context.save()
+			}
 		} catch let error {
 			print(error)
 		}
