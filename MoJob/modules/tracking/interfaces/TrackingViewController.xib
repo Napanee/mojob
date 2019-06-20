@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="activitySelect" destination="7F7-jP-V9e" id="fIf-Id-9az"/>
                 <outlet property="commentLabel" destination="6ph-FO-APw" id="Ad9-Gq-pcS"/>
+                <outlet property="favoriteTracking" destination="q11-uO-dg3" id="7U1-5f-Vwe"/>
                 <outlet property="jobSelect" destination="PL2-uz-BXc" id="QCY-MF-9Ga"/>
                 <outlet property="stopTracking" destination="tNo-i9-B9g" id="wPb-wd-qC8"/>
                 <outlet property="taskSelect" destination="snq-4k-rTw" id="cW2-iw-ABk"/>
@@ -55,11 +56,27 @@
                                             <action selector="stopTracking:" target="-2" id="WgR-XQ-rIf"/>
                                         </connections>
                                     </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q11-uO-dg3">
+                                        <rect key="frame" x="170" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="R6d-IX-hqO"/>
+                                            <constraint firstAttribute="height" constant="30" id="ysV-eo-gGP"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="bevel" title="Button" bezelStyle="regularSquare" image="star-empty" imagePosition="only" alignment="center" alternateImage="star-filled" imageScaling="proportionallyUpOrDown" inset="2" id="P3g-8B-zmJ">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="favoriteTracking:" target="-2" id="Rcd-Eg-m9F"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="eyr-qf-dUK" firstAttribute="centerX" secondItem="fu1-3e-qLE" secondAttribute="centerX" id="3VU-RY-9dm"/>
                                     <constraint firstItem="eyr-qf-dUK" firstAttribute="centerY" secondItem="fu1-3e-qLE" secondAttribute="centerY" constant="-10" id="Hpc-4R-CKk"/>
+                                    <constraint firstAttribute="bottom" secondItem="q11-uO-dg3" secondAttribute="bottom" id="JHb-GQ-uO4"/>
                                     <constraint firstItem="tNo-i9-B9g" firstAttribute="top" secondItem="eyr-qf-dUK" secondAttribute="bottom" constant="5" id="NcA-gr-0vv"/>
+                                    <constraint firstAttribute="trailing" secondItem="q11-uO-dg3" secondAttribute="trailing" id="kAj-Ha-jpr"/>
                                     <constraint firstAttribute="width" constant="200" id="mFb-t5-gDm"/>
                                     <constraint firstItem="tNo-i9-B9g" firstAttribute="centerX" secondItem="fu1-3e-qLE" secondAttribute="centerX" id="saI-jN-u7B"/>
                                     <constraint firstAttribute="height" constant="200" id="scF-BD-3OD"/>
@@ -223,6 +240,8 @@
         </scrollView>
     </objects>
     <resources>
+        <image name="star-empty" width="30" height="29"/>
+        <image name="star-filled" width="30" height="29"/>
         <image name="stop" width="20" height="20"/>
     </resources>
 </document>

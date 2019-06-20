@@ -10,11 +10,40 @@ import Cocoa
 
 class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
+	var starFilled = NSImage(named: "star-filled")
+	var starEmpty = NSImage(named: "star-empty")
 	var userDefaults = UserDefaults()
 	var timer = Timer()
 	var startDate = Date()
+	var isFavorite: Bool {
+		set {
+			currentTracking.job?.isFavorite = newValue
+
+			if (newValue) {
+				favoriteTracking.image = starFilled
+			} else {
+				favoriteTracking.image = starEmpty
+			}
+
+			do {
+				try context.save()
+			} catch let error {
+				print(error)
+			}
+		}
+
+		get {
+			return currentTracking.job?.isFavorite ?? false
+		}
+	}
 	var currentTracking: Tracking! {
 		didSet {
+			if let job = currentTracking.job {
+				favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
+			} else {
+				favoriteTracking.isHidden = true
+			}
+
 			if let jobs = QuoJob.shared.jobs {
 				let jobTitles = jobs.sorted(by: { $0.title! < $1.title! }).map({ $0.title })
 				let type = currentTracking.job?.type
@@ -77,6 +106,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 	@IBOutlet weak var taskSelect: NSPopUpButton!
 	@IBOutlet weak var activitySelect: NSPopUpButton!
 	@IBOutlet weak var stopTracking: NSButton!
+	@IBOutlet weak var favoriteTracking: NSButton!
 
 	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 	var _fetchedResultsControllerTrackings: NSFetchedResultsController<Tracking>? = nil
@@ -276,6 +306,10 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		} catch let error {
 			print(error)
 		}
+	}
+
+	@IBAction func favoriteTracking(_ sender: NSButton) {
+		isFavorite = sender.state == .on
 	}
 
 }
