@@ -215,20 +215,6 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 	@IBAction func stopTracking(_ sender: NSButton) {
 		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 
-//		var compoundPredicates = [NSPredicate]()
-//		compoundPredicates.append(NSPredicate(format: "exported == nil || exported == %@", argumentArray: [SyncStatus.error]))
-//		compoundPredicates.append(NSPredicate(format: "date_end != nil"))
-//
-//		//		if
-//		//			let todayStart = Date().startOfDay,
-//		//			let todayEnd = Date().endOfDay
-//		//		{
-//		//			compoundPredicates.append(NSPredicate(format: "date_start >= %@", argumentArray: [todayStart]))
-//		//			compoundPredicates.append(NSPredicate(format: "date_start <= %@", argumentArray: [todayEnd]))
-//		//		}
-//
-//		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
-
 		guard let currentTracking = (NSApp.delegate as! AppDelegate).currentTracking else { return }
 
 		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
@@ -236,7 +222,11 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		let mirror = Mirror(reflecting: currentTracking)
 
 		for (label, value) in mirror.children  {
-			tracking.setValue(value, forKey: label!)
+			guard let label = label else { continue }
+
+			if value is Job || value is Task || value is Activity || value is String || value is Date {
+				tracking.setValue(value, forKey: label)
+			}
 		}
 
 		tracking.setValue(Calendar.current.date(bySetting: .second, value: 0, of: Date()), forKey: "date_end")

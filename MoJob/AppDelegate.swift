@@ -15,16 +15,16 @@ struct TempTracking {
 	var activity: Activity?
 	var customJob: String?
 	var comment: String?
-	var dateStart: Date
+	var date_start: Date
 
 	init(customJob: String) {
 		self.customJob = customJob
-		self.dateStart = Calendar.current.date(bySetting: .second, value: 0, of: Date())!
+		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: Date())!
 	}
 
 	init(job: Job) {
 		self.job = job
-		self.dateStart = Calendar.current.date(bySetting: .second, value: 0, of: Date())!
+		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: Date())!
 	}
 }
 
