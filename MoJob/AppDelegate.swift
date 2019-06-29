@@ -50,10 +50,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 		QuoJob.shared.checkLoginStatus().done { _ in
 			self.syncData()
-		}.catch { error in
-			QuoJob.shared.loginWithKeyChain().done { _ in
+		}.catch { _ in
+			QuoJob.shared.loginWithKeyChain().done {
 				self.syncData()
-			}
+			}.catch { _ in }
 		}
 	}
 

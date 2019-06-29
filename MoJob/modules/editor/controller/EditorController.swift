@@ -236,7 +236,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		if
 			let title = sender.titleOfSelectedItem,
 			let crayons = NSColorList.init(named: "Crayons"),
-			let color = crayons.color(withKey: title)
+			let _ = crayons.color(withKey: title)
 		{
 			print(title)
 //			let colorData = NSKeyedArchiver.archivedData(withRootObject: color)
