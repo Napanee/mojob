@@ -10,14 +10,18 @@ import Cocoa
 
 class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
-	var starFilled = NSImage(named: "star-filled")
-	var starEmpty = NSImage(named: "star-empty")
-	var userDefaults = UserDefaults()
+	let starFilled = NSImage(named: "star-filled")?.tint(color: NSColor.systemYellow)
+	let starEmpty = NSImage(named: "star-empty")
+	let userDefaults = UserDefaults()
+
 	var timer = Timer()
 	var startDate = Date()
+	var currentTracking: TempTracking!
 	var isFavorite: Bool {
 		set {
-			currentTracking.job?.isFavorite = newValue
+			if let job = currentTracking.job {
+				job.isFavorite = newValue
+			}
 
 			if (newValue) {
 				favoriteTracking.image = starFilled
@@ -33,66 +37,11 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		}
 
 		get {
-			return currentTracking.job?.isFavorite ?? false
-		}
-	}
-	var currentTracking: Tracking! {
-		didSet {
 			if let job = currentTracking.job {
-				favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
-			} else {
-				favoriteTracking.isHidden = true
+				return job.isFavorite
 			}
 
-			if let jobs = QuoJob.shared.jobs {
-				let jobTitles = jobs.sorted(by: { $0.title! < $1.title! }).map({ $0.title })
-				let type = currentTracking.job?.type
-
-				if let customJobTitle = currentTracking.custom_job {
-					jobSelect.addItem(withTitle: customJobTitle)
-				}
-
-				jobSelect.addItems(withTitles: jobTitles as! [String])
-				jobSelect.lineBreakMode = .byTruncatingTail
-
-				if let index = jobTitles.firstIndex(of: currentTracking.job?.title) {
-					jobSelect.selectItem(at: index)
-				}
-
-				if let tasks = QuoJob.shared.tasks, let jobId = currentTracking.job?.id {
-					let taskTitles = tasks.filter({ $0.job!.id == jobId }).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
-
-					if (taskTitles.count > 0) {
-						taskSelect.addItems(withTitles: taskTitles as! [String])
-					} else {
-						taskSelect.isEnabled = false
-					}
-				} else {
-					taskSelect.isEnabled = false
-				}
-
-				if let activities = QuoJob.shared.activities {
-					let activityTitles = activities.filter({ (activity: Activity) -> Bool in
-						guard let type = type else { return activity.external_service }
-
-						return (type.internal_service && activity.internal_service) || (type.productive_service && activity.external_service)
-					}).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
-
-					activitySelect.addItems(withTitles: activityTitles as! [String])
-					activitySelect.wantsLayer = true
-					activitySelect.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5).cgColor
-
-					if
-						let activityId = userDefaults.object(forKey: "activity") as? String,
-						let title = activities.first(where: { $0.id == activityId })?.title,
-						let index = activityTitles.firstIndex(of: title)
-					{
-						activitySelect.selectItem(at: index + 1)
-						activitySelect.layer?.backgroundColor = CGColor.clear
-						stopTracking.isEnabled = true
-					}
-				}
-			}
+			return false
 		}
 	}
 
@@ -109,45 +58,33 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 	@IBOutlet weak var favoriteTracking: NSButton!
 
 	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
-	var _fetchedResultsControllerTrackings: NSFetchedResultsController<Tracking>? = nil
-	var fetchedResultControllerTrackings: NSFetchedResultsController<Tracking> {
-		if (_fetchedResultsControllerTrackings != nil) {
-			return _fetchedResultsControllerTrackings!
-		}
-
-		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-
-		fetchRequest.predicate = NSPredicate(format: "date_end == nil")
-
-		fetchRequest.sortDescriptors = [
-			NSSortDescriptor(key: "date_start", ascending: true)
-		]
-
-		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-
-		_fetchedResultsControllerTrackings = resultsController
-
-		do {
-			try _fetchedResultsControllerTrackings!.performFetch()
-		} catch {
-			let nserror = error as NSError
-			fatalError("Unresolved error \(nserror)")
-		}
-
-		return _fetchedResultsControllerTrackings!
-	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let currentTracking = fetchedResultControllerTrackings.fetchedObjects?.first {
-			self.currentTracking = currentTracking
+		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+		RunLoop.main.add(timer, forMode: .common)
+
+		currentTracking = (NSApp.delegate as! AppDelegate).currentTracking
+
+		if let job = currentTracking.job {
+			if (job.isFavorite) {
+				favoriteTracking.image = starFilled
+				favoriteTracking.state = .on
+			} else {
+				favoriteTracking.image = starEmpty
+				favoriteTracking.state = .off
+			}
+		} else {
+			favoriteTracking.isHidden = true
 		}
 
 		commentLabel.delegate = self
 		stopTracking.isEnabled = false
 
-		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+		initJobSelect()
+		initTaskSelect()
+		initActivitySelect()
 	}
 
 	func controlTextDidChange(_ obj: Notification) {
@@ -156,11 +93,56 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		let text = textField.stringValue
 
 		currentTracking.comment = text
+	}
 
-		do {
-			try context.save()
-		} catch let error {
-			print(error)
+	func initJobSelect() {
+		if let jobs = QuoJob.shared.jobs {
+			let jobTitles: [String] = jobs.sorted(by: { $0.title! < $1.title! }).map({ $0.title! })
+
+			if let customJobTitle = currentTracking.customJob {
+				jobSelect.addItem(withTitle: customJobTitle)
+			}
+
+			jobSelect.addItems(withTitles: jobTitles)
+			jobSelect.lineBreakMode = .byTruncatingTail
+
+			if let job = currentTracking.job, let index = jobTitles.firstIndex(of: job.title!) {
+				jobSelect.selectItem(at: index)
+			}
+		}
+	}
+
+	func initTaskSelect() {
+		taskSelect.isEnabled = false
+
+		if let tasks = QuoJob.shared.tasks, let job = currentTracking.job, let jobId = job.id {
+			let taskTitles: [String] = tasks.filter({ $0.job!.id == jobId }).sorted(by: { $0.title! < $1.title! }).map({ $0.title! })
+
+			if (taskTitles.count > 0) {
+				taskSelect.addItems(withTitles: taskTitles)
+				taskSelect.isEnabled = true
+			}
+		}
+	}
+
+	func initActivitySelect() {
+		if let activities = QuoJob.shared.activities {
+			let activityTitles: [String] = activities.filter({ (activity: Activity) -> Bool in
+				guard let job = currentTracking.job, let type = job.type else { return activity.external_service }
+
+				return (type.internal_service && activity.internal_service) || (type.productive_service && activity.external_service)
+			}).sorted(by: { $0.title! < $1.title! }).map({ $0.title! })
+
+			activitySelect.addItems(withTitles: activityTitles)
+
+			if
+				let activityId = userDefaults.object(forKey: "activity") as? String,
+				let title = activities.first(where: { $0.id == activityId })?.title,
+				let index = activityTitles.firstIndex(of: title)
+			{
+				activitySelect.selectItem(at: index + 1)
+				stopTracking.isEnabled = true
+			}
 		}
 	}
 
@@ -184,12 +166,6 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		currentTracking.task = nil
 		taskSelect.removeAllItems()
 		activitySelect.removeAllItems()
-
-		do {
-			try context.save()
-		} catch let error {
-			print(error)
-		}
 		
 		if let tasks = QuoJob.shared.tasks {
 			let taskTitles = tasks.filter({ $0.job!.id == job.id }).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
@@ -211,7 +187,6 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 			if let currentActivity = currentActivity, let currentIndex = activitySelect.itemTitles.firstIndex(of: currentActivity) {
 				activitySelect.selectItem(at: currentIndex)
 			} else {
-				activitySelect.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5).cgColor
 				stopTracking.isEnabled = false
 			}
 		}
@@ -224,12 +199,6 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		} else {
 			currentTracking.task = nil
 		}
-
-		do {
-			try context.save()
-		} catch let error {
-			print(error)
-		}
 	}
 	
 	@IBAction func activitySelect(_ sender: NSPopUpButton) {
@@ -240,19 +209,11 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		stopTracking.isEnabled = true
 		currentTracking.activity = activity
 
-		do {
-			try context.save()
-
-			userDefaults.set(activity.id, forKey: "activity")
-		} catch let error {
-			print(error)
-		}
+		userDefaults.set(activity.id, forKey: "activity")
 	}
 
 	@IBAction func stopTracking(_ sender: NSButton) {
 		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
-		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-
 
 //		var compoundPredicates = [NSPredicate]()
 //		compoundPredicates.append(NSPredicate(format: "exported == nil || exported == %@", argumentArray: [SyncStatus.error]))
@@ -268,43 +229,41 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 //
 //		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
 
-		fetchRequest.predicate = NSPredicate(format: "exported == nil")
-		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_start", ascending: false)]
+		guard let currentTracking = (NSApp.delegate as! AppDelegate).currentTracking else { return }
 
-		let resultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
+		let tracking = NSManagedObject(entity: entity!, insertInto: context)
+		let mirror = Mirror(reflecting: currentTracking)
 
-		do {
-			try resultController.performFetch()
+		for (label, value) in mirror.children  {
+			tracking.setValue(value, forKey: label!)
+		}
 
-			guard let currentTracking = resultController.fetchedObjects?.first else { return }
+		tracking.setValue(Calendar.current.date(bySetting: .second, value: 0, of: Date()), forKey: "date_end")
+		tracking.setValue(currentTracking.job != nil ? SyncStatus.pending.rawValue : SyncStatus.error.rawValue, forKey: "exported")
 
-			currentTracking.date_end = Calendar.current.date(bySetting: .second, value: 0, of: Date())
-			currentTracking.exported = currentTracking.job != nil ? SyncStatus.pending.rawValue : SyncStatus.error.rawValue
-			try? context.save()
+		try? context.save()
 
-			if (currentTracking.job != nil) {
-				QuoJob.shared.exportTracking(tracking: currentTracking).done { result in
-					if
-						let hourbooking = result["hourbooking"] as? [String: Any],
-						let id = hourbooking["id"] as? String
-					{
-						currentTracking.id = id
-						currentTracking.exported = SyncStatus.success.rawValue
-						try context.save()
-					}
-				}.catch { error in
-					currentTracking.exported = SyncStatus.error.rawValue
-					try? context.save()
-					print(error)
+		if let _ = currentTracking.job, let tracking = tracking as? Tracking {
+			QuoJob.shared.exportTracking(tracking: tracking).done { result in
+				if
+					let hourbooking = result["hourbooking"] as? [String: Any],
+					let id = hourbooking["id"] as? String
+				{
+					tracking.id = id
+					tracking.exported = SyncStatus.success.rawValue
+					try context.save()
 				}
+			}.catch { error in
+				tracking.exported = SyncStatus.error.rawValue
+				try? context.save()
+				print(error)
 			}
+		}
 
-			let window = (NSApp.delegate as! AppDelegate).window
-			if let contentViewController = window?.contentViewController as? SplitViewController {
-				contentViewController.showJobList()
-			}
-		} catch let error {
-			print(error)
+		let window = (NSApp.delegate as! AppDelegate).window
+		if let contentViewController = window?.contentViewController as? SplitViewController {
+			contentViewController.showJobList()
 		}
 	}
 

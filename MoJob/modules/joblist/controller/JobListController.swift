@@ -28,7 +28,7 @@ class JobListController: NSViewController {
 	@IBOutlet weak var favoritesCollectionHeight: NSLayoutConstraint!
 	@IBOutlet weak var jobsCollectionHeight: NSLayoutConstraint!
 
-	let favorites: [String] = ["Foo", "bar"]
+	var favorites: [Job] = []
 	var jobsFiltered: [Job] = []
 	var jobListSelectedIndex: Int?
 	var currentItem: JobItem? = nil
@@ -72,6 +72,10 @@ class JobListController: NSViewController {
 
 		jobsCollectionView.isHidden = true
 		filterField.customDelegate = self
+
+		if let jobs = fetchedResultControllerJobs.fetchedObjects {
+			favorites = jobs.filter({ $0.isFavorite })
+		}
 
 		_configureCollectionView(collectionView: favoritesCollectionView)
 		_configureCollectionView(collectionView: jobsCollectionView)
@@ -199,31 +203,14 @@ extension JobListController: FilterFieldDelegate {
 		guard [125, 126, 36].contains(keyCode) else { return }
 
 		if (keyCode == 36) { // key enter
-			let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
-			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-			let tracking = NSManagedObject(entity: entity!, insertInto: context)
-			var trackingValues = [
-				"date_start": Calendar.current.date(bySetting: .second, value: 0, of: Date()) as Any,
-				"custom_job": filterField.stringValue as Any
-			]
-
-			if let job = currentItem?.job {
-				trackingValues["job"] = job
-				trackingValues["type"] = job.type
-				trackingValues["custom_job"] = nil
-			}
-
-			tracking.setValuesForKeys(trackingValues)
-
-			do {
-				try context.save()
-
-				let window = (NSApp.delegate as! AppDelegate).window
-				if let contentViewController = window?.contentViewController as? SplitViewController {
-					contentViewController.showTracking()
+			if let appDelegate = NSApp.delegate as? AppDelegate, let window = appDelegate.window, let contentViewController = window.contentViewController as? SplitViewController {
+				if let currentItem = currentItem, let job = currentItem.job {
+					appDelegate.currentTracking(job: job)
+				} else {
+					appDelegate.currentTracking(jobTitle: filterField.stringValue)
 				}
-			} catch let error {
-				print(error)
+
+				contentViewController.showTracking()
 			}
 		}
 
@@ -327,7 +314,9 @@ extension JobListController: NSCollectionViewDataSource {
 
 		guard let collectionViewItem = item as? FavoriteItem else {return item}
 
-		collectionViewItem.textField?.stringValue = favorites[indexPath.item]
+		let job = favorites[indexPath.item]
+		collectionViewItem.job = job
+		collectionViewItem.textField?.stringValue = "\(job.number!) - \(job.title!)"
 
 		return collectionViewItem
 	}

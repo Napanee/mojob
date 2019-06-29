@@ -8,12 +8,41 @@
 
 import Cocoa
 
+
+struct TempTracking {
+	var job: Job?
+	var task: Task?
+	var activity: Activity?
+	var customJob: String?
+	var comment: String?
+	var dateStart: Date
+
+	init(customJob: String) {
+		self.customJob = customJob
+		self.dateStart = Calendar.current.date(bySetting: .second, value: 0, of: Date())!
+	}
+
+	init(job: Job) {
+		self.job = job
+		self.dateStart = Calendar.current.date(bySetting: .second, value: 0, of: Date())!
+	}
+}
+
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
 	@IBOutlet weak var window: NSWindow!
+	var _currentTracking: TempTracking?
+	var currentTracking: TempTracking? {
+		set {
+			_currentTracking = newValue
+		}
+		get {
+			return _currentTracking
+		}
+	}
 	var mainWindowController: MainWindowController?
-
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		mainWindowController = MainWindowController()
@@ -37,6 +66,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 				//Handle error or give feedback to the user
 				print(error.localizedDescription)
 		}
+	}
+
+	func currentTracking(jobTitle: String) {
+		currentTracking = TempTracking(customJob: jobTitle)
+	}
+
+	func currentTracking(job: Job) {
+		currentTracking = TempTracking(job: job)
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {

@@ -16,6 +16,22 @@ extension NSImage.Name {
 	static let stop = NSImage.Name("stop")
 }
 
+extension NSImage {
+	func tint(color: NSColor) -> NSImage {
+		let image = self.copy() as! NSImage
+		image.lockFocus()
+
+		color.set()
+
+		let imageRect = NSRect(origin: NSZeroPoint, size: image.size)
+		imageRect.fill(using: .sourceAtop)
+
+		image.unlockFocus()
+
+		return image
+	}
+}
+
 extension Date {
 	var month: String {
 		let dateFormatter = DateFormatter()
