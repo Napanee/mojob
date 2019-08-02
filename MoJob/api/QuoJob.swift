@@ -261,7 +261,7 @@ class QuoJob {
 		}
 
 		if let types = fetchedResultControllerType.fetchedObjects {
-			bookingType = types.first(where: { $0.id == tracking.type?.id })
+			bookingType = types.first(where: { $0.id == tracking.job?.type?.id })
 		}
 
 		if let activity = tracking.activity {

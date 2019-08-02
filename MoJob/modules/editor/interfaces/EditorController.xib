@@ -10,12 +10,14 @@
                 <outlet property="activitySelect" destination="Lt3-1U-KhP" id="Qql-zU-GHa"/>
                 <outlet property="colorPicker" destination="2bi-3y-qE4" id="BAO-xL-2ID"/>
                 <outlet property="comment" destination="XcE-nf-wbv" id="KFf-yO-U9D"/>
+                <outlet property="deleteButton" destination="1Am-V5-hJa" id="ql3-WO-seS"/>
                 <outlet property="fromDay" destination="pwd-lG-4Ll" id="Qym-x6-L03"/>
                 <outlet property="fromHour" destination="PWX-Cr-K1r" id="epd-v0-zZi"/>
                 <outlet property="fromMinute" destination="imT-nJ-o00" id="KPy-8v-Abg"/>
                 <outlet property="fromMonth" destination="imz-oH-pr6" id="ReE-DD-LeQ"/>
                 <outlet property="fromYear" destination="ef2-mf-82k" id="Ls0-7n-cDY"/>
                 <outlet property="jobSelect" destination="hg2-CK-HXt" id="psW-d3-Ucs"/>
+                <outlet property="saveButton" destination="SJk-dW-6EJ" id="OUY-is-Fy0"/>
                 <outlet property="taskSelect" destination="NWP-W7-dZN" id="uZx-O6-DpZ"/>
                 <outlet property="untilDay" destination="6Gk-B7-Zib" id="8et-hj-jFi"/>
                 <outlet property="untilHour" destination="t3e-Cf-nTC" id="lrk-7Z-8SL"/>
@@ -59,7 +61,7 @@
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SJk-dW-6EJ">
                                     <rect key="frame" x="551" y="20" width="89" height="24"/>
-                                    <buttonCell key="cell" type="bevel" title="Speichern" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="jlw-gx-q4U">
+                                    <buttonCell key="cell" type="bevel" title="Speichern" bezelStyle="rounded" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="jlw-gx-q4U">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="systemThin" size="20"/>
                                     </buttonCell>
