@@ -17,11 +17,16 @@ protocol FavoritesItemDelegate {
 	func onDeleteFavorite()
 }
 
-class JobListController: NSViewController {
+protocol AddFavoriteDelegate {
+	func onDismiss()
+}
+
+class JobListController: NSViewController, AddFavoriteDelegate {
 
 	@IBOutlet weak var favoritesCollectionView: NSCollectionView!
 	@IBOutlet weak var jobsCollectionView: NSCollectionView!
 
+	@IBOutlet weak var favoritesView: NSView!
 	@IBOutlet weak var stackView: NSStackView!
 	@IBOutlet weak var errorMessage: NSTextField!
 	@IBOutlet weak var warningView: NSView!
@@ -79,6 +84,10 @@ class JobListController: NSViewController {
 
 		if let jobs = fetchedResultControllerJobs.fetchedObjects {
 			favorites = jobs.filter({ $0.isFavorite })
+
+			if (jobs.count == 0) {
+				favoritesView.isHidden = true
+			}
 		}
 
 		_configureCollectionView(collectionView: favoritesCollectionView)
@@ -93,7 +102,6 @@ class JobListController: NSViewController {
 		}
 
 		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 	}
 
 	override func viewDidAppear() {
@@ -107,10 +115,6 @@ class JobListController: NSViewController {
 	override func viewWillLayout() {
 		favoritesCollectionView.collectionViewLayout?.invalidateLayout()
 		jobsCollectionView.collectionViewLayout?.invalidateLayout()
-	}
-
-	@objc func managedObjectContextDidSave(notification: NSNotification) {
-		try! fetchedResultControllerJobs.performFetch()
 	}
 
 	func showWarning(error: String) {
@@ -160,6 +164,18 @@ class JobListController: NSViewController {
 		}
 	}
 
+	func onDismiss() {
+		if let jobs = fetchedResultControllerJobs.fetchedObjects {
+			favorites = jobs.filter({ $0.isFavorite })
+		}
+
+		favoritesCollectionView.reloadData()
+
+		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
+			favoritesCollectionHeight.constant = heightFavoritesCollection
+		}
+	}
+
 	final private func _configureCollectionView(collectionView: NSCollectionView) {
 		let padding = NSEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
 		let flowLayout = NSCollectionViewFlowLayout()
@@ -170,7 +186,11 @@ class JobListController: NSViewController {
 	}
 
 	@IBAction func addFavorit(_ sender: NSButton) {
+		let addFavoriteVC = AddFavorite(nibName: "AddFavorite", bundle: nil)
+		addFavoriteVC.delegate = self
 
+		let appDelegate = (NSApp.delegate as! AppDelegate)
+		appDelegate.window.contentViewController?.presentAsSheet(addFavoriteVC)
 	}
 
 	@objc func onLogin() {
@@ -183,7 +203,17 @@ class JobListController: NSViewController {
 	@objc func onSync() {
 		QuoJob.shared.syncData()
 			.done {
-				print("done!")
+				self.warningView.isHidden = true
+
+				try! self.fetchedResultControllerJobs.performFetch()
+
+				if let jobs = self.fetchedResultControllerJobs.fetchedObjects {
+					self.favorites = jobs.filter({ $0.isFavorite })
+
+					if (jobs.count > 0) {
+						self.favoritesView.isHidden = false
+					}
+				}
 			}
 			.catch { error in
 				//Handle error or give feedback to the user

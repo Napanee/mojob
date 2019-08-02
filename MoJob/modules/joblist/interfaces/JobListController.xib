@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,6 +10,7 @@
                 <outlet property="errorMessage" destination="LIJ-At-gPX" id="Qub-oD-TMz"/>
                 <outlet property="favoritesCollectionHeight" destination="qCq-gF-9Yn" id="HkQ-3R-MqB"/>
                 <outlet property="favoritesCollectionView" destination="r6J-iM-kkg" id="7aL-js-ho2"/>
+                <outlet property="favoritesView" destination="jx2-FW-tWk" id="8JT-vf-v7j"/>
                 <outlet property="filterField" destination="pex-Xc-Zhc" id="9BN-4o-RTt"/>
                 <outlet property="jobsCollectionHeight" destination="58C-vH-iMk" id="rI5-sI-Nfo"/>
                 <outlet property="jobsCollectionView" destination="moy-nP-Roy" id="RMr-S4-ypW"/>
@@ -245,6 +246,7 @@
                 <constraint firstAttribute="bottom" secondItem="22F-fk-Pv4" secondAttribute="bottom" constant="10" id="VO6-ab-cFn"/>
                 <constraint firstItem="22F-fk-Pv4" firstAttribute="top" secondItem="CTM-rG-bJc" secondAttribute="top" constant="10" id="mfL-hk-Y9X"/>
             </constraints>
+            <point key="canvasLocation" x="-489" y="766"/>
         </customView>
     </objects>
     <resources>

@@ -116,7 +116,9 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		taskSelect.isEnabled = false
 
 		if let tasks = QuoJob.shared.tasks, let job = currentTracking.job, let jobId = job.id {
-			let taskTitles: [String] = tasks.filter({ $0.job!.id == jobId }).sorted(by: { $0.title! < $1.title! }).map({ $0.title! })
+			let taskTitles: [String] = tasks.filter({ $0.job!.id == jobId })
+				.sorted(by: { $0.title! < $1.title! })
+				.map({ $0.title! })
 
 			if (taskTitles.count > 0) {
 				taskSelect.addItems(withTitles: taskTitles)

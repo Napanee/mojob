@@ -12,6 +12,8 @@
 		BBFA9EFCC88576C5F1D1AA8D /* Pods_MoJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D682E214AB8E8C07045252E /* Pods_MoJob.framework */; };
 		E8138A2422525B99008DAA62 /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2322525B99008DAA62 /* structs.swift */; };
 		E8138A2622525BBF008DAA62 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2522525BBF008DAA62 /* extensions.swift */; };
+		E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6122F4A13A004EF977 /* AddFavorite.swift */; };
+		E81DEE6422F4A1CD004EF977 /* AddFavorite.xib in Resources */ = {isa = PBXBuildFile; fileRef = E81DEE6322F4A1CD004EF977 /* AddFavorite.xib */; };
 		E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E821178F220E07B1003D7578 /* AppDelegate.swift */; };
 		E8211793220E07B1003D7578 /* MoJob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8211791220E07B1003D7578 /* MoJob.xcdatamodeld */; };
 		E8211795220E07B2003D7578 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8211794220E07B2003D7578 /* Assets.xcassets */; };
@@ -88,6 +90,8 @@
 		9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJobUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8138A2322525B99008DAA62 /* structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = structs.swift; sourceTree = "<group>"; };
 		E8138A2522525BBF008DAA62 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		E81DEE6122F4A13A004EF977 /* AddFavorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavorite.swift; sourceTree = "<group>"; };
+		E81DEE6322F4A1CD004EF977 /* AddFavorite.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFavorite.xib; sourceTree = "<group>"; };
 		E821178C220E07B1003D7578 /* MoJob.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoJob.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E821178F220E07B1003D7578 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8211792220E07B1003D7578 /* MoJob.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoJob.xcdatamodel; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 				83B674A85D82A77D9B0D008A /* Frameworks */,
 			);
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		E821178D220E07B1003D7578 /* Products */ = {
 			isa = PBXGroup;
@@ -334,6 +339,7 @@
 				E82117D4220E1AF6003D7578 /* JobListController.swift */,
 				E82117DD220E470C003D7578 /* FavoriteItem.swift */,
 				E82117FF220F5364003D7578 /* JobItem.swift */,
+				E81DEE6122F4A13A004EF977 /* AddFavorite.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -344,6 +350,7 @@
 				E82117D6220E1B04003D7578 /* JobListController.xib */,
 				E82117DB220E4593003D7578 /* FavoriteItem.xib */,
 				E8211801220F5384003D7578 /* JobItem.xib */,
+				E81DEE6322F4A1CD004EF977 /* AddFavorite.xib */,
 			);
 			path = interfaces;
 			sourceTree = "<group>";
@@ -675,6 +682,7 @@
 				E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */,
 				E8211798220E07B2003D7578 /* MainMenu.xib in Resources */,
 				E863306522481BED00A8E946 /* Login.xib in Resources */,
+				E81DEE6422F4A1CD004EF977 /* AddFavorite.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,6 +828,7 @@
 				E8CACC782211DE6300675688 /* functions.swift in Sources */,
 				E8731AE5225952B1006947B0 /* constants.swift in Sources */,
 				E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */,
+				E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */,
 				E863305D2245863600A8E946 /* PopUpCell.swift in Sources */,
 				E8211800220F5364003D7578 /* JobItem.swift in Sources */,
 				E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */,
