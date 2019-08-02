@@ -13,6 +13,10 @@ protocol FilterFieldDelegate {
 	func onTextChange(with string: String)
 }
 
+protocol FavoritesItemDelegate {
+	func onDeleteFavorite()
+}
+
 class JobListController: NSViewController {
 
 	@IBOutlet weak var favoritesCollectionView: NSCollectionView!
@@ -287,7 +291,7 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 
 }
 
-extension JobListController: NSCollectionViewDataSource {
+extension JobListController: NSCollectionViewDataSource, FavoritesItemDelegate {
 
 	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
 		if (collectionView == jobsCollectionView) {
@@ -316,9 +320,22 @@ extension JobListController: NSCollectionViewDataSource {
 
 		let job = favorites[indexPath.item]
 		collectionViewItem.job = job
+		collectionViewItem.delegate = self
 		collectionViewItem.textField?.stringValue = "\(job.number!) - \(job.title!)"
 
 		return collectionViewItem
+	}
+
+	func onDeleteFavorite() {
+		if let jobs = fetchedResultControllerJobs.fetchedObjects {
+			favorites = jobs.filter({ $0.isFavorite })
+		}
+
+		favoritesCollectionView.reloadData()
+
+		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
+			favoritesCollectionHeight.constant = heightFavoritesCollection
+		}
 	}
 
 }

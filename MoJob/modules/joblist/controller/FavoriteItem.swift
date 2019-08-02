@@ -11,6 +11,7 @@ import Cocoa
 class FavoriteItem: NSCollectionViewItem {
 
 	var job: Job! = nil
+	var delegate: FavoritesItemDelegate!
 
 	@IBOutlet weak var deleteButton: NSButton!
 	@IBOutlet weak var startButton: NSButton!
@@ -22,6 +23,16 @@ class FavoriteItem: NSCollectionViewItem {
 	}
 
 	@IBAction func deleteButton(_ sender: NSButton) {
+		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+
+		job.isFavorite = false
+
+		do {
+			try context.save()
+			delegate.onDeleteFavorite()
+		} catch let error {
+			print(error)
+		}
 	}
 
 	@IBAction func startButton(_ sender: NSButton) {
