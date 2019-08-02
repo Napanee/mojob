@@ -93,9 +93,10 @@ class TrackingItem: NSView {
 		if let colorList = NSColorList.availableColorLists.first(where: { $0.name == "System" }) {
 			let systemColors = colorList.allKeys.filter({ $0.hasPrefix("system")})
 
-			if let colorName = systemColors.randomElement() {
-				color = colorList.color(withKey: colorName)
-			}
+			// @TODO change color
+//			if let colorName = systemColors.first {
+			color = colorList.color(withKey: "systemGrayColor")
+//			}
 		}
 
 		contentView.wantsLayer = true
