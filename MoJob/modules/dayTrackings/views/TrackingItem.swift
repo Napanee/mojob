@@ -117,6 +117,28 @@ class TrackingItem: NSView {
 		super.draw(dirtyRect)
 	}
 
+	override func rightMouseDown(with event: NSEvent) {
+		let rightClickMenu = NSMenu()
+		rightClickMenu.addItem(withTitle: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
+		rightClickMenu.addItem(withTitle: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
+
+		NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
+	}
+
+	@objc func onContextEdit() {
+		let window = (NSApp.delegate as! AppDelegate).window
+		if let tracking = tracking, let contentViewController = window?.contentViewController as? SplitViewController {
+			contentViewController.showEditor(with: tracking)
+		}
+	}
+
+	@objc func onContextDelete() {
+		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+		context.delete(tracking!)
+
+		try! context.save()
+	}
+
 	override func mouseDown(with event: NSEvent) {
 //		if let theHitView = view.window?.contentView?.hitTest((view.window?.mouseLocationOutsideOfEventStream)!) {
 			if (event.clickCount == 2) {
