@@ -240,10 +240,10 @@ class QuoJob {
 						seal.reject(ApiError.withMessage(errorMessages.unknown))
 					case .failure(let error):
 						switch error.localizedDescription {
-							case "A server with the specified hostname could not be found.":
-								seal.reject(ApiError.withMessage(errorMessages.vpnProblem))
-							default:
-								seal.reject(ApiError.withMessage(error.localizedDescription))
+						case "A server with the specified hostname could not be found.":
+							seal.reject(ApiError.withMessage(errorMessages.vpnProblem))
+						default:
+							seal.reject(ApiError.withMessage(error.localizedDescription))
 						}
 					}
 			}

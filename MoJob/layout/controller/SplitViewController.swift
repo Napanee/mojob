@@ -40,12 +40,6 @@ class SplitViewController: NSSplitViewController {
 		return NSRect(x: drawnRect.minX - 2, y: 0, width: drawnRect.width + 4, height: drawnRect.height)
 	}
 
-	override func splitViewDidResizeSubviews(_ notification: Notification) {
-		if let splitViews = (notification.object as? NSSplitView)?.subviews {
-			print(splitViews)
-		}
-	}
-
 	func showTracking() {
 		if let jobListViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is JobListController }) {
 			let trackingViewController = TrackingViewController(nibName: nibNames.TrackingViewController, bundle: nil)
@@ -53,7 +47,7 @@ class SplitViewController: NSSplitViewController {
 
 			trackingViewController.view.addConstraint(NSLayoutConstraint(item: trackingViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: trackingViewController.view.superview, attribute: .width, multiplier: 1, constant: 300))
 
-			NSAnimationContext.runAnimationGroup({ (context) -> Void in
+			NSAnimationContext.runAnimationGroup({ (_) -> Void in
 				splitViewItem.viewController.view.animator().alphaValue = 0
 			}, completionHandler: { () -> Void in
 				trackingViewController.view.alphaValue = 0
@@ -99,7 +93,7 @@ class SplitViewController: NSSplitViewController {
 
 			jobListViewControllerIndex.view.addConstraint(NSLayoutConstraint(item: jobListViewControllerIndex.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: jobListViewControllerIndex.view.superview, attribute: .width, multiplier: 1, constant: 300))
 
-			NSAnimationContext.runAnimationGroup({ (context) -> Void in
+			NSAnimationContext.runAnimationGroup({ (_) -> Void in
 				splitViewItem.viewController.view.animator().alphaValue = 0
 			}, completionHandler: { () -> Void in
 				jobListViewControllerIndex.view.alphaValue = 0

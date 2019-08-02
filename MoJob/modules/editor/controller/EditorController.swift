@@ -261,8 +261,9 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 
 	private func swatch(size: NSSize, color: NSColor) -> NSImage {
 		let image = NSImage(size: size)
+		let rect = NSMakeRect(0, 0, size.width, size.height)
 		image.lockFocus()
-		color.drawSwatch(in: NSMakeRect(0, 0, size.width, size.height))
+		color.drawSwatch(in: rect)
 		image.unlockFocus()
 
 		return image
@@ -274,7 +275,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 			let crayons = NSColorList.init(named: "Crayons"),
 			let _ = crayons.color(withKey: title)
 		{
-			print(title)
+//			print(title)
 //			let colorData = NSKeyedArchiver.archivedData(withRootObject: color)
 //			userDefaults.set(colorData, forKey: "backgroundColorActiveTracking")
 //			tracking.color = title
