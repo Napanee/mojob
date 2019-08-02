@@ -11,7 +11,7 @@ import Cocoa
 class JobItem: NSCollectionViewItem {
 
 	let backgroundLayer = CALayer()
-	var job: Job! = nil
+	var job: Job!
 	var isHighlighted: Bool! = false {
 		didSet {
 			updateBackground(value: isHighlighted)
@@ -26,6 +26,13 @@ class JobItem: NSCollectionViewItem {
 	func updateBackground(value: Bool) {
 		if let view = view as? CollectionItemView {
 			view.highlightBackground(is: value)
+		}
+	}
+
+	@IBAction func startButton(_ sender: NSButton) {
+		if let appDelegate = NSApp.delegate as? AppDelegate, let window = appDelegate.window, let contentViewController = window.contentViewController as? SplitViewController {
+			appDelegate.currentTracking(job: job)
+			contentViewController.showTracking()
 		}
 	}
 
