@@ -83,7 +83,7 @@
                             </constraints>
                         </customView>
                         <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGR-ie-qcI">
-                            <rect key="frame" x="30" y="212" width="610" height="29"/>
+                            <rect key="frame" x="22" y="212" width="618" height="29"/>
                             <subviews>
                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="2bi-3y-qE4">
                                     <rect key="frame" x="0.0" y="0.0" width="70" height="29"/>
@@ -106,7 +106,7 @@
                                     </connections>
                                 </popUpButton>
                                 <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hg2-CK-HXt">
-                                    <rect key="frame" x="80" y="0.0" width="530" height="29"/>
+                                    <rect key="frame" x="80" y="0.0" width="538" height="29"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="29" id="MQK-G2-07m"/>
                                     </constraints>
@@ -136,7 +136,7 @@
                             </customSpacing>
                         </stackView>
                         <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="NWP-W7-dZN">
-                            <rect key="frame" x="30" y="175" width="610" height="29"/>
+                            <rect key="frame" x="22" y="175" width="618" height="29"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="as6-dp-iJF"/>
                             </constraints>
@@ -156,7 +156,7 @@
                             </connections>
                         </popUpButton>
                         <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="Lt3-1U-KhP">
-                            <rect key="frame" x="30" y="138" width="610" height="29"/>
+                            <rect key="frame" x="22" y="138" width="618" height="29"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="MIo-Xt-V5v"/>
                             </constraints>
@@ -513,14 +513,14 @@
                         </customView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="NWP-W7-dZN" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="1fB-PW-wpP"/>
+                        <constraint firstItem="NWP-W7-dZN" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="22" id="1fB-PW-wpP"/>
                         <constraint firstItem="81b-du-VQj" firstAttribute="width" secondItem="c7j-df-kS2" secondAttribute="width" id="2KT-zi-hPo"/>
                         <constraint firstAttribute="trailing" secondItem="NWP-W7-dZN" secondAttribute="trailing" constant="30" id="ADM-Xm-RpQ"/>
                         <constraint firstAttribute="trailing" secondItem="XcE-nf-wbv" secondAttribute="trailing" constant="30" id="RMs-RY-D84"/>
                         <constraint firstItem="XcE-nf-wbv" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="aWU-bK-YUX"/>
                         <constraint firstItem="D7U-NT-K5Y" firstAttribute="width" secondItem="c7j-df-kS2" secondAttribute="width" id="eLo-D8-IDK"/>
-                        <constraint firstItem="HGR-ie-qcI" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="hQa-Ld-BS8"/>
-                        <constraint firstItem="Lt3-1U-KhP" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="o40-UZ-84S"/>
+                        <constraint firstItem="HGR-ie-qcI" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="22" id="hQa-Ld-BS8"/>
+                        <constraint firstItem="Lt3-1U-KhP" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="22" id="o40-UZ-84S"/>
                         <constraint firstAttribute="trailing" secondItem="Lt3-1U-KhP" secondAttribute="trailing" constant="30" id="tBM-ep-bee"/>
                         <constraint firstAttribute="trailing" secondItem="HGR-ie-qcI" secondAttribute="trailing" constant="30" id="xN6-PZ-6k5"/>
                     </constraints>

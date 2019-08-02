@@ -175,7 +175,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		let formatter = DateFormatter()
 		formatter.dateFormat = "YYYY/MM/dd HH:mm"
 
-		if (textField == fromMinute || textField == fromHour || textField == fromDay || textField == fromMonth || textField == fromYear) {
+		if ([fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField)) {
 			if let newDate = formatter.date(from: "\(fromYear.stringValue)/\(fromMonth.stringValue)/\(fromDay.stringValue) \(fromHour.stringValue):\(fromMinute.stringValue)"),
 				tempTracking.date_start.compare(newDate) != .orderedSame
 			{
@@ -183,7 +183,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 			}
 		}
 
-		if (textField == untilMinute || textField == untilHour || textField == untilDay || textField == untilMonth || textField == untilYear) {
+		if ([untilMinute, untilHour, untilDay, untilMonth, untilYear].contains(textField)) {
 			if let oldDate = tempTracking.date_end,
 				let newDate = formatter.date(from: "\(untilYear.stringValue)/\(untilMonth.stringValue)/\(untilDay.stringValue) \(untilHour.stringValue):\(untilMinute.stringValue)"),
 				oldDate.compare(newDate) != .orderedSame
@@ -208,6 +208,10 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 //	}
 
 	private func initColorPicker() {
+		colorPicker.isHidden = true
+		return
+
+		// @TODO ColorPicker
 		let menu = NSMenu()
 		let size = NSSize(width: 50, height: 19)
 
@@ -368,45 +372,42 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	}
 
 	@IBAction func save(_ sender: NSButton) {
-		if (tracking == nil) {
-			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-			let tracking = NSManagedObject(entity: entity!, insertInto: context)
-			let mirror = Mirror(reflecting: tempTracking!)
+		let currentTracking: Tracking!
 
-			for (label, value) in mirror.children  {
-				guard let label = label else { continue }
-
-				if value is Job || value is Task || value is Activity || value is String || value is Date {
-					tracking.setValue(value, forKey: label)
-				}
-			}
-
-			tracking.setValue(Calendar.current.date(bySetting: .second, value: 0, of: Date()), forKey: "date_end")
-			tracking.setValue(tempTracking.job != nil ? SyncStatus.pending.rawValue : SyncStatus.error.rawValue, forKey: "exported")
-
-			try? context.save()
-
-			if let _ = tempTracking.job, let tracking = tracking as? Tracking {
-				QuoJob.shared.exportTracking(tracking: tracking).done { result in
-					if
-						let hourbooking = result["hourbooking"] as? [String: Any],
-						let id = hourbooking["id"] as? String
-					{
-						tracking.id = id
-						tracking.exported = SyncStatus.success.rawValue
-						try self.context.save()
-					}
-					}.catch { error in
-						tracking.exported = SyncStatus.error.rawValue
-						try? self.context.save()
-						print(error)
-				}
-			}
-
-			removeFromParent()
+		if let tracking = tracking {
+			currentTracking = tracking
 		} else {
-			print("tracking")
+			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
+			currentTracking = NSManagedObject(entity: entity!, insertInto: context) as? Tracking
 		}
+
+		let mirror = Mirror(reflecting: tempTracking!)
+
+		for (label, value) in mirror.children  {
+			guard let label = label else { continue }
+
+			if value is Job || value is Task || value is Activity || value is String || value is Date {
+				currentTracking.setValue(value, forKey: label)
+			}
+		}
+
+		currentTracking.setValue(tempTracking.job != nil ? SyncStatus.pending.rawValue : SyncStatus.error.rawValue, forKey: "exported")
+
+		try? context.save()
+
+		QuoJob.shared.exportTracking(tracking: currentTracking).done { result in
+			if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
+				currentTracking.id = id
+				currentTracking.exported = SyncStatus.success.rawValue
+				try self.context.save()
+			}
+		}.catch { error in
+			currentTracking.exported = SyncStatus.error.rawValue
+			try? self.context.save()
+			print(error)
+		}
+
+		removeFromParent()
 	}
 
 }
