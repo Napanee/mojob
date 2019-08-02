@@ -58,7 +58,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="d0V-cn-9XQ"/>
                             </constraints>
-                            <textFieldCell key="cell" selectable="YES" id="xz1-Tc-8ws">
+                            <textFieldCell key="cell" id="xz1-Tc-8ws">
                                 <font key="font" metaFont="system"/>
                                 <string key="title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero </string>
                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
