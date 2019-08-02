@@ -94,13 +94,34 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 			}
 
 			if let tasks = QuoJob.shared.tasks {
-				let taskTitles = tasks.filter({ $0.job!.id == tracking.job?.id }).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
+				let taskTitles = tasks
+						.filter({ $0.job!.id == tracking.job?.id })
+						.sorted(by: { $0.title! < $1.title! })
+						.map({ task -> String in
+							var title = "\(task.title ?? "no title")"
+
+							if (task.hours_planed > 0) {
+								let avarage = round(task.hours_booked / task.hours_planed * 100)
+								title = "\(title) - \(avarage)%"
+							}
+
+							return title
+						})
 
 				if (taskTitles.count > 0) {
 					taskSelect.addItem(withTitle: "Aufgabe wählen")
-					taskSelect.addItems(withTitles: taskTitles as! [String])
+					taskSelect.addItems(withTitles: taskTitles)
 
-					if let index = taskTitles.firstIndex(of: tracking.task?.title) {
+					if let task = tracking.task, let index = taskTitles.firstIndex(where: { taskTitle -> Bool in
+						var title = "\(task.title ?? "no title")"
+
+						if (task.hours_planed > 0) {
+							let avarage = round(task.hours_booked / task.hours_planed * 100)
+							title = "\(title) - \(avarage)%"
+						}
+
+						return taskTitle == title
+					}) {
 						taskSelect.selectItem(at: index + 1)
 					}
 				} else {
@@ -316,11 +337,23 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		activitySelect.removeAllItems()
 
 		if let tasks = QuoJob.shared.tasks {
-			let taskTitles = tasks.filter({ $0.job!.id == job.id }).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
+			let taskTitles = tasks
+				.filter({ $0.job!.id == job.id })
+				.sorted(by: { $0.title! < $1.title! })
+				.map({ task -> String in
+					var title = "\(task.title ?? "no title")"
+
+					if (task.hours_planed > 0) {
+						let avarage = round(task.hours_booked / task.hours_planed * 10000) / 100
+						title = "\(title) - \(avarage)%"
+					}
+
+					return title
+				})
 
 			if (taskTitles.count > 0) {
 				taskSelect.addItem(withTitle: "Aufgabe wählen")
-				taskSelect.addItems(withTitles: taskTitles as! [String])
+				taskSelect.addItems(withTitles: taskTitles)
 				taskSelect.isEnabled = true
 			} else {
 				taskSelect.isEnabled = false
@@ -342,7 +375,19 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 
 	@IBAction func taskSelect(_ sender: NSPopUpButton) {
 		let title = sender.titleOfSelectedItem
-		if let task = QuoJob.shared.tasks?.first(where: { $0.title == title }) {
+		if let task = QuoJob.shared.tasks?
+			.first(where: { task -> Bool in
+				var taskTitle = "\(task.title ?? "no title")"
+
+				if (task.hours_planed > 0) {
+					let avarage = round(task.hours_booked / task.hours_planed * 10000) / 100
+					taskTitle = "\(taskTitle) - \(avarage)%"
+				}
+
+				return taskTitle == title
+			})
+		{
+			print(task)
 			tempTracking.task = task
 		} else {
 			tempTracking.task = nil
