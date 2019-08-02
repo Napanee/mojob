@@ -61,6 +61,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 
 		fromDay.dateDelegate = self
 		untilDay.dateDelegate = self
+		comment.delegate = self
 
 		jobSelect.removeAllItems()
 		taskSelect.removeAllItems()
@@ -190,6 +191,10 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 			{
 				tempTracking.date_end = newDate
 			}
+		}
+
+		if (textField == comment) {
+			tempTracking.comment = textField.stringValue
 		}
 
 		saveButton.isEnabled = formIsValid
