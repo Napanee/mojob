@@ -122,6 +122,11 @@ class TrackingItem: NSView {
 		rightClickMenu.addItem(withTitle: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
 		rightClickMenu.addItem(withTitle: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
 
+		if (tracking?.custom_job != nil) {
+			rightClickMenu.addItem(NSMenuItem.separator())
+			rightClickMenu.addItem(withTitle: "Aufteilen", action: #selector(onContextSplit), keyEquivalent: "")
+		}
+
 		NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
 	}
 
@@ -137,6 +142,14 @@ class TrackingItem: NSView {
 		context.delete(tracking!)
 
 		try! context.save()
+	}
+
+	@objc func onContextSplit() {
+		let splitTrackingVC = SplitTracking(nibName: "SplitTracking", bundle: nil)
+		splitTrackingVC.sourceTracking = tracking
+
+		let appDelegate = (NSApp.delegate as! AppDelegate)
+		appDelegate.window.contentViewController?.presentAsSheet(splitTrackingVC)
 	}
 
 	override func mouseDown(with event: NSEvent) {

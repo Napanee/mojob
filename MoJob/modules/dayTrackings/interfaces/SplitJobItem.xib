@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SplitJobItem" customModule="MoJob" customModuleProvider="target">
+            <connections>
+                <outlet property="jobSelect" destination="DEY-P1-2bS" id="qBt-dp-AsC"/>
+                <outlet property="view" destination="c22-O7-iKe" id="Viy-1L-Ha1"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="29"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="DEY-P1-2bS">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="29"/>
+                    <popUpButtonCell key="cell" type="bevel" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="BsP-qT-NiO" id="xAo-Ek-ABM">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="systemThin" size="20"/>
+                        <menu key="menu" id="Jrg-mL-xKO">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="BsP-qT-NiO"/>
+                                <menuItem title="Item 2" id="sGy-cb-Oam"/>
+                                <menuItem title="Item 3" id="XnC-BK-NCk"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+            </subviews>
+            <constraints>
+                <constraint firstItem="DEY-P1-2bS" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="IEq-Es-eXh"/>
+                <constraint firstAttribute="bottom" secondItem="DEY-P1-2bS" secondAttribute="bottom" id="Jqd-jt-YLz"/>
+                <constraint firstAttribute="trailing" secondItem="DEY-P1-2bS" secondAttribute="trailing" id="qol-lV-LWn"/>
+                <constraint firstItem="DEY-P1-2bS" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="sGh-9i-Rc2"/>
+            </constraints>
+        </customView>
+        <collectionViewItem id="twa-T1-Y1o" customClass="SplitJobItem" customModule="MoJob" customModuleProvider="target"/>
+    </objects>
+</document>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SplitTracking" customModule="MoJob" customModuleProvider="target">
+            <connections>
+                <outlet property="jobsCollectionHeight" destination="aFm-4o-yor" id="DhY-ba-BO9"/>
+                <outlet property="jobsCollectionView" destination="uZK-OH-MXw" id="SaW-1Q-vbo"/>
+                <outlet property="saveButton" destination="JNc-O4-Frg" id="m93-lu-8ch"/>
+                <outlet property="view" destination="c22-O7-iKe" id="BIE-Aq-oQW"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="250"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l9n-7I-HrA">
+                    <rect key="frame" x="28" y="196" width="148" height="24"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Tracking aufteilen" id="ZyQ-nl-AjI">
+                        <font key="font" metaFont="systemThin" size="20"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="fKx-1A-rlr">
+                    <rect key="frame" x="28" y="159" width="424" height="32"/>
+                    <textFieldCell key="cell" selectable="YES" title="Achtung: Aufgrund von Rundungen, kann es zu Abweichungen zur ursprünglichen Gesamtzeit kommen." id="SfA-mh-X4Y">
+                        <font key="font" metaFont="system" size="12"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <collectionView translatesAutoresizingMaskIntoConstraints="NO" id="uZK-OH-MXw">
+                    <rect key="frame" x="30" y="89" width="420" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="aFm-4o-yor"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="siZ-q1-CwD">
+                        <size key="itemSize" width="50" height="50"/>
+                    </collectionViewFlowLayout>
+                    <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-2" id="7HJ-e1-wX4"/>
+                        <outlet property="delegate" destination="-2" id="zZg-Bb-UcW"/>
+                    </connections>
+                </collectionView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="abN-fw-FRl">
+                    <rect key="frame" x="30" y="68" width="153" height="16"/>
+                    <buttonCell key="cell" type="bevel" title="weiteren Job hinzufügen" bezelStyle="rounded" image="NSAddTemplate" imagePosition="left" alignment="center" imageScaling="proportionallyDown" inset="2" id="1hN-qB-xGG">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="systemThin" size="12"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <action selector="addButton:" target="-2" id="Lu4-7N-j45"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VdV-98-H5O">
+                    <rect key="frame" x="30" y="30" width="75" height="18"/>
+                    <buttonCell key="cell" type="bevel" title="Abbrechen" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="eN1-qB-RsD">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="systemThin" size="14"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <action selector="dismissController:" target="-2" id="f31-1h-U1i"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JNc-O4-Frg">
+                    <rect key="frame" x="381" y="30" width="69" height="18"/>
+                    <buttonCell key="cell" type="bevel" title="Speichern" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="s0X-F9-TMq">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="systemThin" size="14"/>
+                    </buttonCell>
+                    <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                    <connections>
+                        <action selector="saveButton:" target="-2" id="zCt-J4-ckO"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="VdV-98-H5O" firstAttribute="top" secondItem="abN-fw-FRl" secondAttribute="bottom" constant="20" id="41G-Vf-tBm"/>
+                <constraint firstItem="VdV-98-H5O" firstAttribute="leading" secondItem="l9n-7I-HrA" secondAttribute="leading" id="BgE-Ic-L7o"/>
+                <constraint firstItem="fKx-1A-rlr" firstAttribute="trailing" secondItem="uZK-OH-MXw" secondAttribute="trailing" id="EUT-09-Sw7"/>
+                <constraint firstAttribute="bottom" secondItem="VdV-98-H5O" secondAttribute="bottom" constant="30" id="IoF-Yx-cHU"/>
+                <constraint firstItem="JNc-O4-Frg" firstAttribute="trailing" secondItem="uZK-OH-MXw" secondAttribute="trailing" id="K6c-tF-N9g"/>
+                <constraint firstItem="abN-fw-FRl" firstAttribute="top" secondItem="uZK-OH-MXw" secondAttribute="bottom" constant="5" id="OPf-kg-Xyv"/>
+                <constraint firstAttribute="trailing" secondItem="uZK-OH-MXw" secondAttribute="trailing" constant="30" id="WS1-uZ-UnJ"/>
+                <constraint firstItem="fKx-1A-rlr" firstAttribute="top" secondItem="l9n-7I-HrA" secondAttribute="bottom" constant="5" id="f0N-H8-32C"/>
+                <constraint firstItem="abN-fw-FRl" firstAttribute="leading" secondItem="l9n-7I-HrA" secondAttribute="leading" id="kGC-LH-DQj"/>
+                <constraint firstItem="uZK-OH-MXw" firstAttribute="leading" secondItem="l9n-7I-HrA" secondAttribute="leading" id="pdz-mE-xlb"/>
+                <constraint firstItem="JNc-O4-Frg" firstAttribute="centerY" secondItem="VdV-98-H5O" secondAttribute="centerY" id="qvR-oo-o2P"/>
+                <constraint firstItem="l9n-7I-HrA" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="rj5-s0-PX0"/>
+                <constraint firstItem="fKx-1A-rlr" firstAttribute="leading" secondItem="l9n-7I-HrA" secondAttribute="leading" id="u20-tu-TWa"/>
+                <constraint firstItem="l9n-7I-HrA" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="yiA-e2-2Ze"/>
+                <constraint firstItem="uZK-OH-MXw" firstAttribute="top" secondItem="fKx-1A-rlr" secondAttribute="bottom" constant="20" id="zJc-gL-dw4"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="156"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+    </resources>
+</document>
