@@ -47,7 +47,6 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	@IBOutlet weak var untilMonth: NumberField!
 	@IBOutlet weak var untilYear: NumberField!
 	@IBOutlet weak var comment: NSTextField!
-	@IBOutlet weak var colorPicker: NSPopUpButton!
 	@IBOutlet weak var jobSelect: NSPopUpButton!
 	@IBOutlet weak var taskSelect: NSPopUpButton!
 	@IBOutlet weak var activitySelect: NSPopUpButton!
@@ -56,8 +55,6 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		initColorPicker()
 
 		fromDay.dateDelegate = self
 		untilDay.dateDelegate = self
@@ -232,93 +229,6 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 //
 //		return true
 //	}
-
-	private func initColorPicker() {
-		colorPicker.isHidden = true
-		return
-
-		// @TODO ColorPicker
-		let menu = NSMenu()
-		let size = NSSize(width: 50, height: 19)
-
-		if let crayons = NSColorList.init(named: "Crayons") {
-			for key in crayons.allKeys.filter({
-				if
-					let color = crayons.color(withKey: $0),
-					let red = color.usingColorSpace(.deviceRGB)?.redComponent,
-					let green = color.usingColorSpace(.deviceRGB)?.greenComponent,
-					let blue = color.usingColorSpace(.deviceRGB)?.blueComponent
-				{
-					return round(red * 100) != round(green * 100) || round(red * 100) != round(blue * 100)
-				}
-
-				return false
-			}) {
-				let item = NSMenuItem(title: key, action: nil, keyEquivalent: "")
-				item.image = swatch(size: size, color: crayons.color(withKey: key) ?? .red)
-				menu.addItem(item)
-			}
-		}
-
-		colorPicker.menu = menu
-		colorPicker.imagePosition = .imageOnly
-		colorPicker.wantsLayer = true
-		colorPicker.selectItem(at: 5)
-
-		let lineWidth: CGFloat = 1
-		let posTop = colorPicker.bounds.maxY - (lineWidth / 2)
-		let lineColor = NSColor.quaternaryLabelColor.cgColor
-
-		let path = NSBezierPath()
-		path.move(to: NSPoint(x: colorPicker.bounds.width, y: posTop))
-		path.line(to: NSPoint(x: 0, y: posTop))
-		let underscore = CAShapeLayer()
-		underscore.strokeColor = lineColor
-		underscore.lineWidth = lineWidth
-		underscore.path = path.cgPath
-
-		colorPicker.layer?.addSublayer(underscore)
-	}
-
-	private func swatch(size: NSSize, color: NSColor) -> NSImage {
-		let image = NSImage(size: size)
-		let rect = NSMakeRect(0, 0, size.width, size.height)
-		image.lockFocus()
-		color.drawSwatch(in: rect)
-		image.unlockFocus()
-
-		return image
-	}
-
-	@IBAction func colorSelect(_ sender: NSPopUpButton) {
-		if
-			let title = sender.titleOfSelectedItem,
-			let crayons = NSColorList.init(named: "Crayons"),
-			let _ = crayons.color(withKey: title)
-		{
-//			print(title)
-//			let colorData = NSKeyedArchiver.archivedData(withRootObject: color)
-//			userDefaults.set(colorData, forKey: "backgroundColorActiveTracking")
-//			tracking.color = title
-
-//			.filter({
-//				if
-//					let color = crayons.color(withKey: $0),
-//					let red = color.usingColorSpace(.deviceRGB)?.redComponent,
-//					let green = color.usingColorSpace(.deviceRGB)?.greenComponent,
-//					let blue = color.usingColorSpace(.deviceRGB)?.blueComponent
-//				{
-//					return round(red * 100) != round(green * 100) || round(red * 100) != round(blue * 100)
-//				}
-//
-//				return false
-//			}) {
-//				let item = NSMenuItem(title: key, action: nil, keyEquivalent: "")
-//				item.image = swatch(size: size, color: crayons.color(withKey: key) ?? .red)
-//				menu.addItem(item)
-//			}
-		}
-	}
 
 	@IBAction func jobSelect(_ sender: NSPopUpButton) {
 		let title = sender.titleOfSelectedItem

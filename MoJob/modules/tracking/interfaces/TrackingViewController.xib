@@ -97,10 +97,10 @@
                                 </userDefinedRuntimeAttributes>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="z97-CG-Oyg">
-                                <rect key="frame" x="30" y="207" width="337" height="334"/>
+                                <rect key="frame" x="30" y="185" width="337" height="356"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dQ8-dy-mO0">
-                                        <rect key="frame" x="-2" y="317" width="116" height="17"/>
+                                        <rect key="frame" x="-2" y="339" width="116" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Job und Aufgabe:" id="jK1-by-ZNy">
                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -194,14 +194,20 @@
                                         </textFieldCell>
                                     </textField>
                                     <popUpButton horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="PL2-uz-BXc">
-                                        <rect key="frame" x="0.0" y="308" width="337" height="4"/>
+                                        <rect key="frame" x="0.0" y="308" width="337" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="l7z-ma-0VL"/>
                                         </constraints>
-                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" id="oXe-N9-OVP" customClass="PopUpCellText" customModule="MoJob" customModuleProvider="target">
+                                        <popUpButtonCell key="cell" type="bevel" title="Job wählen" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" selectedItem="uhF-mw-dPx" id="oXe-N9-OVP" customClass="PopUpCellText" customModule="MoJob" customModuleProvider="target">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="systemThin" size="18"/>
-                                            <menu key="menu" id="5ix-by-w8x"/>
+                                            <menu key="menu" id="5ix-by-w8x">
+                                                <items>
+                                                    <menuItem title="Job wählen" id="uhF-mw-dPx">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
                                         </popUpButtonCell>
                                         <connections>
                                             <action selector="jobSelect:" target="-2" id="VpQ-KP-pfy"/>
