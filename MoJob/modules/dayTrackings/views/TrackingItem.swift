@@ -8,6 +8,7 @@
 
 import Cocoa
 
+
 class TrackingItem: NSView {
 
 	@IBOutlet var contentView: NSView!
@@ -17,7 +18,9 @@ class TrackingItem: NSView {
 	@IBOutlet var titleLabel: NSTextField!
 	@IBOutlet var commentLabel: NSTextField!
 	@IBOutlet weak var statusImage: NSButton!
+	@IBOutlet var colorSelect: NSStackView!
 
+	var rightClickMenu = NSMenu()
 	var indicatorLayer: CALayer! = CALayer()
 
 	var exportStatus: SyncStatus {
@@ -51,6 +54,14 @@ class TrackingItem: NSView {
 			endTimeLabel.stringValue = formatter.string(from: tracking.date_end!)
 			titleLabel.stringValue = title ?? "kein Job!"
 
+			if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
+				let colors = NSColorList(name: "MoJob", fromFile: path),
+				let jobColor = tracking.job?.color,
+				let color = colors.color(withKey: jobColor) {
+				textView.layer?.backgroundColor = color.withAlphaComponent(0.5).cgColor
+				indicatorLayer.backgroundColor = color.cgColor
+			}
+
 			if let text = tracking.comment {
 				commentLabel.stringValue = text
 			} else {
@@ -61,11 +72,6 @@ class TrackingItem: NSView {
 					superview.addConstraint(constraint)
 				}
 			}
-
-//			if let color = tracking.color as? NSColor {
-//				textView.layer?.backgroundColor = color.withAlphaComponent(0.5).cgColor
-//				indicatorLayer.backgroundColor = color.cgColor
-//			}
 		}
 	}
 
@@ -89,15 +95,7 @@ class TrackingItem: NSView {
 		Bundle.main.loadNibNamed("TrackingItem", owner: self, topLevelObjects: nil)
 		addSubview(contentView)
 
-		var color: NSColor! = NSColor.clear
-		if let colorList = NSColorList.availableColorLists.first(where: { $0.name == "System" }) {
-			let systemColors = colorList.allKeys.filter({ $0.hasPrefix("system")})
-
-			// @TODO change color
-//			if let colorName = systemColors.first {
-			color = colorList.color(withKey: "systemGrayColor")
-//			}
-		}
+		let color: NSColor! = NSColor.gray
 
 		contentView.wantsLayer = true
 		contentView.layer?.backgroundColor = CGColor.clear
@@ -118,9 +116,37 @@ class TrackingItem: NSView {
 	}
 
 	override func rightMouseDown(with event: NSEvent) {
-		let rightClickMenu = NSMenu()
+		if (rightClickMenu.items.count > 0) {
+			return
+		}
+
 		rightClickMenu.addItem(withTitle: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
 		rightClickMenu.addItem(withTitle: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
+
+		if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
+			let colors = NSColorList(name: "MoJob", fromFile: path) {
+			let buttons = colors.allKeys.map({ (key) -> NSButton in
+				let color = colors.color(withKey: key)
+				let button = ColorButton(frame: NSRect(x: 0, y: 0, width: 15, height: 15))
+				button.target = self
+				button.action = #selector(onSelectColor(_:))
+				button.color = color
+				button.key = key
+
+				return button
+			})
+
+			let stack = NSStackView(views: buttons)
+			stack.edgeInsets = NSEdgeInsets(top: 5, left: 22, bottom: 5, right: 22)
+			stack.spacing = 5
+			stack.setFrameSize(NSSize(width: (buttons.count * 15 + (buttons.count - 1) * 5) + 44, height: 25))
+
+			let menuItem = NSMenuItem()
+			menuItem.view = stack
+			rightClickMenu.addItem(NSMenuItem.separator())
+			rightClickMenu.addItem(withTitle: "Color:", action: nil, keyEquivalent: "")
+			rightClickMenu.addItem(menuItem)
+		}
 
 		if (tracking?.custom_job != nil) {
 			rightClickMenu.addItem(NSMenuItem.separator())
@@ -161,6 +187,16 @@ class TrackingItem: NSView {
 				}
 			}
 //		}
+	}
+
+	@objc func onSelectColor(_ sender: NSButton) {
+		if let button = sender as? ColorButton {
+			let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+			tracking?.job?.color = button.key
+			try? context.save()
+
+			rightClickMenu.cancelTracking()
+		}
 	}
 
 	@IBAction func statusImage(_ sender: NSButton) {

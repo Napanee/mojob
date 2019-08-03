@@ -10,16 +10,28 @@ import Cocoa
 
 class FavoriteItem: NSCollectionViewItem {
 
-	var job: Job! = nil
+	var job: Job!
 	var delegate: FavoritesItemDelegate!
+	let indicatorLayer = CALayer()
 
 	@IBOutlet weak var deleteButton: NSButton!
 	@IBOutlet weak var startButton: NSButton!
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
+	override func viewDidLayout() {
+		view.layer?.sublayers?.removeAll(where: { $0.isEqual(to: indicatorLayer) })
 
-		view.wantsLayer = true
+		if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
+			let colors = NSColorList(name: "MoJob", fromFile: path), let jobColor = job.color,
+			let color = colors.color(withKey: jobColor) {
+
+			indicatorLayer.frame = CGRect(x: 15, y: view.frame.height / 2 - 6, width: 12, height: 12)
+			indicatorLayer.cornerRadius = 6
+			indicatorLayer.borderColor = NSColor.darkGray.cgColor
+			indicatorLayer.borderWidth = 1
+			indicatorLayer.backgroundColor = color.cgColor
+
+			view.layer?.addSublayer(indicatorLayer)
+		}
 	}
 
 	@IBAction func deleteButton(_ sender: NSButton) {

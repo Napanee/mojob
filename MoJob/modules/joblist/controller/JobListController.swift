@@ -106,6 +106,12 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 			showWarning(error: "Es sind keine Jobs vorhanden. Jetzt mit QuoJob synchronisieren?")
 		}
 
+		if let appDelegate = (NSApp.delegate as? AppDelegate) {
+			let context = appDelegate.persistentContainer.viewContext
+			let notificationCenter = NotificationCenter.default
+			notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
+		}
+
 		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
 	}
 
@@ -120,6 +126,19 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	override func viewWillLayout() {
 		favoritesCollectionView.collectionViewLayout?.invalidateLayout()
 		jobsCollectionView.collectionViewLayout?.invalidateLayout()
+	}
+
+	@objc func managedObjectContextObjectsDidChange(notification: NSNotification) {
+		guard let userInfo = notification.userInfo else { return }
+
+		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+			if let updateValues = updates.first?.changedValues() {
+				let keys = updateValues.keys
+				if (keys.contains("color")) {
+					favoritesCollectionView.reloadData()
+				}
+			}
+		}
 	}
 
 	func showWarning(error: String) {

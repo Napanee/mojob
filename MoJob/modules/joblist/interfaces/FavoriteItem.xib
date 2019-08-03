@@ -16,12 +16,12 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <collectionViewItem id="SRZ-ps-BTj" customClass="FavoriteItem" customModule="MoJob" customModuleProvider="target"/>
-        <customView id="mHd-3v-Od6" customClass="CollectionItemView" customModule="MoJob" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="409" height="20"/>
+        <customView id="mHd-3v-Od6">
+            <rect key="frame" x="0.0" y="0.0" width="409" height="25"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-s9-zuX">
-                    <rect key="frame" x="28" y="1" width="298" height="19"/>
+                    <rect key="frame" x="28" y="3" width="298" height="19"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="qvk-z9-Bqi">
                         <font key="font" metaFont="systemThin" size="16"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -29,7 +29,7 @@
                     </textFieldCell>
                 </textField>
                 <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-LA-Kym">
-                    <rect key="frame" x="334" y="0.0" width="20" height="20"/>
+                    <rect key="frame" x="334" y="3" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="WAv-ZJ-10A"/>
                     </constraints>
@@ -42,7 +42,7 @@
                     </connections>
                 </button>
                 <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cs7-FA-gmg">
-                    <rect key="frame" x="359" y="0.0" width="20" height="20"/>
+                    <rect key="frame" x="359" y="3" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="plO-4W-y6a"/>
                     </constraints>
@@ -56,20 +56,14 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="cs7-FA-gmg" secondAttribute="bottom" id="2oi-es-b5R"/>
-                <constraint firstItem="cs7-FA-gmg" firstAttribute="centerY" secondItem="6pU-LA-Kym" secondAttribute="centerY" id="3vo-N0-RM6"/>
                 <constraint firstItem="cs7-FA-gmg" firstAttribute="leading" secondItem="6pU-LA-Kym" secondAttribute="trailing" constant="5" id="Hhl-KX-ixM"/>
                 <constraint firstItem="tn4-s9-zuX" firstAttribute="leading" secondItem="mHd-3v-Od6" secondAttribute="leading" constant="30" id="Hv6-Ie-Jxt"/>
-                <constraint firstItem="cs7-FA-gmg" firstAttribute="top" secondItem="mHd-3v-Od6" secondAttribute="top" id="Lvh-OY-gnf"/>
+                <constraint firstItem="6pU-LA-Kym" firstAttribute="centerY" secondItem="tn4-s9-zuX" secondAttribute="centerY" id="bU0-fW-fLd"/>
                 <constraint firstAttribute="trailing" secondItem="cs7-FA-gmg" secondAttribute="trailing" constant="30" id="czJ-Z1-z9B"/>
                 <constraint firstItem="6pU-LA-Kym" firstAttribute="leading" secondItem="tn4-s9-zuX" secondAttribute="trailing" constant="10" id="e16-Kv-xAu"/>
+                <constraint firstItem="tn4-s9-zuX" firstAttribute="centerY" secondItem="mHd-3v-Od6" secondAttribute="centerY" id="hp5-pq-jzj"/>
                 <constraint firstItem="cs7-FA-gmg" firstAttribute="centerY" secondItem="tn4-s9-zuX" secondAttribute="centerY" id="yVr-a0-H9L"/>
             </constraints>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                    <color key="value" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
-                </userDefinedRuntimeAttribute>
-            </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="262.5" y="269.5"/>
         </customView>
     </objects>
