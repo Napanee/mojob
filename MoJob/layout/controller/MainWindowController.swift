@@ -55,4 +55,8 @@ class MainWindowController: NSWindowController {
 		contentViewController = splitViewController
 	}
 
+	override func mouseDown(with event: NSEvent) {
+		window?.makeFirstResponder(nil)
+	}
+
 }
