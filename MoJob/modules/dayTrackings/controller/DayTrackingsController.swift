@@ -40,8 +40,11 @@ class DayTrackingsController: NSViewController {
 			let todayStart = Date().startOfDay,
 			let todayEnd = Date().endOfDay
 		{
-			compoundPredicates.append(NSPredicate(format: "date_start >= %@", argumentArray: [todayStart]))
-			compoundPredicates.append(NSPredicate(format: "date_start <= %@", argumentArray: [todayEnd]))
+			let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
+				NSPredicate(format: "date_start >= %@ AND date_start <= %@", argumentArray: [todayStart, todayEnd]),
+				NSPredicate(format: "date_end >= %@ AND date_end <= %@", argumentArray: [todayStart, todayEnd])
+			])
+			compoundPredicates.append(compound)
 		}
 
 		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
@@ -98,6 +101,7 @@ class DayTrackingsController: NSViewController {
 		dateYear.stringValue = today.year
 
 		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(calendarDayChanged), name: .NSCalendarDayChanged, object: nil)
 	}
 
 	private func networkChanged() {
@@ -139,6 +143,23 @@ class DayTrackingsController: NSViewController {
 
 	@objc private func onSessionUpdate(notification: NSNotification) {
 		hideWarning()
+	}
+
+	@objc func calendarDayChanged() {
+		DispatchQueue.main.async {
+			let today = Date()
+			self.dateDay.stringValue = today.day
+			self.dateMonth.stringValue = today.month
+			self.dateYear.stringValue = today.year
+
+			self._fetchedResultsControllerTrackings = nil
+			if let trackings = self.fetchedResultControllerTrackings.fetchedObjects {
+				self.trackingsStackView.reloadData(with: trackings)
+
+				let sum = trackings.map({ $0.date_end!.timeIntervalSince($0.date_start!) }).reduce(0.0, { $0 + $1 })
+				self.totalTimeForDay.stringValue = secondsToHoursMinutesSeconds(sec: Int(sum))
+			}
+		}
 	}
 
 	@IBAction func loginButton(_ sender: NSButton) {
