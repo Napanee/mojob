@@ -47,7 +47,7 @@
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <collectionView allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6J-iM-kkg">
+                                            <collectionView selectable="YES" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6J-iM-kkg">
                                                 <rect key="frame" x="0.0" y="60" width="908" height="200"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="qCq-gF-9Yn"/>

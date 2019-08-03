@@ -41,6 +41,8 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	var jobsFiltered: [Job] = []
 	var jobListSelectedIndex: Int?
 	var currentItem: JobItem? = nil
+	var draggingItem: NSCollectionViewItem?
+	var draggingIndexPath: IndexPath?
 
 	var selectedJobItem: JobItem? {
 		get {
@@ -92,6 +94,9 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 		_configureCollectionView(collectionView: favoritesCollectionView)
 		_configureCollectionView(collectionView: jobsCollectionView)
+
+		favoritesCollectionView.registerForDraggedTypes([NSPasteboard.PasteboardType.string])
+		favoritesCollectionView.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: true)
 
 		warningView.wantsLayer = true
 		warningButton.target = self
@@ -317,6 +322,90 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 		}
 
 		return NSSize(width: collectionView.frame.size.width, height: 30)
+	}
+
+	func collectionView(_ collectionView: NSCollectionView, canDragItemsAt indexPaths: Set<IndexPath>, with event: NSEvent) -> Bool {
+		guard (collectionView == favoritesCollectionView) else { return false }
+
+		return true
+	}
+
+	func collectionView(_ collectionView: NSCollectionView, writeItemsAt indexPaths: Set<IndexPath>, to pasteboard: NSPasteboard) -> Bool {
+		guard (collectionView == favoritesCollectionView) else { return false }
+
+		if let archiver = try? NSKeyedArchiver.archivedData(withRootObject: indexPaths, requiringSecureCoding: false) {
+			let indexData = Data(archiver)
+			pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: self)
+			pasteboard.setData(indexData, forType: NSPasteboard.PasteboardType.string)
+
+			return true
+		}
+
+		return false
+	}
+
+	func collectionView(_ collectionView: NSCollectionView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forItemsAt indexPaths: Set<IndexPath>) {
+		if let indexPath = indexPaths.first,
+			let item = collectionView.item(at: indexPath) {
+			draggingItem = item
+			draggingIndexPath = indexPath
+
+			draggingItem?.view.isHidden = true
+		}
+	}
+
+	func collectionView(_ collectionView: NSCollectionView, draggingSession session: NSDraggingSession, endedAt screenPoint: NSPoint, dragOperation operation: NSDragOperation) {
+		if let draggingItem = draggingItem {
+			draggingItem.view.isHidden = false
+
+			if let draggingIndexPath = draggingIndexPath,
+				let currentIndexPath = collectionView.indexPath(for: draggingItem),
+				currentIndexPath != draggingIndexPath,
+				collectionView.item(at: draggingIndexPath.item) != nil {  // guard to move once only
+
+				collectionView.animator().moveItem(at: currentIndexPath, to: draggingIndexPath)
+			}
+		}
+
+		draggingItem = nil
+	}
+
+	func collectionView(_ collectionView: NSCollectionView, acceptDrop draggingInfo: NSDraggingInfo, indexPath: IndexPath, dropOperation: NSCollectionView.DropOperation) -> Bool {
+		if let draggingItem = draggingItem {
+			draggingItem.view.isHidden = false
+		}
+
+		draggingItem = nil
+
+		let itemCount = collectionView.numberOfItems(inSection: 0)
+		for i in 0..<itemCount {
+			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
+				item.job.favoriteOrder = Int16(i)
+			}
+		}
+
+		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+		do {
+			try context.save()
+		} catch let error {
+			print(error)
+		}
+
+		return true
+	}
+
+	func collectionView(_ collectionView: NSCollectionView, validateDrop draggingInfo: NSDraggingInfo, proposedIndexPath proposedDropIndexPath: AutoreleasingUnsafeMutablePointer<NSIndexPath>, dropOperation proposedDropOperation: UnsafeMutablePointer<NSCollectionView.DropOperation>) -> NSDragOperation {
+		let proposedDropIndexPath = proposedDropIndexPath.pointee
+
+		if let draggingItem = draggingItem,
+			let currentIndexPath = collectionView.indexPath(for: draggingItem),
+			currentIndexPath != IndexPath(item: proposedDropIndexPath.item, section: proposedDropIndexPath.section),
+			collectionView.item(at: proposedDropIndexPath.item) != nil {  // guard to move once only
+
+			collectionView.animator().moveItem(at: currentIndexPath, to: IndexPath(item: proposedDropIndexPath.item, section: proposedDropIndexPath.section))
+		}
+
+		return .move
 	}
 
 }
