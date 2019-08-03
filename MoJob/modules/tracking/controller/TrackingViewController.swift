@@ -99,7 +99,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		if let jobs = QuoJob.shared.jobs {
 			let jobTitles: [String] = jobs.sorted(by: { $0.title! < $1.title! }).map({ $0.title! })
 
-			if let customJobTitle = currentTracking.customJob {
+			if let customJobTitle = currentTracking.custom_job {
 				jobSelect.addItem(withTitle: customJobTitle)
 			}
 

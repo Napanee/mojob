@@ -26,7 +26,7 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	var tempTracking: TempTracking!
 	var formIsValid: Bool {
 		get {
-			if ((tempTracking.date_end ?? Date()).timeIntervalSince(tempTracking.date_start) > 60 && (tempTracking.job != nil || tempTracking.customJob != nil) && tempTracking.activity != nil) {
+			if ((tempTracking.date_end ?? Date()).timeIntervalSince(tempTracking.date_start) > 60 && (tempTracking.job != nil || tempTracking.custom_job != nil) && tempTracking.activity != nil) {
 				return true
 			}
 
