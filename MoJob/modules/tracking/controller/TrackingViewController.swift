@@ -47,10 +47,10 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
 	@IBOutlet weak var timerCount: TimerCount!
 	@IBOutlet weak var timeLabel: NSTextField!
-//	@IBOutlet weak var jobLabel: TextField!
-//	@IBOutlet weak var taskLabel: TextField!
-//	@IBOutlet weak var activityLabel: TextField!
+	@IBOutlet weak var fromHour: NumberField!
+	@IBOutlet weak var fromMinute: NumberField!
 	@IBOutlet weak var commentLabel: TextField!
+	@IBOutlet weak var comment: NSTextField!
 	@IBOutlet weak var jobSelect: NSPopUpButton!
 	@IBOutlet weak var taskSelect: NSPopUpButton!
 	@IBOutlet weak var activitySelect: NSPopUpButton!
@@ -79,6 +79,12 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 			favoriteTracking.isHidden = true
 		}
 
+		let dateStart = currentTracking.date_start
+		let hour = Calendar.current.component(.hour, from: dateStart)
+		fromHour.stringValue = String(format: "%02d", hour)
+		let minute = Calendar.current.component(.minute, from: dateStart)
+		fromMinute.stringValue = String(format: "%02d", minute)
+
 		commentLabel.delegate = self
 		stopTracking.isEnabled = false
 
@@ -90,9 +96,19 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 	func controlTextDidChange(_ obj: Notification) {
 		guard let textField = obj.object as? NSTextField else { return }
 
-		let text = textField.stringValue
+		if ([fromHour, fromMinute].contains(textField)) {
+			let comp = Calendar.current.dateComponents([.hour, .minute], from: currentTracking.date_start)
+			let hour = fromHour.stringValue != "" ? Int(fromHour.stringValue) : comp.hour
+			let minute = fromMinute.stringValue != "" ? Int(fromMinute.stringValue) : comp.minute
+			let newStartDate = Calendar.current.date(bySettingHour: hour!, minute: minute!, second: 0, of: currentTracking.date_start)!
 
-		currentTracking.comment = text
+			currentTracking.date_start = newStartDate
+			startDate = newStartDate
+		}
+
+		if (textField == comment) {
+			currentTracking.comment = textField.stringValue
+		}
 	}
 
 	func initJobSelect() {
