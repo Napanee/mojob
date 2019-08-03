@@ -139,9 +139,11 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
 			if
 				let activityId = userDefaults.object(forKey: "activity") as? String,
-				let title = activities.first(where: { $0.id == activityId })?.title,
+				let activity = activities.first(where: { $0.id == activityId }),
+				let title = activity.title,
 				let index = activityTitles.firstIndex(of: title)
 			{
+				currentTracking.activity = activity
 				activitySelect.selectItem(at: index + 1)
 				stopTracking.isEnabled = true
 			}
@@ -217,7 +219,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 	@IBAction func stopTracking(_ sender: NSButton) {
 		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 
-		guard let currentTracking = (NSApp.delegate as! AppDelegate).currentTracking else { return }
+		guard let currentTracking = currentTracking else { return }
 
 		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
 		let tracking = NSManagedObject(entity: entity!, insertInto: context)
