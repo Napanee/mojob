@@ -44,6 +44,7 @@
 		E850997222F6FEF600068ED8 /* TrackingSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */; };
 		E850997822F7078C00068ED8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997722F7078C00068ED8 /* SettingsViewController.swift */; };
 		E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E850997922F708E600068ED8 /* SettingsViewController.xib */; };
+		E850998222F7578200068ED8 /* ComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850998122F7578200068ED8 /* ComboBox.swift */; };
 		E863305D2245863600A8E946 /* PopUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305C2245863600A8E946 /* PopUpCell.swift */; };
 		E86330602247AC1B00A8E946 /* QuoJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305F2247AC1B00A8E946 /* QuoJob.swift */; };
 		E863306522481BED00A8E946 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E863306422481BED00A8E946 /* Login.xib */; };
@@ -139,6 +140,7 @@
 		E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingSplitViewController.swift; sourceTree = "<group>"; };
 		E850997722F7078C00068ED8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E850997922F708E600068ED8 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		E850998122F7578200068ED8 /* ComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboBox.swift; sourceTree = "<group>"; };
 		E863305C2245863600A8E946 /* PopUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCell.swift; sourceTree = "<group>"; };
 		E863305F2247AC1B00A8E946 /* QuoJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJob.swift; sourceTree = "<group>"; };
 		E863306422481BED00A8E946 /* Login.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
@@ -606,6 +608,7 @@
 			isa = PBXGroup;
 			children = (
 				E8E9508E2232D62A0070F57E /* TextField.swift */,
+				E850998122F7578200068ED8 /* ComboBox.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 				E877EC83224FCA8C002C3828 /* PopUpCellText.swift in Sources */,
 				E8E9509D223482940070F57E /* AddButton.swift in Sources */,
 				E82117D3220E175D003D7578 /* NavigationView.swift in Sources */,
+				E850998222F7578200068ED8 /* ComboBox.swift in Sources */,
 				E863306A2248232F00A8E946 /* Password.swift in Sources */,
 				E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */,
 				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,

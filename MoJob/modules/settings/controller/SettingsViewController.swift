@@ -10,9 +10,10 @@ import Cocoa
 
 class SettingsViewController: NSViewController {
 
-	@IBOutlet weak var activitySelect: NSPopUpButton!
+	@IBOutlet weak var activitySelect: NSComboBox!
 
 	var userDefaults = UserDefaults()
+	var activities: [Activity] = []
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -21,30 +22,60 @@ class SettingsViewController: NSViewController {
 	}
 
 	private func initActivitySelect() {
-		activitySelect.removeAllItems()
+		activitySelect.placeholderString = "Leistungsart wählen oder eingeben"
 
 		if let activities = QuoJob.shared.activities {
-			let activityTitles = activities.sorted(by: { $0.title! < $1.title! }).map({ $0.title })
-			activitySelect.addItem(withTitle: "Leistungsart wählen")
-			activitySelect.addItems(withTitles: activityTitles as! [String])
+			self.activities = activities.sorted(by: { $0.title! < $1.title! })
+		}
 
-			if let defaultJobId = userDefaults.string(forKey: "activity"), let activity = activities.first(where: { $0.id == defaultJobId }), let title = activity.title {
-				if let index = activityTitles.firstIndex(of: title) {
-					activitySelect.selectItem(at: index + 1)
-				}
+		activitySelect.reloadData()
+
+		if let activityId = userDefaults.string(forKey: "activity") {
+			if let index = activities.index(where: { $0.id == activityId }) {
+				activitySelect.selectItem(at: index)
 			}
 		}
 	}
 
-	@IBAction func activitySelect(_ sender: NSPopUpButton) {
-		let title = sender.titleOfSelectedItem
-		guard let activity = QuoJob.shared.activities?.first(where: { $0.title == title }) else {
+	@IBAction func activitySelect(_ sender: NSComboBox) {
+		guard let cell = sender.cell else { return }
+
+		let value = cell.stringValue.lowercased()
+
+		if (value == "") {
 			userDefaults.removeObject(forKey: "activity")
-
-			return
+		} else if let activities = QuoJob.shared.activities, let activity = activities.first(where: { $0.title?.lowercased() == value }) {
+			userDefaults.set(activity.id, forKey: "activity")
 		}
-
-		userDefaults.set(activity.id, forKey: "activity")
 	}
 
+}
+
+extension SettingsViewController: NSComboBoxDataSource {
+	func numberOfItems(in comboBox: NSComboBox) -> Int {
+		return activities.count
+	}
+
+	func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+		return activities[index].title
+	}
+}
+
+extension SettingsViewController: NSTextFieldDelegate {
+	func controlTextDidChange(_ obj: Notification) {
+		let comboBox = obj.object as! NSComboBox
+
+		if let comboBoxCell = comboBox.cell as? NSComboBoxCell {
+			let selectedValue = comboBoxCell.stringValue
+
+			activities = QuoJob.shared.activities!
+				.filter({ $0.title!.lowercased().contains(selectedValue.lowercased()) })
+				.sorted(by: { $0.title! < $1.title! })
+
+			if (activities.count > 0) {
+				comboBox.reloadData()
+				comboBoxCell.perform(Selector(("popUp:")))
+			}
+		}
+	}
 }

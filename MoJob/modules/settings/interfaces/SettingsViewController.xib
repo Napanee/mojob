@@ -7,7 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SettingsViewController" customModule="MoJob" customModuleProvider="target">
             <connections>
-                <outlet property="activitySelect" destination="GWS-G7-o0n" id="vWe-qf-4ar"/>
+                <outlet property="activitySelect" destination="Aia-UP-W2J" id="bxt-VC-fmv"/>
                 <outlet property="view" destination="c22-O7-iKe" id="ecX-j3-JiA"/>
             </connections>
         </customObject>
@@ -36,59 +36,57 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="GWS-G7-o0n">
-                    <rect key="frame" x="22" y="85" width="616" height="29"/>
-                    <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="5XO-3z-uGj"/>
-                        <constraint firstAttribute="height" constant="29" id="RSZ-vC-kFt"/>
-                    </constraints>
-                    <popUpButtonCell key="cell" type="bevel" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="myZ-VR-3ym" id="eda-Z3-aCb">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="systemThin" size="20"/>
-                        <menu key="menu" id="rsG-f3-DU2">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="myZ-VR-3ym"/>
-                                <menuItem title="Item 2" id="d6N-lC-4bY"/>
-                                <menuItem title="Item 3" id="yfL-Pf-Inm"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                    <connections>
-                        <action selector="activitySelect:" target="-2" id="ho1-th-YxS"/>
-                    </connections>
-                </popUpButton>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F4v-ez-mFn">
-                    <rect key="frame" x="28" y="114" width="63" height="17"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Tätigkeit:" id="zXr-uy-lKd">
-                        <font key="font" metaFont="systemSemibold" size="13"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JKJ-HQ-Je3">
-                    <rect key="frame" x="28" y="146" width="595" height="17"/>
+                    <rect key="frame" x="28" y="146" width="622" height="17"/>
                     <textFieldCell key="cell" selectable="YES" title="Definiere hier Standardwerte, die automatisch bei einem neuen Tracking angewendet werden soll." id="K4a-8E-GZo">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F4v-ez-mFn">
+                    <rect key="frame" x="28" y="114" width="88" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Leistungsart:" id="zXr-uy-lKd">
+                        <font key="font" metaFont="systemSemibold" size="13"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Aia-UP-W2J" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="30" y="85" width="611" height="26"/>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="znC-m8-BxX">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <objectValues>
+                            <string>Item 1</string>
+                            <string>Item 2</string>
+                            <string>Item 3</string>
+                        </objectValues>
+                    </comboBoxCell>
+                    <connections>
+                        <action selector="activitySelect:" target="-2" id="wgP-2o-Gcm"/>
+                        <outlet property="dataSource" destination="-2" id="7CP-ZB-wb0"/>
+                        <outlet property="delegate" destination="-2" id="qh7-Wr-7Xy"/>
+                    </connections>
+                </comboBox>
             </subviews>
             <constraints>
                 <constraint firstItem="F4v-ez-mFn" firstAttribute="top" secondItem="JKJ-HQ-Je3" secondAttribute="bottom" constant="15" id="7bX-O5-SVy"/>
+                <constraint firstAttribute="trailing" secondItem="Aia-UP-W2J" secondAttribute="trailing" constant="30" id="9EP-KK-QKW"/>
                 <constraint firstItem="YOK-4o-6wY" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="HB6-Wc-byJ"/>
                 <constraint firstItem="F4v-ez-mFn" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="O8G-l8-1RU"/>
                 <constraint firstItem="AaL-eA-GkU" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="RW4-zu-uns"/>
                 <constraint firstItem="AaL-eA-GkU" firstAttribute="top" secondItem="fYu-Rx-c6S" secondAttribute="bottom" constant="20" id="Rh3-BF-en2"/>
                 <constraint firstItem="JKJ-HQ-Je3" firstAttribute="top" secondItem="AaL-eA-GkU" secondAttribute="bottom" constant="5" id="Rmi-Zm-KPT"/>
                 <constraint firstItem="JKJ-HQ-Je3" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="SkV-gC-IoU"/>
-                <constraint firstItem="GWS-G7-o0n" firstAttribute="top" secondItem="F4v-ez-mFn" secondAttribute="bottom" id="VTA-Ff-EqZ"/>
-                <constraint firstAttribute="trailing" secondItem="GWS-G7-o0n" secondAttribute="trailing" constant="30" id="dLs-s0-H7V"/>
+                <constraint firstItem="Aia-UP-W2J" firstAttribute="top" secondItem="F4v-ez-mFn" secondAttribute="bottom" constant="5" id="mJY-pV-pmN"/>
                 <constraint firstAttribute="trailing" secondItem="fYu-Rx-c6S" secondAttribute="trailing" constant="20" id="me3-Fg-x4r"/>
                 <constraint firstItem="fYu-Rx-c6S" firstAttribute="top" secondItem="YOK-4o-6wY" secondAttribute="bottom" constant="10" id="miH-qf-rQJ"/>
+                <constraint firstAttribute="trailing" secondItem="JKJ-HQ-Je3" secondAttribute="trailing" constant="20" id="oEr-F0-hO2"/>
                 <constraint firstItem="fYu-Rx-c6S" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="ooF-wL-Qq3"/>
                 <constraint firstItem="YOK-4o-6wY" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="p1L-4m-q5L"/>
-                <constraint firstItem="GWS-G7-o0n" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="22" id="tJU-oy-ptu"/>
+                <constraint firstItem="Aia-UP-W2J" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="zeZ-tV-WEF"/>
             </constraints>
             <point key="canvasLocation" x="233" y="154"/>
         </customView>
