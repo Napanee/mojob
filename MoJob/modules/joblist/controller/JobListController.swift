@@ -261,7 +261,7 @@ extension JobListController: FilterFieldDelegate {
 		guard [125, 126, 36].contains(keyCode) else { return }
 
 		if (keyCode == 36) { // key enter
-			if let appDelegate = NSApp.delegate as? AppDelegate, let window = appDelegate.window, let contentViewController = window.contentViewController as? SplitViewController {
+			if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 				if let currentItem = currentItem, let job = currentItem.job {
 					appDelegate.currentTracking(job: job)
 				} else {

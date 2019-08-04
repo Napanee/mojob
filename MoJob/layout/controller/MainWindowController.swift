@@ -15,6 +15,12 @@ class MainWindowController: NSWindowController {
 
 	weak var appDelegate = NSApplication.shared.delegate as? AppDelegate
 
+	var currentContentViewController: NSViewController? {
+		get {
+			return contentViewController?.children[1]
+		}
+	}
+
 	override func windowDidLoad() {
 		super.windowDidLoad()
 
@@ -23,34 +29,10 @@ class MainWindowController: NSWindowController {
 
 		let splitViewController = SplitViewController()
 		let navigation = NavigationController(nibName: nibNames.NavigationController, bundle: nil)
-		let jobList = JobListController(nibName: nibNames.JobListController, bundle: nil)
-		jobList.view.addConstraint(
-			NSLayoutConstraint(
-				item: jobList.view,
-				attribute: .width,
-				relatedBy: .greaterThanOrEqual,
-				toItem: jobList.view.superview,
-				attribute: .width,
-				multiplier: 1,
-				constant: 300
-			)
-		)
-
-		let verticalSplitViewController = NSSplitViewController()
-		verticalSplitViewController.view.addConstraint(
-			NSLayoutConstraint(
-				item: verticalSplitViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual,
-				toItem: verticalSplitViewController.view.superview, attribute: .width, multiplier: 1, constant: 400
-			)
-		)
-		let dayTrackings = DayTrackingsController(nibName: nibNames.DayTrackingsController, bundle: nil)
-
-		verticalSplitViewController.splitView.isVertical = false
-		verticalSplitViewController.addChild(dayTrackings)
+		let trackingSplitViewController = TrackingSplitViewController()
 
 		splitViewController.addChild(navigation)
-		splitViewController.addChild(jobList)
-		splitViewController.addChild(verticalSplitViewController)
+		splitViewController.addChild(trackingSplitViewController)
 
 		contentViewController = splitViewController
 	}

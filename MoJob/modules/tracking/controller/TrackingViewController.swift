@@ -288,8 +288,8 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 
 		timer.invalidate()
 		appBadge.badgeLabel = ""
-		let window = (NSApp.delegate as! AppDelegate).window
-		if let contentViewController = window?.contentViewController as? SplitViewController {
+
+		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 			contentViewController.showJobList()
 		}
 	}

@@ -46,8 +46,7 @@ class AddButton: NSView {
 	}
 
 	@IBAction func addTracking(_ sender: NSButton) {
-		let window = (NSApp.delegate as! AppDelegate).window
-		if let contentViewController = window?.contentViewController as? SplitViewController {
+		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 			let tracking = TempTracking(start: from, end: until)
 
 			contentViewController.showEditor(with: tracking)

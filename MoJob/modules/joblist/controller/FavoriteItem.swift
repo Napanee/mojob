@@ -48,7 +48,7 @@ class FavoriteItem: NSCollectionViewItem {
 	}
 
 	@IBAction func startButton(_ sender: NSButton) {
-		if let appDelegate = NSApp.delegate as? AppDelegate, let window = appDelegate.window, let contentViewController = window.contentViewController as? SplitViewController {
+		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 			appDelegate.currentTracking(job: job)
 			contentViewController.showTracking()
 		}

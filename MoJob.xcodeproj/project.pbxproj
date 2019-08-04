@@ -41,6 +41,9 @@
 		E83447742236735900621617 /* AddButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E83447732236735900621617 /* AddButton.xib */; };
 		E850996A22F6118B00068ED8 /* MoJob.clr in Resources */ = {isa = PBXBuildFile; fileRef = E850996922F6118B00068ED8 /* MoJob.clr */; };
 		E850996C22F6145700068ED8 /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850996B22F6145700068ED8 /* ColorButton.swift */; };
+		E850997222F6FEF600068ED8 /* TrackingSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */; };
+		E850997822F7078C00068ED8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997722F7078C00068ED8 /* SettingsViewController.swift */; };
+		E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E850997922F708E600068ED8 /* SettingsViewController.xib */; };
 		E863305D2245863600A8E946 /* PopUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305C2245863600A8E946 /* PopUpCell.swift */; };
 		E86330602247AC1B00A8E946 /* QuoJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305F2247AC1B00A8E946 /* QuoJob.swift */; };
 		E863306522481BED00A8E946 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E863306422481BED00A8E946 /* Login.xib */; };
@@ -133,6 +136,9 @@
 		E83447732236735900621617 /* AddButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddButton.xib; sourceTree = "<group>"; };
 		E850996922F6118B00068ED8 /* MoJob.clr */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = MoJob.clr; sourceTree = "<group>"; };
 		E850996B22F6145700068ED8 /* ColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
+		E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingSplitViewController.swift; sourceTree = "<group>"; };
+		E850997722F7078C00068ED8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		E850997922F708E600068ED8 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		E863305C2245863600A8E946 /* PopUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCell.swift; sourceTree = "<group>"; };
 		E863305F2247AC1B00A8E946 /* QuoJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJob.swift; sourceTree = "<group>"; };
 		E863306422481BED00A8E946 /* Login.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
@@ -284,6 +290,7 @@
 			children = (
 				E82117BE220E0B20003D7578 /* MainWindowController.swift */,
 				E82117C4220E0FBD003D7578 /* SplitViewController.swift */,
+				E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -300,6 +307,7 @@
 		E82117C6220E1116003D7578 /* modules */ = {
 			isa = PBXGroup;
 			children = (
+				E850996D22F6FD9800068ED8 /* settings */,
 				E863306122481B8100A8E946 /* login */,
 				E8E950852232BC110070F57E /* editor */,
 				E895D8452221BB3D00DAAA4E /* dayTrackings */,
@@ -387,6 +395,39 @@
 				E8731AE4225952B1006947B0 /* constants.swift */,
 			);
 			path = helper;
+			sourceTree = "<group>";
+		};
+		E850996D22F6FD9800068ED8 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				E850996E22F6FDA900068ED8 /* controller */,
+				E850996F22F6FDB000068ED8 /* interfaces */,
+				E850997022F6FDC400068ED8 /* views */,
+			);
+			path = settings;
+			sourceTree = "<group>";
+		};
+		E850996E22F6FDA900068ED8 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				E850997722F7078C00068ED8 /* SettingsViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		E850996F22F6FDB000068ED8 /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E850997922F708E600068ED8 /* SettingsViewController.xib */,
+			);
+			path = interfaces;
+			sourceTree = "<group>";
+		};
+		E850997022F6FDC400068ED8 /* views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 		E863305E2247AB3B00A8E946 /* api */ = {
@@ -688,6 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8211795220E07B2003D7578 /* Assets.xcassets in Resources */,
+				E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */,
 				E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */,
 				E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */,
 				E8211802220F5384003D7578 /* JobItem.xib in Resources */,
@@ -846,6 +888,7 @@
 				E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */,
 				E8E9508F2232D62A0070F57E /* TextField.swift in Sources */,
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
+				E850997222F6FEF600068ED8 /* TrackingSplitViewController.swift in Sources */,
 				E8CACC782211DE6300675688 /* functions.swift in Sources */,
 				E81DEE6C22F4DF96004EF977 /* SplitJobItem.swift in Sources */,
 				E8731AE5225952B1006947B0 /* constants.swift in Sources */,
@@ -862,6 +905,7 @@
 				E81DEE6822F4D78F004EF977 /* SplitTracking.swift in Sources */,
 				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
 				E863306722481E2C00A8E946 /* Login.swift in Sources */,
+				E850997822F7078C00068ED8 /* SettingsViewController.swift in Sources */,
 				E8138A2622525BBF008DAA62 /* extensions.swift in Sources */,
 				E8E950892232C09F0070F57E /* EditorController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
