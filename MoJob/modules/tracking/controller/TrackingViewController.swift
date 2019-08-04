@@ -155,7 +155,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 			activitySelect.addItems(withTitles: activityTitles)
 
 			if
-				let activityId = userDefaults.object(forKey: "activity") as? String,
+				let activityId = userDefaults.string(forKey: "activity"),
 				let activity = activities.first(where: { $0.id == activityId }),
 				let title = activity.title,
 				let index = activityTitles.firstIndex(of: title)
