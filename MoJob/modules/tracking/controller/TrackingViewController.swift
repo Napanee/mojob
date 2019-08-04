@@ -124,7 +124,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 			jobSelect.lineBreakMode = .byTruncatingTail
 
 			if let job = currentTracking.job, let index = jobTitles.firstIndex(of: job.title!) {
-				jobSelect.selectItem(at: index)
+				jobSelect.selectItem(at: index + 1)
 			}
 		}
 	}
