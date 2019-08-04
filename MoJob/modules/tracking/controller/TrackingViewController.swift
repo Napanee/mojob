@@ -14,6 +14,7 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 	let starEmpty = NSImage(named: "star-empty")
 	let userDefaults = UserDefaults()
 
+	var appBadge = NSApp.dockTile as NSDockTile
 	var timer = Timer()
 	var startDate = Date()
 	var currentTracking: TempTracking!
@@ -170,9 +171,23 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 		let currentDate = Date()
 		let diff = currentDate.timeIntervalSince(startDate)
 		let restSeconds = diff.remainder(dividingBy: 60)
+		let totalSeconds = Int(round(diff))
 
 		timerCount.counter = round(CGFloat(restSeconds))
-		timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: Int(round(diff)))
+		timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: totalSeconds)
+
+
+		let formatter = DateComponentsFormatter()
+		formatter.unitsStyle = .positional
+		formatter.zeroFormattingBehavior = .pad
+
+		if (totalSeconds < 60 * 60) { // more than an hour
+			formatter.allowedUnits = [.minute, .second]
+		} else {
+			formatter.allowedUnits = [.hour, .minute]
+		}
+
+		appBadge.badgeLabel = formatter.string(from: diff)
 	}
 
 	@IBAction func jobSelect(_ sender: NSPopUpButton) {
@@ -271,6 +286,8 @@ class TrackingViewController: NSViewController, NSTextFieldDelegate {
 			}
 		}
 
+		timer.invalidate()
+		appBadge.badgeLabel = ""
 		let window = (NSApp.delegate as! AppDelegate).window
 		if let contentViewController = window?.contentViewController as? SplitViewController {
 			contentViewController.showJobList()
