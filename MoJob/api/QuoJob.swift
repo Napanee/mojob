@@ -592,24 +592,20 @@ extension QuoJob {
 				activities = self.fetchedResultControllerActivity.fetchedObjects
 			}
 
-			activityItems = activityItems.filter({
-				if let active = $0["active"] as? Bool {
-					return active
-				}
-
-				return false
-			})
+			activityItems = activityItems.filter({ $0["active"] as? Bool ?? false })
 
 			for item in activityItems {
 				let id = item["id"] as! String
 				let title = item["name"] as! String
 				let internal_service = item["internal"] as! Bool
 				let external_service = item["external_service"] as! Bool
+				let nfc = item["nfc"] as! Bool
 
 				if let activity = activities?.first(where: { $0.id == id }) {
 					activity.title = title
 					activity.internal_service = internal_service
 					activity.external_service = external_service
+					activity.nfc = nfc
 				} else {
 					let entity = NSEntityDescription.entity(forEntityName: "Activity", in: self.context)
 					let activity = NSManagedObject(entity: entity!, insertInto: self.context)
@@ -617,7 +613,8 @@ extension QuoJob {
 						"id": id,
 						"title": title,
 						"internal_service": internal_service,
-						"external_service": external_service
+						"external_service": external_service,
+						"nfc": nfc
 					]
 					activity.setValuesForKeys(activityValues)
 				}
