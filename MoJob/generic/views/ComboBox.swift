@@ -44,6 +44,7 @@ class ComboBox: NSComboBox {
 		font = NSFont.systemFont(ofSize: 20, weight: .light)
 		usesDataSource = true
 		wantsLayer = true
+		lineBreakMode = .byTruncatingTail
 
 		let lineWidth: CGFloat = 1
 		let lineColor = NSColor.quaternaryLabelColor.cgColor
