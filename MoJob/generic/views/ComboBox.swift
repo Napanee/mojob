@@ -10,6 +10,12 @@ import Cocoa
 
 class ComboBox: NSComboBox {
 
+	override var isEnabled: Bool {
+		didSet {
+			alphaValue = isEnabled ? 1.0 : 0.5
+		}
+	}
+
 	let underscoreLayer = CAShapeLayer()
 	let underscoreLayerActive = CALayer()
 	let borderColor: NSColor = NSColor.placeholderTextColor
@@ -65,17 +71,19 @@ class ComboBox: NSComboBox {
 	}
 
 	override func becomeFirstResponder() -> Bool {
-		super.becomeFirstResponder()
+		if (isEnabled) {
+			setFocused()
+		}
 
-		setFocused()
-
-		return true
+		return super.becomeFirstResponder()
 	}
 
 	override func mouseDown(with event: NSEvent) {
 		super.mouseDown(with: event)
 
-		setFocused()
+		if (isEnabled) {
+			setFocused()
+		}
 	}
 
 	override func textDidEndEditing(_ notification: Notification) {

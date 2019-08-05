@@ -15,7 +15,7 @@ protocol DateFieldDelegate {
 	func getUntilYear() -> Int?
 }
 
-class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate {
+class EditorController: NSViewController {
 	var tracking: Tracking? {
 		didSet {
 			if let tracking = tracking {
@@ -26,13 +26,21 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	var tempTracking: TempTracking!
 	var formIsValid: Bool {
 		get {
-			if ((tempTracking.date_end ?? Date()).timeIntervalSince(tempTracking.date_start) > 60 && (tempTracking.job != nil || tempTracking.custom_job != nil) && tempTracking.activity != nil) {
+			if (
+				tempTracking.activity != nil &&
+				(tempTracking.date_end ?? Date()).timeIntervalSince(tempTracking.date_start) > 60 &&
+				(tempTracking.job != nil || tempTracking.custom_job != nil || tempTracking.activity!.nfc)
+			) {
 				return true
 			}
 
 			return false
 		}
 	}
+	var userDefaults = UserDefaults()
+	var jobs: [Job] = []
+	var tasks: [Task] = []
+	var activities: [Activity] = []
 
 	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -47,9 +55,9 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 	@IBOutlet weak var untilMonth: NumberField!
 	@IBOutlet weak var untilYear: NumberField!
 	@IBOutlet weak var comment: NSTextField!
-	@IBOutlet weak var jobSelect: NSPopUpButton!
-	@IBOutlet weak var taskSelect: NSPopUpButton!
-	@IBOutlet weak var activitySelect: NSPopUpButton!
+	@IBOutlet weak var jobSelect: NSComboBox!
+	@IBOutlet weak var taskSelect: NSComboBox!
+	@IBOutlet weak var activitySelect: NSComboBox!
 	@IBOutlet weak var saveButton: NSButton!
 	@IBOutlet weak var deleteButton: NSButton!
 
@@ -60,85 +68,12 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		untilDay.dateDelegate = self
 		comment.delegate = self
 
-		jobSelect.removeAllItems()
-		taskSelect.removeAllItems()
-		activitySelect.removeAllItems()
-
 		saveButton.isEnabled = formIsValid
 		deleteButton.isHidden = tracking == nil
 
-		if let jobs = QuoJob.shared.jobs, let tracking = tempTracking {
-			let jobTitles = jobs
-				.sorted(by: {
-					$0.type!.id! != $1.type!.id! && $0.type!.title! < $1.type!.title! ||
-					$0.number! != $1.number! && $0.number! < $1.number! ||
-					$0.title! < $1.title!
-				})
-				.map({ job -> String in
-					guard let title = job.title, let number = job.number else { return "" }
-
-					return "\(number) - \(title)"
-				})
-			let type = tracking.job?.type
-			jobSelect.addItem(withTitle: "Job wählen")
-			jobSelect.addItems(withTitles: jobTitles)
-
-			if let job = tracking.job, let title = job.title, let number = job.number {
-				let fullJobTitle = "\(number) - \(title)"
-				if let index = jobTitles.firstIndex(of: fullJobTitle) {
-					jobSelect.selectItem(at: index + 1)
-				}
-			}
-
-			if let tasks = QuoJob.shared.tasks {
-				let taskTitles = tasks
-						.filter({ $0.job!.id == tracking.job?.id })
-						.sorted(by: { $0.title! < $1.title! })
-						.map({ task -> String in
-							var title = "\(task.title ?? "no title")"
-
-							if (task.hours_planed > 0) {
-								let avarage = round(task.hours_booked / task.hours_planed * 100)
-								title = "\(title) - \(avarage)%"
-							}
-
-							return title
-						})
-
-				if (taskTitles.count > 0) {
-					taskSelect.addItem(withTitle: "Aufgabe wählen")
-					taskSelect.addItems(withTitles: taskTitles)
-
-					if let task = tracking.task, let index = taskTitles.firstIndex(where: { taskTitle -> Bool in
-						var title = "\(task.title ?? "no title")"
-
-						if (task.hours_planed > 0) {
-							let avarage = round(task.hours_booked / task.hours_planed * 100)
-							title = "\(title) - \(avarage)%"
-						}
-
-						return taskTitle == title
-					}) {
-						taskSelect.selectItem(at: index + 1)
-					}
-				} else {
-					taskSelect.isEnabled = false
-				}
-			}
-
-			if let activities = QuoJob.shared.activities {
-				let activityTitles = activities.filter({
-					(type?.internal_service ?? true && $0.internal_service) ||
-					(type?.productive_service ?? true && $0.external_service)
-				}).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
-				activitySelect.addItem(withTitle: "Leistungsart wählen")
-				activitySelect.addItems(withTitles: activityTitles as! [String])
-
-				if let index = activityTitles.firstIndex(of: tracking.activity?.title) {
-					activitySelect.selectItem(at: index + 1)
-				}
-			}
-		}
+		initJobSelect()
+		initTaskSelect()
+		initActivitySelect()
 
 		if let commentString = tempTracking.comment {
 			comment.stringValue = commentString
@@ -172,50 +107,77 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 		}
 	}
 
-	func getFromMonth() -> Int? {
-		return Int(fromMonth.stringValue)
-	}
+	private func initJobSelect() {
+		jobSelect.placeholderString = "Job wählen oder eingeben"
 
-	func getFromYear() -> Int? {
-		return Int(fromYear.stringValue)
-	}
+		if let jobs = QuoJob.shared.jobs {
+			self.jobs = jobs
+				.sorted(by: {
+					$0.type!.id! != $1.type!.id! && $0.type!.title! < $1.type!.title! ||
+						$0.number! != $1.number! && $0.number! < $1.number! ||
+						$0.title! < $1.title!
+				})
+		}
 
-	func getUntilMonth() -> Int? {
-		return Int(untilMonth.stringValue)
-	}
+		jobSelect.reloadData()
 
-	func getUntilYear() -> Int? {
-		return Int(untilYear.stringValue)
-	}
-
-	func controlTextDidChange(_ obj: Notification) {
-		guard let textField = obj.object as? NSTextField else { return }
-
-		let formatter = DateFormatter()
-		formatter.dateFormat = "YYYY/MM/dd HH:mm"
-
-		if ([fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField)) {
-			if let newDate = formatter.date(from: "\(fromYear.stringValue)/\(fromMonth.stringValue)/\(fromDay.stringValue) \(fromHour.stringValue):\(fromMinute.stringValue)"),
-				tempTracking.date_start.compare(newDate) != .orderedSame
-			{
-				tempTracking.date_start = newDate
+		if let job = tempTracking.job {
+			if let index = jobs.index(where: { $0.id == job.id }) {
+				jobSelect.selectItem(at: index)
 			}
 		}
+	}
 
-		if ([untilMinute, untilHour, untilDay, untilMonth, untilYear].contains(textField)) {
-			if let oldDate = tempTracking.date_end,
-				let newDate = formatter.date(from: "\(untilYear.stringValue)/\(untilMonth.stringValue)/\(untilDay.stringValue) \(untilHour.stringValue):\(untilMinute.stringValue)"),
-				oldDate.compare(newDate) != .orderedSame
-			{
-				tempTracking.date_end = newDate
+	private func initTaskSelect() {
+		if let tasks = QuoJob.shared.tasks {
+			self.tasks = tasks
+				.filter({ $0.job!.id == tempTracking.job?.id })
+				.sorted(by: { $0.title! < $1.title! })
+		}
+
+		taskSelect.reloadData()
+
+		if (tasks.count > 0) {
+			taskSelect.placeholderString = "Aufgabe wählen oder eingeben"
+			taskSelect.isEnabled = true
+		} else {
+			taskSelect.placeholderString = "keine Aufgaben verfügbar"
+			taskSelect.isEnabled = false
+		}
+
+		if let task = tempTracking.task {
+			if let index = tasks.index(where: { $0.id == task.id }) {
+				taskSelect.selectItem(at: index)
 			}
 		}
+	}
 
-		if (textField == comment) {
-			tempTracking.comment = textField.stringValue
+	private func initActivitySelect() {
+		activitySelect.placeholderString = "Leistungsart wählen oder eingeben"
+
+		if let activities = QuoJob.shared.activities {
+			self.activities = activities
+				.filter({
+					if let job = tempTracking.job {
+						return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
+					}
+
+					return $0.internal_service || $0.nfc
+				})
+				.sorted(by: { $0.title! < $1.title! })
 		}
 
-		saveButton.isEnabled = formIsValid
+		activitySelect.reloadData()
+
+		if let activity = tempTracking.activity, let activityId = activity.id {
+			if let index = activities.index(where: { $0.id == activityId }) {
+				activitySelect.selectItem(at: index)
+			}
+		} else if let activityId = userDefaults.string(forKey: "activity") {
+			if let index = activities.index(where: { $0.id == activityId }) {
+				activitySelect.selectItem(at: index)
+			}
+		}
 	}
 
 //	private func validateData() -> Bool {
@@ -230,90 +192,65 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 //		return true
 //	}
 
-	@IBAction func jobSelect(_ sender: NSPopUpButton) {
-		let title = sender.titleOfSelectedItem
-		let currentActivity = activitySelect.titleOfSelectedItem
-		guard let job = QuoJob.shared.jobs?.first(where: { "\($0.number!) - \($0.title!)" == title }) else {
+	@IBAction func jobSelect(_ sender: NSComboBox) {
+		guard let cell = sender.cell else { return }
+
+		let value = cell.stringValue.lowercased()
+
+		if (value == "") {
+			print(2)
+			tempTracking.job = nil
 			saveButton.isEnabled = false
-			return
+		} else if let job = QuoJob.shared.jobs?.first(where: { "\($0.number ?? "number N/A") - \($0.title ?? "title N/A")".lowercased() == value }) {
+			tempTracking.job = job
+			saveButton.isEnabled = formIsValid
 		}
 
-		let type = job.type
+		initTaskSelect()
+		initActivitySelect()
+	}
 
-		tempTracking.job = job
-		saveButton.isEnabled = formIsValid
+	@IBAction func taskSelect(_ sender: NSComboBox) {
+		guard let cell = sender.cell else { return }
 
-		taskSelect.removeAllItems()
-		activitySelect.removeAllItems()
+		let value = cell.stringValue.lowercased()
 
-		if let tasks = QuoJob.shared.tasks {
-			let taskTitles = tasks
-				.filter({ $0.job!.id == job.id })
-				.sorted(by: { $0.title! < $1.title! })
-				.map({ task -> String in
-					var title = "\(task.title ?? "no title")"
-
-					if (task.hours_planed > 0) {
-						let avarage = round(task.hours_booked / task.hours_planed * 10000) / 100
-						title = "\(title) - \(avarage)%"
-					}
-
-					return title
-				})
-
-			if (taskTitles.count > 0) {
-				taskSelect.addItem(withTitle: "Aufgabe wählen")
-				taskSelect.addItems(withTitles: taskTitles)
-				taskSelect.isEnabled = true
-			} else {
-				taskSelect.isEnabled = false
-			}
-		}
-
-		if let activities = QuoJob.shared.activities {
-			let activityTitles = activities.filter({ ((type?.internal_service)! && $0.internal_service) || ((type?.productive_service)! && $0.external_service) }).sorted(by: { $0.title! < $1.title! }).map({ $0.title })
-			activitySelect.addItem(withTitle: "Leistungsart wählen")
-			activitySelect.addItems(withTitles: activityTitles as! [String])
-
-			if let currentActivity = currentActivity, let currentIndex = activitySelect.itemTitles.firstIndex(of: currentActivity) {
-				activitySelect.selectItem(at: currentIndex)
-			} else {
-				activitySelect.layer?.backgroundColor = NSColor.systemRed.withAlphaComponent(0.5).cgColor
-			}
+		if (value == "") {
+			tempTracking.task = nil
+		} else if let task = QuoJob.shared.tasks?.first(where: { $0.title?.lowercased() == value }) {
+			tempTracking.task = task
 		}
 	}
 
-	@IBAction func taskSelect(_ sender: NSPopUpButton) {
-		let title = sender.titleOfSelectedItem
-		if let task = QuoJob.shared.tasks?
-			.first(where: { task -> Bool in
-				var taskTitle = "\(task.title ?? "no title")"
+	@IBAction func activitySelect(_ sender: NSComboBox) {
+		guard let cell = sender.cell else { return }
 
-				if (task.hours_planed > 0) {
-					let avarage = round(task.hours_booked / task.hours_planed * 10000) / 100
-					taskTitle = "\(taskTitle) - \(avarage)%"
+		let value = cell.stringValue.lowercased()
+
+		if (value == "") {
+			jobSelect.isEnabled = true
+			tempTracking.activity = nil
+			saveButton.isEnabled = false
+		} else if let activity = QuoJob.shared.activities?
+			.filter({
+				if let job = tempTracking.job {
+					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 				}
 
-				return taskTitle == title
+				return $0.internal_service || $0.nfc
 			})
+			.first(where: { $0.title?.lowercased() == value })
 		{
-			print(task)
-			tempTracking.task = task
-		} else {
-			tempTracking.task = nil
-		}
-	}
+			if (activity.nfc) {
+				jobSelect.cell?.stringValue = ""
+				jobSelect.isEnabled = false
+			} else {
+				jobSelect.isEnabled = true
+			}
 
-	@IBAction func activitySelect(_ sender: NSPopUpButton) {
-		let title = sender.titleOfSelectedItem
-		guard let activity = QuoJob.shared.activities?.first(where: { $0.title == title }) else {
-			saveButton.isEnabled = false
-			return
+			tempTracking.activity = activity
+			saveButton.isEnabled = formIsValid
 		}
-
-		activitySelect.layer?.backgroundColor = CGColor.clear
-		tempTracking.activity = activity
-		saveButton.isEnabled = formIsValid
 	}
 
 	@IBAction func deleteTracking(_ sender: NSButton) {
@@ -363,12 +300,142 @@ class EditorController: NSViewController, DateFieldDelegate, NSTextFieldDelegate
 				try self.context.save()
 			}
 		}.catch { error in
+			print("error")
+			print(error)
 			currentTracking.exported = SyncStatus.error.rawValue
 			try? self.context.save()
-			print(error)
 		}
 
 		removeFromParent()
 	}
 
+}
+
+extension EditorController: NSComboBoxDataSource {
+	func numberOfItems(in comboBox: NSComboBox) -> Int {
+		if (comboBox.isEqual(jobSelect)) {
+			return jobs.count
+		} else if (comboBox.isEqual(taskSelect)) {
+			return tasks.count
+		} else if (comboBox.isEqual(activitySelect)) {
+			return activities.count
+		}
+
+		return 0
+	}
+
+	func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+		if (comboBox.isEqual(jobSelect)) {
+			let job = jobs[index]
+			return "\(job.number ?? "number N/A") - \(job.title ?? "title N/A")"
+		} else if (comboBox.isEqual(taskSelect)) {
+			return tasks[index].title
+		} else if (comboBox.isEqual(activitySelect)) {
+			return activities[index].title
+		}
+
+		return ""
+	}
+}
+
+extension EditorController: DateFieldDelegate {
+	func getFromMonth() -> Int? {
+		return Int(fromMonth.stringValue)
+	}
+
+	func getFromYear() -> Int? {
+		return Int(fromYear.stringValue)
+	}
+
+	func getUntilMonth() -> Int? {
+		return Int(untilMonth.stringValue)
+	}
+
+	func getUntilYear() -> Int? {
+		return Int(untilYear.stringValue)
+	}
+}
+
+extension EditorController: NSTextFieldDelegate {
+	func controlTextDidChange(_ obj: Notification) {
+		if let textField = obj.object as? NSTextField {
+			handleTextChange(in: textField)
+		}
+
+		if let comboBox = obj.object as? NSComboBox {
+			handleTextChange(in: comboBox)
+		}
+	}
+
+	private func handleTextChange(in textField: NSTextField) {
+		let formatter = DateFormatter()
+		formatter.dateFormat = "YYYY/MM/dd HH:mm"
+
+		if ([fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField)) {
+			if let newDate = formatter.date(from: "\(fromYear.stringValue)/\(fromMonth.stringValue)/\(fromDay.stringValue) \(fromHour.stringValue):\(fromMinute.stringValue)"),
+				tempTracking.date_start.compare(newDate) != .orderedSame
+			{
+				tempTracking.date_start = newDate
+			}
+		}
+
+		if ([untilMinute, untilHour, untilDay, untilMonth, untilYear].contains(textField)) {
+			if let oldDate = tempTracking.date_end,
+				let newDate = formatter.date(from: "\(untilYear.stringValue)/\(untilMonth.stringValue)/\(untilDay.stringValue) \(untilHour.stringValue):\(untilMinute.stringValue)"),
+				oldDate.compare(newDate) != .orderedSame
+			{
+				tempTracking.date_end = newDate
+			}
+		}
+
+		if (textField == comment) {
+			tempTracking.comment = textField.stringValue
+		}
+
+		saveButton.isEnabled = formIsValid
+	}
+
+	private func handleTextChange(in comboBox: NSComboBox) {
+		guard let comboBoxCell = comboBox.cell as? NSComboBoxCell else { return }
+		let value = comboBoxCell.stringValue.lowercased()
+
+		if (comboBox.isEqual(jobSelect)) {
+			jobs = QuoJob.shared.jobs!
+				.filter({ value == "" || "\($0.number!) - \($0.title!)".lowercased().contains(value) })
+				.sorted(by: {
+					$0.type!.id! != $1.type!.id! && $0.type!.title! < $1.type!.title! ||
+						$0.number! != $1.number! && $0.number! < $1.number! ||
+						$0.title! < $1.title!
+				})
+
+			if (jobs.count > 0) {
+				comboBoxCell.perform(Selector(("popUp:")))
+			}
+		} else if (comboBox.isEqual(taskSelect)) {
+			tasks = QuoJob.shared.tasks!
+				.filter({ value == "" || $0.job!.id == tempTracking.job?.id && $0.title!.lowercased().contains(value) })
+				.sorted(by: { $0.title! < $1.title! })
+
+			if (tasks.count > 0) {
+				comboBoxCell.perform(Selector(("popUp:")))
+			}
+		} else if (comboBox.isEqual(activitySelect)) {
+			activities = QuoJob.shared.activities!
+				.filter({
+					if let job = tempTracking.job {
+						return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
+					}
+
+					return $0.internal_service || $0.nfc
+				})
+				.filter({ value == "" || $0.title!.lowercased().contains(value) })
+				.sorted(by: { $0.title! < $1.title! })
+
+			if (activities.count > 0) {
+				comboBoxCell.perform(Selector(("popUp:")))
+			}
+		}
+
+		comboBox.reloadData()
+	}
 }
