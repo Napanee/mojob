@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import Fabric
+import Crashlytics
 
 
 struct TempTracking {
@@ -61,6 +63,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	var mainWindowController: MainWindowController?
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
+		Fabric.with([Crashlytics.self, Answers.self])
+
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
 

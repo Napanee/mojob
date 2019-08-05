@@ -854,7 +854,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n\"${PODS_ROOT}/Fabric/run\" 08042b2dbc27ed6620e1aed5fdc4f980e11af3f9 652f66bb6f28478ba6170e3f82bd0d717c3879632ee4b53513b8fff3fada2faf\n";
 		};
 		F5958C8F316B926FBE6550F6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1093,6 +1093,7 @@
 				CODE_SIGN_ENTITLEMENTS = MoJob/MoJob.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				INFOPLIST_FILE = MoJob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

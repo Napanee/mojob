@@ -6,6 +6,8 @@ def shared_pods
 	pod 'PromiseKit/Alamofire', '~> 6.0'
 	pod 'KeychainAccess', '~> 3.1'
 	pod 'SwiftLint'
+	pod 'Fabric'
+	pod 'Crashlytics'
 end
 
 target 'MoJob' do

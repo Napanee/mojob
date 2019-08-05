@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (4.8.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - Fabric (1.9.0)
   - KeychainAccess (3.1.2)
   - PromiseKit/Alamofire (6.8.3):
     - Alamofire (~> 4.0)
@@ -9,6 +12,8 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.8)
+  - Crashlytics
+  - Fabric
   - KeychainAccess (~> 3.1)
   - PromiseKit/Alamofire (~> 6.0)
   - SwiftLint
@@ -16,16 +21,20 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - Crashlytics
+    - Fabric
     - KeychainAccess
     - PromiseKit
     - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: 1368d7d491c0f1f6d964f25e9991d7f013a40944
+PODFILE CHECKSUM: d03547096ce1382ede318ff988e2af4864bba695
 
 COCOAPODS: 1.6.0
