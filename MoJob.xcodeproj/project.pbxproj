@@ -62,6 +62,10 @@
 		E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A270402210BAE80030B61C /* TrackingViewController.xib */; };
 		E8A270442210C3100030B61C /* TimerCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270432210C3100030B61C /* TimerCount.swift */; };
 		E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */; };
+		E8AA8CAE22F890520017698F /* HelperAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA8CAD22F890520017698F /* HelperAppDelegate.swift */; };
+		E8AA8CB222F890540017698F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8AA8CB122F890540017698F /* Assets.xcassets */; };
+		E8AA8CB522F890540017698F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8AA8CB322F890540017698F /* Main.storyboard */; };
+		E8AA8CBC22F891790017698F /* AutoLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E8CACC782211DE6300675688 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
 		E8E950892232C09F0070F57E /* EditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950882232C09F0070F57E /* EditorController.swift */; };
 		E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E9508A2232C0AF0070F57E /* EditorController.xib */; };
@@ -87,6 +91,19 @@
 			remoteInfo = MoJob;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E8AA8CBB22F891660017698F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				E8AA8CBC22F891790017698F /* AutoLaunchHelper.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		094DA011DFDF8D35D98D439B /* Pods-MoJobTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobTests.release.xcconfig"; path = "Target Support Files/Pods-MoJobTests/Pods-MoJobTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -158,6 +175,12 @@
 		E8A270402210BAE80030B61C /* TrackingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackingViewController.xib; sourceTree = "<group>"; };
 		E8A270432210C3100030B61C /* TimerCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCount.swift; sourceTree = "<group>"; };
 		E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath-cgPath.swift"; sourceTree = "<group>"; };
+		E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLaunchHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8AA8CAD22F890520017698F /* HelperAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperAppDelegate.swift; sourceTree = "<group>"; };
+		E8AA8CB122F890540017698F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E8AA8CB422F890540017698F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E8AA8CB622F890540017698F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E8AA8CB722F890540017698F /* AutoLaunchHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutoLaunchHelper.entitlements; sourceTree = "<group>"; };
 		E8CACC772211DE6300675688 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 		E8E950882232C09F0070F57E /* EditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorController.swift; sourceTree = "<group>"; };
 		E8E9508A2232C0AF0070F57E /* EditorController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorController.xib; sourceTree = "<group>"; };
@@ -189,6 +212,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4EB7A298F04A937F35732F5 /* Pods_MoJobUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8AA8CA822F890520017698F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +254,7 @@
 				E821178E220E07B1003D7578 /* MoJob */,
 				E82117A2220E07B2003D7578 /* MoJobTests */,
 				E82117AD220E07B3003D7578 /* MoJobUITests */,
+				E8AA8CAC22F890520017698F /* AutoLaunchHelper */,
 				E821178D220E07B1003D7578 /* Products */,
 				6E162B655EF2BB420D7E68F1 /* Pods */,
 				83B674A85D82A77D9B0D008A /* Frameworks */,
@@ -237,6 +268,7 @@
 				E821178C220E07B1003D7578 /* MoJob.app */,
 				E821179F220E07B2003D7578 /* MoJobTests.xctest */,
 				E82117AA220E07B3003D7578 /* MoJobUITests.xctest */,
+				E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -404,7 +436,6 @@
 			children = (
 				E850996E22F6FDA900068ED8 /* controller */,
 				E850996F22F6FDB000068ED8 /* interfaces */,
-				E850997022F6FDC400068ED8 /* views */,
 			);
 			path = settings;
 			sourceTree = "<group>";
@@ -423,13 +454,6 @@
 				E850997922F708E600068ED8 /* SettingsViewController.xib */,
 			);
 			path = interfaces;
-			sourceTree = "<group>";
-		};
-		E850997022F6FDC400068ED8 /* views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = views;
 			sourceTree = "<group>";
 		};
 		E863305E2247AB3B00A8E946 /* api */ = {
@@ -562,6 +586,18 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		E8AA8CAC22F890520017698F /* AutoLaunchHelper */ = {
+			isa = PBXGroup;
+			children = (
+				E8AA8CAD22F890520017698F /* HelperAppDelegate.swift */,
+				E8AA8CB122F890540017698F /* Assets.xcassets */,
+				E8AA8CB322F890540017698F /* Main.storyboard */,
+				E8AA8CB622F890540017698F /* Info.plist */,
+				E8AA8CB722F890540017698F /* AutoLaunchHelper.entitlements */,
+			);
+			path = AutoLaunchHelper;
+			sourceTree = "<group>";
+		};
 		E8E950842231B3DD0070F57E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -635,6 +671,7 @@
 				E821178A220E07B1003D7578 /* Resources */,
 				709109543FB4E546A9F47017 /* [CP] Embed Pods Frameworks */,
 				E81DEE5E22F4918B004EF977 /* ShellScript */,
+				E8AA8CBB22F891660017698F /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -683,13 +720,30 @@
 			productReference = E82117AA220E07B3003D7578 /* MoJobUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		E8AA8CAA22F890520017698F /* AutoLaunchHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E8AA8CBA22F890540017698F /* Build configuration list for PBXNativeTarget "AutoLaunchHelper" */;
+			buildPhases = (
+				E8AA8CA722F890520017698F /* Sources */,
+				E8AA8CA822F890520017698F /* Frameworks */,
+				E8AA8CA922F890520017698F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AutoLaunchHelper;
+			productName = AutoLaunchHelper;
+			productReference = E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		E8211784220E07B1003D7578 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1000;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Martin Schneider";
 				TargetAttributes = {
@@ -709,6 +763,9 @@
 						CreatedOnToolsVersion = 10.0;
 						TestTargetID = E821178B220E07B1003D7578;
 					};
+					E8AA8CAA22F890520017698F = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
 				};
 			};
 			buildConfigurationList = E8211787220E07B1003D7578 /* Build configuration list for PBXProject "MoJob" */;
@@ -727,6 +784,7 @@
 				E821178B220E07B1003D7578 /* MoJob */,
 				E821179E220E07B2003D7578 /* MoJobTests */,
 				E82117A9220E07B3003D7578 /* MoJobUITests */,
+				E8AA8CAA22F890520017698F /* AutoLaunchHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -768,6 +826,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8AA8CA922F890520017698F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8AA8CB222F890540017698F /* Assets.xcassets in Resources */,
+				E8AA8CB522F890540017698F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,6 +1015,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E8AA8CA722F890520017698F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8AA8CAE22F890520017698F /* HelperAppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -970,6 +1045,14 @@
 				E8211797220E07B2003D7578 /* Base */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		E8AA8CB322F890540017698F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E8AA8CB422F890540017698F /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1225,6 +1308,48 @@
 			};
 			name = Release;
 		};
+		E8AA8CB822F890540017698F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AutoLaunchHelper/AutoLaunchHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = CYSY859JZ8;
+				INFOPLIST_FILE = AutoLaunchHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.AutoLaunchHelper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E8AA8CB922F890540017698F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AutoLaunchHelper/AutoLaunchHelper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = CYSY859JZ8;
+				INFOPLIST_FILE = AutoLaunchHelper/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.AutoLaunchHelper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1260,6 +1385,15 @@
 			buildConfigurations = (
 				E82117BA220E07B3003D7578 /* Debug */,
 				E82117BB220E07B3003D7578 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E8AA8CBA22F890540017698F /* Build configuration list for PBXNativeTarget "AutoLaunchHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8AA8CB822F890540017698F /* Debug */,
+				E8AA8CB922F890540017698F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

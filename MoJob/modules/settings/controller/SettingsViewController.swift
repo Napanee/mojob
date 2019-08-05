@@ -7,18 +7,27 @@
 //
 
 import Cocoa
+import ServiceManagement
 
 class SettingsViewController: NSViewController {
 
 	@IBOutlet weak var activitySelect: NSComboBox!
+	@IBOutlet weak var autoLaunchCheckbox: NSButton!
 
 	var userDefaults = UserDefaults()
 	var activities: [Activity] = []
+	let helperBundleName = "de.martinschneider.AutoLaunchHelper"
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		initActivitySelect()
+
+		let foundHelper = NSWorkspace.shared.runningApplications.contains {
+			$0.bundleIdentifier == helperBundleName
+		}
+
+		autoLaunchCheckbox.state = foundHelper ? .on : .off
 	}
 
 	private func initActivitySelect() {
@@ -47,6 +56,11 @@ class SettingsViewController: NSViewController {
 		} else if let activities = QuoJob.shared.activities, let activity = activities.first(where: { $0.title?.lowercased() == value }) {
 			userDefaults.set(activity.id, forKey: "activity")
 		}
+	}
+
+	@IBAction func toggleAutoLaunch(_ sender: NSButton) {
+		let isAuto = sender.state == .on
+		SMLoginItemSetEnabled(helperBundleName as CFString, isAuto)
 	}
 
 }
