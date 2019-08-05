@@ -695,6 +695,11 @@
 				TargetAttributes = {
 					E821178B220E07B1003D7578 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					E821179E220E07B2003D7578 = {
 						CreatedOnToolsVersion = 10.0;
@@ -1091,6 +1096,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MoJob/MoJob.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1103,6 +1109,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MoJob/MoJob-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};
@@ -1114,6 +1121,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MoJob/MoJob.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
@@ -1125,6 +1133,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MoJob/MoJob-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 			};

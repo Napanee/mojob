@@ -109,7 +109,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	     application to it. This property is optional since there are legitimate
 	     error conditions that could cause the creation of the store to fail.
 	    */
-	    let container = NSPersistentContainer(name: "MoJob")
+		let modelURL = Bundle.main.url(forResource: RESSOURCE_NAME, withExtension: "momd") ?? Bundle.main.url(forResource: RESSOURCE_NAME, withExtension: "mom")
+		let model = NSManagedObjectModel(contentsOf: modelURL!)
+		let container = NSPersistentContainer(name: CONTAINER_NAME, managedObjectModel: model!)
 	    container.loadPersistentStores(completionHandler: { (storeDescription, error) in
 	        if let error = error {
 	            // Replace this implementation with code to handle the error appropriately.
