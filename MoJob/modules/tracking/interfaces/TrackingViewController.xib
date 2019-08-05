@@ -8,15 +8,15 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TrackingViewController" customModule="MoJob" customModuleProvider="target">
             <connections>
-                <outlet property="activitySelect" destination="7F7-jP-V9e" id="fIf-Id-9az"/>
+                <outlet property="activitySelect" destination="MdH-SC-bOo" id="Egv-e4-6Qz"/>
                 <outlet property="comment" destination="6ph-FO-APw" id="L0B-ud-RjK"/>
                 <outlet property="commentLabel" destination="6ph-FO-APw" id="Ad9-Gq-pcS"/>
                 <outlet property="favoriteTracking" destination="q11-uO-dg3" id="7U1-5f-Vwe"/>
                 <outlet property="fromHour" destination="xtI-70-Rm0" id="8Nq-Lx-KD4"/>
                 <outlet property="fromMinute" destination="dmo-GF-BuN" id="62J-RH-xtx"/>
-                <outlet property="jobSelect" destination="PL2-uz-BXc" id="QCY-MF-9Ga"/>
+                <outlet property="jobSelect" destination="aHX-yB-gab" id="Wf9-Jt-wjO"/>
                 <outlet property="stopTracking" destination="tNo-i9-B9g" id="wPb-wd-qC8"/>
-                <outlet property="taskSelect" destination="snq-4k-rTw" id="cW2-iw-ABk"/>
+                <outlet property="taskSelect" destination="Wtm-jI-Dgv" id="Lv9-lY-fzZ"/>
                 <outlet property="timeLabel" destination="eyr-qf-dUK" id="ckO-XY-PzN"/>
                 <outlet property="timerCount" destination="fu1-3e-qLE" id="wYN-tk-DtT"/>
                 <outlet property="view" destination="GNv-6l-LWp" id="ezI-B7-KkE"/>
@@ -97,26 +97,88 @@
                                 </userDefinedRuntimeAttributes>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="z97-CG-Oyg">
-                                <rect key="frame" x="30" y="185" width="337" height="356"/>
+                                <rect key="frame" x="30" y="174" width="337" height="367"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dQ8-dy-mO0">
-                                        <rect key="frame" x="-2" y="339" width="116" height="17"/>
+                                        <rect key="frame" x="-2" y="350" width="116" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Job und Aufgabe:" id="jK1-by-ZNy">
                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aHX-yB-gab" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="321" width="340" height="26"/>
+                                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="WiS-Ta-UTO">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <objectValues>
+                                                <string>Item 1</string>
+                                                <string>Item 2</string>
+                                                <string>Item 3</string>
+                                            </objectValues>
+                                        </comboBoxCell>
+                                        <connections>
+                                            <action selector="jobSelect:" target="-2" id="6Jo-mk-Vmw"/>
+                                            <outlet property="dataSource" destination="-2" id="Asl-St-W3d"/>
+                                            <outlet property="delegate" destination="-2" id="WaE-Cb-FNh"/>
+                                        </connections>
+                                    </comboBox>
+                                    <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wtm-jI-Dgv" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="286" width="340" height="26"/>
+                                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="Q8n-Iw-AWp">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <objectValues>
+                                                <string>Item 1</string>
+                                                <string>Item 2</string>
+                                                <string>Item 3</string>
+                                            </objectValues>
+                                        </comboBoxCell>
+                                        <connections>
+                                            <action selector="taskSelect:" target="-2" id="WEf-uv-mbL"/>
+                                            <outlet property="dataSource" destination="-2" id="Si4-e8-TCb"/>
+                                            <outlet property="delegate" destination="-2" id="qfy-0f-BGq"/>
+                                        </connections>
+                                    </comboBox>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ytt-a6-ynY">
-                                        <rect key="frame" x="-2" y="244" width="63" height="17"/>
+                                        <rect key="frame" x="-2" y="248" width="63" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Tätigkeit:" id="C4a-HL-NP6">
                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MdH-SC-bOo" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="219" width="340" height="26"/>
+                                        <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="FAu-Ms-R2P">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <objectValues>
+                                                <string>Item 1</string>
+                                                <string>Item 2</string>
+                                                <string>Item 3</string>
+                                            </objectValues>
+                                        </comboBoxCell>
+                                        <connections>
+                                            <action selector="activitySelect:" target="-2" id="fEd-UX-HuK"/>
+                                            <outlet property="dataSource" destination="-2" id="SaN-ZD-R0D"/>
+                                            <outlet property="delegate" destination="-2" id="IuW-K4-Pzq"/>
+                                        </connections>
+                                    </comboBox>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pBG-Hw-Bez">
+                                        <rect key="frame" x="-2" y="181" width="63" height="17"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Startzeit:" id="nGQ-9J-b0J">
+                                            <font key="font" metaFont="systemSemibold" size="13"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q8C-Af-3wI">
-                                        <rect key="frame" x="0.0" y="142" width="74" height="29"/>
+                                        <rect key="frame" x="0.0" y="147" width="74" height="29"/>
                                         <subviews>
                                             <textField identifier="fromHour" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xtI-70-Rm0" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="33" height="29"/>
@@ -193,97 +255,31 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <popUpButton horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="PL2-uz-BXc">
-                                        <rect key="frame" x="0.0" y="308" width="337" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="l7z-ma-0VL"/>
-                                        </constraints>
-                                        <popUpButtonCell key="cell" type="bevel" title="Job wählen" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" selectedItem="uhF-mw-dPx" id="oXe-N9-OVP" customClass="PopUpCellText" customModule="MoJob" customModuleProvider="target">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="systemThin" size="18"/>
-                                            <menu key="menu" id="5ix-by-w8x">
-                                                <items>
-                                                    <menuItem title="Job wählen" id="uhF-mw-dPx">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </popUpButtonCell>
-                                        <connections>
-                                            <action selector="jobSelect:" target="-2" id="VpQ-KP-pfy"/>
-                                        </connections>
-                                    </popUpButton>
-                                    <popUpButton horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="snq-4k-rTw">
-                                        <rect key="frame" x="0.0" y="281" width="337" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="fSK-B5-RYZ"/>
-                                        </constraints>
-                                        <popUpButtonCell key="cell" type="bevel" title="Aufgabe wählen" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="HcY-XU-Awe" id="l6M-ss-8VL" customClass="PopUpCellText" customModule="MoJob" customModuleProvider="target">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="systemThin" size="14"/>
-                                            <menu key="menu" id="sBA-VX-Gxy">
-                                                <items>
-                                                    <menuItem title="Aufgabe wählen" state="on" id="HcY-XU-Awe">
-                                                        <attributedString key="attributedTitle"/>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </popUpButtonCell>
-                                        <connections>
-                                            <action selector="taskSelect:" target="-2" id="L5u-Yv-Wqm"/>
-                                        </connections>
-                                    </popUpButton>
-                                    <popUpButton horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="7F7-jP-V9e">
-                                        <rect key="frame" x="0.0" y="213" width="337" height="26"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="079-2M-mlQ"/>
-                                        </constraints>
-                                        <popUpButtonCell key="cell" type="bevel" title="Leistungsart wählen" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="5Tb-mQ-3qe" id="bCj-va-iaK" customClass="PopUpCellText" customModule="MoJob" customModuleProvider="target">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="systemThin" size="18"/>
-                                            <menu key="menu" id="5Be-5b-eIn">
-                                                <items>
-                                                    <menuItem title="Leistungsart wählen" state="on" id="5Tb-mQ-3qe"/>
-                                                </items>
-                                            </menu>
-                                        </popUpButtonCell>
-                                        <connections>
-                                            <action selector="activitySelect:" target="-2" id="FM0-cd-za5"/>
-                                        </connections>
-                                    </popUpButton>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pBG-Hw-Bez">
-                                        <rect key="frame" x="-2" y="176" width="63" height="17"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Startzeit:" id="nGQ-9J-b0J">
-                                            <font key="font" metaFont="systemSemibold" size="13"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="pBG-Hw-Bez" firstAttribute="top" secondItem="7F7-jP-V9e" secondAttribute="bottom" constant="20" id="5IZ-d9-wP7"/>
                                     <constraint firstAttribute="bottom" secondItem="6ph-FO-APw" secondAttribute="bottom" id="6bd-SF-UVl"/>
                                     <constraint firstItem="6ph-FO-APw" firstAttribute="top" secondItem="MvS-Wm-cSc" secondAttribute="bottom" constant="5" id="6bi-zh-VzG"/>
                                     <constraint firstAttribute="trailing" secondItem="6ph-FO-APw" secondAttribute="trailing" id="6lt-Hi-PXK"/>
+                                    <constraint firstAttribute="trailing" secondItem="MdH-SC-bOo" secondAttribute="trailing" id="9ry-Gr-uFE"/>
                                     <constraint firstItem="6ph-FO-APw" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="AlZ-cD-LEC"/>
                                     <constraint firstItem="pBG-Hw-Bez" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="FTF-ca-OOF"/>
-                                    <constraint firstAttribute="trailing" secondItem="PL2-uz-BXc" secondAttribute="trailing" id="JUq-PV-6sL"/>
-                                    <constraint firstAttribute="trailing" secondItem="7F7-jP-V9e" secondAttribute="trailing" id="JrW-Ao-zor"/>
-                                    <constraint firstAttribute="trailing" secondItem="snq-4k-rTw" secondAttribute="trailing" id="M85-9s-ZI9"/>
-                                    <constraint firstItem="7F7-jP-V9e" firstAttribute="top" secondItem="Ytt-a6-ynY" secondAttribute="bottom" constant="5" id="MWI-is-8pq"/>
-                                    <constraint firstItem="snq-4k-rTw" firstAttribute="top" secondItem="PL2-uz-BXc" secondAttribute="bottom" constant="5" id="Reb-ud-Lbm"/>
+                                    <constraint firstItem="MdH-SC-bOo" firstAttribute="top" secondItem="Ytt-a6-ynY" secondAttribute="bottom" constant="5" id="I9j-zL-OHP"/>
+                                    <constraint firstItem="MdH-SC-bOo" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="ImD-NG-U2G"/>
+                                    <constraint firstItem="pBG-Hw-Bez" firstAttribute="top" secondItem="MdH-SC-bOo" secondAttribute="bottom" constant="25" id="LEa-ix-p8a"/>
+                                    <constraint firstItem="Wtm-jI-Dgv" firstAttribute="top" secondItem="aHX-yB-gab" secondAttribute="bottom" constant="15" id="Rm0-uI-54b"/>
                                     <constraint firstItem="dQ8-dy-mO0" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="Sv5-yJ-cyn"/>
                                     <constraint firstItem="q8C-Af-3wI" firstAttribute="top" secondItem="pBG-Hw-Bez" secondAttribute="bottom" constant="5" id="TPf-67-Cz7"/>
-                                    <constraint firstItem="PL2-uz-BXc" firstAttribute="top" secondItem="dQ8-dy-mO0" secondAttribute="bottom" constant="5" id="X2e-fL-oMl"/>
-                                    <constraint firstItem="snq-4k-rTw" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="e9c-1R-Hav"/>
-                                    <constraint firstItem="PL2-uz-BXc" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="idA-NF-fW4"/>
+                                    <constraint firstAttribute="trailing" secondItem="Wtm-jI-Dgv" secondAttribute="trailing" id="TYE-LP-bpl"/>
+                                    <constraint firstAttribute="trailing" secondItem="aHX-yB-gab" secondAttribute="trailing" id="aVN-xM-hhw"/>
+                                    <constraint firstItem="Ytt-a6-ynY" firstAttribute="top" secondItem="Wtm-jI-Dgv" secondAttribute="bottom" constant="25" id="dfx-Th-38q"/>
+                                    <constraint firstItem="aHX-yB-gab" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="gh3-59-g3X"/>
+                                    <constraint firstItem="aHX-yB-gab" firstAttribute="top" secondItem="dQ8-dy-mO0" secondAttribute="bottom" constant="5" id="idZ-1r-Zpq"/>
                                     <constraint firstItem="q8C-Af-3wI" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="iwx-eu-1Ai"/>
                                     <constraint firstItem="MvS-Wm-cSc" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="mYM-Cm-WGe"/>
-                                    <constraint firstItem="MvS-Wm-cSc" firstAttribute="top" secondItem="q8C-Af-3wI" secondAttribute="bottom" constant="20" id="rJd-lR-CSF"/>
+                                    <constraint firstItem="MvS-Wm-cSc" firstAttribute="top" secondItem="q8C-Af-3wI" secondAttribute="bottom" constant="25" id="rJd-lR-CSF"/>
+                                    <constraint firstItem="Wtm-jI-Dgv" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="ske-yW-7bx"/>
                                     <constraint firstItem="Ytt-a6-ynY" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="txx-iI-lov"/>
                                     <constraint firstItem="dQ8-dy-mO0" firstAttribute="top" secondItem="z97-CG-Oyg" secondAttribute="top" id="uHh-v1-83M"/>
-                                    <constraint firstItem="7F7-jP-V9e" firstAttribute="leading" secondItem="z97-CG-Oyg" secondAttribute="leading" id="xan-Ek-ZeV"/>
-                                    <constraint firstItem="Ytt-a6-ynY" firstAttribute="top" secondItem="snq-4k-rTw" secondAttribute="bottom" constant="20" id="xug-F4-BWh"/>
                                 </constraints>
                             </customView>
                         </subviews>
