@@ -198,7 +198,6 @@ class EditorController: NSViewController {
 		let value = cell.stringValue.lowercased()
 
 		if (value == "") {
-			print(2)
 			tempTracking.job = nil
 			saveButton.isEnabled = false
 		} else if let job = QuoJob.shared.jobs?.first(where: { "\($0.number ?? "number N/A") - \($0.title ?? "title N/A")".lowercased() == value }) {
