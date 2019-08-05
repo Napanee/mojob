@@ -97,6 +97,7 @@
                                 <action selector="jobSelect:" target="-2" id="NEG-j0-hTH"/>
                                 <outlet property="dataSource" destination="-2" id="R1D-h4-cvj"/>
                                 <outlet property="delegate" destination="-2" id="kl1-Fk-3Xt"/>
+                                <outlet property="nextKeyView" destination="PCu-pY-pc0" id="xzH-FV-bOJ"/>
                             </connections>
                         </comboBox>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PCu-pY-pc0" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
@@ -115,6 +116,7 @@
                                 <action selector="taskSelect:" target="-2" id="85g-r3-Al6"/>
                                 <outlet property="dataSource" destination="-2" id="tzH-uE-hrY"/>
                                 <outlet property="delegate" destination="-2" id="XFh-CL-YfA"/>
+                                <outlet property="nextKeyView" destination="l9U-lW-Fq8" id="A5O-LU-aKt"/>
                             </connections>
                         </comboBox>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l9U-lW-Fq8" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
@@ -133,6 +135,7 @@
                                 <action selector="activitySelect:" target="-2" id="08I-io-XB4"/>
                                 <outlet property="dataSource" destination="-2" id="r4G-TP-AVl"/>
                                 <outlet property="delegate" destination="-2" id="kKU-P6-FAm"/>
+                                <outlet property="nextKeyView" destination="XcE-nf-wbv" id="ntD-52-5jk"/>
                             </connections>
                         </comboBox>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="XcE-nf-wbv" customClass="TextField" customModule="MoJob" customModuleProvider="target">
