@@ -20,11 +20,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="osv-QK-7DM">
-            <rect key="frame" x="0.0" y="0.0" width="517" height="82"/>
+            <rect key="frame" x="0.0" y="0.0" width="517" height="84"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NuU-cB-96b">
-                    <rect key="frame" x="18" y="60" width="39" height="17"/>
+                    <rect key="frame" x="8" y="62" width="39" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="08:07" id="R43-j4-Tze">
                         <font key="font" metaFont="systemThin" size="13"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -32,7 +32,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZN9-Kc-rzr">
-                    <rect key="frame" x="18" y="5" width="35" height="17"/>
+                    <rect key="frame" x="8" y="5" width="35" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="10:12" id="ZWI-ME-ZZu">
                         <font key="font" metaFont="systemThin" size="13"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -40,11 +40,12 @@
                     </textFieldCell>
                 </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="jzA-X6-Fee">
-                    <rect key="frame" x="60" y="0.0" width="457" height="82"/>
+                    <rect key="frame" x="50" y="0.0" width="467" height="84"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="hhO-zs-Pec">
-                            <rect key="frame" x="8" y="61" width="219" height="16"/>
+                            <rect key="frame" x="8" y="61" width="219" height="18"/>
                             <constraints>
+                                <constraint firstAttribute="height" constant="18" id="Rxo-Uq-nCV"/>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="d9e-qt-eN4"/>
                             </constraints>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" title="2h 34min - Foo Job with long title" id="hB2-gF-NIn">
@@ -54,7 +55,7 @@
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="xpi-Ck-JzY">
-                            <rect key="frame" x="8" y="5" width="441" height="51"/>
+                            <rect key="frame" x="8" y="5" width="451" height="51"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="d0V-cn-9XQ"/>
                             </constraints>
@@ -66,9 +67,8 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s40-uR-V2y">
-                            <rect key="frame" x="422" y="61" width="35" height="16"/>
+                            <rect key="frame" x="432" y="61" width="35" height="18"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="16" id="CXW-so-N14"/>
                                 <constraint firstAttribute="width" constant="35" id="TtP-0R-Vrj"/>
                             </constraints>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="sync-success" imagePosition="overlaps" alignment="center" inset="2" id="paO-Uh-Wd4">
@@ -97,13 +97,13 @@
                 </customView>
             </subviews>
             <constraints>
-                <constraint firstItem="jzA-X6-Fee" firstAttribute="leading" secondItem="osv-QK-7DM" secondAttribute="leading" constant="60" id="0XX-3Z-8Kz"/>
+                <constraint firstItem="jzA-X6-Fee" firstAttribute="leading" secondItem="osv-QK-7DM" secondAttribute="leading" constant="50" id="0XX-3Z-8Kz"/>
                 <constraint firstItem="jzA-X6-Fee" firstAttribute="top" secondItem="osv-QK-7DM" secondAttribute="top" id="DzG-Dj-l1x"/>
-                <constraint firstItem="NuU-cB-96b" firstAttribute="leading" secondItem="osv-QK-7DM" secondAttribute="leading" constant="20" id="K4l-Lw-gOX"/>
+                <constraint firstItem="NuU-cB-96b" firstAttribute="leading" secondItem="osv-QK-7DM" secondAttribute="leading" constant="10" id="K4l-Lw-gOX"/>
                 <constraint firstAttribute="trailing" secondItem="jzA-X6-Fee" secondAttribute="trailing" id="aFJ-D9-Xfe"/>
                 <constraint firstItem="NuU-cB-96b" firstAttribute="top" secondItem="osv-QK-7DM" secondAttribute="top" constant="5" id="cRn-H9-nbF"/>
                 <constraint firstAttribute="bottom" secondItem="jzA-X6-Fee" secondAttribute="bottom" id="hHA-Vf-UFD"/>
-                <constraint firstItem="ZN9-Kc-rzr" firstAttribute="leading" secondItem="osv-QK-7DM" secondAttribute="leading" constant="20" id="pki-oz-My5"/>
+                <constraint firstItem="ZN9-Kc-rzr" firstAttribute="leading" secondItem="osv-QK-7DM" secondAttribute="leading" constant="10" id="pki-oz-My5"/>
                 <constraint firstAttribute="bottom" secondItem="ZN9-Kc-rzr" secondAttribute="bottom" constant="5" id="sFE-6e-kAQ"/>
             </constraints>
             <userDefinedRuntimeAttributes>
