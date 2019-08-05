@@ -252,7 +252,7 @@ class QuoJob {
 
 	func exportTracking(tracking: Tracking) -> Promise<[String: Any]> {
 		var id: String? = nil
-		var bookingType: Type? = nil
+		var bookingTypeString: String! = "abw"
 		var activityId: String! = nil
 		var taskId: String! = nil
 
@@ -260,8 +260,12 @@ class QuoJob {
 			id = trackingId
 		}
 
-		if let types = fetchedResultControllerType.fetchedObjects {
-			bookingType = types.first(where: { $0.id == tracking.job?.type?.id })
+		if let types = fetchedResultControllerType.fetchedObjects, let bookingType = types.first(where: { $0.id == tracking.job?.type?.id }) {
+			if (bookingType.internal_service) {
+				bookingTypeString = "int"
+			} else if (bookingType.productive_service) {
+				bookingTypeString = "prod"
+			}
 		}
 
 		if let activity = tracking.activity {
@@ -282,11 +286,11 @@ class QuoJob {
 					"date": dateFormatterFull.string(from: tracking.date_start! as Date),
 					"time_from": dateFormatterTime.string(from: tracking.date_start! as Date),
 					"time_until": dateFormatterTime.string(from: tracking.date_end! as Date),
-					"job_id": tracking.job!.id! as Any,
+					"job_id": tracking.job?.id as Any,
 					"activity_id": activityId as Any,
 					"jobtask_id": taskId as Any,
 					"text": tracking.comment as Any,
-					"booking_type": (bookingType?.internal_service ?? false) ? "int" : "prod"
+					"booking_type": bookingTypeString as Any
 				] as [String: Any]
 			] as [String: Any],
 			"id": 1
