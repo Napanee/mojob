@@ -34,7 +34,7 @@ class AddButton: NSView {
 		contentView.frame = self.bounds
 		contentView.autoresizingMask = [.width, .height]
 		contentView.wantsLayer = true
-		contentView.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+		contentView.layer?.backgroundColor = NSColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1).cgColor
 
 		addConstraints([
 			NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30)

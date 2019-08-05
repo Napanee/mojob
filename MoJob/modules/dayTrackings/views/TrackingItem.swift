@@ -27,13 +27,13 @@ class TrackingItem: NSView {
 		didSet {
 			switch exportStatus {
 			case .success:
-				statusImage.image = NSImage(named: "sync-success")
+				statusImage.image = NSImage(named: "sync-success")?.tint(color: NSColor(red: 0.106, green: 0.369, blue: 0.125, alpha: 1))
 				statusImage.isEnabled = false
 			case .error:
-				statusImage.image = NSImage(named: "sync-error")
+				statusImage.image = NSImage(named: "sync-error")?.tint(color: NSColor(red: 0.835, green: 0, blue: 0, alpha: 1))
 				statusImage.isEnabled = true
 			case .pending:
-				statusImage.image = NSImage(named: "sync-pending")
+				statusImage.image = NSImage(named: "sync-pending")?.tint(color: NSColor(red: 0.992, green: 0.847, blue: 0.208, alpha: 1))
 				statusImage.isEnabled = false
 			}
 		}
@@ -95,7 +95,7 @@ class TrackingItem: NSView {
 		Bundle.main.loadNibNamed("TrackingItem", owner: self, topLevelObjects: nil)
 		addSubview(contentView)
 
-		let color: NSColor! = NSColor.gray
+		let color: NSColor! = NSColor(red: 0.878, green: 0.878, blue: 0.878, alpha: 1)
 
 		contentView.wantsLayer = true
 		contentView.layer?.backgroundColor = CGColor.clear
@@ -113,6 +113,12 @@ class TrackingItem: NSView {
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
+
+		if (tracking?.custom_job != nil) {
+			statusImage.isHidden = true
+		} else {
+			statusImage.isHidden = false
+		}
 	}
 
 	override func rightMouseDown(with event: NSEvent) {
@@ -180,8 +186,7 @@ class TrackingItem: NSView {
 	override func mouseDown(with event: NSEvent) {
 //		if let theHitView = view.window?.contentView?.hitTest((view.window?.mouseLocationOutsideOfEventStream)!) {
 			if (event.clickCount == 2) {
-				let window = (NSApp.delegate as! AppDelegate).window
-				if let tracking = tracking, let contentViewController = window?.contentViewController as? TrackingSplitViewController {
+				if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 					contentViewController.showEditor(with: tracking)
 				}
 			}
