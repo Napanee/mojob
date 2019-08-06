@@ -15,7 +15,7 @@ class TrackingSplitViewController: SplitViewController {
 
 		var leftController: NSViewController
 
-		if let appDelegate = NSApp.delegate as? AppDelegate, let _ = appDelegate.currentTracking {
+		if let _ = CoreDataHelper.shared.currentTracking {
 			leftController = TrackingViewController(nibName: nibNames.TrackingViewController, bundle: nil)
 		} else {
 			leftController = JobListController(nibName: nibNames.JobListController, bundle: nil)

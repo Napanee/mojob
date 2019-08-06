@@ -14,16 +14,7 @@ import Crashlytics
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-	@IBOutlet weak var window: NSWindow!
-	var _currentTracking: TempTracking?
-	var currentTracking: TempTracking? {
-		set {
-			_currentTracking = newValue
-		}
-		get {
-			return _currentTracking
-		}
-	}
+	var window: NSWindow!
 	var mainWindowController: MainWindowController?
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -50,14 +41,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 				//Handle error or give feedback to the user
 				print(error.localizedDescription)
 		}
-	}
-
-	func currentTracking(jobTitle: String) {
-		currentTracking = TempTracking(customJob: jobTitle)
-	}
-
-	func currentTracking(job: Job) {
-		currentTracking = TempTracking(job: job)
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {
