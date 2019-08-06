@@ -12,6 +12,8 @@
 		BBFA9EFCC88576C5F1D1AA8D /* Pods_MoJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D682E214AB8E8C07045252E /* Pods_MoJob.framework */; };
 		E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8322F9851700E82EBE /* QuoJobSelections.swift */; };
 		E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */; };
+		E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8722F9B9F400E82EBE /* Tracking.swift */; };
+		E800AE8A22F9C42900E82EBE /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8922F9C42900E82EBE /* Job.swift */; };
 		E8138A2422525B99008DAA62 /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2322525B99008DAA62 /* structs.swift */; };
 		E8138A2622525BBF008DAA62 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2522525BBF008DAA62 /* extensions.swift */; };
 		E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6122F4A13A004EF977 /* AddFavorite.swift */; };
@@ -119,6 +121,8 @@
 		9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJobUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E800AE8322F9851700E82EBE /* QuoJobSelections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJobSelections.swift; sourceTree = "<group>"; };
 		E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
+		E800AE8722F9B9F400E82EBE /* Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracking.swift; sourceTree = "<group>"; };
+		E800AE8922F9C42900E82EBE /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		E8138A2322525B99008DAA62 /* structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = structs.swift; sourceTree = "<group>"; };
 		E8138A2522525BBF008DAA62 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		E81DEE6122F4A13A004EF977 /* AddFavorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavorite.swift; sourceTree = "<group>"; };
@@ -615,6 +619,8 @@
 			isa = PBXGroup;
 			children = (
 				E8211791220E07B1003D7578 /* MoJob.xcdatamodeld */,
+				E800AE8722F9B9F400E82EBE /* Tracking.swift */,
+				E800AE8922F9C42900E82EBE /* Job.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -1013,6 +1019,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */,
 				E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */,
 				E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */,
 				E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */,
@@ -1051,6 +1058,7 @@
 				E82117D3220E175D003D7578 /* NavigationView.swift in Sources */,
 				E850998222F7578200068ED8 /* ComboBox.swift in Sources */,
 				E863306A2248232F00A8E946 /* Password.swift in Sources */,
+				E800AE8A22F9C42900E82EBE /* Job.swift in Sources */,
 				E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */,
 				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,
 				E82117C5220E0FBD003D7578 /* SplitViewController.swift in Sources */,

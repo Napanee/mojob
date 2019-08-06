@@ -11,42 +11,6 @@ import Fabric
 import Crashlytics
 
 
-struct TempTracking {
-	var job: Job?
-	var task: Task?
-	var activity: Activity?
-	var custom_job: String?
-	var comment: String?
-	var date_start: Date
-	var date_end: Date?
-
-	init(customJob: String) {
-		self.custom_job = customJob
-		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: Date())!
-	}
-
-	init(job: Job) {
-		self.job = job
-		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: Date())!
-	}
-
-	init(start: Date, end: Date) {
-		self.date_start = start
-		self.date_end = end
-	}
-
-	init(tracking: Tracking) {
-		self.job = tracking.job
-		self.task = tracking.task
-		self.activity = tracking.activity
-		self.custom_job = tracking.custom_job
-		self.comment = tracking.comment
-		self.date_start = tracking.date_start ?? Calendar.current.date(bySetting: .second, value: 0, of: Date())!
-		self.date_end = tracking.date_end
-	}
-}
-
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 

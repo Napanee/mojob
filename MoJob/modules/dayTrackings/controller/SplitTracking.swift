@@ -64,7 +64,6 @@ class SplitTracking: NSViewController {
 		guard let totalSeconds = sourceTracking.date_end?.timeIntervalSince(sourceTracking.date_start!) else { return }
 		let secondsPerItem = round(totalSeconds / Double(items.count) / 60) * 60
 		var date_start = sourceTracking.date_start!
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
 
 		for item in items {
 			if let job = jobs?.first(where: { (job) -> Bool in
@@ -72,40 +71,27 @@ class SplitTracking: NSViewController {
 
 				return "\(number) - \(title)" == item.jobSelect.titleOfSelectedItem
 			}) {
-				let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-				guard let tracking = NSManagedObject(entity: entity!, insertInto: context) as? Tracking else { return }
 				let date_end = date_start.addingTimeInterval(TimeInterval(secondsPerItem))
+				let values = [
+					"job": job,
+					"activity": sourceTracking.activity as Any,
+					"comment": sourceTracking.comment as Any,
+					"date_start": date_start,
+					"date_end": date_end,
+					"exported": SyncStatus.pending.rawValue
+				]
 
-				tracking.setValuesForKeys(
-					[
-						"job": job,
-						"activity": sourceTracking.activity as Any,
-						"comment": sourceTracking.comment as Any,
-						"date_start": date_start,
-						"date_end": date_end,
-						"exported": SyncStatus.pending.rawValue
-					]
-				)
+				Tracking.insert(with: values).done({ tracking in
+					if let tracking = tracking, let _ = tracking.job {
+						tracking.export().catch({ error in print(error) })
+					}
+				}).catch { error in }
 
 				date_start = date_end
-
-				QuoJob.shared.exportTracking(tracking: tracking).done { result in
-					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-						tracking.id = id
-						tracking.exported = SyncStatus.success.rawValue
-						try context.save()
-					}
-				}.catch { error in
-					tracking.exported = SyncStatus.error.rawValue
-					try? context.save()
-					print(error)
-				}
 			}
 		}
 
-		context.delete(sourceTracking)
-
-		try? context.save()
+		sourceTracking.delete()
 
 		dismiss(self)
 	}

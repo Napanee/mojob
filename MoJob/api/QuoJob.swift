@@ -66,7 +66,7 @@ class QuoJob {
 		}
 	}
 
-	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+	let context = CoreDataHelper.shared.persistentContainer.viewContext
 	var _fetchedResultsControllerSync: NSFetchedResultsController<Sync>? = nil
 	var fetchedResultControllerSync: NSFetchedResultsController<Sync> {
 		if (_fetchedResultsControllerSync != nil) {

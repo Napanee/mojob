@@ -35,21 +35,19 @@ class FavoriteItem: NSCollectionViewItem {
 	}
 
 	@IBAction func deleteButton(_ sender: NSButton) {
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+		job.update(with: ["isFavorite": false])
 
-		job.isFavorite = false
-
-		do {
-			try context.save()
-			delegate.onDeleteFavorite()
-		} catch let error {
-			print(error)
-		}
+		delegate.onDeleteFavorite()
 	}
 
 	@IBAction func startButton(_ sender: NSButton) {
-		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
-			appDelegate.currentTracking(job: job)
+		Tracking.insert(with: ["job": job, "date_start": Date()]).catch({ _ in })
+
+		if
+			let appDelegate = NSApp.delegate as? AppDelegate,
+			let mainWindowController = appDelegate.mainWindowController,
+			let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
+		{
 			contentViewController.showTracking()
 		}
 	}

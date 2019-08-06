@@ -203,23 +203,13 @@ class TrackingItem: NSView {
 	@IBAction func statusImage(_ sender: NSButton) {
 		guard sender.isEnabled else { return }
 
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
-		if let tracking = tracking {
-			QuoJob.shared.exportTracking(tracking: tracking).done { result in
-				if
-					let hourbooking = result["hourbooking"] as? [String: Any],
-					let id = hourbooking["id"] as? String
-				{
-					tracking.id = id
-					tracking.exported = SyncStatus.success.rawValue
-					sender.isEnabled = false
-					try context.save()
-				}
-			}.catch { error in
-				tracking.exported = SyncStatus.error.rawValue
-				try? context.save()
-			}
-		}
+		sender.isEnabled = false
+
+		tracking?.export()
+			.done({ _ in
+				sender.isEnabled = false
+			})
+			.catch { _ in }
 	}
 
 }

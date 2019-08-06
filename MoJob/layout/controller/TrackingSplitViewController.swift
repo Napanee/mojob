@@ -13,13 +13,20 @@ class TrackingSplitViewController: SplitViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let jobList = JobListController(nibName: nibNames.JobListController, bundle: nil)
-		jobList.view.addConstraint(
+		var leftController: NSViewController
+
+		if let appDelegate = NSApp.delegate as? AppDelegate, let _ = appDelegate.currentTracking {
+			leftController = TrackingViewController(nibName: nibNames.TrackingViewController, bundle: nil)
+		} else {
+			leftController = JobListController(nibName: nibNames.JobListController, bundle: nil)
+		}
+
+		leftController.view.addConstraint(
 			NSLayoutConstraint(
-				item: jobList.view,
+				item: leftController.view,
 				attribute: .width,
 				relatedBy: .greaterThanOrEqual,
-				toItem: jobList.view.superview,
+				toItem: leftController.view.superview,
 				attribute: .width,
 				multiplier: 1,
 				constant: 300
@@ -38,7 +45,7 @@ class TrackingSplitViewController: SplitViewController {
 		verticalSplitViewController.splitView.isVertical = false
 		verticalSplitViewController.addChild(dayTrackings)
 
-		addChild(jobList)
+		addChild(leftController)
 		addChild(verticalSplitViewController)
 	}
 
@@ -82,7 +89,7 @@ class TrackingSplitViewController: SplitViewController {
 				verticalSplitViewController.splitViewItems.remove(at: currentEditorIndex)
 			}
 
-			editorViewController.tracking = tracking
+			editorViewController.sourceTracking = tracking
 
 			verticalSplitViewController.insertChild(editorViewController, at: 0)
 		}

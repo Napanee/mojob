@@ -19,12 +19,12 @@ class TrackingViewController: QuoJobSelections {
 
 	var isFavorite: Bool {
 		get {
-			guard let job = tempTracking.job else { return false }
+			guard let job = tracking?.job else { return false }
 			return job.isFavorite
 		}
 
 		set {
-			guard let job = tempTracking.job else { return }
+			guard let job = tracking?.job else { return }
 
 			job.isFavorite = newValue
 			favoriteTracking.image = newValue ? starFilled : starEmpty
@@ -49,14 +49,14 @@ class TrackingViewController: QuoJobSelections {
 	@IBOutlet weak var favoriteTracking: NSButton!
 	
 	override func viewDidLoad() {
-		tempTracking = (NSApp.delegate as! AppDelegate).currentTracking
+		tracking = CoreDataHelper.shared.currentTracking
 
 		super.viewDidLoad()
 
 		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
 		RunLoop.main.add(timer, forMode: .common)
 
-		if let job = tempTracking.job {
+		if let job = tracking?.job {
 			favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
 			favoriteTracking.state = job.isFavorite ? .on : .off
 		} else {
@@ -68,7 +68,7 @@ class TrackingViewController: QuoJobSelections {
 
 	@objc func updateTime() {
 		let currentDate = Date()
-		let diff = currentDate.timeIntervalSince(startDate)
+		let diff = currentDate.timeIntervalSince(tracking?.date_start ?? Date())
 		let restSeconds = diff.remainder(dividingBy: 60)
 		let totalSeconds = Int(round(diff))
 
@@ -89,43 +89,18 @@ class TrackingViewController: QuoJobSelections {
 	}
 
 	@IBAction func stopTracking(_ sender: NSButton) {
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
+		guard let tracking = tracking else { return }
 
-		guard let tempTracking = tempTracking else { return }
+		let date = Date()
 
-		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-		let tracking = NSManagedObject(entity: entity!, insertInto: context)
-		let mirror = Mirror(reflecting: tempTracking)
-
-		for (label, value) in mirror.children  {
-			guard let label = label else { continue }
-
-			if value is Job || value is Task || value is Activity || value is String || value is Date {
-				tracking.setValue(value, forKey: label)
+		tracking.update(with: [
+			"date_start": Calendar.current.date(bySetting: .second, value: 0, of: tracking.date_start ?? date),
+			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
+		]).done({ _ in
+			if let _ = tracking.job {
+				tracking.export().catch({ error in print(error) })
 			}
-		}
-
-		tracking.setValue(Calendar.current.date(bySetting: .second, value: 0, of: Date()), forKey: "date_end")
-		tracking.setValue(tempTracking.job != nil ? SyncStatus.pending.rawValue : SyncStatus.error.rawValue, forKey: "exported")
-
-		try? context.save()
-
-		if let _ = tempTracking.job, let tracking = tracking as? Tracking {
-			QuoJob.shared.exportTracking(tracking: tracking).done { result in
-				if
-					let hourbooking = result["hourbooking"] as? [String: Any],
-					let id = hourbooking["id"] as? String
-				{
-					tracking.id = id
-					tracking.exported = SyncStatus.success.rawValue
-					try context.save()
-				}
-			}.catch { error in
-				tracking.exported = SyncStatus.error.rawValue
-				try? context.save()
-				print(error)
-			}
-		}
+		}).catch { error in print(error) }
 
 		timer.invalidate()
 		appBadge.badgeLabel = ""

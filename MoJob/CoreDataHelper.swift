@@ -12,6 +12,21 @@ import CoreData
 
 class CoreDataHelper {
 
+	var currentTracking: Tracking? {
+		get {
+			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+			fetchRequest.predicate = NSPredicate(format: "date_end == nil")
+
+			do {
+				return try context.fetch(fetchRequest).first
+			} catch let error as NSError {
+				print("Could not fetch. \(error), \(error.userInfo)")
+				return nil
+			}
+		}
+	}
+
 	static let shared = CoreDataHelper()
 
 	private init() {}

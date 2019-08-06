@@ -259,11 +259,15 @@ extension JobListController: FilterFieldDelegate {
 		guard [125, 126, 36].contains(keyCode) else { return }
 
 		if (keyCode == 36) { // key enter
-			if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
+			if
+				let appDelegate = NSApp.delegate as? AppDelegate,
+				let mainWindowController = appDelegate.mainWindowController,
+				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
+			{
 				if let currentItem = currentItem, let job = currentItem.job {
-					appDelegate.currentTracking(job: job)
+					Tracking.insert(with: ["job": job, "date_start": Date()]).catch { _ in }
 				} else {
-					appDelegate.currentTracking(jobTitle: filterField.stringValue)
+					Tracking.insert(with: ["custom_job": filterField.stringValue, "date_start": Date()]).catch { _ in }
 				}
 
 				contentViewController.showTracking()

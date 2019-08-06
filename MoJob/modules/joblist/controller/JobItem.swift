@@ -48,8 +48,13 @@ class JobItem: NSCollectionViewItem {
 	}
 
 	@IBAction func startButton(_ sender: NSButton) {
-		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
-			appDelegate.currentTracking(job: job)
+		Tracking.insert(with: ["job": job, "date_start": Date()]).catch({ _ in })
+
+		if
+			let appDelegate = NSApp.delegate as? AppDelegate,
+			let mainWindowController = appDelegate.mainWindowController,
+			let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
+		{
 			contentViewController.showTracking()
 		}
 	}

@@ -55,9 +55,7 @@ class AddFavorite: NSViewController {
 		let title = jobSelect.titleOfSelectedItem
 
 		if let job = QuoJob.shared.jobs?.first(where: { "\($0.number!) - \($0.title!)" == title }) {
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
-			job.isFavorite = true
-			try! context.save()
+			job.update(with: ["isFavorite": true])
 
 			delegate.onDismiss()
 

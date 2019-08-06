@@ -18,10 +18,10 @@ protocol DateFieldDelegate {
 class EditorController: QuoJobSelections {
 	let context = CoreDataHelper.shared.persistentContainer.viewContext
 
-	var tracking: Tracking? {
+	var sourceTracking: Tracking? {
 		didSet {
-			if let tracking = tracking {
-				self.tempTracking = TempTracking(tracking: tracking)
+			if let sourceTracking = sourceTracking {
+				self.tempTracking = TempTracking(tracking: sourceTracking)
 			}
 		}
 	}
@@ -54,12 +54,10 @@ class EditorController: QuoJobSelections {
 //	}
 
 	@IBAction func deleteTracking(_ sender: NSButton) {
-		guard let tracking = tracking else { return }
-		context.delete(tracking)
+		guard let sourceTracking = sourceTracking else { return }
+		sourceTracking.delete()
 
-		if let _ = try? context.save() {
-			removeFromParent()
-		}
+		removeFromParent()
 	}
 	
 	@IBAction func cancel(_ sender: NSButton) {
@@ -67,14 +65,7 @@ class EditorController: QuoJobSelections {
 	}
 
 	@IBAction func save(_ sender: NSButton) {
-		let currentTracking: Tracking!
-
-		if let tracking = tracking {
-			currentTracking = tracking
-		} else {
-			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-			currentTracking = NSManagedObject(entity: entity!, insertInto: context) as? Tracking
-		}
+		var values: [String: Any] = [:]
 
 		let mirror = Mirror(reflecting: tempTracking!)
 
@@ -82,24 +73,22 @@ class EditorController: QuoJobSelections {
 			guard let label = label else { continue }
 
 			if value is Job || value is Task || value is Activity || value is String || value is Date {
-				currentTracking.setValue(value, forKey: label)
+				values[label] = value
 			}
 		}
 
-		currentTracking.setValue(tempTracking.job != nil ? SyncStatus.pending.rawValue : SyncStatus.error.rawValue, forKey: "exported")
+		values["exported"] = tempTracking?.job != nil ? SyncStatus.pending.rawValue : SyncStatus.error.rawValue
 
-		try? context.save()
-
-		QuoJob.shared.exportTracking(tracking: currentTracking).done { result in
-			if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-				currentTracking.id = id
-				currentTracking.exported = SyncStatus.success.rawValue
-				try self.context.save()
-			}
-		}.catch { error in
-			print(error)
-			currentTracking.exported = SyncStatus.error.rawValue
-			try? self.context.save()
+		if let sourceTracking = sourceTracking {
+			sourceTracking.update(with: values).done({ _ in
+				if let _ = sourceTracking.job {
+					sourceTracking.export().catch({ error in print(error) })
+				}
+			}).catch { error in print(error) }
+		} else {
+			Tracking.insert(with: values).done({ tracking in
+				tracking?.export().catch({ error in print(error) })
+			}).catch({ _ in })
 		}
 
 		removeFromParent()
