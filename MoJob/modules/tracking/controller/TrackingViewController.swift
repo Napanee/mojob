@@ -50,6 +50,8 @@ class TrackingViewController: QuoJobSelections {
 
 		super.viewDidLoad()
 
+		updateTime()
+
 		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
 		RunLoop.main.add(timer, forMode: .common)
 
@@ -61,6 +63,10 @@ class TrackingViewController: QuoJobSelections {
 		}
 
 		taskSelect.font = NSFont.systemFont(ofSize: 14, weight: .light)
+	}
+
+	override func viewDidDisappear() {
+		timer.invalidate()
 	}
 
 	@objc func updateTime() {
