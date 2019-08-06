@@ -23,8 +23,8 @@ import Cocoa
 		}
 	}
 
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
+	override func draw(_ dirtyRect: NSRect) {
+		super.draw(dirtyRect)
 
 		drawBgShape()
 		drawTimeSecondsShape()
@@ -34,7 +34,7 @@ import Cocoa
 		animation.toValue = 1
 		animation.duration = 0.25
 		timeSecondsShapeLayer.add(animation, forKey: "angle")
-    }
+	}
 
 	func drawBgShape() {
 		let rect = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.width)
