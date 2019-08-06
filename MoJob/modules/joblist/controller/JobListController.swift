@@ -265,9 +265,9 @@ extension JobListController: FilterFieldDelegate {
 				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
 			{
 				if let currentItem = currentItem, let job = currentItem.job {
-					Tracking.insert(with: ["job": job, "date_start": Date()]).catch { _ in }
+					Tracking.insert(with: ["job": job]).catch { _ in }
 				} else {
-					Tracking.insert(with: ["custom_job": filterField.stringValue, "date_start": Date()]).catch { _ in }
+					Tracking.insert(with: ["custom_job": filterField.stringValue]).catch { _ in }
 				}
 
 				contentViewController.showTracking()

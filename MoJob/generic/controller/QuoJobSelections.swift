@@ -123,7 +123,6 @@ class QuoJobSelections: NSViewController {
 			if let activity = activities.first(where: { $0.id == activityId }), let index = activities.index(where: { $0 == activity }) {
 				activitySelect.selectItem(at: index)
 				tempTracking?.activity = activity
-				tracking?.update(with: ["activity": activity]).catch({ _ in })
 			}
 		}
 	}

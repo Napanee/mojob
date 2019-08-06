@@ -41,7 +41,7 @@ class FavoriteItem: NSCollectionViewItem {
 	}
 
 	@IBAction func startButton(_ sender: NSButton) {
-		Tracking.insert(with: ["job": job, "date_start": Date()]).catch({ _ in })
+		Tracking.insert(with: ["job": job]).catch({ _ in })
 
 		if
 			let appDelegate = NSApp.delegate as? AppDelegate,
