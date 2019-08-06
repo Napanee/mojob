@@ -8,6 +8,7 @@ PODS:
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
   - PromiseKit/CorePromise (6.8.3)
+  - Sparkle (1.21.3)
   - SwiftLint (0.31.0)
 
 DEPENDENCIES:
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - Fabric
   - KeychainAccess (~> 3.1)
   - PromiseKit/Alamofire (~> 6.0)
+  - Sparkle (~> 1.21)
   - SwiftLint
 
 SPEC REPOS:
@@ -25,6 +27,7 @@ SPEC REPOS:
     - Fabric
     - KeychainAccess
     - PromiseKit
+    - Sparkle
     - SwiftLint
 
 SPEC CHECKSUMS:
@@ -33,8 +36,9 @@ SPEC CHECKSUMS:
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
+  Sparkle: 3f75576db8b0265adef36c43249d747f22d0b708
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: d03547096ce1382ede318ff988e2af4864bba695
+PODFILE CHECKSUM: 2797bc118316ebc54f577f282f96905f9a485114
 
 COCOAPODS: 1.6.0

@@ -8,6 +8,7 @@ def shared_pods
 	pod 'SwiftLint'
 	pod 'Fabric'
 	pod 'Crashlytics'
+	pod 'Sparkle', '~> 1.21'
 end
 
 target 'MoJob' do
