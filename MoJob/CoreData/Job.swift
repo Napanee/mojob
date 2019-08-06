@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import PromiseKit
 
 
 extension Job {
@@ -34,15 +35,19 @@ extension Job {
 		}
 	}
 
-	func update(with params: [String: Any]) {
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
+	func update(with params: [String: Any?]) -> Promise<Void> {
+		return Promise { _ in
+			let context = CoreDataHelper.shared.persistentContainer.viewContext
 
-		setValuesForKeys(params)
+			for (key, value) in params {
+				setValue(value, forKey: key)
+			}
 
-		do {
-			try context.save()
-		} catch let error as NSError  {
-			print("Could not save \(error), \(error.userInfo)")
+			do {
+				try context.save()
+			} catch let error as NSError  {
+				print("Could not save \(error), \(error.userInfo)")
+			}
 		}
 	}
 

@@ -10,7 +10,6 @@ import Cocoa
 
 class TrackingViewController: QuoJobSelections {
 
-	let context = CoreDataHelper.shared.persistentContainer.viewContext
 	let starFilled = NSImage(named: "star-filled")?.tint(color: NSColor.systemYellow)
 	let starEmpty = NSImage(named: "star-empty")
 
@@ -26,14 +25,12 @@ class TrackingViewController: QuoJobSelections {
 		set {
 			guard let job = tracking?.job else { return }
 
-			job.isFavorite = newValue
-			favoriteTracking.image = newValue ? starFilled : starEmpty
-
-			guard let _ = try? context.save() else {
+			job.update(with: ["isFavorite": newValue]).done({ _ in
+				self.favoriteTracking.image = newValue ? self.starFilled : self.starEmpty
+			}).catch({ _ in
 				job.isFavorite = !newValue
-				favoriteTracking.image = !newValue ? starFilled : starEmpty
-				return
-			}
+				self.favoriteTracking.image = !newValue ? self.starFilled : self.starEmpty
+			})
 		}
 	}
 

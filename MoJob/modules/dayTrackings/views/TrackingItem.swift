@@ -191,11 +191,8 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onSelectColor(_ sender: NSButton) {
-		if let button = sender as? ColorButton {
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
-			tracking?.job?.color = button.key
-			try? context.save()
-
+		if let button = sender as? ColorButton, let job = tracking?.job {
+			job.update(with: ["color": button.key]).catch({ _ in })
 			rightClickMenu.cancelTracking()
 		}
 	}
