@@ -14,6 +14,7 @@
 		E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */; };
 		E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8722F9B9F400E82EBE /* Tracking.swift */; };
 		E800AE8A22F9C42900E82EBE /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8922F9C42900E82EBE /* Job.swift */; };
+		E800AE8C22FA1A4100E82EBE /* GlobalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8B22FA1A4100E82EBE /* GlobalTimer.swift */; };
 		E8138A2422525B99008DAA62 /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2322525B99008DAA62 /* structs.swift */; };
 		E8138A2622525BBF008DAA62 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2522525BBF008DAA62 /* extensions.swift */; };
 		E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6122F4A13A004EF977 /* AddFavorite.swift */; };
@@ -123,6 +124,7 @@
 		E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		E800AE8722F9B9F400E82EBE /* Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracking.swift; sourceTree = "<group>"; };
 		E800AE8922F9C42900E82EBE /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		E800AE8B22FA1A4100E82EBE /* GlobalTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTimer.swift; sourceTree = "<group>"; };
 		E8138A2322525B99008DAA62 /* structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = structs.swift; sourceTree = "<group>"; };
 		E8138A2522525BBF008DAA62 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		E81DEE6122F4A13A004EF977 /* AddFavorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavorite.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				E8E9508C2232D5AF0070F57E /* generic */,
 				E821178F220E07B1003D7578 /* AppDelegate.swift */,
 				E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */,
+				E800AE8B22FA1A4100E82EBE /* GlobalTimer.swift */,
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
 				E850996922F6118B00068ED8 /* MoJob.clr */,
 				E8211799220E07B2003D7578 /* Info.plist */,
@@ -1029,6 +1032,7 @@
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
 				E850997222F6FEF600068ED8 /* TrackingSplitViewController.swift in Sources */,
 				E8CACC782211DE6300675688 /* functions.swift in Sources */,
+				E800AE8C22FA1A4100E82EBE /* GlobalTimer.swift in Sources */,
 				E81DEE6C22F4DF96004EF977 /* SplitJobItem.swift in Sources */,
 				E8731AE5225952B1006947B0 /* constants.swift in Sources */,
 				E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */,

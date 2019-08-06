@@ -12,9 +12,7 @@ class TrackingViewController: QuoJobSelections {
 
 	let starFilled = NSImage(named: "star-filled")?.tint(color: NSColor.systemYellow)
 	let starEmpty = NSImage(named: "star-empty")
-
-	var appBadge = NSApp.dockTile as NSDockTile
-	var timer = Timer()
+	private var observer: NSObjectProtocol!
 
 	var isFavorite: Bool {
 		get {
@@ -50,11 +48,6 @@ class TrackingViewController: QuoJobSelections {
 
 		super.viewDidLoad()
 
-		updateTime()
-
-		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-		RunLoop.main.add(timer, forMode: .common)
-
 		if let job = tracking?.job {
 			favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
 			favoriteTracking.state = job.isFavorite ? .on : .off
@@ -63,32 +56,21 @@ class TrackingViewController: QuoJobSelections {
 		}
 
 		taskSelect.font = NSFont.systemFont(ofSize: 14, weight: .light)
+
+		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "counter:tick"), object: nil, queue: nil, using: { notification in
+			guard let totalSeconds = (notification.object as? NSDictionary)?["totalSeconds"] as? Double else { return }
+
+			let restSeconds = totalSeconds.remainder(dividingBy: 60)
+			self.timerCount.counter = round(CGFloat(restSeconds))
+			self.timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: Int(totalSeconds))
+		})
+
+		GlobalTimer.shared.startTimer()
 	}
 
 	override func viewDidDisappear() {
-		timer.invalidate()
-	}
-
-	@objc func updateTime() {
-		let currentDate = Date()
-		let diff = currentDate.timeIntervalSince(tracking?.date_start ?? Date())
-		let restSeconds = diff.remainder(dividingBy: 60)
-		let totalSeconds = Int(round(diff))
-
-		timerCount.counter = round(CGFloat(restSeconds))
-		timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: totalSeconds)
-
-		let formatter = DateComponentsFormatter()
-		formatter.unitsStyle = .positional
-		formatter.zeroFormattingBehavior = .pad
-
-		if (totalSeconds < 60 * 60) { // more than an hour
-			formatter.allowedUnits = [.minute, .second]
-		} else {
-			formatter.allowedUnits = [.hour, .minute]
-		}
-
-		appBadge.badgeLabel = formatter.string(from: diff)
+		super.viewDidDisappear()
+		NotificationCenter.default.removeObserver(observer)
 	}
 
 	@IBAction func stopTracking(_ sender: NSButton) {
@@ -97,16 +79,16 @@ class TrackingViewController: QuoJobSelections {
 		let date = Date()
 
 		tracking.update(with: [
-			"date_start": Calendar.current.date(bySetting: .second, value: 0, of: tracking.date_start ?? date),
-			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
+			"date_start": Calendar.current.date(bySetting: .nanosecond, value: 0, of: tracking.date_start ?? date),
+			"date_end": Calendar.current.date(bySetting: .nanosecond, value: 0, of: date)
 		]).done({ _ in
 			if let _ = tracking.job {
 				tracking.export().catch({ error in print(error) })
 			}
 		}).catch { error in print(error) }
 
-		timer.invalidate()
-		appBadge.badgeLabel = ""
+		GlobalTimer.shared.stopTimer()
+		NotificationCenter.default.removeObserver(observer)
 
 		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 			contentViewController.showJobList()
