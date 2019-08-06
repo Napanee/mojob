@@ -11,6 +11,7 @@
 		A4EB7A298F04A937F35732F5 /* Pods_MoJobUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */; };
 		BBFA9EFCC88576C5F1D1AA8D /* Pods_MoJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D682E214AB8E8C07045252E /* Pods_MoJob.framework */; };
 		E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8322F9851700E82EBE /* QuoJobSelections.swift */; };
+		E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */; };
 		E8138A2422525B99008DAA62 /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2322525B99008DAA62 /* structs.swift */; };
 		E8138A2622525BBF008DAA62 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2522525BBF008DAA62 /* extensions.swift */; };
 		E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6122F4A13A004EF977 /* AddFavorite.swift */; };
@@ -117,6 +118,7 @@
 		7847464B34327E7A7CA03419 /* Pods-MoJob.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJob.debug.xcconfig"; path = "Target Support Files/Pods-MoJob/Pods-MoJob.debug.xcconfig"; sourceTree = "<group>"; };
 		9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJobUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E800AE8322F9851700E82EBE /* QuoJobSelections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJobSelections.swift; sourceTree = "<group>"; };
+		E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		E8138A2322525B99008DAA62 /* structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = structs.swift; sourceTree = "<group>"; };
 		E8138A2522525BBF008DAA62 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		E81DEE6122F4A13A004EF977 /* AddFavorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavorite.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				E82117BC220E0AED003D7578 /* layout */,
 				E8E9508C2232D5AF0070F57E /* generic */,
 				E821178F220E07B1003D7578 /* AppDelegate.swift */,
+				E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */,
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
 				E850996922F6118B00068ED8 /* MoJob.clr */,
 				E8211799220E07B2003D7578 /* Info.plist */,
@@ -1023,6 +1026,7 @@
 				E8731AE5225952B1006947B0 /* constants.swift in Sources */,
 				E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */,
 				E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */,
+				E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */,
 				E863305D2245863600A8E946 /* PopUpCell.swift in Sources */,
 				E8211800220F5364003D7578 /* JobItem.swift in Sources */,
 				E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */,

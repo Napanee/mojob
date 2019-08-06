@@ -169,10 +169,7 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onContextDelete() {
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
-		context.delete(tracking!)
-
-		try! context.save()
+		tracking?.delete()
 	}
 
 	@objc func onContextSplit() {
@@ -195,7 +192,7 @@ class TrackingItem: NSView {
 
 	@objc func onSelectColor(_ sender: NSButton) {
 		if let button = sender as? ColorButton {
-			let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+			let context = CoreDataHelper.shared.persistentContainer.viewContext
 			tracking?.job?.color = button.key
 			try? context.save()
 
@@ -206,7 +203,7 @@ class TrackingItem: NSView {
 	@IBAction func statusImage(_ sender: NSButton) {
 		guard sender.isEnabled else { return }
 
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+		let context = CoreDataHelper.shared.persistentContainer.viewContext
 		if let tracking = tracking {
 			QuoJob.shared.exportTracking(tracking: tracking).done { result in
 				if

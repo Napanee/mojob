@@ -64,7 +64,7 @@ class SplitTracking: NSViewController {
 		guard let totalSeconds = sourceTracking.date_end?.timeIntervalSince(sourceTracking.date_start!) else { return }
 		let secondsPerItem = round(totalSeconds / Double(items.count) / 60) * 60
 		var date_start = sourceTracking.date_start!
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+		let context = CoreDataHelper.shared.persistentContainer.viewContext
 
 		for item in items {
 			if let job = jobs?.first(where: { (job) -> Bool in

@@ -24,7 +24,7 @@ class DayTrackingsController: NSViewController {
 	@IBOutlet weak var loginButton: NSButton!
 
 	let monitor = NWPathMonitor()
-	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+	let context = CoreDataHelper.shared.persistentContainer.viewContext
 	var _fetchedResultsControllerTrackings: NSFetchedResultsController<Tracking>? = nil
 	var fetchedResultControllerTrackings: NSFetchedResultsController<Tracking> {
 		if (_fetchedResultsControllerTrackings != nil) {
@@ -77,12 +77,10 @@ class DayTrackingsController: NSViewController {
 			totalTimeForDay.stringValue = secondsToHoursMinutesSeconds(sec: Int(sum))
 		}
 
-		if let appDelegate = (NSApp.delegate as? AppDelegate) {
-			let context = appDelegate.persistentContainer.viewContext
-			let notificationCenter = NotificationCenter.default
-			notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
-			notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
-		}
+		let context = CoreDataHelper.shared.persistentContainer.viewContext
+		let notificationCenter = NotificationCenter.default
+		notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
+		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 
 		monitor.pathUpdateHandler = { path in
 			DispatchQueue.main.sync {

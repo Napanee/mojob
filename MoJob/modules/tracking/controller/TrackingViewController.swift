@@ -10,7 +10,7 @@ import Cocoa
 
 class TrackingViewController: QuoJobSelections {
 
-	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+	let context = CoreDataHelper.shared.persistentContainer.viewContext
 	let starFilled = NSImage(named: "star-filled")?.tint(color: NSColor.systemYellow)
 	let starEmpty = NSImage(named: "star-empty")
 
@@ -75,7 +75,6 @@ class TrackingViewController: QuoJobSelections {
 		timerCount.counter = round(CGFloat(restSeconds))
 		timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: totalSeconds)
 
-
 		let formatter = DateComponentsFormatter()
 		formatter.unitsStyle = .positional
 		formatter.zeroFormattingBehavior = .pad
@@ -90,7 +89,7 @@ class TrackingViewController: QuoJobSelections {
 	}
 
 	@IBAction func stopTracking(_ sender: NSButton) {
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+		let context = CoreDataHelper.shared.persistentContainer.viewContext
 
 		guard let tempTracking = tempTracking else { return }
 

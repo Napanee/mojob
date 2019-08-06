@@ -50,7 +50,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		}
 	}
 
-	let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+	let context = CoreDataHelper.shared.persistentContainer.viewContext
 	var _fetchedResultsControllerJobs: NSFetchedResultsController<Job>? = nil
 	var fetchedResultControllerJobs: NSFetchedResultsController<Job> {
 		if (_fetchedResultsControllerJobs != nil) {
@@ -106,11 +106,9 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 			showWarning(error: "Es sind keine Jobs vorhanden. Jetzt mit QuoJob synchronisieren?")
 		}
 
-		if let appDelegate = (NSApp.delegate as? AppDelegate) {
-			let context = appDelegate.persistentContainer.viewContext
-			let notificationCenter = NotificationCenter.default
-			notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
-		}
+		let context = CoreDataHelper.shared.persistentContainer.viewContext
+		let notificationCenter = NotificationCenter.default
+		notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
 
 		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
 	}
@@ -403,7 +401,7 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 			}
 		}
 
-		let context = (NSApp.delegate as! AppDelegate).persistentContainer.viewContext
+		let context = CoreDataHelper.shared.persistentContainer.viewContext
 		do {
 			try context.save()
 		} catch let error {
