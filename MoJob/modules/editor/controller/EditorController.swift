@@ -38,7 +38,7 @@ class EditorController: QuoJobSelections {
 		super.viewDidLoad()
 
 		saveButton.isEnabled = formIsValid
-		deleteButton.isHidden = tracking == nil
+		deleteButton.isHidden = sourceTracking == nil
 	}
 
 //	private func validateData() -> Bool {
