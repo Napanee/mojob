@@ -33,7 +33,6 @@ class GlobalTimer {
 	}
 
 	func stopTimer() {
-		print("stop")
 		timer.invalidate()
 		appBadge.badgeLabel = ""
 	}

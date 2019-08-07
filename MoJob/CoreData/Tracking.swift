@@ -100,26 +100,12 @@ extension Tracking {
 
 	func export() -> Promise<Void> {
 		return Promise { seal in
-			QuoJob.shared.exportTracking(tracking: self)
-				.done { result in
-					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-						self.update(with: ["id": id, "exported": SyncStatus.success.rawValue])
-							.done({ _ in
-								seal.fulfill_()
-							})
-							.catch({ error in
-								print(error)
-								seal.reject(error)
-							})
-					} else {
-						let error = NSError(domain: "de.martingschneider.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "message"])
-						seal.reject(error)
-					}
-				}
-				.catch { error in
-					seal.reject(error)
-					self.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
-				}
+			QuoJob.shared.exportTracking(tracking: self).done({ _ in
+				seal.fulfill_()
+			}).catch { error in
+				seal.reject(error)
+				self.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
+			}
 		}
 	}
 

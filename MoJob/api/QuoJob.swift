@@ -262,7 +262,7 @@ class QuoJob {
 		}
 	}
 
-	func exportTracking(tracking: Tracking) -> Promise<[String: Any]> {
+	func exportTracking(tracking: Tracking) -> Promise<Void> {
 		var id: String? = nil
 		var bookingTypeString: String! = "abw"
 		var activityId: String! = nil
@@ -301,7 +301,11 @@ class QuoJob {
 			"booking_type": bookingTypeString
 		]
 
-		return fetch(as: "mytime.put_hourbooking", with: params)
+		return fetch(as: "mytime.put_hourbooking", with: params).done { result in
+			if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
+				tracking.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).done({ _ in }).catch({ _ in })
+			}
+		}
 	}
 
 	func deleteTracking(tracking: Tracking) -> Promise<[String: Any]> {
