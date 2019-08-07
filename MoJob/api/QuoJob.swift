@@ -292,23 +292,61 @@ class QuoJob: NSObject {
 			taskId = task.id
 		}
 
-		var params = defaultParams
-		params["hourbooking"] = [
-			"id": id,
-			"date": dateFormatterFull.string(from: tracking.date_start! as Date),
-			"time_from": dateFormatterTime.string(from: tracking.date_start! as Date),
-			"time_until": dateFormatterTime.string(from: tracking.date_end! as Date),
-			"job_id": tracking.job?.id,
-			"activity_id": activityId,
-			"jobtask_id": taskId,
-			"text": tracking.comment,
-			"booking_type": bookingTypeString
-		]
+		return Promise { seal in
+			checkLoginStatus().done({ _ in
+				var params = self.defaultParams
+				params["hourbooking"] = [
+					"id": id,
+					"date": self.dateFormatterFull.string(from: tracking.date_start! as Date),
+					"time_from": self.dateFormatterTime.string(from: tracking.date_start! as Date),
+					"time_until": self.dateFormatterTime.string(from: tracking.date_end! as Date),
+					"job_id": tracking.job?.id,
+					"activity_id": activityId,
+					"jobtask_id": taskId,
+					"text": tracking.comment,
+					"booking_type": bookingTypeString
+				]
 
-		return fetch(as: "mytime.put_hourbooking", with: params).done { result in
-			if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-				tracking.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).done({ _ in }).catch({ _ in })
-			}
+				self.fetch(as: "mytime.put_hourbooking", with: params).done { result in
+					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
+						tracking.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).done({ _ in
+							seal.fulfill_()
+						}).catch({ error in
+							seal.reject(error)
+						})
+					}
+				}.catch({ error in
+					seal.reject(error)
+				})
+			}).catch({ error in
+				self.loginWithKeyChain().done({ _ in
+					var params = self.defaultParams
+					params["hourbooking"] = [
+						"id": id,
+						"date": self.dateFormatterFull.string(from: tracking.date_start! as Date),
+						"time_from": self.dateFormatterTime.string(from: tracking.date_start! as Date),
+						"time_until": self.dateFormatterTime.string(from: tracking.date_end! as Date),
+						"job_id": tracking.job?.id,
+						"activity_id": activityId,
+						"jobtask_id": taskId,
+						"text": tracking.comment,
+						"booking_type": bookingTypeString
+					]
+
+					self.fetch(as: "mytime.put_hourbooking", with: params).done { result in
+						if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
+							tracking.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).done({ _ in
+								seal.fulfill_()
+							}).catch({ error in
+								seal.reject(error)
+							})
+						}
+					}.catch({ error in
+						seal.reject(error)
+					})
+				}).catch({ error in
+				})
+			})
 		}
 	}
 
