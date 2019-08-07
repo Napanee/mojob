@@ -81,21 +81,32 @@ extension Tracking {
 	}
 
 	func delete() {
-		QuoJob.shared.deleteTracking(tracking: self)
-			.done({ result in
+		if (self.id != nil) {
+			deleteFromServer().done({ result in
 				if let success = result["success"] as? Bool, success == true {
-					let context = CoreDataHelper.shared.persistentContainer.viewContext
-
-					context.delete(self)
-
-					do {
-						try context.save()
-					} catch let error as NSError {
-						print("Could not delete \(error), \(error.userInfo)")
-					}
+					self.deleteLocal()
 				}
 			})
 			.catch({ _ in })
+		} else {
+			self.deleteLocal()
+		}
+	}
+
+	func deleteLocal() {
+		let context = CoreDataHelper.shared.persistentContainer.viewContext
+
+		context.delete(self)
+
+		do {
+			try context.save()
+		} catch let error as NSError {
+			print("Could not delete \(error), \(error.userInfo)")
+		}
+	}
+
+	func deleteFromServer() -> Promise<[String: Any]>{
+		return QuoJob.shared.deleteTracking(tracking: self)
 	}
 
 	func export() -> Promise<Void> {
