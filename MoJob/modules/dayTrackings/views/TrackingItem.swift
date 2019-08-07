@@ -125,6 +125,7 @@ class TrackingItem: NSView {
 
 	override func rightMouseDown(with event: NSEvent) {
 		if (rightClickMenu.items.count > 0) {
+			NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
 			return
 		}
 
