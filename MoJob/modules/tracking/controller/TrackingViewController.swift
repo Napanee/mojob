@@ -56,7 +56,9 @@ class TrackingViewController: QuoJobSelections {
 		}
 
 		taskSelect.font = NSFont.systemFont(ofSize: 14, weight: .light)
+	}
 
+	override func viewDidAppear() {
 		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "counter:tick"), object: nil, queue: nil, using: { notification in
 			guard let totalSeconds = (notification.object as? NSDictionary)?["totalSeconds"] as? Double else { return }
 
