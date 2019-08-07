@@ -21,7 +21,7 @@ extension Tracking {
 		}
 	}
 
-	class func insert(with params: [String: Any]) -> Promise<Tracking?> {
+	class func insert(with params: [String: Any?]) -> Promise<Tracking?> {
 		return Promise { seal in
 			let context = CoreDataHelper.shared.persistentContainer.viewContext
 			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
