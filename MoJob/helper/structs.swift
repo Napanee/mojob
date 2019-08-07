@@ -15,7 +15,6 @@ struct BaseData {
 }
 
 struct TempTracking {
-	var tracking: Tracking?
 	var job: Job?
 	var task: Task?
 	var activity: Activity?
