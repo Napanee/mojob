@@ -109,6 +109,8 @@ class TrackingItem: NSView {
 		indicatorLayer.backgroundColor = color.cgColor
 
 		textView.layer?.insertSublayer(indicatorLayer, at: 1)
+
+		(statusImage.cell as? NSButtonCell)?.imageDimsWhenDisabled = false
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
