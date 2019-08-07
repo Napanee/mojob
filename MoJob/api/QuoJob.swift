@@ -304,6 +304,13 @@ class QuoJob {
 		return fetch(as: "mytime.put_hourbooking", with: params)
 	}
 
+	func deleteTracking(tracking: Tracking) -> Promise<[String: Any]> {
+		var params = defaultParams
+		params["hourbooking_id"] = tracking.id
+
+		return fetch(as: "mytime.delete_hourbooking", with: params)
+	}
+
 }
 
 // MARK: - login
