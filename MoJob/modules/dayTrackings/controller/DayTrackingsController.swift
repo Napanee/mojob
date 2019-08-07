@@ -79,7 +79,6 @@ class DayTrackingsController: NSViewController {
 
 		let context = CoreDataHelper.shared.persistentContainer.viewContext
 		let notificationCenter = NotificationCenter.default
-		notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 
 		monitor.pathUpdateHandler = { path in
@@ -168,18 +167,6 @@ class DayTrackingsController: NSViewController {
 	}
 
 	// MARK: - Observer
-
-	@objc func managedObjectContextObjectsDidChange(notification: NSNotification) {
-		guard let userInfo = notification.userInfo else { return }
-
-		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-
-		}
-
-		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-
-		}
-	}
 
 	@objc func managedObjectContextDidSave(notification: NSNotification) {
 		guard let userInfo = notification.userInfo else { return }
