@@ -23,12 +23,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
 
-		QuoJob.shared.checkLoginStatus().done { _ in
-			self.syncData()
-		}.catch { _ in
-			QuoJob.shared.loginWithKeyChain().done {
+		if (QuoJob.shared.lastSync?.jobs != nil) {
+			QuoJob.shared.checkLoginStatus().done { _ in
 				self.syncData()
-			}.catch { _ in }
+			}.catch { _ in
+				QuoJob.shared.loginWithKeyChain().done {
+					self.syncData()
+				}.catch { _ in }
+			}
 		}
 	}
 
