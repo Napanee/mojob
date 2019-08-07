@@ -72,22 +72,30 @@ class EditorController: QuoJobSelections {
 		for (label, value) in mirror.children  {
 			guard let label = label else { continue }
 
-			if value is Job || value is Task || value is Activity || value is String || value is Date {
-				values[label] = value
-			}
+			values[label] = value
 		}
 
-		values["exported"] = tempTracking?.job != nil ? SyncStatus.pending.rawValue : SyncStatus.error.rawValue
+		if (tempTracking?.job != nil || values["job"] != nil) {
+			values["exported"] = SyncStatus.pending.rawValue
+		}
 
 		if let sourceTracking = sourceTracking {
 			sourceTracking.update(with: values).done({ _ in
 				if let _ = sourceTracking.job {
 					sourceTracking.export().done({ _ in }).catch({ _ in })
+				} else if let _ = sourceTracking.id {
+					sourceTracking.deleteFromServer().done({ _ in
+						sourceTracking.update(with: ["id": nil, "exported": nil]).done({ _ in }).catch({ _ in })
+					}).catch({ error in
+						sourceTracking.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
+					})
 				}
 			}).catch { error in print(error) }
 		} else {
 			Tracking.insert(with: values).done({ tracking in
-				tracking?.export().done({ _ in }).catch({ _ in })
+				if (tracking?.job != nil) {
+					tracking?.export().done({ _ in }).catch({ _ in })
+				}
 			}).catch({ _ in })
 		}
 
