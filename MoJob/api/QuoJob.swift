@@ -35,6 +35,11 @@ class QuoJob {
 
 	let dateFormatterFull = DateFormatter()
 	let dateFormatterTime = DateFormatter()
+	var defaultParams: [String: Any] {
+		get {
+			return ["session": sessionId!]
+		}
+	}
 
 	var jobs: [Job]? {
 		get {
@@ -199,9 +204,16 @@ class QuoJob {
 		dateFormatterTime.dateFormat = "HHmm"
 	}
 
-	func fetch(params: [String: Any]) -> Promise<[String: Any]> {
+	func fetch(as method: String, with params: [String: Any]) -> Promise<[String: Any]> {
+		let parameters: [String: Any] = [
+			"jsonrpc": "2.0",
+			"method": "mytime.delete_hourbooking",
+			"params": params,
+			"id": 1
+		]
+
 		return Promise { seal in
-			Alamofire.request(API_URL, method: .post, parameters: params, encoding: JSONEncoding.default)
+			Alamofire.request(API_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
 				.responseJSON { response in
 					switch response.result {
 					case .success(let json):
@@ -276,27 +288,20 @@ class QuoJob {
 			taskId = task.id
 		}
 
-		let parameters: [String: Any] = [
-			"jsonrpc": "2.0",
-			"method": "mytime.put_hourbooking",
-			"params": [
-				"session": sessionId!,
-				"hourbooking": [
-					"id": id as Any,
-					"date": dateFormatterFull.string(from: tracking.date_start! as Date),
-					"time_from": dateFormatterTime.string(from: tracking.date_start! as Date),
-					"time_until": dateFormatterTime.string(from: tracking.date_end! as Date),
-					"job_id": tracking.job?.id as Any,
-					"activity_id": activityId as Any,
-					"jobtask_id": taskId as Any,
-					"text": tracking.comment as Any,
-					"booking_type": bookingTypeString as Any
-				] as [String: Any]
-			] as [String: Any],
-			"id": 1
+		var params = defaultParams
+		params["hourbooking"] = [
+			"id": id,
+			"date": dateFormatterFull.string(from: tracking.date_start! as Date),
+			"time_from": dateFormatterTime.string(from: tracking.date_start! as Date),
+			"time_until": dateFormatterTime.string(from: tracking.date_end! as Date),
+			"job_id": tracking.job?.id,
+			"activity_id": activityId,
+			"jobtask_id": taskId,
+			"text": tracking.comment,
+			"booking_type": bookingTypeString
 		]
 
-		return fetch(params: parameters)
+		return fetch(as: "mytime.put_hourbooking", with: params)
 	}
 
 }
@@ -306,35 +311,22 @@ class QuoJob {
 extension QuoJob {
 
 	func checkLoginStatus() -> Promise<[String: Any]> {
-		let verifyParams: [String: Any] = [
-			"jsonrpc": "2.0",
-			"method": "session.get_current_user",
-			"params": [
-				"session": sessionId
-			],
-			"id": 1
-		]
-
-		return fetch(params: verifyParams)
+		let params = defaultParams
+		return fetch(as: "session.get_current_user", with: params)
 	}
 
 	func loginWithUserData(userName: String, password: String) -> Promise<Void> {
-		let parameters: [String: Any] = [
-			"jsonrpc": "2.0",
-			"method": "session.login",
-			"id": "1",
-			"params": [
-				"user": userName,
-				"device_id": "foo",
-				"client_type": "MoJobApp",
-				"language": "de",
-				"password": password.MD5 as Any,
-				"min_version": 1,
-				"max_version": 6
-			]
+		let params = [
+			"user": userName,
+			"device_id": "foo",
+			"client_type": "MoJobApp",
+			"language": "de",
+			"password": password.MD5 as Any,
+			"min_version": 1,
+			"max_version": 6
 		]
 
-		return fetch(params: parameters).done { result in
+		return fetch(as: "session.login", with: params).done { result in
 			self.userId = result["user_id"] as? String
 			self.sessionId = result["session"] as? String
 
@@ -394,17 +386,10 @@ extension QuoJob {
 			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
 		}
 
-		let parameters: [String: Any] = [
-			"jsonrpc": "2.0",
-			"method": "job.get_jobtypes",
-			"params": [
-				"session": sessionId,
-				"last_sync": lastSyncString
-			],
-			"id": 1
-		]
+		var params = defaultParams
+		params["last_sync"] = lastSyncString
 
-		return fetch(params: parameters)
+		return fetch(as: "job.get_jobtypes", with: params)
 	}
 
 	func fetchJobs() -> Promise<[String: Any]> {
@@ -413,17 +398,10 @@ extension QuoJob {
 			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
 		}
 
-		let parameters: [String: Any] = [
-			"jsonrpc": "2.0",
-			"method": "job.get_jobs",
-			"params": [
-				"session": sessionId,
-				"last_sync": lastSyncString
-			],
-			"id": 1
-		]
+		var params = defaultParams
+		params["last_sync"] = lastSyncString
 
-		return fetch(params: parameters)
+		return fetch(as: "job.get_jobs", with: params)
 	}
 
 	func fetchActivities() -> Promise<[String: Any]> {
@@ -432,17 +410,10 @@ extension QuoJob {
 			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
 		}
 
-		let parameters: [String: Any] = [
-			"jsonrpc": "2.0",
-			"method": "common.get_activities",
-			"params": [
-				"session": sessionId,
-				"last_sync": lastSyncString
-			],
-			"id": 1
-		]
+		var params = defaultParams
+		params["last_sync"] = lastSyncString
 
-		return fetch(params: parameters)
+		return fetch(as: "common.get_activities", with: params)
 	}
 
 	func fetchTasks() -> Promise<[String: Any]> {
@@ -451,17 +422,10 @@ extension QuoJob {
 			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
 		}
 
-		let parameters: [String: Any] = [
-			"jsonrpc": "2.0",
-			"method": "job.get_jobtasks",
-			"params": [
-				"session": sessionId,
-				"last_sync": lastSyncString
-			],
-			"id": 1
-		]
+		var params = defaultParams
+		params["last_sync"] = lastSyncString
 
-		return fetch(params: parameters)
+		return fetch(as: "job.get_jobtasks", with: params)
 	}
 
 	private func handleJobTypes(with result: [String: Any]) {
