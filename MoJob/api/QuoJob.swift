@@ -207,7 +207,7 @@ class QuoJob {
 	func fetch(as method: String, with params: [String: Any]) -> Promise<[String: Any]> {
 		let parameters: [String: Any] = [
 			"jsonrpc": "2.0",
-			"method": "mytime.delete_hourbooking",
+			"method": method,
 			"params": params,
 			"id": 1
 		]
