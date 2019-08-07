@@ -83,7 +83,7 @@ class TrackingViewController: QuoJobSelections {
 			"date_end": Calendar.current.date(bySetting: .nanosecond, value: 0, of: date)
 		]).done({ _ in
 			if let _ = tracking.job {
-				tracking.export().catch({ error in print(error) })
+				tracking.export().done({ _ in }).catch({ _ in })
 			}
 		}).catch { error in print(error) }
 

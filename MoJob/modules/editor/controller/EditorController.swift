@@ -82,12 +82,12 @@ class EditorController: QuoJobSelections {
 		if let sourceTracking = sourceTracking {
 			sourceTracking.update(with: values).done({ _ in
 				if let _ = sourceTracking.job {
-					sourceTracking.export().catch({ error in print(error) })
+					sourceTracking.export().done({ _ in }).catch({ _ in })
 				}
 			}).catch { error in print(error) }
 		} else {
 			Tracking.insert(with: values).done({ tracking in
-				tracking?.export().catch({ error in print(error) })
+				tracking?.export().done({ _ in }).catch({ _ in })
 			}).catch({ _ in })
 		}
 

@@ -31,7 +31,7 @@ extension Tracking {
 				tracking.setValue(value, forKey: key)
 			}
 
-			tracking.setValue(Date(), forKey: "date_start")
+			tracking.setValue(Calendar.current.date(bySetting: .second, value: 0, of: params["date_start"] as? Date ?? Date())!, forKey: "date_start")
 
 			let userDefaults = UserDefaults()
 			if let activityId = userDefaults.string(forKey: "activity"), let activity = QuoJob.shared.activities?.first(where: { $0.id == activityId }) {
@@ -63,7 +63,7 @@ extension Tracking {
 //	}
 
 	func update(with params: [String: Any?]) -> Promise<Void> {
-		return Promise { _ in
+		return Promise { seal in
 			let context = CoreDataHelper.shared.persistentContainer.viewContext
 
 			for (key, value) in params {
@@ -72,37 +72,54 @@ extension Tracking {
 
 			do {
 				try context.save()
+				seal.fulfill_()
 			} catch let error as NSError  {
 				print("Could not save \(error), \(error.userInfo)")
+				seal.reject(error)
 			}
 		}
 	}
 
 	func delete() {
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
+		QuoJob.shared.deleteTracking(tracking: self)
+			.done({ result in
+				if let success = result["success"] as? Bool, success == true {
+					let context = CoreDataHelper.shared.persistentContainer.viewContext
 
-		context.delete(self)
+					context.delete(self)
 
-		do {
-			try context.save()
-		} catch let error as NSError {
-			print("Could not delete \(error), \(error.userInfo)")
-		}
+					do {
+						try context.save()
+					} catch let error as NSError {
+						print("Could not delete \(error), \(error.userInfo)")
+					}
+				}
+			})
+			.catch({ _ in })
 	}
 
 	func export() -> Promise<Void> {
-		return Promise { _ in
-			QuoJob.shared.exportTracking(tracking: self).done { result in
-				if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-					self.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).catch({ error in
-						print(error)
-					})
+		return Promise { seal in
+			QuoJob.shared.exportTracking(tracking: self)
+				.done { result in
+					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
+						self.update(with: ["id": id, "exported": SyncStatus.success.rawValue])
+							.done({ _ in
+								seal.fulfill_()
+							})
+							.catch({ error in
+								print(error)
+								seal.reject(error)
+							})
+					} else {
+						let error = NSError(domain: "de.martingschneider.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "message"])
+						seal.reject(error)
+					}
 				}
-			}.catch { _ in
-				self.update(with: ["exported": SyncStatus.error.rawValue]).catch({ error in
-					print(error)
-				})
-			}
+				.catch { error in
+					seal.reject(error)
+					self.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
+				}
 		}
 	}
 

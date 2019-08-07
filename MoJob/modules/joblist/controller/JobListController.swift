@@ -401,7 +401,7 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 		let itemCount = collectionView.numberOfItems(inSection: 0)
 		for i in 0..<itemCount {
 			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
-				item.job.update(with: ["favoriteOrder": Int16(i)]).catch({ _ in })
+				item.job.update(with: ["favoriteOrder": Int16(i)]).done({ _ in }).catch({ _ in })
 			}
 		}
 

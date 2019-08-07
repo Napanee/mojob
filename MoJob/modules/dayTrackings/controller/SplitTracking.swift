@@ -83,7 +83,7 @@ class SplitTracking: NSViewController {
 
 				Tracking.insert(with: values).done({ tracking in
 					if let tracking = tracking, let _ = tracking.job {
-						tracking.export().catch({ error in print(error) })
+						tracking.export().done({ _ in }).catch({ _ in })
 					}
 				}).catch { error in }
 

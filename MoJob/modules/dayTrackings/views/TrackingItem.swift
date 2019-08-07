@@ -192,7 +192,7 @@ class TrackingItem: NSView {
 
 	@objc func onSelectColor(_ sender: NSButton) {
 		if let button = sender as? ColorButton, let job = tracking?.job {
-			job.update(with: ["color": button.key]).catch({ _ in })
+			job.update(with: ["color": button.key]).done({ _ in }).catch({ _ in })
 			rightClickMenu.cancelTracking()
 		}
 	}

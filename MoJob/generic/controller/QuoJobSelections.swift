@@ -172,22 +172,16 @@ class QuoJobSelections: NSViewController {
 			tempTracking?.job = nil
 			tempTracking?.task = nil
 
-			tracking?.update(with: ["job": nil, "task": nil]).catch { error in
-				print(error)
-			}
+			tracking?.update(with: ["job": nil, "task": nil]).done({ _ in }).catch({ _ in })
 		} else if let job = QuoJob.shared.jobs?.first(where: { $0.fullTitle.lowercased() == value }) {
 			tempTracking?.job = job
 
-			tracking?.update(with: ["job": job]).catch { error in
-				print(error)
-			}
+			tracking?.update(with: ["job": job]).done({ _ in }).catch({ _ in })
 		} else {
 			tempTracking?.job = nil
 			tempTracking?.custom_job = value
 
-			tracking?.update(with: ["job": nil, "custom_job": value]).catch { error in
-				print(error)
-			}
+			tracking?.update(with: ["job": nil, "custom_job": value]).done({ _ in }).catch({ _ in })
 		}
 
 		initTaskSelect()
@@ -203,10 +197,10 @@ class QuoJobSelections: NSViewController {
 
 		if (value == "") {
 			tempTracking?.task = nil
-			tracking?.update(with: ["task": nil]).catch({ _ in })
+			tracking?.update(with: ["task": nil]).done({ _ in }).catch({ _ in })
 		} else if let task = QuoJob.shared.tasks?.first(where: { $0.title?.lowercased() == value }) {
 			tempTracking?.task = task
-			tracking?.update(with: ["task": task]).catch({ _ in })
+			tracking?.update(with: ["task": task]).done({ _ in }).catch({ _ in })
 		}
 	}
 
@@ -218,7 +212,7 @@ class QuoJobSelections: NSViewController {
 		if (value == "") {
 			jobSelect.isEnabled = true
 			tempTracking?.activity = nil
-			tracking?.update(with: ["activity": nil]).catch({ _ in })
+			tracking?.update(with: ["activity": nil]).done({ _ in }).catch({ _ in })
 			formIsValid = false
 		} else if let activity = QuoJob.shared.activities?
 			.filter({
@@ -233,14 +227,14 @@ class QuoJobSelections: NSViewController {
 			if (activity.nfc) {
 				jobSelect.cell?.stringValue = ""
 				tempTracking?.job = nil
-				tracking?.update(with: ["job": nil]).catch({ _ in })
+				tracking?.update(with: ["job": nil]).done({ _ in }).catch({ _ in })
 				jobSelect.isEnabled = false
 			} else {
 				jobSelect.isEnabled = true
 			}
 
 			tempTracking?.activity = activity
-			tracking?.update(with: ["activity": activity]).catch({ _ in })
+			tracking?.update(with: ["activity": activity]).done({ _ in }).catch({ _ in })
 			formIsValid = true
 		}
 	}
@@ -308,7 +302,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 			if let newStartDate = Calendar.current.date(from: comp) {
 				tempTracking?.date_start = newStartDate
-				tracking?.update(with: ["date_start": newStartDate]).catch({ _ in })
+				tracking?.update(with: ["date_start": newStartDate]).done({ _ in }).catch({ _ in })
 				startDate = newStartDate
 				formIsValid = true
 			}
@@ -330,7 +324,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 		if (textField == comment) {
 			tempTracking?.comment = textField.stringValue
-			tracking?.update(with: ["comment": textField.stringValue]).catch({ _ in })
+			tracking?.update(with: ["comment": textField.stringValue]).done({ _ in }).catch({ _ in })
 		}
 	}
 

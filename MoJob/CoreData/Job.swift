@@ -36,7 +36,7 @@ extension Job {
 	}
 
 	func update(with params: [String: Any?]) -> Promise<Void> {
-		return Promise { _ in
+		return Promise { seal in
 			let context = CoreDataHelper.shared.persistentContainer.viewContext
 
 			for (key, value) in params {
@@ -45,8 +45,10 @@ extension Job {
 
 			do {
 				try context.save()
+				seal.fulfill_()
 			} catch let error as NSError  {
 				print("Could not save \(error), \(error.userInfo)")
+				seal.reject(error)
 			}
 		}
 	}
