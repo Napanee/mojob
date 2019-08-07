@@ -108,7 +108,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 		let context = CoreDataHelper.shared.persistentContainer.viewContext
 		let notificationCenter = NotificationCenter.default
-		notificationCenter.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: context)
+		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: .NSManagedObjectContextDidSave, object: context)
 
 		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
 	}
@@ -126,15 +126,12 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		jobsCollectionView.collectionViewLayout?.invalidateLayout()
 	}
 
-	@objc func managedObjectContextObjectsDidChange(notification: NSNotification) {
+	@objc func managedObjectContextDidSave(notification: NSNotification) {
 		guard let userInfo = notification.userInfo else { return }
 
-		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-			if let updateValues = updates.first?.changedValues() {
-				let keys = updateValues.keys
-				if (keys.contains("color")) {
-					favoritesCollectionView.reloadData()
-				}
+		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count == 1 {
+			if let _ = updates.first as? Job {
+				favoritesCollectionView.reloadData()
 			}
 		}
 	}
