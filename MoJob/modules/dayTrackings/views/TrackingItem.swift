@@ -130,6 +130,14 @@ class TrackingItem: NSView {
 		}
 
 		rightClickMenu.addItem(withTitle: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
+		if let job = tracking?.job {
+			if (job.isFavorite) {
+				rightClickMenu.addItem(withTitle: "von Favoriten entfernen", action: #selector(onContextToggleFavorite), keyEquivalent: "")
+			} else {
+				rightClickMenu.addItem(withTitle: "zu Favoriten hinzufügen", action: #selector(onContextToggleFavorite), keyEquivalent: "")
+			}
+		}
+		rightClickMenu.addItem(NSMenuItem.separator())
 		rightClickMenu.addItem(withTitle: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
 
 		if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
@@ -168,6 +176,12 @@ class TrackingItem: NSView {
 	@objc func onContextEdit() {
 		if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 			contentViewController.showEditor(with: tracking)
+		}
+	}
+
+	@objc func onContextToggleFavorite() {
+		if let isFavorite = tracking?.job?.isFavorite {
+			tracking?.job?.update(with: ["isFavorite": !isFavorite]).catch({ _ in })
 		}
 	}
 
