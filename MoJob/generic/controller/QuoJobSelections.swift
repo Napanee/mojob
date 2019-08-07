@@ -175,8 +175,9 @@ class QuoJobSelections: NSViewController {
 			tracking?.update(with: ["job": nil, "task": nil]).done({ _ in }).catch({ _ in })
 		} else if let job = QuoJob.shared.jobs?.first(where: { $0.fullTitle.lowercased() == value }) {
 			tempTracking?.job = job
+			tempTracking?.custom_job = nil
 
-			tracking?.update(with: ["job": job]).done({ _ in }).catch({ _ in })
+			tracking?.update(with: ["job": job, "custom_job": nil]).done({ _ in }).catch({ _ in })
 		} else {
 			tempTracking?.job = nil
 			tempTracking?.custom_job = value
