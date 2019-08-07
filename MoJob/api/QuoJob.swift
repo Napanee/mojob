@@ -382,7 +382,7 @@ extension QuoJob {
 				self.handleJobTypes(with: resultTypes)
 				try? self.fetchedResultControllerType.performFetch()
 
-				if let activities = (resultActivities["activities"] as? [[String: Any]]) {
+				if let activities = (resultActivities["activities"] as? [[String: Any]]), activities.count > 0 {
 					results.append(["type": "activities", "order": 2, "text": "\(String(activities.count)) Tätigkeiten"])
 				}
 				self.handleActivities(with: resultActivities)
@@ -390,7 +390,7 @@ extension QuoJob {
 
 				return self.fetchJobs()
 			}.then { resultJobs -> Promise<[String: Any]> in
-				if let jobs = (resultJobs["jobs"] as? [[String: Any]]) {
+				if let jobs = (resultJobs["jobs"] as? [[String: Any]]), jobs.count > 0 {
 					results.append(["type": "jobs", "order": 1, "text": "\(String(jobs.count)) Jobs"])
 				}
 				self.handleJobs(with: resultJobs)
@@ -398,21 +398,30 @@ extension QuoJob {
 
 				return self.fetchTasks()
 			}.done { resultTasks in
-				if let tasks = (resultTasks["jobtasks"] as? [[String: Any]]) {
+				if let tasks = (resultTasks["jobtasks"] as? [[String: Any]]), tasks.count > 0 {
 					results.append(["type": "tasks", "order": 3, "text": "\(String(tasks.count)) Aufgaben"])
 				}
 				self.handleTasks(with: resultTasks)
 			}.ensure {
-				var text: String = "Es wurden "
+				var title: String = ""
+				var text: String = ""
 
-				text += results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
+				if (results.count == 0) {
+					title = "Daten aktuell."
+					text = "Du kannst loslegen ;)"
+				} else {
+					title = "Daten erfolgreich synchronisiert."
+					text = "Es wurden "
+
+					text += results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
 					return type["text"] as! String
-				}).joined(separator: ", ")
+					}).joined(separator: ", ")
 
-				text += " importiert oder aktualisiert."
+					text += " importiert oder aktualisiert.\nFröhlichen Arbeitstag ;)"
+				}
 
 				let notification = NSUserNotification()
-				notification.title = "Daten erfolgreich synchronisiert."
+				notification.title = title
 				notification.informativeText = text
 				notification.soundName = NSUserNotificationDefaultSoundName
 				NSUserNotificationCenter.default.deliver(notification)
