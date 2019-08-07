@@ -87,9 +87,6 @@ class DayTrackingsController: NSViewController {
 			}
 		}
 
-		let queue = DispatchQueue(label: "Monitor")
-		monitor.start(queue: queue)
-
 		warningView.wantsLayer = true
 
 		let today = Date()
@@ -101,6 +98,15 @@ class DayTrackingsController: NSViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(calendarDayChanged), name: .NSCalendarDayChanged, object: nil)
 	}
 
+	override func viewDidAppear() {
+		let queue = DispatchQueue(label: "Monitor")
+		monitor.start(queue: queue)
+	}
+
+	override func viewDidDisappear() {
+		monitor.cancel()
+	}
+
 	private func networkChanged() {
 		let status = monitor.currentPath.status
 		hideWarning()
@@ -110,10 +116,9 @@ class DayTrackingsController: NSViewController {
 				if (error.localizedDescription == errorMessages.sessionProblem) {
 					QuoJob.shared.loginWithKeyChain().catch { error in
 						self.loginButton.isHidden = false
+						self.showWarning(error: error.localizedDescription)
 					}
 				}
-
-				self.showWarning(error: error.localizedDescription)
 			}
 		} else { // offline
 			showWarning(error: errorMessages.offline)
