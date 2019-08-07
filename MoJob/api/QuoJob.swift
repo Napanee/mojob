@@ -29,7 +29,7 @@ extension ApiError: LocalizedError {
 }
 
 
-class QuoJob {
+class QuoJob: NSObject {
 
 	static let shared = QuoJob()
 
@@ -197,7 +197,11 @@ class QuoJob {
 		return _fetchedResultsControllerType!
 	}
 
-	private init() {
+	private override init() {
+		super.init()
+
+		NSUserNotificationCenter.default.delegate = self
+
 		lastSync = fetchedResultControllerSync.fetchedObjects?.first
 
 		dateFormatterFull.dateFormat = "YYYYMMddHHmmss"
@@ -371,23 +375,47 @@ extension QuoJob {
 
 	func syncData() -> Promise<Void> {
 		lastSync = fetchedResultControllerSync.fetchedObjects?.first
+		var results: [[String: Any]] = []
 
 		return when(fulfilled: fetchJobTypes(), fetchActivities())
 			.then { (resultTypes, resultActivities) -> Promise<[String: Any]> in
 				self.handleJobTypes(with: resultTypes)
 				try? self.fetchedResultControllerType.performFetch()
 
+				if let activities = (resultActivities["activities"] as? [[String: Any]]) {
+					results.append(["type": "activities", "order": 2, "text": "\(String(activities.count)) Tätigkeiten"])
+				}
 				self.handleActivities(with: resultActivities)
 				try? self.fetchedResultControllerActivity.performFetch()
 
 				return self.fetchJobs()
 			}.then { resultJobs -> Promise<[String: Any]> in
+				if let jobs = (resultJobs["jobs"] as? [[String: Any]]) {
+					results.append(["type": "jobs", "order": 1, "text": "\(String(jobs.count)) Jobs"])
+				}
 				self.handleJobs(with: resultJobs)
 				try? self.fetchedResultControllerJob.performFetch()
 
 				return self.fetchTasks()
 			}.done { resultTasks in
+				if let tasks = (resultTasks["jobtasks"] as? [[String: Any]]) {
+					results.append(["type": "tasks", "order": 3, "text": "\(String(tasks.count)) Aufgaben"])
+				}
 				self.handleTasks(with: resultTasks)
+			}.ensure {
+				var text: String = "Es wurden "
+
+				text += results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
+					return type["text"] as! String
+				}).joined(separator: ", ")
+
+				text += " importiert oder aktualisiert."
+
+				let notification = NSUserNotification()
+				notification.title = "Daten erfolgreich synchronisiert."
+				notification.informativeText = text
+				notification.soundName = NSUserNotificationDefaultSoundName
+				NSUserNotificationCenter.default.deliver(notification)
 			}
 	}
 
@@ -701,6 +729,15 @@ extension QuoJob {
 				print(error)
 			}
 		}
+	}
+
+}
+
+
+extension QuoJob: NSUserNotificationCenterDelegate {
+
+	func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
+		return true
 	}
 
 }
