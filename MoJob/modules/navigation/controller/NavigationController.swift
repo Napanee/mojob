@@ -11,17 +11,25 @@ import Cocoa
 class NavigationController: NSViewController {
 
 	var window: NSWindow!
-
+	@IBOutlet weak var timeTrackerButton: NSButton!
+	@IBOutlet weak var settingsButton: NSButton!
+	
 	@IBAction func trackerView(_ sender: NSButton) {
 		let tracking = TrackingSplitViewController()
 
 		replaceContent(with: tracking)
+
+		sender.isEnabled = false
+		settingsButton.isEnabled = true
 	}
 
 	@IBAction func settingsView(_ sender: NSButton) {
 		let settings = SettingsViewController()
 
 		replaceContent(with: settings)
+
+		sender.isEnabled = false
+		timeTrackerButton.isEnabled = true
 	}
 	
 	override func viewDidLoad() {

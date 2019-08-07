@@ -7,6 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NavigationController" customModule="MoJob" customModuleProvider="target">
             <connections>
+                <outlet property="settingsButton" destination="WNR-0v-YYS" id="pcQ-ll-QpO"/>
+                <outlet property="timeTrackerButton" destination="gPp-hV-rlT" id="8N5-bq-7ga"/>
                 <outlet property="view" destination="c22-O7-iKe" id="ueD-6M-Dpv"/>
             </connections>
         </customObject>
@@ -21,7 +23,7 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="vuE-s5-YeM"/>
                     </constraints>
-                    <buttonCell key="cell" type="push" title="TimeTracker" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Y3p-GQ-ef4">
+                    <buttonCell key="cell" type="push" title="TimeTracker" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Y3p-GQ-ef4">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
