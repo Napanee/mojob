@@ -19,11 +19,11 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gPp-hV-rlT">
-                    <rect key="frame" x="4" y="214" width="62" height="32"/>
+                    <rect key="frame" x="15" y="187" width="40" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="vuE-s5-YeM"/>
+                        <constraint firstAttribute="width" constant="40" id="vuE-s5-YeM"/>
                     </constraints>
-                    <buttonCell key="cell" type="push" title="TimeTracker" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Y3p-GQ-ef4">
+                    <buttonCell key="cell" type="bevel" title="TimeTracker" bezelStyle="rounded" image="timer-active" imagePosition="only" alignment="center" enabled="NO" state="on" imageScaling="proportionallyDown" inset="2" id="Y3p-GQ-ef4">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -32,11 +32,8 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WNR-0v-YYS">
-                    <rect key="frame" x="4" y="23" width="62" height="32"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="2my-xM-4jm"/>
-                    </constraints>
-                    <buttonCell key="cell" type="push" title="Settings" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jsZ-Pm-3TB">
+                    <rect key="frame" x="15" y="30" width="40" height="35"/>
+                    <buttonCell key="cell" type="bevel" title="Settings" bezelStyle="rounded" image="settings" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="jsZ-Pm-3TB">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -46,10 +43,10 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="gPp-hV-rlT" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="2uD-qI-513"/>
+                <constraint firstItem="gPp-hV-rlT" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="50" id="2uD-qI-513"/>
                 <constraint firstAttribute="bottom" secondItem="WNR-0v-YYS" secondAttribute="bottom" constant="30" id="3QP-yr-SwZ"/>
-                <constraint firstAttribute="trailing" secondItem="gPp-hV-rlT" secondAttribute="trailing" constant="10" id="56h-fF-qWw"/>
-                <constraint firstItem="gPp-hV-rlT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="10" id="FiQ-oq-iMq"/>
+                <constraint firstAttribute="trailing" secondItem="gPp-hV-rlT" secondAttribute="trailing" constant="15" id="56h-fF-qWw"/>
+                <constraint firstItem="gPp-hV-rlT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="15" id="FiQ-oq-iMq"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="XO1-YI-nwa"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="qj2-yl-y4O"/>
             </constraints>
@@ -60,4 +57,8 @@
             </userDefinedRuntimeAttributes>
         </customView>
     </objects>
+    <resources>
+        <image name="settings" width="35" height="35"/>
+        <image name="timer-active" width="35" height="35"/>
+    </resources>
 </document>
