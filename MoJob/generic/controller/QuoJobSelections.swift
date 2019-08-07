@@ -32,6 +32,7 @@ class QuoJobSelections: NSViewController {
 	var tasks: [Task] = []
 	var activities: [Activity] = []
 	var startDate = Date()
+	var nfc: Bool = true
 
 	var formIsValid: Bool {
 		get { return tempTracking?.isValid ?? false || tracking?.isValid ?? false }
@@ -108,7 +109,7 @@ class QuoJobSelections: NSViewController {
 							(job.type?.productive_service ?? true && $0.external_service)
 					}
 
-					return $0.internal_service || $0.nfc
+					return $0.internal_service || (nfc ? $0.nfc : false)
 				})
 				.sorted(by: { $0.title! < $1.title! })
 		}
@@ -221,11 +222,11 @@ class QuoJobSelections: NSViewController {
 					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 				}
 
-				return $0.internal_service || $0.nfc
+				return $0.internal_service || (nfc ? $0.nfc : false)
 			})
 			.first(where: { $0.title?.lowercased() == value })
 		{
-			if (activity.nfc) {
+			if (nfc && activity.nfc) {
 				jobSelect.cell?.stringValue = ""
 				tempTracking?.job = nil
 				tracking?.update(with: ["job": nil]).done({ _ in }).catch({ _ in })
@@ -360,7 +361,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 						return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 					}
 
-					return $0.internal_service || $0.nfc
+					return $0.internal_service || (nfc ? $0.nfc : false)
 				})
 				.filter({ value == "" || $0.title!.lowercased().contains(value) })
 				.sorted(by: { $0.title! < $1.title! })

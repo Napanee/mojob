@@ -56,6 +56,8 @@ class TrackingViewController: QuoJobSelections {
 		}
 
 		taskSelect.font = NSFont.systemFont(ofSize: 14, weight: .light)
+
+		nfc = false
 	}
 
 	override func viewDidAppear() {
