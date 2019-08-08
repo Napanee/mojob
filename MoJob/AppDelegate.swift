@@ -9,6 +9,7 @@
 import Cocoa
 import Fabric
 import Crashlytics
+import LetsMove
 
 
 @NSApplicationMain
@@ -35,6 +36,8 @@ class AppDelegate: NSObject {
 				}.catch { _ in }
 			}
 		}
+
+		PFMoveToApplicationsFolderIfNecessary()
 
 		GlobalTimer.shared.startNoTrackingTimer()
 

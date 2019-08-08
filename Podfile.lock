@@ -4,6 +4,7 @@ PODS:
     - Fabric (~> 1.9.0)
   - Fabric (1.9.0)
   - KeychainAccess (3.1.2)
+  - LetsMove (1.24)
   - PromiseKit/Alamofire (6.8.3):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
@@ -16,6 +17,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - KeychainAccess (~> 3.1)
+  - LetsMove (~> 1.24)
   - PromiseKit/Alamofire (~> 6.0)
   - Sparkle (~> 1.21)
   - SwiftLint
@@ -26,6 +28,7 @@ SPEC REPOS:
     - Crashlytics
     - Fabric
     - KeychainAccess
+    - LetsMove
     - PromiseKit
     - Sparkle
     - SwiftLint
@@ -35,10 +38,11 @@ SPEC CHECKSUMS:
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  LetsMove: fefe56bc7bc7fb7d37049e28a14f297961229fc5
   PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
   Sparkle: 3f75576db8b0265adef36c43249d747f22d0b708
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: 2797bc118316ebc54f577f282f96905f9a485114
+PODFILE CHECKSUM: cf543e2366327f041280dc796e081a582e1455df
 
 COCOAPODS: 1.6.0
