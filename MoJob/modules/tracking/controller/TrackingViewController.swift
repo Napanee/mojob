@@ -10,8 +10,8 @@ import Cocoa
 
 class TrackingViewController: QuoJobSelections {
 
-	let starFilled = NSImage(named: "star-filled")?.tint(color: NSColor.systemYellow)
-	let starEmpty = NSImage(named: "star-empty")
+	let starFilled = NSImage(named: .starFilled)?.tint(color: NSColor.systemYellow)
+	let starEmpty = NSImage(named: .starEmpty)
 	private var observer: NSObjectProtocol!
 
 	var isFavorite: Bool {

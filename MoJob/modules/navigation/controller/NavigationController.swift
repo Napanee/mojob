@@ -20,9 +20,9 @@ class NavigationController: NSViewController {
 		replaceContent(with: tracking)
 
 		sender.isEnabled = false
-		sender.image = NSImage(named: "timer-active")
+		sender.image = NSImage(named: .timerActive)
 		settingsButton.isEnabled = true
-		settingsButton.image = NSImage(named: "settings")
+		settingsButton.image = NSImage(named: .settings)
 	}
 
 	@IBAction func settingsView(_ sender: NSButton) {
@@ -31,9 +31,9 @@ class NavigationController: NSViewController {
 		replaceContent(with: settings)
 
 		sender.isEnabled = false
-		sender.image = NSImage(named: "settings-active")
+		sender.image = NSImage(named: .settingsActive)
 		timeTrackerButton.isEnabled = true
-		timeTrackerButton.image = NSImage(named: "timer")
+		timeTrackerButton.image = NSImage(named: .timer)
 	}
 	
 	override func viewDidLoad() {

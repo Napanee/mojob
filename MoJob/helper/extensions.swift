@@ -11,9 +11,22 @@ import Foundation
 
 
 extension NSImage.Name {
+	static let checked = NSImage.Name("checked")
 	static let delete = NSImage.Name("delete")
+	static let login = NSImage.Name("login")
 	static let play = NSImage.Name("play")
+	static let reload = NSImage.Name("reload")
+	static let settingsActive = NSImage.Name("settings-active")
+	static let settings = NSImage.Name("settings")
+	static let starEmpty = NSImage.Name("star-empty")
+	static let starFilled = NSImage.Name("star-filled")
 	static let stop = NSImage.Name("stop")
+	static let syncError = NSImage.Name("sync-error")
+	static let syncPending = NSImage.Name("sync-pending")
+	static let syncSuccess = NSImage.Name("sync-success")
+	static let timerActive = NSImage.Name("timer-active")
+	static let timer = NSImage.Name("timer")
+	static let unchecked = NSImage.Name("unchecked")
 }
 
 extension NSImage {

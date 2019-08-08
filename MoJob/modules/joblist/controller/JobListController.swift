@@ -138,7 +138,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	func showWarning(error: String) {
 		if (QuoJob.shared.sessionId == "") {
-			warningButton.image = NSImage(named: "login")
+			warningButton.image = NSImage(named: .login)
 			warningButton.title = "Jetzt einloggen"
 			warningButton.action = #selector(onLogin)
 		}
@@ -242,7 +242,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	@objc private func onSessionUpdate(notification: NSNotification) {
 		if (warningView.isHidden == false) {
-			warningButton.image = NSImage(named: "reload")
+			warningButton.image = NSImage(named: .reload)
 			warningButton.title = "Jetzt synchronisieren"
 			warningButton.action = #selector(onSync)
 		}

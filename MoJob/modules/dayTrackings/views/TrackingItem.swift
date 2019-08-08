@@ -27,13 +27,13 @@ class TrackingItem: NSView {
 		didSet {
 			switch exportStatus {
 			case .success:
-				statusImage.image = NSImage(named: "sync-success")?.tint(color: NSColor(red: 0.180, green: 0.490, blue: 0.196, alpha: 1))
+				statusImage.image = NSImage(named: .syncSuccess)?.tint(color: NSColor(red: 0.180, green: 0.490, blue: 0.196, alpha: 1))
 				statusImage.isEnabled = false
 			case .error:
-				statusImage.image = NSImage(named: "sync-error")?.tint(color: NSColor(red: 0.835, green: 0, blue: 0, alpha: 1))
+				statusImage.image = NSImage(named: .syncError)?.tint(color: NSColor(red: 0.835, green: 0, blue: 0, alpha: 1))
 				statusImage.isEnabled = true
 			case .pending:
-				statusImage.image = NSImage(named: "sync-pending")?.tint(color: NSColor(red: 0.984, green: 0.753, blue: 0.176, alpha: 1))
+				statusImage.image = NSImage(named: .syncPending)?.tint(color: NSColor(red: 0.984, green: 0.753, blue: 0.176, alpha: 1))
 				statusImage.isEnabled = false
 			}
 		}
