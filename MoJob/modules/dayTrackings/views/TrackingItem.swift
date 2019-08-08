@@ -130,17 +130,26 @@ class TrackingItem: NSView {
 		}
 
 		rightClickMenu.addItem(withTitle: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
-		if let job = tracking?.job {
-			if (job.isFavorite) {
-				rightClickMenu.addItem(withTitle: "von Favoriten entfernen", action: #selector(onContextToggleFavorite), keyEquivalent: "")
-			} else {
-				rightClickMenu.addItem(withTitle: "zu Favoriten hinzufügen", action: #selector(onContextToggleFavorite), keyEquivalent: "")
-			}
+
+		rightClickMenu.addItem(NSMenuItem.separator())
+
+		let splitItem = NSMenuItem(title: "Aufteilen", action: nil, keyEquivalent: "")
+		splitItem.action = tracking?.custom_job != nil ? #selector(onContextSplit) : nil
+		rightClickMenu.addItem(splitItem)
+
+		let toggleFavoriteItem = NSMenuItem(title: "zu Favoriten hinzufügen", action: nil, keyEquivalent: "")
+		toggleFavoriteItem.action = tracking?.job != nil ? #selector(onContextToggleFavorite) : nil
+		if let job = tracking?.job, job.isFavorite {
+			toggleFavoriteItem.title = "von Favoriten entfernen"
 		}
+		rightClickMenu.addItem(toggleFavoriteItem)
+
 		rightClickMenu.addItem(NSMenuItem.separator())
 		rightClickMenu.addItem(withTitle: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
 
-		if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
+		rightClickMenu.addItem(NSMenuItem.separator())
+		rightClickMenu.addItem(withTitle: "Color:", action: nil, keyEquivalent: "")
+		if let _ = tracking?.job, let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
 			let colors = NSColorList(name: "MoJob", fromFile: path) {
 			let buttons = colors.allKeys.map({ (key) -> NSButton in
 				let color = colors.color(withKey: key)
@@ -160,14 +169,9 @@ class TrackingItem: NSView {
 
 			let menuItem = NSMenuItem()
 			menuItem.view = stack
-			rightClickMenu.addItem(NSMenuItem.separator())
-			rightClickMenu.addItem(withTitle: "Color:", action: nil, keyEquivalent: "")
 			rightClickMenu.addItem(menuItem)
-		}
-
-		if (tracking?.custom_job != nil) {
-			rightClickMenu.addItem(NSMenuItem.separator())
-			rightClickMenu.addItem(withTitle: "Aufteilen", action: #selector(onContextSplit), keyEquivalent: "")
+		} else {
+			rightClickMenu.addItem(withTitle: "nicht verfügbar für custom Jobs", action: nil, keyEquivalent: "")
 		}
 
 		NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
