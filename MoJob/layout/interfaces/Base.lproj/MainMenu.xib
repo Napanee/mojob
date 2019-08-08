@@ -11,7 +11,11 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="MoJob" customModuleProvider="target"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="MoJob" customModuleProvider="target">
+            <connections>
+                <outlet property="syncDataMenuItem" destination="nMK-tr-0Hj" id="Tb2-yd-mob"/>
+            </connections>
+        </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="Jpa-3x-ICj" customClass="SUUpdater"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
@@ -35,6 +39,26 @@
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                             <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
+                            <menuItem title="QuoJob" id="lMe-lS-KW7">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="QuoJob" id="WKo-68-JQI">
+                                    <items>
+                                        <menuItem title="Login" id="K3H-y4-dU6">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="loginMenuItemWithSender:" target="Voe-Tx-rLC" id="1W9-vN-Qr2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Daten synchronisieren" id="nMK-tr-0Hj">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="syncDataMenuItemWithSender:" target="Voe-Tx-rLC" id="pwM-Yy-vHq"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="JC8-p8-ycb"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>

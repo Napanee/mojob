@@ -17,6 +17,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	var window: NSWindow!
 	var mainWindowController: MainWindowController?
 
+	@IBOutlet weak var syncDataMenuItem: NSMenuItem!
+
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		Fabric.with([Crashlytics.self, Answers.self])
 
@@ -57,6 +59,53 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 	func applicationWillTerminate(_ aNotification: Notification) {
 		// Insert code here to tear down your application
+	}
+
+	@IBAction func loginMenuItem(sender: NSMenuItem) {
+		let notificationCenter = NSUserNotificationCenter.default
+		let notification = NSUserNotification()
+		notification.soundName = NSUserNotificationDefaultSoundName
+
+		QuoJob.shared.sessionId = ""
+
+		QuoJob.shared.checkLoginStatus().done { _ in
+			notification.title = "Du wurdest erfolgreich eingeloggt."
+			notificationCenter.deliver(notification)
+			self.syncDataMenuItem.isEnabled = true
+		}.catch { _ in
+			QuoJob.shared.loginWithKeyChain().done {
+				notification.title = "Du wurdest erfolgreich eingeloggt."
+				notificationCenter.deliver(notification)
+				self.syncDataMenuItem.isEnabled = true
+			}.catch { _ in
+				if
+					let presentedViewControllers = self.window.contentViewController?.presentedViewControllers,
+					let _ = presentedViewControllers.first(where: { $0.isKind(of: Login.self) })
+				{
+					return
+				}
+
+				let loginVC = Login(nibName: .loginNib, bundle: nil)
+				self.window.contentViewController?.presentAsSheet(loginVC)
+			}
+		}
+	}
+
+	@IBAction func syncDataMenuItem(sender: NSMenuItem) {
+		QuoJob.shared.checkLoginStatus().done { _ in
+			self.syncData()
+		}.catch { _ in
+			QuoJob.shared.loginWithKeyChain().done {
+				self.syncData()
+			}.catch { _ in
+				sender.isEnabled = false
+				let notificationCenter = NSUserNotificationCenter.default
+				let notification = NSUserNotification()
+				notification.title = "Du bist nicht eingeloggt."
+				notification.soundName = NSUserNotificationDefaultSoundName
+				notificationCenter.deliver(notification)
+			}
+		}
 	}
 
 	// MARK: - Core Data Saving and Undo support
