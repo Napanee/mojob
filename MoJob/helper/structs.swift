@@ -14,6 +14,11 @@ struct BaseData {
 	var until: Date
 }
 
+struct userDefaultValues {
+	static let notificationNotracking: Int = 10
+	static let notificationDaycomplete: Double = 8
+}
+
 struct TempTracking {
 	var job: Job?
 	var task: Task?
