@@ -63,6 +63,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		// Insert code here to tear down your application
 	}
 
+	@IBAction func openWebappMenuItem(sender: NSMenuItem) {
+		let url = URL(string: "https://mojob.moccu")!
+		NSWorkspace.shared.open(url)
+	}
+
 	@IBAction func loginMenuItem(sender: NSMenuItem) {
 		let notificationCenter = NSUserNotificationCenter.default
 		let notification = NSUserNotification()

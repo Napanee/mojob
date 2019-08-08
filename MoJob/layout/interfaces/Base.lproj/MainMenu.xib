@@ -55,6 +55,13 @@
                                                 <action selector="syncDataMenuItemWithSender:" target="Voe-Tx-rLC" id="pwM-Yy-vHq"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="veJ-j5-2m8"/>
+                                        <menuItem title="MoJob im Browser öffnen" id="rY5-Yk-7f6">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="openWebappMenuItemWithSender:" target="Voe-Tx-rLC" id="hti-3y-Ech"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
