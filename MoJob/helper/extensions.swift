@@ -114,10 +114,18 @@ extension Date {
 	}
 
 	var startOfDay: Date? {
-		return Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: self)
+		return Calendar.current.date(from: Calendar.current.dateComponents([.day, .month, .year], from: self))
 	}
 
 	var endOfDay: Date? {
-		return Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: self)
+		return Calendar.current.date(byAdding: .day, value: 1, to: self.startOfDay!)
+	}
+
+	var startOfWeek: Date? {
+		return Calendar.current.date(from: Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))
+	}
+
+	var endOfWeek: Date? {
+		return Calendar.current.date(byAdding: .day, value: 7, to: self.startOfWeek!)
 	}
 }
