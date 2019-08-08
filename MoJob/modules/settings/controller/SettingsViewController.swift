@@ -27,6 +27,15 @@ class SettingsViewController: NSViewController {
 			$0.bundleIdentifier == helperBundleName
 		}
 
+		let pstyle = NSMutableParagraphStyle()
+		pstyle.firstLineHeadIndent = 5.0
+		autoLaunchCheckbox.attributedTitle = NSAttributedString(
+			string: autoLaunchCheckbox.title,
+			attributes: [
+				NSAttributedString.Key.paragraphStyle: pstyle
+			]
+		)
+
 		autoLaunchCheckbox.state = foundHelper ? .on : .off
 	}
 

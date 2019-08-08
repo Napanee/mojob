@@ -56,7 +56,7 @@
                     </connections>
                 </comboBox>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GdW-Th-2Ts">
-                    <rect key="frame" x="28" y="191" width="56" height="17"/>
+                    <rect key="frame" x="28" y="181" width="56" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Starten:" id="WCe-YY-6Gu">
                         <font key="font" metaFont="systemSemibold" size="13"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -64,8 +64,8 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avi-ie-qko">
-                    <rect key="frame" x="28" y="165" width="240" height="18"/>
-                    <buttonCell key="cell" type="check" title="Automatisch bei Systemstart öffnen" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="EV6-9z-GXW">
+                    <rect key="frame" x="30" y="149" width="608" height="22"/>
+                    <buttonCell key="cell" type="bevel" title="Automatisch bei Systemstart öffnen" bezelStyle="regularSquare" image="radio-unchecked" imagePosition="left" alternateImage="radio-checked" inset="2" id="EV6-9z-GXW">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -75,12 +75,13 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="GdW-Th-2Ts" firstAttribute="top" secondItem="Aia-UP-W2J" secondAttribute="bottom" constant="20" id="2nc-VU-82T"/>
+                <constraint firstItem="GdW-Th-2Ts" firstAttribute="top" secondItem="Aia-UP-W2J" secondAttribute="bottom" constant="30" id="2nc-VU-82T"/>
                 <constraint firstItem="avi-ie-qko" firstAttribute="top" secondItem="GdW-Th-2Ts" secondAttribute="bottom" constant="10" id="3Wh-L5-T70"/>
                 <constraint firstAttribute="trailing" secondItem="Aia-UP-W2J" secondAttribute="trailing" constant="30" id="9EP-KK-QKW"/>
                 <constraint firstItem="YOK-4o-6wY" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="HB6-Wc-byJ"/>
                 <constraint firstItem="F4v-ez-mFn" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="O8G-l8-1RU"/>
                 <constraint firstItem="avi-ie-qko" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="Sig-MC-o93"/>
+                <constraint firstItem="avi-ie-qko" firstAttribute="width" secondItem="Aia-UP-W2J" secondAttribute="width" id="V3J-AB-TfZ"/>
                 <constraint firstItem="F4v-ez-mFn" firstAttribute="top" secondItem="fYu-Rx-c6S" secondAttribute="bottom" constant="20" id="Yvc-l5-hsD"/>
                 <constraint firstItem="Aia-UP-W2J" firstAttribute="top" secondItem="F4v-ez-mFn" secondAttribute="bottom" constant="10" id="mJY-pV-pmN"/>
                 <constraint firstAttribute="trailing" secondItem="fYu-Rx-c6S" secondAttribute="trailing" constant="20" id="me3-Fg-x4r"/>
@@ -93,4 +94,8 @@
             <point key="canvasLocation" x="233" y="198"/>
         </customView>
     </objects>
+    <resources>
+        <image name="radio-checked" width="21" height="22"/>
+        <image name="radio-unchecked" width="21" height="22"/>
+    </resources>
 </document>
