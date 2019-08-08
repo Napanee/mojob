@@ -442,23 +442,36 @@ extension QuoJob {
 				self.handleJobTypes(with: resultTypes)
 				try? self.fetchedResultControllerType.performFetch()
 
-				if let activities = (resultActivities["activities"] as? [[String: Any]]), activities.count > 0 {
-					results.append(["type": "activities", "order": 2, "text": "\(String(activities.count)) Tätigkeiten"])
+				if let newActivities = (resultActivities["activities"] as? [[String: Any]])?
+						.filter({ $0["active"] as? Bool ?? false }),
+					newActivities.count > 0
+				{
+					results.append(["type": "activities", "order": 2, "text": "\(String(newActivities.count)) Tätigkeiten"])
 				}
 				self.handleActivities(with: resultActivities)
 				try? self.fetchedResultControllerActivity.performFetch()
 
 				return self.fetchJobs()
 			}.then { resultJobs -> Promise<[String: Any]> in
-				if let jobs = (resultJobs["jobs"] as? [[String: Any]]), jobs.count > 0 {
-					results.append(["type": "jobs", "order": 1, "text": "\(String(jobs.count)) Jobs"])
+				if
+					let newJobs = (resultJobs["jobs"] as? [[String: Any]])?
+						.filter({
+							(($0["bookable"] as? Bool) ?? false) && ($0["assigned_user_ids"] as! [String]).contains(self.userId)
+						}),
+					newJobs.count > 0
+				{
+					results.append(["type": "jobs", "order": 1, "text": "\(String(newJobs.count)) Jobs"])
 				}
 				self.handleJobs(with: resultJobs)
 				try? self.fetchedResultControllerJob.performFetch()
 
 				return self.fetchTasks()
 			}.done { resultTasks in
-				if let tasks = (resultTasks["jobtasks"] as? [[String: Any]]), tasks.count > 0 {
+				if
+					let jobsAll = self.jobs?.filter({ $0.assigned }).map({ $0.id }),
+					let tasks = (resultTasks["jobtasks"] as? [[String: Any]])?.filter({ jobsAll.contains($0["job_id"] as? String) }),
+					tasks.count > 0
+				{
 					results.append(["type": "tasks", "order": 3, "text": "\(String(tasks.count)) Aufgaben"])
 				}
 				self.handleTasks(with: resultTasks)
