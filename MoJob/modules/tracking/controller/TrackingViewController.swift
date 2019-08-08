@@ -58,6 +58,8 @@ class TrackingViewController: QuoJobSelections {
 		taskSelect.font = NSFont.systemFont(ofSize: 14, weight: .light)
 
 		nfc = false
+
+		GlobalTimer.shared.stopNoTrackingTimer()
 	}
 
 	override func viewDidAppear() {
@@ -89,6 +91,8 @@ class TrackingViewController: QuoJobSelections {
 			if let _ = tracking.job {
 				tracking.export().done({ _ in }).catch({ _ in })
 			}
+
+			GlobalTimer.shared.startNoTrackingTimer()
 		}).catch { error in print(error) }
 
 		GlobalTimer.shared.stopTimer()

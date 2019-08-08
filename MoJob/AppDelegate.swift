@@ -35,6 +35,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			}
 		}
 
+		GlobalTimer.shared.startNoTrackingTimer()
+
 		NSUserNotificationCenter.default.delegate = self
 	}
 
