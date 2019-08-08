@@ -131,7 +131,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count == 1 {
 			if let _ = updates.first as? Job {
-				favoritesCollectionView.reloadData()
+				reloadFavorites()
 			}
 		}
 	}
@@ -184,6 +184,19 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func onDismiss() {
+		if let jobs = fetchedResultControllerJobs.fetchedObjects {
+			favorites = jobs.filter({ $0.isFavorite })
+		}
+
+		favoritesCollectionView.reloadData()
+
+		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
+			favoritesCollectionHeight.constant = heightFavoritesCollection
+		}
+	}
+
+	func reloadFavorites() {
+		try? fetchedResultControllerJobs.performFetch()
 		if let jobs = fetchedResultControllerJobs.fetchedObjects {
 			favorites = jobs.filter({ $0.isFavorite })
 		}
