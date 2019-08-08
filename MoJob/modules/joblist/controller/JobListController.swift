@@ -138,7 +138,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	func showWarning(error: String) {
 		if (QuoJob.shared.sessionId == "") {
-			warningButton.image = NSImage(named: .login)
+			warningButton.image = NSImage(named: .loginImage)
 			warningButton.title = "Jetzt einloggen"
 			warningButton.action = #selector(onLogin)
 		}
@@ -205,7 +205,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	@IBAction func addFavorit(_ sender: NSButton) {
-		let addFavoriteVC = AddFavorite(nibName: "AddFavorite", bundle: nil)
+		let addFavoriteVC = AddFavorite(nibName: .addFavoriteNib, bundle: nil)
 		addFavoriteVC.delegate = self
 
 		let appDelegate = (NSApp.delegate as! AppDelegate)
@@ -213,7 +213,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	@objc func onLogin() {
-		let loginVC = Login(nibName: "Login", bundle: nil)
+		let loginVC = Login(nibName: .loginNib, bundle: nil)
 
 		let appDelegate = (NSApp.delegate as! AppDelegate)
 		appDelegate.window.contentViewController?.presentAsSheet(loginVC)
@@ -242,7 +242,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	@objc private func onSessionUpdate(notification: NSNotification) {
 		if (warningView.isHidden == false) {
-			warningButton.image = NSImage(named: .reload)
+			warningButton.image = NSImage(named: .reloadImage)
 			warningButton.title = "Jetzt synchronisieren"
 			warningButton.action = #selector(onSync)
 		}

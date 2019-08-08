@@ -165,7 +165,7 @@ class DayTrackingsController: NSViewController {
 	}
 
 	@IBAction func loginButton(_ sender: NSButton) {
-		let loginVC = Login(nibName: "Login", bundle: nil)
+		let loginVC = Login(nibName: .loginNib, bundle: nil)
 
 		let appDelegate = (NSApp.delegate as! AppDelegate)
 		appDelegate.window.contentViewController?.presentAsSheet(loginVC)

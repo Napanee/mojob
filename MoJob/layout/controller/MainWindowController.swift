@@ -28,7 +28,7 @@ class MainWindowController: NSWindowController {
 		window?.backgroundColor = NSColor.controlBackgroundColor
 
 		let splitViewController = SplitViewController()
-		let navigation = NavigationController(nibName: nibNames.NavigationController, bundle: nil)
+		let navigation = NavigationController(nibName: .navigationControllerNib, bundle: nil)
 		let trackingSplitViewController = TrackingSplitViewController()
 
 		splitViewController.addChild(navigation)

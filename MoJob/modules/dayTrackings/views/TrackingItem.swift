@@ -27,13 +27,13 @@ class TrackingItem: NSView {
 		didSet {
 			switch exportStatus {
 			case .success:
-				statusImage.image = NSImage(named: .syncSuccess)?.tint(color: NSColor(red: 0.180, green: 0.490, blue: 0.196, alpha: 1))
+				statusImage.image = NSImage(named: .syncSuccessImage)?.tint(color: NSColor(red: 0.180, green: 0.490, blue: 0.196, alpha: 1))
 				statusImage.isEnabled = false
 			case .error:
-				statusImage.image = NSImage(named: .syncError)?.tint(color: NSColor(red: 0.835, green: 0, blue: 0, alpha: 1))
+				statusImage.image = NSImage(named: .syncErrorImage)?.tint(color: NSColor(red: 0.835, green: 0, blue: 0, alpha: 1))
 				statusImage.isEnabled = true
 			case .pending:
-				statusImage.image = NSImage(named: .syncPending)?.tint(color: NSColor(red: 0.984, green: 0.753, blue: 0.176, alpha: 1))
+				statusImage.image = NSImage(named: .syncPendingImage)?.tint(color: NSColor(red: 0.984, green: 0.753, blue: 0.176, alpha: 1))
 				statusImage.isEnabled = false
 			}
 		}
@@ -190,7 +190,7 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onContextSplit() {
-		let splitTrackingVC = SplitTracking(nibName: "SplitTracking", bundle: nil)
+		let splitTrackingVC = SplitTracking(nibName: .splitTrackingNib, bundle: nil)
 		splitTrackingVC.sourceTracking = tracking
 
 		let appDelegate = (NSApp.delegate as! AppDelegate)

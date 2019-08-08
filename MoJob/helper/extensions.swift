@@ -10,33 +10,46 @@ import AppKit
 import Foundation
 
 extension QuoJob.Method {
-	static let myTime_putHourbooking = QuoJob.Method("mytime.put_hourbooking")
-	static let myTime_deleteHourbooking = QuoJob.Method("mytime.delete_hourbooking")
-	static let session_getCurrentUser = QuoJob.Method("session.get_current_user")
-	static let session_login = QuoJob.Method("session.login")
-	static let job_getJobtypes = QuoJob.Method("job.get_jobtypes")
-	static let job_getJobs = QuoJob.Method("job.get_jobs")
-	static let common_getActivities = QuoJob.Method("common.get_activities")
-	static let job_getJobtasks = QuoJob.Method("job.get_jobtasks")
+	static let myTime_putHourbooking = "mytime.put_hourbooking"
+	static let myTime_deleteHourbooking = "mytime.delete_hourbooking"
+	static let session_getCurrentUser = "session.get_current_user"
+	static let session_login = "session.login"
+	static let job_getJobtypes = "job.get_jobtypes"
+	static let job_getJobs = "job.get_jobs"
+	static let common_getActivities = "common.get_activities"
+	static let job_getJobtasks = "job.get_jobtasks"
+}
+
+extension NSNib.Name {
+	static let addFavoriteNib = "AddFavorite"
+	static let loginNib = "Login"
+	static let splitTrackingNib = "SplitTracking"
+	static let navigationControllerNib = "NavigationController"
+	static let jobListControllerNib = "JobListController"
+	static let favoritesCollectionItemNib = "FavoriteItem"
+	static let jobsCollectionItemNib = "JobItem"
+	static let trackingViewControllerNib = "TrackingViewController"
+	static let dayTrackingsControllerNib = "DayTrackingsController"
+	static let editorControllerNib = "EditorController"
 }
 
 extension NSImage.Name {
-	static let checked = NSImage.Name("checked")
-	static let delete = NSImage.Name("delete")
-	static let login = NSImage.Name("login")
-	static let play = NSImage.Name("play")
-	static let reload = NSImage.Name("reload")
-	static let settingsActive = NSImage.Name("settings-active")
-	static let settings = NSImage.Name("settings")
-	static let starEmpty = NSImage.Name("star-empty")
-	static let starFilled = NSImage.Name("star-filled")
-	static let stop = NSImage.Name("stop")
-	static let syncError = NSImage.Name("sync-error")
-	static let syncPending = NSImage.Name("sync-pending")
-	static let syncSuccess = NSImage.Name("sync-success")
-	static let timerActive = NSImage.Name("timer-active")
-	static let timer = NSImage.Name("timer")
-	static let unchecked = NSImage.Name("unchecked")
+	static let checkedImage = "checked"
+	static let deleteImage = "delete"
+	static let loginImage = "login"
+	static let playImage = "play"
+	static let reloadImage = "reload"
+	static let settingsActiveImage = "settings-active"
+	static let settingsImage = "settings"
+	static let starEmptyImage = "star-empty"
+	static let starFilledImage = "star-filled"
+	static let stopImage = "stop"
+	static let syncErrorImage = "sync-error"
+	static let syncPendingImage = "sync-pending"
+	static let syncSuccessImage = "sync-success"
+	static let timerActiveImage = "timer-active"
+	static let timerImage = "timer"
+	static let uncheckedImage = "unchecked"
 }
 
 extension NSImage {

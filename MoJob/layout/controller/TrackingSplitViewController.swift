@@ -16,9 +16,9 @@ class TrackingSplitViewController: SplitViewController {
 		var leftController: NSViewController
 
 		if let _ = CoreDataHelper.shared.currentTracking {
-			leftController = TrackingViewController(nibName: nibNames.TrackingViewController, bundle: nil)
+			leftController = TrackingViewController(nibName: .trackingViewControllerNib, bundle: nil)
 		} else {
-			leftController = JobListController(nibName: nibNames.JobListController, bundle: nil)
+			leftController = JobListController(nibName: .jobListControllerNib, bundle: nil)
 		}
 
 		leftController.view.addConstraint(
@@ -40,7 +40,7 @@ class TrackingSplitViewController: SplitViewController {
 				toItem: verticalSplitViewController.view.superview, attribute: .width, multiplier: 1, constant: 400
 			)
 		)
-		let dayTrackings = DayTrackingsController(nibName: nibNames.DayTrackingsController, bundle: nil)
+		let dayTrackings = DayTrackingsController(nibName: .dayTrackingsControllerNib, bundle: nil)
 
 		verticalSplitViewController.splitView.isVertical = false
 		verticalSplitViewController.addChild(dayTrackings)
@@ -51,7 +51,7 @@ class TrackingSplitViewController: SplitViewController {
 
 	func showTracking() {
 		if let jobListViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is JobListController }) {
-			let trackingViewController = TrackingViewController(nibName: nibNames.TrackingViewController, bundle: nil)
+			let trackingViewController = TrackingViewController(nibName: .trackingViewControllerNib, bundle: nil)
 
 			trackingViewController.view.addConstraint(NSLayoutConstraint(item: trackingViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: trackingViewController.view.superview, attribute: .width, multiplier: 1, constant: 300))
 
@@ -69,7 +69,7 @@ class TrackingSplitViewController: SplitViewController {
 
 	func showEditor(with tracking: TempTracking) {
 		if let verticalSplitViewController = splitViewItems.first(where: { $0.viewController.isKind(of: NSSplitViewController.self) })?.viewController as? NSSplitViewController {
-			let editorViewController = EditorController(nibName: nibNames.EditorController, bundle: nil)
+			let editorViewController = EditorController(nibName: .editorControllerNib, bundle: nil)
 
 			if let currentEditorIndex = verticalSplitViewController.splitViewItems.firstIndex(where: { $0.viewController.isKind(of: EditorController.self) }) {
 				verticalSplitViewController.splitViewItems.remove(at: currentEditorIndex)
@@ -83,7 +83,7 @@ class TrackingSplitViewController: SplitViewController {
 
 	func showEditor(with tracking: Tracking) {
 		if let verticalSplitViewController = splitViewItems.first(where: { $0.viewController.isKind(of: NSSplitViewController.self) })?.viewController as? NSSplitViewController {
-			let editorViewController = EditorController(nibName: nibNames.EditorController, bundle: nil)
+			let editorViewController = EditorController(nibName: .editorControllerNib, bundle: nil)
 
 			if let currentEditorIndex = verticalSplitViewController.splitViewItems.firstIndex(where: { $0.viewController.isKind(of: EditorController.self) }) {
 				verticalSplitViewController.splitViewItems.remove(at: currentEditorIndex)
@@ -97,7 +97,7 @@ class TrackingSplitViewController: SplitViewController {
 
 	func showJobList() {
 		if let trackingViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is TrackingViewController }) {
-			let jobListViewController = JobListController(nibName: nibNames.JobListController, bundle: nil)
+			let jobListViewController = JobListController(nibName: .jobListControllerNib, bundle: nil)
 
 			jobListViewController.view.addConstraint(NSLayoutConstraint(item: jobListViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: jobListViewController.view.superview, attribute: .width, multiplier: 1, constant: 300))
 
