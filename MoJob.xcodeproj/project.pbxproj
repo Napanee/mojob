@@ -43,6 +43,8 @@
 		E8211802220F5384003D7578 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
 		E8211804220F5991003D7578 /* FilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* FilterField.swift */; };
 		E83447742236735900621617 /* AddButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E83447732236735900621617 /* AddButton.xib */; };
+		E84FCE3E22FC3EA6002E41B4 /* WakeUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = E84FCE3D22FC3EA6002E41B4 /* WakeUp.xib */; };
+		E84FCE4022FC3ED7002E41B4 /* WakeUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */; };
 		E850996A22F6118B00068ED8 /* MoJob.clr in Resources */ = {isa = PBXBuildFile; fileRef = E850996922F6118B00068ED8 /* MoJob.clr */; };
 		E850996C22F6145700068ED8 /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850996B22F6145700068ED8 /* ColorButton.swift */; };
 		E850997222F6FEF600068ED8 /* TrackingSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */; };
@@ -160,6 +162,8 @@
 		E8211803220F5991003D7578 /* FilterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterField.swift; sourceTree = "<group>"; };
 		E82B2E6D224C1AF6001CCAC8 /* Mojob-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mojob-Bridging-Header.h"; sourceTree = "<group>"; };
 		E83447732236735900621617 /* AddButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddButton.xib; sourceTree = "<group>"; };
+		E84FCE3D22FC3EA6002E41B4 /* WakeUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WakeUp.xib; sourceTree = "<group>"; };
+		E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeUp.swift; sourceTree = "<group>"; };
 		E850996922F6118B00068ED8 /* MoJob.clr */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = MoJob.clr; sourceTree = "<group>"; };
 		E850996B22F6145700068ED8 /* ColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
 		E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingSplitViewController.swift; sourceTree = "<group>"; };
@@ -359,6 +363,7 @@
 		E82117C6220E1116003D7578 /* modules */ = {
 			isa = PBXGroup;
 			children = (
+				E84FCE3A22FC3C8C002E41B4 /* wakeUp */,
 				E850996D22F6FD9800068ED8 /* settings */,
 				E863306122481B8100A8E946 /* login */,
 				E8E950852232BC110070F57E /* editor */,
@@ -438,6 +443,31 @@
 				E8731AE4225952B1006947B0 /* constants.swift */,
 			);
 			path = helper;
+			sourceTree = "<group>";
+		};
+		E84FCE3A22FC3C8C002E41B4 /* wakeUp */ = {
+			isa = PBXGroup;
+			children = (
+				E84FCE3B22FC3C99002E41B4 /* controller */,
+				E84FCE3C22FC3C9F002E41B4 /* interfaces */,
+			);
+			path = wakeUp;
+			sourceTree = "<group>";
+		};
+		E84FCE3B22FC3C99002E41B4 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		E84FCE3C22FC3C9F002E41B4 /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E84FCE3D22FC3EA6002E41B4 /* WakeUp.xib */,
+			);
+			path = interfaces;
 			sourceTree = "<group>";
 		};
 		E850996D22F6FD9800068ED8 /* settings */ = {
@@ -819,6 +849,7 @@
 				E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */,
 				E81DEE6622F4D780004EF977 /* SplitTracking.xib in Resources */,
 				E83447742236735900621617 /* AddButton.xib in Resources */,
+				E84FCE3E22FC3EA6002E41B4 /* WakeUp.xib in Resources */,
 				E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */,
 				E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */,
 				E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */,
@@ -1011,6 +1042,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E84FCE4022FC3ED7002E41B4 /* WakeUp.swift in Sources */,
 				E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */,
 				E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */,
 				E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */,
