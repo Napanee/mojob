@@ -12,10 +12,11 @@ import Crashlytics
 
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject {
 
 	var window: NSWindow!
 	var mainWindowController: MainWindowController?
+	private var timerSleep: Date?
 
 	@IBOutlet weak var syncDataMenuItem: NSMenuItem!
 
@@ -37,6 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 		GlobalTimer.shared.startNoTrackingTimer()
 
+		NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onScreenDidSleep(notification:)), name: NSWorkspace.screensDidSleepNotification, object: nil) // lock screen
+		NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onScreenDidWake(notification:)), name: NSWorkspace.screensDidWakeNotification, object: nil) // return from locked screen
+
 		NSUserNotificationCenter.default.delegate = self
 	}
 
@@ -49,20 +53,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 				//Handle error or give feedback to the user
 				print(error.localizedDescription)
 		}
-	}
-
-	func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-		if (flag) {
-			window.orderFront(self)
-		} else {
-			window.makeKeyAndOrderFront(self)
-		}
-
-		return true
-	}
-
-	func applicationWillTerminate(_ aNotification: Notification) {
-		// Insert code here to tear down your application
 	}
 
 	@IBAction func openWebappMenuItem(sender: NSMenuItem) {
@@ -117,25 +107,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		}
 	}
 
-	// MARK: - Core Data Saving and Undo support
+	// MARK: - Sleephandling
 
-//	@IBAction func saveAction(_ sender: AnyObject?) {
-//		// Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
-//		let context = persistentContainer.viewContext
-//
-//		if !context.commitEditing() {
-//			NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing before saving")
-//		}
-//		if context.hasChanges {
-//			do {
-//				try context.save()
-//			} catch {
-//				// Customize this code block to include application-specific recovery steps.
-//				let nserror = error as NSError
-//				NSApplication.shared.presentError(nserror)
-//			}
-//		}
-//	}
+	@objc private func onScreenDidSleep(notification: NSNotification) {
+		guard CoreDataHelper.shared.currentTracking != nil else {
+			GlobalTimer.shared.stopNoTrackingTimer()
+			return
+		}
+
+		if
+			let presentedViewControllers = self.window.contentViewController?.presentedViewControllers,
+			let presentedViewController = presentedViewControllers.first(where: { $0.isKind(of: WakeUp.self) })
+		{
+			presentedViewController.dismiss(self)
+		}
+
+		timerSleep = Date()
+	}
+
+	@objc private func onScreenDidWake(notification: NSNotification) {
+		guard CoreDataHelper.shared.currentTracking != nil else {
+			GlobalTimer.shared.startNoTrackingTimer()
+			return
+		}
+
+		let alertVC = WakeUp(nibName: .wakeUpController, bundle: nil)
+		alertVC.sleepTime = timerSleep
+		window.contentViewController?.presentAsModalWindow(alertVC)
+	}
+
+}
+
+// MARK: - Core Data Saving and Undo support
+extension AppDelegate: NSApplicationDelegate {
 
 	func windowWillReturnUndoManager(window: NSWindow) -> UndoManager? {
 		// Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
@@ -163,6 +167,38 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 		return .terminateCancel
 	}
+
+	func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+		if (flag) {
+			window.orderFront(self)
+		} else {
+			window.makeKeyAndOrderFront(self)
+		}
+
+		return true
+	}
+
+	func applicationWillTerminate(_ aNotification: Notification) {
+		// Insert code here to tear down your application
+	}
+
+	//	@IBAction func saveAction(_ sender: AnyObject?) {
+	//		// Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
+	//		let context = persistentContainer.viewContext
+	//
+	//		if !context.commitEditing() {
+	//			NSLog("\(NSStringFromClass(type(of: self))) unable to commit editing before saving")
+	//		}
+	//		if context.hasChanges {
+	//			do {
+	//				try context.save()
+	//			} catch {
+	//				// Customize this code block to include application-specific recovery steps.
+	//				let nserror = error as NSError
+	//				NSApplication.shared.presentError(nserror)
+	//			}
+	//		}
+	//	}
 
 }
 

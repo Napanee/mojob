@@ -79,24 +79,20 @@ class TrackingViewController: QuoJobSelections {
 		NotificationCenter.default.removeObserver(observer)
 	}
 
+	func reRender() {
+		tracking = CoreDataHelper.shared.currentTracking
+		GlobalTimer.shared.stopNoTrackingTimer()
+		GlobalTimer.shared.startTimer()
+
+		initStartDate()
+
+		formIsValid = true
+	}
+
 	@IBAction func stopTracking(_ sender: NSButton) {
 		guard let tracking = tracking else { return }
 
-		let date = Date()
-
-		tracking.update(with: [
-			"date_start": Calendar.current.date(bySetting: .nanosecond, value: 0, of: tracking.date_start ?? date),
-			"date_end": Calendar.current.date(bySetting: .nanosecond, value: 0, of: date)
-		]).done({ _ in
-			if let _ = tracking.job {
-				tracking.export().done({ _ in }).catch({ _ in })
-			}
-
-			GlobalTimer.shared.startNoTrackingTimer()
-		}).catch { error in print(error) }
-
-		GlobalTimer.shared.stopTimer()
-		NotificationCenter.default.removeObserver(observer)
+		tracking.stop()
 
 		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 			contentViewController.showJobList()

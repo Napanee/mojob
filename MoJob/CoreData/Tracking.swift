@@ -62,6 +62,23 @@ extension Tracking {
 //		}
 //	}
 
+	func stop(dateEnd: Date? = nil) {
+		let date = dateEnd ?? Date()
+
+		self.update(with: [
+			"date_start": Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date),
+			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
+		]).done({ _ in
+			if let _ = self.job {
+				self.export().done({ _ in }).catch({ _ in })
+			}
+
+			GlobalTimer.shared.startNoTrackingTimer()
+		}).catch { error in print(error) }
+
+		GlobalTimer.shared.stopTimer()
+	}
+
 	func update(with params: [String: Any?]) -> Promise<Void> {
 		return Promise { seal in
 			let context = CoreDataHelper.shared.persistentContainer.viewContext

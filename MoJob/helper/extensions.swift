@@ -31,6 +31,7 @@ extension NSNib.Name {
 	static let trackingViewControllerNib = "TrackingViewController"
 	static let dayTrackingsControllerNib = "DayTrackingsController"
 	static let editorControllerNib = "EditorController"
+	static let wakeUpController = "WakeUp"
 }
 
 extension NSImage.Name {
@@ -50,6 +51,8 @@ extension NSImage.Name {
 	static let timerActiveImage = "timer-active"
 	static let timerImage = "timer"
 	static let uncheckedImage = "unchecked"
+	static let radioUncheckedImage = "radio-unchecked"
+	static let radioCheckedImage = "radio-checked"
 }
 
 extension NSImage {
