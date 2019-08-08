@@ -51,7 +51,7 @@
                                             <constraint firstAttribute="width" constant="30" id="0L3-Cn-f4t"/>
                                             <constraint firstAttribute="height" constant="30" id="WDZ-pU-r4I"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" image="stop" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyUpOrDown" inset="2" id="9VH-V5-4Q1">
+                                        <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" image="stop" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="9VH-V5-4Q1">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>

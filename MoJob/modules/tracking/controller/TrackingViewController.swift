@@ -96,7 +96,26 @@ class TrackingViewController: QuoJobSelections {
 	@IBAction func stopTracking(_ sender: NSButton) {
 		guard let tracking = tracking else { return }
 
-		tracking.stop()
+		if (Date().timeIntervalSince(tracking.date_start!) < 60) {
+			let question = "Tracking wird verworfen. Möchtest du fortfahren?"
+			let info = "QuoJob akzeptiert nur Trackings, die mindestens eine Minute dauern."
+			let confirmButton = "Tracking verwerfen"
+			let cancelButton = "Abbrechen"
+			let alert = NSAlert()
+			alert.messageText = question
+			alert.informativeText = info
+			alert.addButton(withTitle: confirmButton)
+			alert.addButton(withTitle: cancelButton)
+
+			let answer = alert.runModal()
+			if answer == .alertSecondButtonReturn {
+				return
+			} else {
+				tracking.delete()
+			}
+		} else {
+			tracking.stop()
+		}
 
 		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
 			contentViewController.showJobList()
