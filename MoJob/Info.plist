@@ -46,6 +46,8 @@
 	<true/>
 	<key>SUFeedURL</key>
 	<string>https://napanee.synology.me/mojob2/appcast/appcast.xml</string>
+	<key>SUScheduledCheckInterval</key>
+	<string>7200</string>
 	<key>SUPublicEDKey</key>
 	<string>Gndq61F3N7fF1Q5r0yWldugTT2o67Yq1qo4DVqtgeB0=</string>
 </dict>
