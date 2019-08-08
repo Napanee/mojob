@@ -25,7 +25,7 @@ class TrackingsStackView: NSStackView {
 			endTime = tracking.date_end!
 		}
 
-		insertAddButton(from: endTime, until: Date())
+		insertAddButton(from: endTime, until: Calendar.current.date(bySetting: .second, value: 0, of: Date())!)
 	}
 
 	func insertTrackingView(with tracking: Tracking) {

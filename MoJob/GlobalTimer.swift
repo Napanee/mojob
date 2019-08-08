@@ -39,7 +39,7 @@ class GlobalTimer: NSObject {
 
 	func startNoTrackingTimer() {
 		if (timerNoTracking.isValid || CoreDataHelper.shared.currentTracking != nil) { return }
-print("start timer")
+
 		timerNoTracking = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(noTrackingNotification), userInfo: nil, repeats: false)
 		RunLoop.main.add(timerNoTracking, forMode: .common)
 	}
@@ -50,7 +50,6 @@ print("start timer")
 	}
 
 	func stopNoTrackingTimer() {
-		print("stop timer")
 		timerNoTracking.invalidate()
 	}
 

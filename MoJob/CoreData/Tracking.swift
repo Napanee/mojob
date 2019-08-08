@@ -27,11 +27,11 @@ extension Tracking {
 			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
 			let tracking = NSManagedObject(entity: entity!, insertInto: context)
 
+			tracking.setValue(Date(), forKey: "date_start")
+
 			for (key, value) in params {
 				tracking.setValue(value, forKey: key)
 			}
-
-			tracking.setValue(Calendar.current.date(bySetting: .second, value: 0, of: params["date_start"] as? Date ?? Date())!, forKey: "date_start")
 
 			let userDefaults = UserDefaults()
 			if let activityId = userDefaults.string(forKey: "activity"), let activity = QuoJob.shared.activities?.first(where: { $0.id == activityId }) {

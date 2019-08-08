@@ -128,11 +128,14 @@ class QuoJobSelections: NSViewController {
 		}
 	}
 
-	private func initCommentText() {
+	func initCommentText() {
 		comment.delegate = self
+
+		guard let commentText = tempTracking?.comment ?? tracking?.comment else { return }
+		comment.stringValue = commentText
 	}
 
-	private func initStartDate() {
+	func initStartDate() {
 		guard let dateStart = tempTracking?.date_start ?? tracking?.date_start else { return }
 
 		let day = Calendar.current.component(.day, from: dateStart)
