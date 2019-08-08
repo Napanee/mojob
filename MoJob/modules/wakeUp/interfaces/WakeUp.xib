@@ -19,7 +19,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="557" height="319"/>
+            <rect key="frame" x="0.0" y="0.0" width="557" height="325"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="250" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PfL-0a-mt5">
@@ -51,6 +51,9 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="xZf-gC-4F6">
+                                    <rect key="frame" x="0.0" y="130" width="417" height="5"/>
+                                </box>
                                 <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JJO-mU-R7N">
                                     <rect key="frame" x="0.0" y="0.0" width="417" height="112"/>
                                     <subviews>
@@ -108,9 +111,6 @@
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
-                                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="xZf-gC-4F6">
-                                    <rect key="frame" x="0.0" y="130" width="417" height="5"/>
-                                </box>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="b60-nl-eJI" secondAttribute="trailing" id="2hA-bl-cI5"/>
@@ -154,7 +154,6 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="x7w-Vy-Dhg" secondAttribute="bottom" constant="30" id="2yF-7D-At8"/>
                 <constraint firstItem="x7w-Vy-Dhg" firstAttribute="top" secondItem="PfL-0a-mt5" secondAttribute="bottom" constant="30" id="6Vh-jW-eGE"/>
                 <constraint firstItem="PfL-0a-mt5" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="AaM-nu-cRt"/>
                 <constraint firstAttribute="trailing" secondItem="x7w-Vy-Dhg" secondAttribute="trailing" constant="30" id="X3H-KU-xpm"/>

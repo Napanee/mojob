@@ -91,7 +91,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField identifier="fromYear" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ld3-AC-m5E" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ld3-AC-m5E" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                     <rect key="frame" x="65" y="71" width="40" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="XwG-6J-VKd"/>
@@ -114,7 +114,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField identifier="fromYear" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90N-kN-2ot" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90N-kN-2ot" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                     <rect key="frame" x="65" y="35" width="40" height="26"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="26" id="Xlv-9c-C9i"/>
