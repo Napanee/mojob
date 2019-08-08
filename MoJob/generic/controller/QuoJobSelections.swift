@@ -120,7 +120,7 @@ class QuoJobSelections: NSViewController {
 			if let index = activities.index(where: { $0.id == activityId }) {
 				activitySelect.selectItem(at: index)
 			}
-		} else if let activityId = userDefaults.string(forKey: "activity") {
+		} else if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity) {
 			if let activity = activities.first(where: { $0.id == activityId }), let index = activities.index(where: { $0 == activity }) {
 				activitySelect.selectItem(at: index)
 				tempTracking?.activity = activity

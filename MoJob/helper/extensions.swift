@@ -55,6 +55,20 @@ extension NSImage.Name {
 	static let radioCheckedImage = "radio-checked"
 }
 
+extension UserDefaults {
+	public typealias Keys = String
+
+	func contains(key: String) -> Bool {
+		return UserDefaults.standard.object(forKey: key) != nil
+	}
+}
+
+extension UserDefaults.Keys {
+	static let notificationNotracking = "notification:notracking"
+	static let notificationDaycomplete = "notification:daycomplete"
+	static let activity = "activity"
+}
+
 extension NSImage {
 	func tint(color: NSColor) -> NSImage {
 		let image = self.copy() as! NSImage
