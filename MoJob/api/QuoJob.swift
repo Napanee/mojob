@@ -31,6 +31,8 @@ extension ApiError: LocalizedError {
 
 class QuoJob: NSObject {
 
+	public typealias Method = String
+
 	static let shared = QuoJob()
 
 	let dateFormatterFull = DateFormatter()
@@ -208,7 +210,7 @@ class QuoJob: NSObject {
 		dateFormatterTime.dateFormat = "HHmm"
 	}
 
-	func fetch(as method: String, with params: [String: Any]) -> Promise<[String: Any]> {
+	func fetch(as method: QuoJob.Method, with params: [String: Any]) -> Promise<[String: Any]> {
 		let parameters: [String: Any] = [
 			"jsonrpc": "2.0",
 			"method": method,
@@ -307,7 +309,7 @@ class QuoJob: NSObject {
 					"booking_type": bookingTypeString
 				]
 
-				self.fetch(as: "mytime.put_hourbooking", with: params).done { result in
+				self.fetch(as: .myTime_putHourbooking, with: params).done { result in
 					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
 						tracking.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).done({ _ in
 							seal.fulfill_()
@@ -333,7 +335,7 @@ class QuoJob: NSObject {
 						"booking_type": bookingTypeString
 					]
 
-					self.fetch(as: "mytime.put_hourbooking", with: params).done { result in
+					self.fetch(as: .myTime_putHourbooking, with: params).done { result in
 						if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
 							tracking.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).done({ _ in
 								seal.fulfill_()
@@ -356,7 +358,7 @@ class QuoJob: NSObject {
 				var params = self.defaultParams
 				params["hourbooking_id"] = tracking.id
 
-				self.fetch(as: "mytime.delete_hourbooking", with: params).done({ result in
+				self.fetch(as: .myTime_deleteHourbooking, with: params).done({ result in
 					seal.fulfill(result)
 				}).catch({ error in
 					seal.reject(error)
@@ -366,7 +368,7 @@ class QuoJob: NSObject {
 					var params = self.defaultParams
 					params["hourbooking_id"] = tracking.id
 
-					self.fetch(as: "mytime.delete_hourbooking", with: params).done({ result in
+					self.fetch(as: .myTime_deleteHourbooking, with: params).done({ result in
 						seal.fulfill(result)
 					}).catch({ error in
 						seal.reject(error)
@@ -385,7 +387,7 @@ extension QuoJob {
 
 	func checkLoginStatus() -> Promise<[String: Any]> {
 		let params = defaultParams
-		return fetch(as: "session.get_current_user", with: params)
+		return fetch(as: .session_getCurrentUser, with: params)
 	}
 
 	func loginWithUserData(userName: String, password: String) -> Promise<Void> {
@@ -399,7 +401,7 @@ extension QuoJob {
 			"max_version": 6
 		]
 
-		return fetch(as: "session.login", with: params).done { result in
+		return fetch(as: .session_login, with: params).done { result in
 			self.userId = result["user_id"] as? String
 			self.sessionId = result["session"] as? String
 
@@ -495,7 +497,7 @@ extension QuoJob {
 		var params = defaultParams
 		params["last_sync"] = lastSyncString
 
-		return fetch(as: "job.get_jobtypes", with: params)
+		return fetch(as: .job_getJobtypes, with: params)
 	}
 
 	func fetchJobs() -> Promise<[String: Any]> {
@@ -507,7 +509,7 @@ extension QuoJob {
 		var params = defaultParams
 		params["last_sync"] = lastSyncString
 
-		return fetch(as: "job.get_jobs", with: params)
+		return fetch(as: .job_getJobs, with: params)
 	}
 
 	func fetchActivities() -> Promise<[String: Any]> {
@@ -519,7 +521,7 @@ extension QuoJob {
 		var params = defaultParams
 		params["last_sync"] = lastSyncString
 
-		return fetch(as: "common.get_activities", with: params)
+		return fetch(as: .common_getActivities, with: params)
 	}
 
 	func fetchTasks() -> Promise<[String: Any]> {
@@ -531,7 +533,7 @@ extension QuoJob {
 		var params = defaultParams
 		params["last_sync"] = lastSyncString
 
-		return fetch(as: "job.get_jobtasks", with: params)
+		return fetch(as: .job_getJobtasks, with: params)
 	}
 
 	private func handleJobTypes(with result: [String: Any]) {

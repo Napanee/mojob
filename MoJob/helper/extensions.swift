@@ -9,6 +9,16 @@
 import AppKit
 import Foundation
 
+extension QuoJob.Method {
+	static let myTime_putHourbooking = QuoJob.Method("mytime.put_hourbooking")
+	static let myTime_deleteHourbooking = QuoJob.Method("mytime.delete_hourbooking")
+	static let session_getCurrentUser = QuoJob.Method("session.get_current_user")
+	static let session_login = QuoJob.Method("session.login")
+	static let job_getJobtypes = QuoJob.Method("job.get_jobtypes")
+	static let job_getJobs = QuoJob.Method("job.get_jobs")
+	static let common_getActivities = QuoJob.Method("common.get_activities")
+	static let job_getJobtasks = QuoJob.Method("job.get_jobtasks")
+}
 
 extension NSImage.Name {
 	static let checked = NSImage.Name("checked")
