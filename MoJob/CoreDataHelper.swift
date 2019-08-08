@@ -27,6 +27,106 @@ class CoreDataHelper {
 		}
 	}
 
+	var trackingsToday: [Tracking]? {
+		get {
+			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+
+			var compoundPredicates = [NSPredicate]()
+			compoundPredicates.append(NSPredicate(format: "date_end != nil"))
+
+			if
+				let todayStart = Date().startOfDay,
+				let todayEnd = Date().endOfDay
+			{
+				let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
+					NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [todayStart, todayEnd]),
+					NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd])
+					])
+				compoundPredicates.append(compound)
+			}
+
+			fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
+
+			do {
+				return try context.fetch(fetchRequest)
+			} catch let error as NSError {
+				print("Could not fetch. \(error), \(error.userInfo)")
+				return nil
+			}
+		}
+	}
+
+	var trackingsWeek: [Tracking]? {
+		get {
+			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+
+			var compoundPredicates = [NSPredicate]()
+			compoundPredicates.append(NSPredicate(format: "date_end != nil"))
+
+			if
+				let weekStart = Date().startOfWeek,
+				let weekEnd = Date().endOfWeek
+			{
+				let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
+					NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [weekStart, weekEnd]),
+					NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [weekStart, weekEnd])
+				])
+				compoundPredicates.append(compound)
+			}
+
+			fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
+
+			do {
+				return try context.fetch(fetchRequest)
+			} catch let error as NSError {
+				print("Could not fetch. \(error), \(error.userInfo)")
+				return nil
+			}
+		}
+	}
+
+	var secondsToday: Double? {
+		let startOfDay = Date().startOfDay!
+		let todayTrackings = trackingsToday?.map({ (tracking) -> TimeInterval in
+			var dateStart = tracking.date_start!
+			let dateEnd = tracking.date_end!
+
+			if (tracking.date_start?.compare(startOfDay) == ComparisonResult.orderedAscending) {
+				dateStart = startOfDay
+			}
+
+			return dateEnd.timeIntervalSince(dateStart)
+		}).reduce(0, +)
+
+		if let todayTrackings = todayTrackings {
+			return todayTrackings
+		}
+
+		return 0
+	}
+
+	var secondsWeek: Double? {
+		let startOfWeek = Date().startOfWeek!
+		let weekTrackings = trackingsWeek?.map({ (tracking) -> TimeInterval in
+			var dateStart = tracking.date_start!
+			let dateEnd = tracking.date_end!
+
+			if (tracking.date_start?.compare(startOfWeek) == ComparisonResult.orderedAscending) {
+				dateStart = startOfWeek
+			}
+
+			return dateEnd.timeIntervalSince(dateStart)
+		}).reduce(0, +)
+
+		if let weekTrackings = weekTrackings {
+			return weekTrackings
+		}
+
+		return 0
+	}
+
 	static let shared = CoreDataHelper()
 
 	private init() {}
