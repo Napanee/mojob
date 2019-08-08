@@ -9,6 +9,8 @@
             <connections>
                 <outlet property="activitySelect" destination="Aia-UP-W2J" id="bxt-VC-fmv"/>
                 <outlet property="autoLaunchCheckbox" destination="avi-ie-qko" id="N5X-HG-HEw"/>
+                <outlet property="dayCompleteNotification" destination="90N-kN-2ot" id="6WV-Y4-zlz"/>
+                <outlet property="noTrackingNotification" destination="ld3-AC-m5E" id="B9c-Of-btD"/>
                 <outlet property="view" destination="c22-O7-iKe" id="ecX-j3-JiA"/>
             </connections>
         </customObject>
@@ -73,22 +75,108 @@
                         <action selector="toggleAutoLaunch:" target="-2" id="dwn-EY-YbS"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gpy-Y8-smW">
+                    <rect key="frame" x="28" y="102" width="89" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Notifications:" id="p87-RU-Pip">
+                        <font key="font" metaFont="systemSemibold" size="13"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7rz-r8-uRV">
+                    <rect key="frame" x="28" y="73" width="34" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="nach" id="HJ6-s4-tCn">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField identifier="fromYear" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ld3-AC-m5E" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="65" y="71" width="40" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="XwG-6J-VKd"/>
+                        <constraint firstAttribute="height" constant="26" id="lP6-UK-B1b"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="30" drawsBackground="YES" id="dMm-YC-O3P">
+                        <font key="font" metaFont="systemThin" size="20"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="Nvs-V0-rvr"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WWP-Rb-FJj">
+                    <rect key="frame" x="28" y="37" width="34" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="nach" id="AhZ-XW-5ha">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField identifier="fromYear" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90N-kN-2ot" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="65" y="35" width="40" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="Xlv-9c-C9i"/>
+                        <constraint firstAttribute="width" constant="40" id="jmN-r9-xkN"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="30" drawsBackground="YES" id="8h4-7J-UYu">
+                        <font key="font" metaFont="systemThin" size="20"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="LHq-Rq-3nM"/>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Myb-pC-Rc0">
+                    <rect key="frame" x="108" y="73" width="510" height="17"/>
+                    <textFieldCell key="cell" selectable="YES" title="Minuten Inaktivität erinnern, dass kein Tracking läuft (0 eingeben zum Deaktivieren)" id="jsa-f0-J0r">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hgA-X8-qTP">
+                    <rect key="frame" x="108" y="37" width="515" height="17"/>
+                    <textFieldCell key="cell" selectable="YES" title="Stunden daran erinnern, dass das Tagessoll erfüllt ist (0 eingeben zum Deaktivieren)" id="4ks-Up-jRA">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
+                <constraint firstItem="hgA-X8-qTP" firstAttribute="leading" secondItem="ld3-AC-m5E" secondAttribute="trailing" constant="5" id="1sx-Q6-C7e"/>
                 <constraint firstItem="GdW-Th-2Ts" firstAttribute="top" secondItem="Aia-UP-W2J" secondAttribute="bottom" constant="30" id="2nc-VU-82T"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hgA-X8-qTP" secondAttribute="trailing" constant="30" id="3F9-Wh-vrh"/>
                 <constraint firstItem="avi-ie-qko" firstAttribute="top" secondItem="GdW-Th-2Ts" secondAttribute="bottom" constant="10" id="3Wh-L5-T70"/>
+                <constraint firstItem="Myb-pC-Rc0" firstAttribute="leading" secondItem="ld3-AC-m5E" secondAttribute="trailing" constant="5" id="7Ff-vZ-w4K"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Myb-pC-Rc0" secondAttribute="trailing" constant="30" id="83b-we-S3a"/>
+                <constraint firstItem="WWP-Rb-FJj" firstAttribute="firstBaseline" secondItem="90N-kN-2ot" secondAttribute="firstBaseline" id="9BV-wf-ok0"/>
                 <constraint firstAttribute="trailing" secondItem="Aia-UP-W2J" secondAttribute="trailing" constant="30" id="9EP-KK-QKW"/>
+                <constraint firstItem="90N-kN-2ot" firstAttribute="leading" secondItem="WWP-Rb-FJj" secondAttribute="trailing" constant="5" id="Bjk-fC-6ne"/>
+                <constraint firstItem="Myb-pC-Rc0" firstAttribute="firstBaseline" secondItem="ld3-AC-m5E" secondAttribute="firstBaseline" id="D9O-7A-GYv"/>
+                <constraint firstItem="90N-kN-2ot" firstAttribute="top" secondItem="ld3-AC-m5E" secondAttribute="bottom" constant="10" id="FNQ-sX-iTa"/>
                 <constraint firstItem="YOK-4o-6wY" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="HB6-Wc-byJ"/>
+                <constraint firstItem="ld3-AC-m5E" firstAttribute="top" secondItem="gpy-Y8-smW" secondAttribute="bottom" constant="5" id="Ja9-8A-A6s"/>
+                <constraint firstItem="ld3-AC-m5E" firstAttribute="leading" secondItem="7rz-r8-uRV" secondAttribute="trailing" constant="5" id="N2F-dx-jJz"/>
                 <constraint firstItem="F4v-ez-mFn" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="O8G-l8-1RU"/>
                 <constraint firstItem="avi-ie-qko" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="Sig-MC-o93"/>
                 <constraint firstItem="avi-ie-qko" firstAttribute="width" secondItem="Aia-UP-W2J" secondAttribute="width" id="V3J-AB-TfZ"/>
+                <constraint firstItem="hgA-X8-qTP" firstAttribute="firstBaseline" secondItem="90N-kN-2ot" secondAttribute="firstBaseline" id="Xbe-J7-z1Z"/>
                 <constraint firstItem="F4v-ez-mFn" firstAttribute="top" secondItem="fYu-Rx-c6S" secondAttribute="bottom" constant="20" id="Yvc-l5-hsD"/>
+                <constraint firstItem="7rz-r8-uRV" firstAttribute="firstBaseline" secondItem="ld3-AC-m5E" secondAttribute="firstBaseline" id="fC0-Cn-pgj"/>
+                <constraint firstItem="gpy-Y8-smW" firstAttribute="top" secondItem="avi-ie-qko" secondAttribute="bottom" constant="30" id="gx9-Ke-9bN"/>
+                <constraint firstItem="WWP-Rb-FJj" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="llN-LP-0ZZ"/>
                 <constraint firstItem="Aia-UP-W2J" firstAttribute="top" secondItem="F4v-ez-mFn" secondAttribute="bottom" constant="10" id="mJY-pV-pmN"/>
                 <constraint firstAttribute="trailing" secondItem="fYu-Rx-c6S" secondAttribute="trailing" constant="20" id="me3-Fg-x4r"/>
                 <constraint firstItem="fYu-Rx-c6S" firstAttribute="top" secondItem="YOK-4o-6wY" secondAttribute="bottom" constant="10" id="miH-qf-rQJ"/>
+                <constraint firstItem="7rz-r8-uRV" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="n1s-vz-sXl"/>
                 <constraint firstItem="fYu-Rx-c6S" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="ooF-wL-Qq3"/>
                 <constraint firstItem="YOK-4o-6wY" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="p1L-4m-q5L"/>
                 <constraint firstItem="GdW-Th-2Ts" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="sK8-KH-Fgs"/>
+                <constraint firstItem="gpy-Y8-smW" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="z7p-ae-P3G"/>
                 <constraint firstItem="Aia-UP-W2J" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="zeZ-tV-WEF"/>
             </constraints>
             <point key="canvasLocation" x="233" y="198"/>

@@ -41,8 +41,8 @@ class DayTrackingsController: NSViewController {
 			let todayEnd = Date().endOfDay
 		{
 			let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
-				NSPredicate(format: "date_start >= %@ AND date_start <= %@", argumentArray: [todayStart, todayEnd]),
-				NSPredicate(format: "date_end >= %@ AND date_end <= %@", argumentArray: [todayStart, todayEnd])
+				NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [todayStart, todayEnd]),
+				NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd])
 			])
 			compoundPredicates.append(compound)
 		}

@@ -15,7 +15,10 @@ class GlobalTimer: NSObject {
 	private var timerNoTracking: Timer = Timer()
 	var currentTracking: Tracking!
 	var appBadge = NSApp.dockTile as NSDockTile
+	var completedTrackingSecondsToday: Double?
+	var completedTrackingSecondsWeek: Double?
 
+	let userDefaults = UserDefaults()
 	static let shared = GlobalTimer()
 
 	private override init() {
@@ -31,6 +34,10 @@ class GlobalTimer: NSObject {
 		}
 
 		currentTracking = CoreDataHelper.shared.currentTracking
+
+		completedTrackingSecondsToday = CoreDataHelper.shared.secondsToday
+		completedTrackingSecondsWeek = CoreDataHelper.shared.secondsWeek
+
 		updateTime()
 
 		timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
@@ -38,9 +45,10 @@ class GlobalTimer: NSObject {
 	}
 
 	func startNoTrackingTimer() {
-		if (timerNoTracking.isValid || CoreDataHelper.shared.currentTracking != nil) { return }
+		let minutes = userDefaults.integer(forKey: UserDefaults.Keys.notificationNotracking)
+		if (minutes == 0 || timerNoTracking.isValid || CoreDataHelper.shared.currentTracking != nil) { return }
 
-		timerNoTracking = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(noTrackingNotification), userInfo: nil, repeats: false)
+		timerNoTracking = Timer.scheduledTimer(timeInterval: TimeInterval(minutes * 60), target: self, selector: #selector(noTrackingNotification), userInfo: nil, repeats: false)
 		RunLoop.main.add(timerNoTracking, forMode: .common)
 	}
 
@@ -54,6 +62,8 @@ class GlobalTimer: NSObject {
 	}
 
 	@objc func updateTime() {
+		let defaultDayHours = userDefaults.double(forKey: UserDefaults.Keys.notificationDaycomplete)
+		let dayHours = userDefaults.contains(key: UserDefaults.Keys.notificationDaycomplete) ? defaultDayHours : userDefaultValues.notificationDaycomplete
 		let currentDate = Date()
 		let diff = currentDate.timeIntervalSince(currentTracking.date_start ?? Date())
 		let totalSeconds = round(diff)
@@ -69,6 +79,22 @@ class GlobalTimer: NSObject {
 		}
 
 		appBadge.badgeLabel = formatter.string(from: diff)
+
+		if dayHours > 0, let completedTrackingSeconds = completedTrackingSecondsToday, completedTrackingSeconds + totalSeconds == dayHours * 3600 {
+			let notification = NSUserNotification()
+			notification.title = "Wer hat an der Uhr gedreht?"
+			notification.informativeText = "Ja, es ist schon so spät. Stift fallen lassen und ab nach Hause 😁"
+			notification.soundName = NSUserNotificationDefaultSoundName
+			NSUserNotificationCenter.default.deliver(notification)
+		}
+
+		if dayHours > 0, let completedTrackingSeconds = completedTrackingSecondsWeek, completedTrackingSeconds + totalSeconds == (dayHours * 5 * 3600) {
+			let notification = NSUserNotification()
+			notification.title = "Potzblitz. Die Woche ist schon wieder rum!"
+			notification.informativeText = "Wenn du es also mit deinem Gewissen vereinbaren kannst: Ab ins Wochenende 🤪"
+			notification.soundName = NSUserNotificationDefaultSoundName
+			NSUserNotificationCenter.default.deliver(notification)
+		}
 
 		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "counter:tick"), object: ["totalSeconds": totalSeconds])
 	}
