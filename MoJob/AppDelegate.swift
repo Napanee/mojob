@@ -34,6 +34,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 				}.catch { _ in }
 			}
 		}
+
+		NSUserNotificationCenter.default.delegate = self
 	}
 
 	func syncData() {
@@ -157,3 +159,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 }
 
+extension AppDelegate: NSUserNotificationCenterDelegate {
+
+	func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
+		return true
+	}
+
+}
