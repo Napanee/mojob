@@ -11,6 +11,8 @@ import Foundation
 
 extension QuoJob.Method {
 	static let myTime_putHourbooking = "mytime.put_hourbooking"
+	static let myTime_getHourbookingChanges = "mytime.get_hourbooking_changes"
+	static let myTime_getHourbookings = "mytime.get_hourbookings"
 	static let myTime_deleteHourbooking = "mytime.delete_hourbooking"
 	static let session_getCurrentUser = "session.get_current_user"
 	static let session_login = "session.login"

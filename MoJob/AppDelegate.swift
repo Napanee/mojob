@@ -20,6 +20,7 @@ class AppDelegate: NSObject {
 	private var timerSleep: Date?
 
 	@IBOutlet weak var syncDataMenuItem: NSMenuItem!
+	@IBOutlet weak var syncTrackingsMenuItem: NSMenuItem!
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		Fabric.with([Crashlytics.self, Answers.self])
@@ -56,6 +57,17 @@ class AppDelegate: NSObject {
 				//Handle error or give feedback to the user
 				print(error.localizedDescription)
 		}
+	}
+
+	func syncTrackings() {
+		QuoJob.shared.syncTrackings()
+			.done {
+				print("done!")
+			}
+			.catch { error in
+				//Handle error or give feedback to the user
+				print(error.localizedDescription)
+			}
 	}
 
 	@IBAction func openWebappMenuItem(sender: NSMenuItem) {
@@ -99,6 +111,23 @@ class AppDelegate: NSObject {
 		}.catch { _ in
 			QuoJob.shared.loginWithKeyChain().done {
 				self.syncData()
+			}.catch { _ in
+				sender.isEnabled = false
+				let notificationCenter = NSUserNotificationCenter.default
+				let notification = NSUserNotification()
+				notification.title = "Du bist nicht eingeloggt."
+				notification.soundName = NSUserNotificationDefaultSoundName
+				notificationCenter.deliver(notification)
+			}
+		}
+	}
+
+	@IBAction func syncTrackingsMenuItem(sender: NSMenuItem) {
+		QuoJob.shared.checkLoginStatus().done { _ in
+			self.syncTrackings()
+		}.catch { _ in
+			QuoJob.shared.loginWithKeyChain().done {
+				self.syncTrackings()
 			}.catch { _ in
 				sender.isEnabled = false
 				let notificationCenter = NSUserNotificationCenter.default

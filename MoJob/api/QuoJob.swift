@@ -199,6 +199,31 @@ class QuoJob: NSObject {
 		return _fetchedResultsControllerType!
 	}
 
+	var _fetchedResultsControllerTracking: NSFetchedResultsController<Tracking>? = nil
+	var fetchedResultControllerTracking: NSFetchedResultsController<Tracking> {
+		if (_fetchedResultsControllerTracking != nil) {
+			return _fetchedResultsControllerTracking!
+		}
+
+		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "id", ascending: false)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerTracking = resultsController
+
+		do {
+			try _fetchedResultsControllerTracking!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
+		}
+
+		return _fetchedResultsControllerTracking!
+	}
+
 	private override init() {
 		super.init()
 
@@ -501,6 +526,58 @@ extension QuoJob {
 			}
 	}
 
+	func syncTrackings() -> Promise<Void> {
+		fetchedResultControllerSync.fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "trackings", ascending: false)
+		]
+		try? fetchedResultControllerSync.performFetch()
+
+		lastSync = fetchedResultControllerSync.fetchedObjects?.first
+		var results: [[String: Any]] = []
+
+		return fetchTrackingChanges()
+			.then { resultChanges -> Promise<[String: Any]> in
+				guard let result = self.handleTrackingChanges(with: resultChanges), result.count > 0 else {
+					return Promise { $0.reject(AFError.responseValidationFailed(reason: .dataFileNil)) }
+				}
+
+				return self.fetchTrackings(with: result)
+			}.done { resultTrackings in
+				if
+					let trackingsAll = (resultTrackings["hourbookings"] as? [[String: Any]])?.map({ $0["id"] as! String }),
+					let trackingsEdited = self.fetchedResultControllerTracking.fetchedObjects?.filter({ trackingsAll.contains($0.id!) }),
+					trackingsEdited.count > 0
+				{
+					results.append(["type": "trackings_new", "order": 1, "text": "\(String(trackingsAll.count - trackingsEdited.count)) Trackings hinzugefügt"])
+					results.append(["type": "trackings_edit", "order": 2, "text": "\(String(trackingsEdited.count)) Trackings aktualisiert"])
+				}
+
+				self.handleTrackings(with: resultTrackings)
+			}.ensure {
+				var title: String = ""
+				var text: String = ""
+
+				if (results.count == 0) {
+					title = "Trackings aktuell."
+				} else {
+					title = "Trackings erfolgreich synchronisiert."
+					text = "Es wurden "
+
+					text += results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
+						return type["text"] as! String
+					}).joined(separator: " und ")
+
+					text += "\nFröhlichen Arbeitstag ;)"
+				}
+
+				let notification = NSUserNotification()
+				notification.title = title
+				notification.informativeText = text
+				notification.soundName = NSUserNotificationDefaultSoundName
+				NSUserNotificationCenter.default.deliver(notification)
+			}
+	}
+
 	func fetchJobTypes() -> Promise<[String: Any]> {
 		var lastSyncString: String! = nil
 		if let lastSyncTime = lastSync?.tasks {
@@ -547,6 +624,28 @@ extension QuoJob {
 		params["last_sync"] = lastSyncString
 
 		return fetch(as: .job_getJobtasks, with: params)
+	}
+
+	func fetchTrackingChanges() -> Promise<[String: Any]> {
+		var lastSyncString: String! = nil
+		if let lastSyncTime = lastSync?.trackings {
+			lastSyncString = dateFormatterFull.string(from: lastSyncTime)
+		}
+
+		var params = defaultParams
+		params["last_sync"] = lastSyncString
+
+		return fetch(as: .myTime_getHourbookingChanges, with: params)
+	}
+
+	func fetchTrackings(with ids: [String]) -> Promise<[String: Any]> {
+		var params = defaultParams
+		params["hourbookings"] = ids
+		params["filter"] = [
+			"user_id": userId
+		]
+
+		return fetch(as: .myTime_getHourbookings, with: params)
 	}
 
 	private func handleJobTypes(with result: [String: Any]) {
@@ -806,6 +905,127 @@ extension QuoJob {
 			}
 
 			self.lastSync?.tasks = newSyncDate
+
+			do {
+				try self.context.save()
+			} catch let error {
+				print(error)
+			}
+		}
+	}
+
+	private func handleTrackingChanges(with result: [String: Any]) -> [String]? {
+		guard
+			let new = result["new"] as? [String],
+			let changed = result["changed"] as? [String],
+			let deleted = result["deleted"] as? [String],
+			let timestamp = result["timestamp"] as? String
+		else {
+			return nil
+		}
+
+		if (deleted.count > 0) {
+			let trackings = self.fetchedResultControllerTracking.fetchedObjects
+			for deletedId in deleted {
+				if let tracking = trackings?.first(where: { $0.id == deletedId }) {
+					self.context.delete(tracking)
+				}
+			}
+
+			let newSyncDate = self.dateFormatterFull.date(from: timestamp)
+
+			if (self.lastSync == nil) {
+				let entity = NSEntityDescription.entity(forEntityName: "Sync", in: self.context)
+				self.lastSync = NSManagedObject(entity: entity!, insertInto: self.context) as? Sync
+			}
+
+			self.lastSync?.trackings = newSyncDate
+
+			do {
+				try self.context.save()
+			} catch let error {
+				print(error)
+			}
+		}
+
+		return new + changed
+	}
+
+	private func handleTrackings(with result: [String: Any]) {
+		if let trackingItems = result["hourbookings"] as? [[String: Any]], let timestamp = result["timestamp"] as? String {
+			guard (trackingItems.count > 0) else { return }
+
+			let trackings = fetchedResultControllerTracking.fetchedObjects
+			let jobs = fetchedResultControllerJob.fetchedObjects
+			let tasks = fetchedResultControllerTask.fetchedObjects
+			let activities = fetchedResultControllerActivity.fetchedObjects
+
+			for item in trackingItems {
+				let id = item["id"] as! String
+				let quantity = item["quantity"] as! Double
+				var date = item["date"] as! String
+				let timeFrom = item["time_from"] as! String
+				let timeUntil = item["time_until"] as! String
+				let text = item["text"] as! String
+
+				if let timeInterval = dateFormatterFull.date(from: date)?.timeIntervalSince1970, timeInterval < 0 {
+					date = item["date_created"] as! String
+				}
+
+				var jobObject: Job? = nil
+				if let jobId = item["job_id"] as? String, let job = jobs?.first(where: { $0.id == jobId }) {
+					jobObject = job
+				}
+
+				var activityObject: Activity? = nil
+				if let activityId = item["activity_id"] as? String, let activity = activities?.first(where: { $0.id == activityId }) {
+					activityObject = activity
+				}
+
+				var taskObject: Task? = nil
+				if let taskId = item["jobtask_id"] as? String, let task = tasks?.first(where: { $0.id == taskId }) {
+					taskObject = task
+				}
+
+				var dateStart: Date!
+				var dateEnd: Date!
+				if (timeUntil == "" || timeFrom == "") {
+					dateStart = dateFormatterFull.date(from: date)
+					dateEnd = Calendar.current.date(byAdding: .minute, value: Int(round(quantity * 60)), to: dateStart!)
+				} else {
+					let trackingDate = dateFormatterFull.date(from: date)
+					let timeFromDate = Calendar.current.dateComponents([.hour, .minute], from: dateFormatterTime.date(from: timeFrom)!)
+					let timeUntilDate = Calendar.current.dateComponents([.hour, .minute], from: dateFormatterTime.date(from: timeUntil)!)
+
+					dateStart = Calendar.current.date(bySettingHour: timeFromDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
+					dateEnd = Calendar.current.date(bySettingHour: timeUntilDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
+				}
+
+				if let tracking = trackings?.first(where: { $0.id == id }) {
+					tracking.job = jobObject
+					tracking.task = taskObject
+					tracking.activity = activityObject
+					tracking.date_start = dateStart
+					tracking.date_end = dateEnd
+					tracking.comment = text
+					tracking.exported = SyncStatus.success.rawValue
+				} else {
+					let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.context)
+					let tracking = NSManagedObject(entity: entity!, insertInto: self.context)
+					let trackingValues: [String: Any?] = [
+						"id": id,
+						"job": jobObject,
+						"task": taskObject,
+						"activity": activityObject,
+						"date_start": dateStart,
+						"date_end": dateEnd,
+						"comment": text,
+						"exported": SyncStatus.success.rawValue
+					]
+
+					tracking.setValuesForKeys(trackingValues as [String: Any])
+				}
+			}
 
 			do {
 				try self.context.save()

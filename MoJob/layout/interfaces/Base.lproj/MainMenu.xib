@@ -14,6 +14,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="MoJob" customModuleProvider="target">
             <connections>
                 <outlet property="syncDataMenuItem" destination="nMK-tr-0Hj" id="Tb2-yd-mob"/>
+                <outlet property="syncTrackingsMenuItem" destination="nMK-tr-0Hj" id="a8W-cV-2hM"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -49,10 +50,16 @@
                                                 <action selector="loginMenuItemWithSender:" target="Voe-Tx-rLC" id="1W9-vN-Qr2"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Daten synchronisieren" id="nMK-tr-0Hj">
+                                        <menuItem title="Jobdaten synchronisieren" id="nMK-tr-0Hj">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="syncDataMenuItemWithSender:" target="Voe-Tx-rLC" id="pwM-Yy-vHq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Trackings synchronisieren" id="oeO-QE-Pfg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="syncTrackingsMenuItemWithSender:" target="Voe-Tx-rLC" id="VkD-AC-sIT"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="veJ-j5-2m8"/>
