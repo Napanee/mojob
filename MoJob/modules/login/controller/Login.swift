@@ -86,8 +86,4 @@ class Login: NSViewController {
 			}
 	}
 
-	@IBAction func cancel(_ sender: NSButton) {
-		dismiss(self)
-	}
-
 }

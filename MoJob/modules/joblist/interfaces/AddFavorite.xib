@@ -65,7 +65,7 @@
                     </buttonCell>
                     <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                     <connections>
-                        <action selector="cancel:" target="-2" id="ugw-f4-WOM"/>
+                        <action selector="dismissController:" target="-2" id="6Xc-hi-nEt"/>
                     </connections>
                 </button>
             </subviews>
