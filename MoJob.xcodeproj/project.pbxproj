@@ -43,6 +43,7 @@
 		E8211802220F5384003D7578 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
 		E8211804220F5991003D7578 /* FilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* FilterField.swift */; };
 		E83447742236735900621617 /* AddButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E83447732236735900621617 /* AddButton.xib */; };
+		E849396D22FDFA0700D2A4C9 /* GlobalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E849396C22FDFA0700D2A4C9 /* GlobalNotification.swift */; };
 		E84FCE3E22FC3EA6002E41B4 /* WakeUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = E84FCE3D22FC3EA6002E41B4 /* WakeUp.xib */; };
 		E84FCE4022FC3ED7002E41B4 /* WakeUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */; };
 		E850996A22F6118B00068ED8 /* MoJob.clr in Resources */ = {isa = PBXBuildFile; fileRef = E850996922F6118B00068ED8 /* MoJob.clr */; };
@@ -162,6 +163,7 @@
 		E8211803220F5991003D7578 /* FilterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterField.swift; sourceTree = "<group>"; };
 		E82B2E6D224C1AF6001CCAC8 /* Mojob-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mojob-Bridging-Header.h"; sourceTree = "<group>"; };
 		E83447732236735900621617 /* AddButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddButton.xib; sourceTree = "<group>"; };
+		E849396C22FDFA0700D2A4C9 /* GlobalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNotification.swift; sourceTree = "<group>"; };
 		E84FCE3D22FC3EA6002E41B4 /* WakeUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WakeUp.xib; sourceTree = "<group>"; };
 		E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeUp.swift; sourceTree = "<group>"; };
 		E850996922F6118B00068ED8 /* MoJob.clr */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = MoJob.clr; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				E821178F220E07B1003D7578 /* AppDelegate.swift */,
 				E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */,
 				E800AE8B22FA1A4100E82EBE /* GlobalTimer.swift */,
+				E849396C22FDFA0700D2A4C9 /* GlobalNotification.swift */,
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
 				E850996922F6118B00068ED8 /* MoJob.clr */,
 				E8211799220E07B2003D7578 /* Info.plist */,
@@ -1057,6 +1060,7 @@
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
 				E850997222F6FEF600068ED8 /* TrackingSplitViewController.swift in Sources */,
 				E8CACC782211DE6300675688 /* functions.swift in Sources */,
+				E849396D22FDFA0700D2A4C9 /* GlobalNotification.swift in Sources */,
 				E800AE8C22FA1A4100E82EBE /* GlobalTimer.swift in Sources */,
 				E81DEE6C22F4DF96004EF977 /* SplitJobItem.swift in Sources */,
 				E8731AE5225952B1006947B0 /* constants.swift in Sources */,

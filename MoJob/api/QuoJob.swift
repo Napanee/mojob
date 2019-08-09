@@ -518,11 +518,7 @@ extension QuoJob {
 						text += " importiert oder aktualisiert.\nFröhlichen Arbeitstag ;)"
 					}
 
-					let notification = NSUserNotification()
-					notification.title = title
-					notification.informativeText = text
-					notification.soundName = NSUserNotificationDefaultSoundName
-					NSUserNotificationCenter.default.deliver(notification)
+					GlobalNotification.shared.deliverNotification(withTitle: title, andInformationtext: text)
 				}.catch({ error in
 					print("SyncError: \(error)")
 				})
@@ -573,11 +569,7 @@ extension QuoJob {
 					text += "\nFröhlichen Arbeitstag ;)"
 				}
 
-				let notification = NSUserNotification()
-				notification.title = title
-				notification.informativeText = text
-				notification.soundName = NSUserNotificationDefaultSoundName
-				NSUserNotificationCenter.default.deliver(notification)
+				GlobalNotification.shared.deliverNotification(withTitle: title, andInformationtext: text)
 			}
 	}
 

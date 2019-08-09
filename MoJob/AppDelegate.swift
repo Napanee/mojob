@@ -30,12 +30,7 @@ class AppDelegate: NSObject {
 
 		if (QuoJob.shared.lastSync?.jobs != nil) {
 			QuoJob.shared.syncData().catch { error in
-				let notificationCenter = NSUserNotificationCenter.default
-				let notification = NSUserNotification()
-				notification.title = "Du bist nicht eingeloggt."
-				notification.informativeText = "Damit deine Trackings automatisch übertragen werden können, solltest du dich einloggen."
-				notification.soundName = NSUserNotificationDefaultSoundName
-				notificationCenter.deliver(notification)
+				GlobalNotification.shared.deliverNotLoggedIn()
 			}
 		}
 
@@ -77,15 +72,10 @@ class AppDelegate: NSObject {
 	}
 
 	@IBAction func loginMenuItem(sender: NSMenuItem) {
-		let notificationCenter = NSUserNotificationCenter.default
-		let notification = NSUserNotification()
-		notification.soundName = NSUserNotificationDefaultSoundName
-
 		QuoJob.shared.sessionId = ""
 
 		QuoJob.shared.login().done({ _ in
-			notification.title = "Du wurdest erfolgreich eingeloggt."
-			notificationCenter.deliver(notification)
+			GlobalNotification.shared.deliverNotification(withTitle: "Du wurdest erfolgreich eingeloggt.", andInformationtext: nil)
 			self.syncDataMenuItem.isEnabled = true
 		}).catch({ error in
 			if
@@ -105,11 +95,7 @@ class AppDelegate: NSObject {
 			print("done!")
 		}.catch { error in
 			sender.isEnabled = false
-			let notificationCenter = NSUserNotificationCenter.default
-			let notification = NSUserNotification()
-			notification.title = "Du bist nicht eingeloggt."
-			notification.soundName = NSUserNotificationDefaultSoundName
-			notificationCenter.deliver(notification)
+			GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um die QuoJob-Daten zu synchronisieren.")
 		}
 	}
 
@@ -118,11 +104,7 @@ class AppDelegate: NSObject {
 			print("done!")
 		}.catch { _ in
 			sender.isEnabled = false
-			let notificationCenter = NSUserNotificationCenter.default
-			let notification = NSUserNotification()
-			notification.title = "Du bist nicht eingeloggt."
-			notification.soundName = NSUserNotificationDefaultSoundName
-			notificationCenter.deliver(notification)
+			GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um deine Trackings zu synchronisieren.")
 		}
 	}
 

@@ -81,19 +81,17 @@ class GlobalTimer: NSObject {
 		appBadge.badgeLabel = formatter.string(from: diff)
 
 		if dayHours > 0, let completedTrackingSeconds = completedTrackingSecondsToday, completedTrackingSeconds + totalSeconds == dayHours * 3600 {
-			let notification = NSUserNotification()
-			notification.title = "Wer hat an der Uhr gedreht?"
-			notification.informativeText = "Ja, es ist schon so spät. Stift fallen lassen und ab nach Hause 😁"
-			notification.soundName = NSUserNotificationDefaultSoundName
-			NSUserNotificationCenter.default.deliver(notification)
+			GlobalNotification.shared.deliverNotification(
+				withTitle: "Wer hat an der Uhr gedreht?",
+				andInformationtext: "Ja, es ist schon so spät. Stift fallen lassen und ab nach Hause 😁"
+			)
 		}
 
 		if dayHours > 0, let completedTrackingSeconds = completedTrackingSecondsWeek, completedTrackingSeconds + totalSeconds == (dayHours * 5 * 3600) {
-			let notification = NSUserNotification()
-			notification.title = "Potzblitz. Die Woche ist schon wieder rum!"
-			notification.informativeText = "Wenn du es also mit deinem Gewissen vereinbaren kannst: Ab ins Wochenende 🤪"
-			notification.soundName = NSUserNotificationDefaultSoundName
-			NSUserNotificationCenter.default.deliver(notification)
+			GlobalNotification.shared.deliverNotification(
+				withTitle: "Potzblitz. Die Woche ist schon wieder rum!",
+				andInformationtext: "Wenn du es also mit deinem Gewissen vereinbaren kannst: Ab ins Wochenende 🤪"
+			)
 		}
 
 		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "counter:tick"), object: ["totalSeconds": totalSeconds])
@@ -102,11 +100,10 @@ class GlobalTimer: NSObject {
 	@objc func noTrackingNotification() {
 		guard (timerNoTracking.isValid && CoreDataHelper.shared.currentTracking == nil) else { return }
 
-		let notification = NSUserNotification()
-		notification.title = "Der Timer läuft nicht"
-		notification.informativeText = "Vergessen zu starten?"
-		notification.soundName = NSUserNotificationDefaultSoundName
-		NSUserNotificationCenter.default.deliver(notification)
+		GlobalNotification.shared.deliverNotification(
+			withTitle: "Der Timer läuft nicht",
+			andInformationtext: "Na? Wollen wir dann auch mal wieder arbeiten? 🧐"
+		)
 	}
 
 }
