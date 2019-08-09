@@ -29,12 +29,13 @@ class AppDelegate: NSObject {
 		mainWindowController!.showWindow(nil)
 
 		if (QuoJob.shared.lastSync?.jobs != nil) {
-			QuoJob.shared.checkLoginStatus().done { _ in
-				self.syncData()
-			}.catch { _ in
-				QuoJob.shared.loginWithKeyChain().done {
-					self.syncData()
-				}.catch { _ in }
+			QuoJob.shared.syncData().catch { error in
+				let notificationCenter = NSUserNotificationCenter.default
+				let notification = NSUserNotification()
+				notification.title = "Du bist nicht eingeloggt."
+				notification.informativeText = "Damit deine Trackings automatisch übertragen werden können, solltest du dich einloggen."
+				notification.soundName = NSUserNotificationDefaultSoundName
+				notificationCenter.deliver(notification)
 			}
 		}
 
@@ -82,60 +83,46 @@ class AppDelegate: NSObject {
 
 		QuoJob.shared.sessionId = ""
 
-		QuoJob.shared.checkLoginStatus().done { _ in
+		QuoJob.shared.login().done({ _ in
 			notification.title = "Du wurdest erfolgreich eingeloggt."
 			notificationCenter.deliver(notification)
 			self.syncDataMenuItem.isEnabled = true
-		}.catch { _ in
-			QuoJob.shared.loginWithKeyChain().done {
-				notification.title = "Du wurdest erfolgreich eingeloggt."
-				notificationCenter.deliver(notification)
-				self.syncDataMenuItem.isEnabled = true
-			}.catch { _ in
-				if
-					let presentedViewControllers = self.window.contentViewController?.presentedViewControllers,
-					let _ = presentedViewControllers.first(where: { $0.isKind(of: Login.self) })
-				{
-					return
-				}
-
-				let loginVC = Login(nibName: .loginNib, bundle: nil)
-				self.window.contentViewController?.presentAsSheet(loginVC)
+		}).catch({ error in
+			if
+				let presentedViewControllers = self.window.contentViewController?.presentedViewControllers,
+				let _ = presentedViewControllers.first(where: { $0.isKind(of: Login.self) })
+			{
+				return
 			}
-		}
+
+			let loginVC = Login(nibName: .loginNib, bundle: nil)
+			self.window.contentViewController?.presentAsSheet(loginVC)
+		})
 	}
 
 	@IBAction func syncDataMenuItem(sender: NSMenuItem) {
-		QuoJob.shared.checkLoginStatus().done { _ in
-			self.syncData()
-		}.catch { _ in
-			QuoJob.shared.loginWithKeyChain().done {
-				self.syncData()
-			}.catch { _ in
-				sender.isEnabled = false
-				let notificationCenter = NSUserNotificationCenter.default
-				let notification = NSUserNotification()
-				notification.title = "Du bist nicht eingeloggt."
-				notification.soundName = NSUserNotificationDefaultSoundName
-				notificationCenter.deliver(notification)
-			}
+		QuoJob.shared.syncData().done {
+			print("done!")
+		}.catch { error in
+			sender.isEnabled = false
+			let notificationCenter = NSUserNotificationCenter.default
+			let notification = NSUserNotification()
+			notification.title = "Du bist nicht eingeloggt."
+			notification.soundName = NSUserNotificationDefaultSoundName
+			notificationCenter.deliver(notification)
 		}
 	}
 
 	@IBAction func syncTrackingsMenuItem(sender: NSMenuItem) {
-		QuoJob.shared.checkLoginStatus().done { _ in
-			self.syncTrackings()
+		QuoJob.shared.syncTrackings().done {
+			print("done!")
 		}.catch { _ in
-			QuoJob.shared.loginWithKeyChain().done {
-				self.syncTrackings()
-			}.catch { _ in
-				sender.isEnabled = false
-				let notificationCenter = NSUserNotificationCenter.default
-				let notification = NSUserNotification()
-				notification.title = "Du bist nicht eingeloggt."
-				notification.soundName = NSUserNotificationDefaultSoundName
-				notificationCenter.deliver(notification)
-			}
+			sender.isEnabled = false
+			let notificationCenter = NSUserNotificationCenter.default
+			let notification = NSUserNotification()
+			notification.title = "Du bist nicht eingeloggt."
+			notification.soundName = NSUserNotificationDefaultSoundName
+			notificationCenter.deliver(notification)
 		}
 	}
 

@@ -320,7 +320,7 @@ class QuoJob: NSObject {
 		}
 
 		return Promise { seal in
-			checkLoginStatus().done({ _ in
+			login().done({ _ in
 				var params = self.defaultParams
 				params["hourbooking"] = [
 					"id": id,
@@ -378,27 +378,12 @@ class QuoJob: NSObject {
 	}
 
 	func deleteTracking(tracking: Tracking) -> Promise<[String: Any]> {
-		return Promise { seal in
-			checkLoginStatus().then({ _ -> Promise<[String: Any]> in
-				var params = self.defaultParams
-				params["hourbooking_id"] = tracking.id
+		return login().then({ _ -> Promise<[String: Any]> in
+			var params = self.defaultParams
+			params["hourbooking_id"] = tracking.id
 
-				return self.fetch(as: .myTime_deleteHourbooking, with: params)
-			}).done({ result in
-				seal.fulfill(result)
-			}).catch({ error in
-				self.loginWithKeyChain().then({ _ -> Promise<[String: Any]> in
-					var params = self.defaultParams
-					params["hourbooking_id"] = tracking.id
-
-					return self.fetch(as: .myTime_deleteHourbooking, with: params)
-				}).done({ result in
-					seal.fulfill(result)
-				}).catch({ error in
-					seal.reject(error)
-				})
-			})
-		}
+			return self.fetch(as: .myTime_deleteHourbooking, with: params)
+		})
 	}
 
 }
@@ -407,7 +392,26 @@ class QuoJob: NSObject {
 
 extension QuoJob {
 
-	func checkLoginStatus() -> Promise<[String: Any]> {
+	func login() -> Promise<Bool> {
+		print("try to login")
+		return Promise { seal in
+			return self.isLoggedIn().done({ _ in
+				print("already logged in")
+				seal.fulfill(true)
+			}).catch({ _ in
+				print("not logged in")
+				self.loginWithKeyChain().done({ _ in
+					print("logged in with keychain")
+					seal.fulfill(true)
+				}).catch({ error in
+					print("error during login")
+					seal.reject(error)
+				})
+			})
+		}
+	}
+
+	func isLoggedIn() -> Promise<[String: Any]> {
 		let params = defaultParams
 		return fetch(as: .session_getCurrentUser, with: params)
 	}
@@ -424,6 +428,7 @@ extension QuoJob {
 		]
 
 		return fetch(as: .session_login, with: params).done { result in
+			print("logged in with userdata from keychain")
 			self.userId = result["user_id"] as? String
 			self.sessionId = result["session"] as? String
 
@@ -433,20 +438,17 @@ extension QuoJob {
 	}
 
 	func loginWithKeyChain() -> Promise<Void> {
+		print("try to login with keychain")
 		keychain = Keychain(service: KEYCHAIN_NAMESPACE)
+		let keys = keychain.allKeys()
 
-		guard keychain.allKeys().count > 0 else {
-			return Promise { $0.reject(ApiError.withMessage(errorMessages.sessionProblem)) }
+		if keys.count > 0, let name = keys.first, let pass = try? keychain.get(name) {
+			print("keychain data found -> login with userdata from keychain")
+			return loginWithUserData(userName: name, password: pass!)
 		}
 
-		guard
-			let name = keychain.allKeys().first,
-			let pass = try? keychain.get(name)
-		else {
-			return Promise { $0.reject(ApiError.withMessage(errorMessages.sessionProblem)) }
-		}
-
-		return loginWithUserData(userName: name, password: pass!)
+		print("no keychain data")
+		return Promise { $0.reject(ApiError.withMessage(errorMessages.sessionProblem)) }
 	}
 
 }
@@ -459,68 +461,72 @@ extension QuoJob {
 		lastSync = fetchedResultControllerSync.fetchedObjects?.first
 		var results: [[String: Any]] = []
 
-		return when(fulfilled: fetchJobTypes(), fetchActivities())
-			.then { (resultTypes, resultActivities) -> Promise<[String: Any]> in
-				self.handleJobTypes(with: resultTypes)
-				try? self.fetchedResultControllerType.performFetch()
+		return login().done { result -> Void in
+			return when(fulfilled: self.fetchJobTypes(), self.fetchActivities())
+				.then { (resultTypes, resultActivities) -> Promise<[String: Any]> in
+					self.handleJobTypes(with: resultTypes)
+					try? self.fetchedResultControllerType.performFetch()
 
-				if let newActivities = (resultActivities["activities"] as? [[String: Any]])?
+					if let newActivities = (resultActivities["activities"] as? [[String: Any]])?
 						.filter({ $0["active"] as? Bool ?? false }),
-					newActivities.count > 0
-				{
-					results.append(["type": "activities", "order": 2, "text": "\(String(newActivities.count)) Tätigkeiten"])
-				}
-				self.handleActivities(with: resultActivities)
-				try? self.fetchedResultControllerActivity.performFetch()
+						newActivities.count > 0
+					{
+						results.append(["type": "activities", "order": 2, "text": "\(String(newActivities.count)) Tätigkeiten"])
+					}
+					self.handleActivities(with: resultActivities)
+					try? self.fetchedResultControllerActivity.performFetch()
 
-				return self.fetchJobs()
-			}.then { resultJobs -> Promise<[String: Any]> in
-				if
-					let newJobs = (resultJobs["jobs"] as? [[String: Any]])?
-						.filter({
-							(($0["bookable"] as? Bool) ?? false) && ($0["assigned_user_ids"] as! [String]).contains(self.userId)
-						}),
-					newJobs.count > 0
-				{
-					results.append(["type": "jobs", "order": 1, "text": "\(String(newJobs.count)) Jobs"])
-				}
-				self.handleJobs(with: resultJobs)
-				try? self.fetchedResultControllerJob.performFetch()
+					return self.fetchJobs()
+				}.then { resultJobs -> Promise<[String: Any]> in
+					if
+						let newJobs = (resultJobs["jobs"] as? [[String: Any]])?
+							.filter({
+								(($0["bookable"] as? Bool) ?? false) && ($0["assigned_user_ids"] as! [String]).contains(self.userId)
+							}),
+						newJobs.count > 0
+					{
+						results.append(["type": "jobs", "order": 1, "text": "\(String(newJobs.count)) Jobs"])
+					}
+					self.handleJobs(with: resultJobs)
+					try? self.fetchedResultControllerJob.performFetch()
 
-				return self.fetchTasks()
-			}.done { resultTasks in
-				if
-					let jobsAll = self.jobs?.filter({ $0.assigned }).map({ $0.id }),
-					let tasks = (resultTasks["jobtasks"] as? [[String: Any]])?.filter({ jobsAll.contains($0["job_id"] as? String) }),
-					tasks.count > 0
-				{
-					results.append(["type": "tasks", "order": 3, "text": "\(String(tasks.count)) Aufgaben"])
-				}
-				self.handleTasks(with: resultTasks)
-			}.ensure {
-				var title: String = ""
-				var text: String = ""
+					return self.fetchTasks()
+				}.done { resultTasks in
+					if
+						let jobsAll = self.jobs?.filter({ $0.assigned }).map({ $0.id }),
+						let tasks = (resultTasks["jobtasks"] as? [[String: Any]])?.filter({ jobsAll.contains($0["job_id"] as? String) }),
+						tasks.count > 0
+					{
+						results.append(["type": "tasks", "order": 3, "text": "\(String(tasks.count)) Aufgaben"])
+					}
+					self.handleTasks(with: resultTasks)
+				}.ensure {
+					var title: String = ""
+					var text: String = ""
 
-				if (results.count == 0) {
-					title = "Daten aktuell."
-					text = "Du kannst loslegen ;)"
-				} else {
-					title = "Daten erfolgreich synchronisiert."
-					text = "Es wurden "
+					if (results.count == 0) {
+						title = "Daten aktuell."
+						text = "Du kannst loslegen ;)"
+					} else {
+						title = "Daten erfolgreich synchronisiert."
+						text = "Es wurden "
 
-					text += results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
-					return type["text"] as! String
-					}).joined(separator: ", ")
+						text += results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
+							return type["text"] as! String
+						}).joined(separator: ", ")
 
-					text += " importiert oder aktualisiert.\nFröhlichen Arbeitstag ;)"
-				}
+						text += " importiert oder aktualisiert.\nFröhlichen Arbeitstag ;)"
+					}
 
-				let notification = NSUserNotification()
-				notification.title = title
-				notification.informativeText = text
-				notification.soundName = NSUserNotificationDefaultSoundName
-				NSUserNotificationCenter.default.deliver(notification)
-			}
+					let notification = NSUserNotification()
+					notification.title = title
+					notification.informativeText = text
+					notification.soundName = NSUserNotificationDefaultSoundName
+					NSUserNotificationCenter.default.deliver(notification)
+				}.catch({ error in
+					print("SyncError: \(error)")
+				})
+		}
 	}
 
 	func syncTrackings() -> Promise<Void> {

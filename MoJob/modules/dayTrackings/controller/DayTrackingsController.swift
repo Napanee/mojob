@@ -112,13 +112,9 @@ class DayTrackingsController: NSViewController {
 		hideWarning()
 
 		if (status == .satisfied) { // online
-			QuoJob.shared.checkLoginStatus().catch { error in
-				if (error.localizedDescription == errorMessages.sessionProblem) {
-					QuoJob.shared.loginWithKeyChain().catch { error in
-						self.loginButton.isHidden = false
-						self.showWarning(error: error.localizedDescription)
-					}
-				}
+			QuoJob.shared.login().catch { error in
+				self.loginButton.isHidden = false
+				self.showWarning(error: error.localizedDescription)
 			}
 		} else { // offline
 			showWarning(error: errorMessages.offline)
