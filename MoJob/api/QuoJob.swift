@@ -609,25 +609,26 @@ extension QuoJob {
 	}
 
 	private func handleJobs(with result: [String: Any]) {
-		if var jobItems = result["jobs"] as? [[String: Any]], let timestamp = result["timestamp"] as? String {
+		if let jobItems = result["jobs"] as? [[String: Any]], let timestamp = result["timestamp"] as? String {
 			var jobs: [Job]?
 
 			if (jobItems.count > 0) {
 				jobs = fetchedResultControllerJob.fetchedObjects
 			}
 
-			var typeIds: [String] = []
-			if let types = fetchedResultControllerType.fetchedObjects {
-				typeIds = types.map({ $0.id! })
-			}
-
-			jobItems = jobItems.filter({
-				if let bookable = $0["bookable"] as? Bool {
-					return bookable && typeIds.contains($0["job_type_id"] as! String)
-				}
-
-				return false
-			})
+			// not active, because we want ALL jobs for the history
+//			var typeIds: [String] = []
+//			if let types = fetchedResultControllerType.fetchedObjects {
+//				typeIds = types.map({ $0.id! })
+//			}
+//
+//			jobItems = jobItems.filter({
+//				if let bookable = $0["bookable"] as? Bool {
+//					return bookable && typeIds.contains($0["job_type_id"] as! String)
+//				}
+//
+//				return false
+//			})
 
 			for item in jobItems {
 				let id = item["id"] as! String
@@ -739,13 +740,14 @@ extension QuoJob {
 				jobIds = jobs.map({ $0.id! })
 			}
 
-			taskItems = taskItems.filter({
-				if let status = $0["status"] as? String {
-					return status == "active" && jobIds.contains($0["job_id"] as! String)
-				}
-
-				return false
-			})
+			// not active, because we want ALL tasks for the history
+//			taskItems = taskItems.filter({
+//				if let status = $0["status"] as? String {
+//					return status == "active" && jobIds.contains($0["job_id"] as! String)
+//				}
+//
+//				return false
+//			})
 
 			for item in taskItems {
 				let id = item["id"] as! String
