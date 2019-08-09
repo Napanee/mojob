@@ -29,7 +29,9 @@ class AppDelegate: NSObject {
 		mainWindowController!.showWindow(nil)
 
 		if (QuoJob.shared.lastSync?.jobs != nil) {
-			QuoJob.shared.syncData().catch { error in
+			QuoJob.shared.syncData().then {
+				QuoJob.shared.syncTrackings()
+			}.catch { error in
 				GlobalNotification.shared.deliverNotLoggedIn()
 			}
 		}
@@ -42,28 +44,6 @@ class AppDelegate: NSObject {
 		NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onScreenDidWake(notification:)), name: NSWorkspace.screensDidWakeNotification, object: nil) // return from locked screen
 
 		NSUserNotificationCenter.default.delegate = self
-	}
-
-	func syncData() {
-		QuoJob.shared.syncData()
-			.done {
-				print("done!")
-			}
-			.catch { error in
-				//Handle error or give feedback to the user
-				print(error.localizedDescription)
-		}
-	}
-
-	func syncTrackings() {
-		QuoJob.shared.syncTrackings()
-			.done {
-				print("done!")
-			}
-			.catch { error in
-				//Handle error or give feedback to the user
-				print(error.localizedDescription)
-			}
 	}
 
 	@IBAction func openWebappMenuItem(sender: NSMenuItem) {
@@ -91,18 +71,14 @@ class AppDelegate: NSObject {
 	}
 
 	@IBAction func syncDataMenuItem(sender: NSMenuItem) {
-		QuoJob.shared.syncData().done {
-			print("done!")
-		}.catch { error in
+		QuoJob.shared.syncData().catch { error in
 			sender.isEnabled = false
 			GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um die QuoJob-Daten zu synchronisieren.")
 		}
 	}
 
 	@IBAction func syncTrackingsMenuItem(sender: NSMenuItem) {
-		QuoJob.shared.syncTrackings().done {
-			print("done!")
-		}.catch { _ in
+		QuoJob.shared.syncTrackings().catch { _ in
 			sender.isEnabled = false
 			GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um deine Trackings zu synchronisieren.")
 		}
