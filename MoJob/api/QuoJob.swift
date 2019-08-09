@@ -379,26 +379,23 @@ class QuoJob: NSObject {
 
 	func deleteTracking(tracking: Tracking) -> Promise<[String: Any]> {
 		return Promise { seal in
-			checkLoginStatus().done({ _ in
+			checkLoginStatus().then({ _ -> Promise<[String: Any]> in
 				var params = self.defaultParams
 				params["hourbooking_id"] = tracking.id
 
-				self.fetch(as: .myTime_deleteHourbooking, with: params).done({ result in
-					seal.fulfill(result)
-				}).catch({ error in
-					seal.reject(error)
-				})
+				return self.fetch(as: .myTime_deleteHourbooking, with: params)
+			}).done({ result in
+				seal.fulfill(result)
 			}).catch({ error in
-				self.loginWithKeyChain().done({ _ in
+				self.loginWithKeyChain().then({ _ -> Promise<[String: Any]> in
 					var params = self.defaultParams
 					params["hourbooking_id"] = tracking.id
 
-					self.fetch(as: .myTime_deleteHourbooking, with: params).done({ result in
-						seal.fulfill(result)
-					}).catch({ error in
-						seal.reject(error)
-					})
+					return self.fetch(as: .myTime_deleteHourbooking, with: params)
+				}).done({ result in
+					seal.fulfill(result)
 				}).catch({ error in
+					seal.reject(error)
 				})
 			})
 		}
