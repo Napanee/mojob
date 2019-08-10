@@ -35,6 +35,7 @@ class QuoJob: NSObject {
 
 	static let shared = QuoJob()
 
+	let utilityQueue = DispatchQueue.global(qos: .utility)
 	let dateFormatterFull = DateFormatter()
 	let dateFormatterTime = DateFormatter()
 	var defaultParams: [String: Any] {
@@ -245,7 +246,7 @@ class QuoJob: NSObject {
 
 		return Promise { seal in
 			Alamofire.request(API_URL, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-				.responseJSON { response in
+				.responseJSON(queue: utilityQueue) { response in
 					switch response.result {
 					case .success(let json):
 						guard let json = json as? [String: Any] else {
