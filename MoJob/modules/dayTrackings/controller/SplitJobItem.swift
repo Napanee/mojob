@@ -19,11 +19,7 @@ class SplitJobItem: NSCollectionViewItem {
 
 		if let jobs = QuoJob.shared.jobs {
 			let jobTitles = jobs
-				.sorted(by: {
-					$0.type!.id! != $1.type!.id! && $0.type!.title! < $1.type!.title! ||
-						$0.number! != $1.number! && $0.number! < $1.number! ||
-						$0.title! < $1.title!
-				})
+				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 				.map({ job -> String in
 					guard let title = job.title, let number = job.number else { return "" }
 

@@ -141,7 +141,9 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 		if (string.count > 0) {
 			jobsCollectionView.isHidden = false
-			jobsFiltered = jobs.filter({ $0.title!.lowercased().contains(string.lowercased()) || $0.number!.lowercased().contains(string.lowercased()) })
+			jobsFiltered = jobs
+				.filter({ $0.title!.lowercased().contains(string.lowercased()) || $0.number!.lowercased().contains(string.lowercased()) })
+				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 		} else {
 			jobsCollectionView.isHidden = true
 			jobsFiltered = []
