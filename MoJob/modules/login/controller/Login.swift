@@ -50,15 +50,13 @@ class Login: NSViewController {
 			keychain[name] = pass
 		}
 
-		if (QuoJob.shared.lastSync?.jobs == nil) {
+		if (QuoJob.shared.jobs == nil) {
 			GlobalNotification.shared.deliverNotification(
 				withTitle: "Initiale Daten werden geladen.",
 				andInformationtext: "Dies kann bis zu einer Minute dauern, aber ich sage Bescheid, wenn ich fertig bin 😉"
 			)
 
-			QuoJob.shared.syncData().done {
-				QuoJob.shared.syncTrackings().catch({ _ in })
-			}.catch({ _ in })
+			QuoJob.shared.syncData().catch({ _ in })
 		} else {
 			GlobalNotification.shared.deliverNotification(withTitle: "Erfolgreich eingeloggt.")
 		}

@@ -12,6 +12,22 @@ import CoreData
 
 class CoreDataHelper {
 
+	static let context: NSManagedObjectContext = {
+		let persistentContainer = CoreDataHelper.shared.persistentContainer
+		let context = persistentContainer.viewContext
+
+		return context
+	}()
+
+	static let backgroundContext: NSManagedObjectContext = {
+		let parent = CoreDataHelper.context
+		let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+
+		context.parent = parent
+
+		return context
+	}()
+
 	var currentTracking: Tracking? {
 		get {
 			let context = CoreDataHelper.shared.persistentContainer.viewContext
@@ -156,6 +172,8 @@ class CoreDataHelper {
 				*/
 				fatalError("Unresolved error \(error)")
 			}
+
+			container.viewContext.automaticallyMergesChangesFromParent = true
 		})
 		return container
 	}()

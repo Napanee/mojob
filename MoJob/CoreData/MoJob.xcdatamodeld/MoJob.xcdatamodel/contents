@@ -5,6 +5,7 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="internal_service" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="nfc" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="sync" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="activity" inverseEntity="Task" syncable="YES"/>
         <relationship name="trackings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tracking" inverseName="activity" inverseEntity="Tracking" syncable="YES"/>
@@ -16,22 +17,17 @@
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sync" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="job" inverseEntity="Task" syncable="YES"/>
         <relationship name="trackings" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tracking" inverseName="job" inverseEntity="Tracking" syncable="YES"/>
         <relationship name="type" maxCount="1" deletionRule="Nullify" destinationEntity="Type" inverseName="jobs" inverseEntity="Type" syncable="YES"/>
     </entity>
-    <entity name="Sync" representedClassName="Sync" syncable="YES" codeGenerationType="class">
-        <attribute name="activities" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="jobs" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="tasks" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="trackings" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="types" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-    </entity>
     <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class">
         <attribute name="hours_booked" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="hours_planed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sync" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="tasks" inverseEntity="Activity" syncable="YES"/>
         <relationship name="job" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Job" inverseName="tasks" inverseEntity="Job" syncable="YES"/>
@@ -44,6 +40,7 @@
         <attribute name="date_start" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="exported" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sync" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="activity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="trackings" inverseEntity="Activity" syncable="YES"/>
         <relationship name="job" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Job" inverseName="trackings" inverseEntity="Job" syncable="YES"/>
         <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="trackings" inverseEntity="Task" syncable="YES"/>
@@ -53,15 +50,15 @@
         <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="internal_service" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="productive_service" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="sync" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="jobs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Job" inverseName="type" inverseEntity="Job" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="153.37890625" positionY="16.140625" width="128" height="150"/>
-        <element name="Job" positionX="-264.55078125" positionY="42.35546875" width="128" height="195"/>
-        <element name="Sync" positionX="165.70703125" positionY="208.84765625" width="128" height="120"/>
-        <element name="Task" positionX="-31.54296875" positionY="177.91015625" width="128" height="148"/>
-        <element name="Tracking" positionX="-88.01171875" positionY="-61.671875" width="128" height="180"/>
-        <element name="Type" positionX="-283.21484375" positionY="239.578125" width="128" height="135"/>
+        <element name="Activity" positionX="153.37890625" positionY="16.140625" width="128" height="165"/>
+        <element name="Job" positionX="-264.55078125" positionY="42.35546875" width="128" height="210"/>
+        <element name="Task" positionX="-31.54296875" positionY="177.91015625" width="128" height="165"/>
+        <element name="Tracking" positionX="-88.01171875" positionY="-61.671875" width="128" height="195"/>
+        <element name="Type" positionX="-283.21484375" positionY="239.578125" width="128" height="150"/>
     </elements>
 </model>
