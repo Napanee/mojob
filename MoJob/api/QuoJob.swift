@@ -51,7 +51,11 @@ class QuoJob: NSObject {
 			fetchRequest.sortDescriptors = [
 				NSSortDescriptor(key: "title", ascending: false)
 			]
-			fetchRequest.predicate = NSPredicate(format: "assigned = %@", argumentArray: [true])
+			let predicates = NSCompoundPredicate(andPredicateWithSubpredicates: [
+				NSPredicate(format: "assigned = %@", argumentArray: [true]),
+				NSPredicate(format: "bookable = %@", argumentArray: [true])
+			])
+			fetchRequest.predicate = predicates
 
 			do {
 				result = try context.fetch(fetchRequest)
@@ -648,6 +652,7 @@ extension QuoJob {
 				for item in jobItems {
 					let id = item["id"] as! String
 					let number = item["number"] as! String
+					let bookable = item["bookable"] as! Bool
 					let title = item["title"] as! String
 					let typeId = item["job_type_id"] as! String
 					let assigned_user_ids = item["assigned_user_ids"] as! [String]
@@ -658,6 +663,7 @@ extension QuoJob {
 						let type = (try? self.context.fetch(fetchRequest) as! [Type])?.first
 
 						job.assigned = assigned_user_ids.contains(self.userId)
+						job.bookable = bookable
 						job.number = number
 						job.title = title
 						job.type = type
@@ -674,6 +680,7 @@ extension QuoJob {
 							"title": title,
 							"number": number,
 							"assigned": assigned_user_ids.contains(self.userId),
+							"bookable": bookable,
 							"type": type!,
 							"sync": syncDate as Any
 						]
