@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.0.1</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -46,9 +46,9 @@
 	<true/>
 	<key>SUFeedURL</key>
 	<string>https://napanee.synology.me/mojob2/appcast/appcast.xml</string>
-	<key>SUScheduledCheckInterval</key>
-	<string>7200</string>
 	<key>SUPublicEDKey</key>
 	<string>Gndq61F3N7fF1Q5r0yWldugTT2o67Yq1qo4DVqtgeB0=</string>
+	<key>SUScheduledCheckInterval</key>
+	<string>7200</string>
 </dict>
 </plist>
