@@ -35,8 +35,8 @@ class AppDelegate: NSObject {
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
 
-		if (QuoJob.shared.jobs == nil) {
-			QuoJob.shared.isLoggedIn().done({ _ in
+		if (QuoJob.shared.jobs.count == 0) {
+			QuoJob.shared.login().done({ _ in
 				GlobalNotification.shared.deliverNotification(
 					withTitle: "Initiale Daten werden geladen.",
 					andInformationtext: "Dies kann bis zu einer Minute dauern, aber ich sage Bescheid, wenn ich fertig bin 😉"
