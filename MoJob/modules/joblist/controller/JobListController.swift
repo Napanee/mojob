@@ -80,12 +80,10 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		jobsCollectionView.isHidden = true
 		filterField.customDelegate = self
 
-		if let jobs = QuoJob.shared.jobs {
-			favorites = jobs.filter({ $0.isFavorite })
-
-			if (jobs.count == 0) {
-				favoritesView.isHidden = true
-			}
+		let jobs = QuoJob.shared.jobs
+		favorites = jobs.filter({ $0.isFavorite })
+		if (jobs.count == 0) {
+			favoritesView.isHidden = true
 		}
 
 		_configureCollectionView(collectionView: favoritesCollectionView)
@@ -137,7 +135,8 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func onTextChange(with string: String) {
-		guard let jobs = QuoJob.shared.jobs else { return }
+		let jobs = QuoJob.shared.jobs
+		guard jobs.count > 0 else { return }
 
 		if (string.count > 0) {
 			jobsCollectionView.isHidden = false
@@ -164,9 +163,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func onDismiss() {
-		if let jobs = QuoJob.shared.jobs {
-			favorites = jobs.filter({ $0.isFavorite })
-		}
+		favorites = QuoJob.shared.jobs.filter({ $0.isFavorite })
 
 		favoritesCollectionView.reloadData()
 
@@ -176,9 +173,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func reloadFavorites() {
-		if let jobs = QuoJob.shared.jobs {
-			favorites = jobs.filter({ $0.isFavorite })
-		}
+		favorites = QuoJob.shared.jobs.filter({ $0.isFavorite })
 
 		favoritesCollectionView.reloadData()
 
@@ -188,7 +183,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func reloadJobs() {
-		if let jobs = QuoJob.shared.jobs, jobs.count > 0 {
+		if QuoJob.shared.jobs.count > 0 {
 			favoritesView.isHidden = false
 
 			if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
@@ -441,9 +436,7 @@ extension JobListController: NSCollectionViewDataSource, FavoritesItemDelegate {
 	}
 
 	func onDeleteFavorite() {
-		if let jobs = QuoJob.shared.jobs {
-			favorites = jobs.filter({ $0.isFavorite })
-		}
+		favorites = QuoJob.shared.jobs.filter({ $0.isFavorite })
 
 		favoritesCollectionView.reloadData()
 

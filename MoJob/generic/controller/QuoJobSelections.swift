@@ -53,10 +53,8 @@ class QuoJobSelections: NSViewController {
 	private func initJobSelect() {
 		jobSelect.placeholderString = "Job wählen oder eingeben"
 
-		if let jobs = QuoJob.shared.jobs {
-			self.jobs = jobs
-				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
-		}
+		self.jobs = QuoJob.shared.jobs
+			.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
 		jobSelect.reloadData()
 
@@ -70,11 +68,9 @@ class QuoJobSelections: NSViewController {
 	}
 
 	private func initTaskSelect() {
-		if let tasks = QuoJob.shared.tasks {
-			self.tasks = tasks
-				.filter({ $0.job!.id == tempTracking?.job?.id ?? tracking?.job?.id })
-				.sorted(by: { $0.title! < $1.title! })
-		}
+		self.tasks = QuoJob.shared.tasks
+			.filter({ $0.job!.id == tempTracking?.job?.id ?? tracking?.job?.id })
+			.sorted(by: { $0.title! < $1.title! })
 
 		taskSelect.reloadData()
 
@@ -96,19 +92,17 @@ class QuoJobSelections: NSViewController {
 	private func initActivitySelect() {
 		activitySelect.placeholderString = "Leistungsart wählen oder eingeben"
 
-		if let activities = QuoJob.shared.activities {
-			self.activities = activities
-				.filter({
-					if let job = tempTracking?.job ?? tracking?.job {
-						return
-							(job.type?.internal_service ?? true && $0.internal_service) ||
-							(job.type?.productive_service ?? true && $0.external_service)
-					}
+		self.activities = QuoJob.shared.activities
+			.filter({
+				if let job = tempTracking?.job ?? tracking?.job {
+					return
+						(job.type?.internal_service ?? true && $0.internal_service) ||
+						(job.type?.productive_service ?? true && $0.external_service)
+				}
 
-					return $0.internal_service || (nfc ? $0.nfc : false)
-				})
-				.sorted(by: { $0.title! < $1.title! })
-		}
+				return $0.internal_service || (nfc ? $0.nfc : false)
+			})
+			.sorted(by: { $0.title! < $1.title! })
 
 		activitySelect.reloadData()
 
@@ -173,7 +167,7 @@ class QuoJobSelections: NSViewController {
 			tempTracking?.task = nil
 
 			tracking?.update(with: ["job": nil, "task": nil]).done({ _ in }).catch({ _ in })
-		} else if let job = QuoJob.shared.jobs?.first(where: { $0.fullTitle.lowercased() == value }) {
+		} else if let job = QuoJob.shared.jobs.first(where: { $0.fullTitle.lowercased() == value }) {
 			tempTracking?.job = job
 			tempTracking?.custom_job = nil
 
@@ -199,7 +193,7 @@ class QuoJobSelections: NSViewController {
 		if (value == "") {
 			tempTracking?.task = nil
 			tracking?.update(with: ["task": nil]).done({ _ in }).catch({ _ in })
-		} else if let task = QuoJob.shared.tasks?.first(where: { $0.title?.lowercased() == value }) {
+		} else if let task = QuoJob.shared.tasks.first(where: { $0.title?.lowercased() == value }) {
 			tempTracking?.task = task
 			tracking?.update(with: ["task": task]).done({ _ in }).catch({ _ in })
 		}
@@ -215,7 +209,7 @@ class QuoJobSelections: NSViewController {
 			tempTracking?.activity = nil
 			tracking?.update(with: ["activity": nil]).done({ _ in }).catch({ _ in })
 			formIsValid = false
-		} else if let activity = QuoJob.shared.activities?
+		} else if let activity = QuoJob.shared.activities
 			.filter({
 				if let job = tempTracking?.job ?? tracking?.job {
 					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
@@ -334,7 +328,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 		let value = comboBoxCell.stringValue.lowercased()
 
 		if (comboBox.isEqual(jobSelect)) {
-			jobs = QuoJob.shared.jobs!
+			jobs = QuoJob.shared.jobs
 				.filter({ value == "" || $0.fullTitle.lowercased().contains(value) })
 				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
@@ -342,7 +336,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		} else if (comboBox.isEqual(taskSelect)) {
-			tasks = QuoJob.shared.tasks!
+			tasks = QuoJob.shared.tasks
 				.filter({ value == "" || $0.job!.id == tempTracking?.job?.id ?? tracking?.job?.id && $0.title!.lowercased().contains(value) })
 				.sorted(by: { $0.title! < $1.title! })
 
@@ -350,7 +344,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		} else if (comboBox.isEqual(activitySelect)) {
-			activities = QuoJob.shared.activities!
+			activities = QuoJob.shared.activities
 				.filter({
 					if let job = tempTracking?.job ?? tracking?.job {
 						return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)

@@ -66,7 +66,7 @@ class SplitTracking: NSViewController {
 		var date_start = sourceTracking.date_start!
 
 		for item in items {
-			if let job = jobs?.first(where: { (job) -> Bool in
+			if let job = jobs.first(where: { (job) -> Bool in
 				guard let title = job.title, let number = job.number else { return false }
 
 				return "\(number) - \(title)" == item.jobSelect.titleOfSelectedItem

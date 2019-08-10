@@ -17,15 +17,12 @@ class SplitJobItem: NSCollectionViewItem {
 
 		jobSelect.removeAllItems()
 
-		if let jobs = QuoJob.shared.jobs {
-			let jobTitles = jobs
-				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
-				.map({ job -> String in
-					guard let title = job.title, let number = job.number else { return "" }
+		let jobTitles = QuoJob.shared.jobs
+			.filter({ $0.number != nil && $0.title != nil })
+			.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
+			.map({ "\($0.number!) - \($0.title!)" })
 
-					return "\(number) - \(title)"
-				})
-
+		if (jobTitles.count > 0) {
 			jobSelect.addItem(withTitle: "Job wählen")
 			jobSelect.addItems(withTitles: jobTitles)
 		}

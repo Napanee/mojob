@@ -34,7 +34,7 @@ extension Tracking {
 			}
 
 			let userDefaults = UserDefaults()
-			if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity), let activity = QuoJob.shared.activities?.first(where: { $0.id == activityId }) {
+			if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity), let activity = QuoJob.shared.activities.first(where: { $0.id == activityId }) {
 				tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
 			}
 

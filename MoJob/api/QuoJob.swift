@@ -44,9 +44,9 @@ class QuoJob: NSObject {
 		}
 	}
 
-	var jobs: [Job]? {
+	var jobs: [Job] {
 		get {
-			var result: [Job]?
+			var result: [Job] = []
 			let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
 			fetchRequest.sortDescriptors = [
 				NSSortDescriptor(key: "title", ascending: false)
@@ -67,9 +67,9 @@ class QuoJob: NSObject {
 		}
 	}
 
-	var activities: [Activity]? {
+	var activities: [Activity] {
 		get {
-			var result: [Activity]?
+			var result: [Activity] = []
 			let fetchRequest: NSFetchRequest<Activity> = Activity.fetchRequest()
 			fetchRequest.sortDescriptors = [
 				NSSortDescriptor(key: "title", ascending: false)
@@ -85,9 +85,9 @@ class QuoJob: NSObject {
 		}
 	}
 
-	var tasks: [Task]? {
+	var tasks: [Task] {
 		get {
-			var result: [Task]?
+			var result: [Task] = []
 			let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
 			fetchRequest.sortDescriptors = [
 				NSSortDescriptor(key: "title", ascending: false)
@@ -103,9 +103,9 @@ class QuoJob: NSObject {
 		}
 	}
 
-	var types: [Type]? {
+	var types: [Type] {
 		get {
-			var result: [Type]?
+			var result: [Type] = []
 			let fetchRequest: NSFetchRequest<Type> = Type.fetchRequest()
 			fetchRequest.sortDescriptors = [
 				NSSortDescriptor(key: "title", ascending: false)
@@ -121,9 +121,9 @@ class QuoJob: NSObject {
 		}
 	}
 
-	var trackings: [Tracking]? {
+	var trackings: [Tracking] {
 		get {
-			var result: [Tracking]?
+			var result: [Tracking] = []
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 			fetchRequest.sortDescriptors = [
 				NSSortDescriptor(key: "id", ascending: false)
@@ -225,7 +225,7 @@ class QuoJob: NSObject {
 			id = trackingId
 		}
 
-		if let types = types, let bookingType = types.first(where: { $0.id == tracking.job?.type?.id }) {
+		if let bookingType = types.first(where: { $0.id == tracking.job?.type?.id }) {
 			if (bookingType.internal_service) {
 				bookingTypeString = "int"
 			} else if (bookingType.productive_service) {
@@ -418,8 +418,9 @@ extension QuoJob {
 				}.then { _ -> Promise<[String: Any]> in
 					return self.fetchTasks()
 				}.then { resultTasks -> Promise<Void> in
+					let jobsAll = self.jobs.filter({ $0.assigned }).map({ $0.id })
+
 					if
-						let jobsAll = self.jobs?.filter({ $0.assigned }).map({ $0.id }),
 						let tasks = (resultTasks["jobtasks"] as? [[String: Any]])?.filter({ jobsAll.contains($0["job_id"] as? String) }),
 						tasks.count > 0
 					{
@@ -434,16 +435,16 @@ extension QuoJob {
 				}.then { result -> Promise<[String: Any]> in
 					return self.fetchTrackings(with: result)
 				}.then { resultTrackings -> Promise<Void> in
-					if
-						let trackingsAll = (resultTrackings["hourbookings"] as? [[String: Any]])?.map({ $0["id"] as! String }),
-						let trackingsEdited = self.trackings?.filter({
+					if let trackingsAll = (resultTrackings["hourbookings"] as? [[String: Any]])?.map({ $0["id"] as! String }) {
+						let trackingsEdited = self.trackings.filter({
 							guard let id = $0.id else { return false }
 							return trackingsAll.contains(id)
-						}),
-						trackingsEdited.count > 0
-					{
-						results.append(["type": "trackings_new", "order": 1, "text": "\(String(trackingsAll.count - trackingsEdited.count)) Trackings hinzugefügt"])
-						results.append(["type": "trackings_edit", "order": 2, "text": "\(String(trackingsEdited.count)) Trackings aktualisiert"])
+						})
+
+						if (trackingsEdited.count > 0) {
+							results.append(["type": "trackings_new", "order": 1, "text": "\(String(trackingsAll.count - trackingsEdited.count)) Trackings hinzugefügt"])
+							results.append(["type": "trackings_edit", "order": 2, "text": "\(String(trackingsEdited.count)) Trackings aktualisiert"])
+						}
 					}
 
 					return self.handleTrackings(with: resultTrackings)
@@ -597,7 +598,7 @@ extension QuoJob {
 					let internalService = item["internal"] as! Bool
 					let productiveService = item["productive"] as! Bool
 
-					if let type = self.types?.first(where: { $0.id == id }) {
+					if let type = self.types.first(where: { $0.id == id }) {
 						type.title = title
 						type.active = active
 						type.internal_service = internalService
@@ -660,7 +661,7 @@ extension QuoJob {
 					let typeId = item["job_type_id"] as! String
 					let assigned_user_ids = item["assigned_user_ids"] as! [String]
 
-					if let job = self.jobs?.first(where: { $0.id == id }) {
+					if let job = self.jobs.first(where: { $0.id == id }) {
 						let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Type")
 						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
 						let type = (try? self.context.fetch(fetchRequest) as! [Type])?.first
@@ -720,7 +721,7 @@ extension QuoJob {
 					let external_service = item["external_service"] as! Bool
 					let nfc = item["nfc"] as! Bool
 
-					if let activity = self.activities?.first(where: { $0.id == id }) {
+					if let activity = self.activities.first(where: { $0.id == id }) {
 						activity.title = title
 						activity.internal_service = internal_service
 						activity.external_service = external_service
@@ -809,7 +810,7 @@ extension QuoJob {
 						hoursBooked = hours_booked
 					}
 
-					if let task = self.tasks?.first(where: { $0.id == id }) {
+					if let task = self.tasks.first(where: { $0.id == id }) {
 						task.title = title
 						task.hours_planed = hoursPlaned
 						task.hours_booked = hoursBooked
@@ -917,7 +918,7 @@ extension QuoJob {
 						dateEnd = Calendar.current.date(bySettingHour: timeUntilDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
 					}
 
-					if let tracking = self.trackings?.first(where: { $0.id == id }) {
+					if let tracking = self.trackings.first(where: { $0.id == id }) {
 						var jobObject: Job? = nil
 						if let jobId = item["job_id"] as? String, let job = jobs?.first(where: { $0.id == jobId }) {
 							jobObject = job

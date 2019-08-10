@@ -50,9 +50,9 @@ class SettingsViewController: NSViewController {
 	private func initActivitySelect() {
 		activitySelect.placeholderString = "Leistungsart wählen oder eingeben"
 
-		if let activities = QuoJob.shared.activities {
-			self.activities = activities.sorted(by: { $0.title! < $1.title! })
-		}
+		activities = QuoJob.shared.activities
+			.filter({ $0.title != nil })
+			.sorted(by: { $0.title! < $1.title! })
 
 		activitySelect.reloadData()
 
@@ -70,7 +70,7 @@ class SettingsViewController: NSViewController {
 
 		if (value == "") {
 			userDefaults.removeObject(forKey: UserDefaults.Keys.activity)
-		} else if let activities = QuoJob.shared.activities, let activity = activities.first(where: { $0.title?.lowercased() == value }) {
+		} else if let activity = QuoJob.shared.activities.first(where: { $0.title?.lowercased() == value }) {
 			userDefaults.set(activity.id, forKey: UserDefaults.Keys.activity)
 		}
 	}
@@ -129,7 +129,7 @@ extension SettingsViewController: NSTextFieldDelegate {
 		if let comboBoxCell = comboBox.cell as? NSComboBoxCell {
 			let selectedValue = comboBoxCell.stringValue
 
-			activities = QuoJob.shared.activities!
+			activities = QuoJob.shared.activities
 				.filter({ $0.title!.lowercased().contains(selectedValue.lowercased()) })
 				.sorted(by: { $0.title! < $1.title! })
 
