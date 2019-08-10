@@ -393,13 +393,6 @@ extension QuoJob {
 		return login().done { result -> Void in
 			return when(fulfilled: self.fetchJobTypes(), self.fetchActivities())
 				.then { (resultTypes, resultActivities) -> Promise<Void> in
-					if let newActivities = (resultActivities["activities"] as? [[String: Any]])?
-						.filter({ $0["active"] as? Bool ?? false }),
-						newActivities.count > 0
-					{
-						results.append(["type": "activities", "order": 2, "text": "\(String(newActivities.count)) Tätigkeiten"])
-					}
-
 					return when(fulfilled: self.handleJobTypes(with: resultTypes), self.handleActivities(with: resultActivities))
 				}.then { _ -> Promise<[String: Any]> in
 					return self.fetchJobs()
@@ -418,13 +411,13 @@ extension QuoJob {
 				}.then { _ -> Promise<[String: Any]> in
 					return self.fetchTasks()
 				}.then { resultTasks -> Promise<Void> in
-					let jobsAll = self.jobs.filter({ $0.assigned }).map({ $0.id })
+					let jobsAll = self.jobs.filter({ $0.assigned && $0.bookable }).map({ $0.id })
 
 					if
 						let tasks = (resultTasks["jobtasks"] as? [[String: Any]])?.filter({ jobsAll.contains($0["job_id"] as? String) }),
 						tasks.count > 0
 					{
-						results.append(["type": "tasks", "order": 3, "text": "\(String(tasks.count)) Aufgaben"])
+						results.append(["type": "tasks", "order": 2, "text": "\(String(tasks.count)) Aufgaben"])
 					}
 
 					return self.handleTasks(with: resultTasks)
@@ -435,16 +428,11 @@ extension QuoJob {
 				}.then { result -> Promise<[String: Any]> in
 					return self.fetchTrackings(with: result)
 				}.then { resultTrackings -> Promise<Void> in
-					if let trackingsAll = (resultTrackings["hourbookings"] as? [[String: Any]])?.map({ $0["id"] as! String }) {
-						let trackingsEdited = self.trackings.filter({
-							guard let id = $0.id else { return false }
-							return trackingsAll.contains(id)
-						})
-
-						if (trackingsEdited.count > 0) {
-							results.append(["type": "trackings_new", "order": 1, "text": "\(String(trackingsAll.count - trackingsEdited.count)) Trackings hinzugefügt"])
-							results.append(["type": "trackings_edit", "order": 2, "text": "\(String(trackingsEdited.count)) Trackings aktualisiert"])
-						}
+					if
+						let trackings = (resultTrackings["hourbookings"] as? [[String: Any]])?.map({ $0["id"] as! String }),
+						trackings.count > 0
+					{
+						results.append(["type": "trackings", "order": 3, "text": "\(String(trackings.count)) Trackings"])
 					}
 
 					return self.handleTrackings(with: resultTrackings)
@@ -469,7 +457,7 @@ extension QuoJob {
 							return type["text"] as! String
 						}).joined(separator: ", ")
 
-						text += " importiert oder aktualisiert.\nFröhlichen Arbeitstag ;)"
+						text += " importiert oder aktualisiert."
 					}
 
 					GlobalNotification.shared.deliverNotification(withTitle: title, andInformationtext: text)
