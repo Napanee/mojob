@@ -48,6 +48,8 @@ class TrackingItem: NSView {
 			var title = tracking.custom_job
 			if let job = tracking.job, let jobTitle = job.title {
 				title = jobTitle
+			} else if let activity = tracking.activity, let activityTitle = activity.title {
+				title = activityTitle
 			}
 
 			startTimeLabel.stringValue = formatter.string(from: tracking.date_start!)
