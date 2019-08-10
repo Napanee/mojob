@@ -10,17 +10,24 @@ import Cocoa
 import Fabric
 import Crashlytics
 import LetsMove
+import Network
+import PromiseKit
 
 
 @NSApplicationMain
 class AppDelegate: NSObject {
 
-	var window: NSWindow!
-	var mainWindowController: MainWindowController?
-	private var timerSleep: Date?
-
 	@IBOutlet weak var syncDataMenuItem: NSMenuItem!
 	@IBOutlet weak var syncTrackingsMenuItem: NSMenuItem!
+
+	let monitor = NWPathMonitor()
+
+	var window: NSWindow!
+	var mainWindowController: MainWindowController?
+	var hasInternalConnection: Bool = false
+	var hasExternalConnection: Bool = false
+
+	private var timerSleep: Date?
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		Fabric.with([Crashlytics.self, Answers.self])
@@ -28,12 +35,19 @@ class AppDelegate: NSObject {
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
 
-		if (QuoJob.shared.lastSync?.jobs != nil) {
-			QuoJob.shared.syncData().then {
-				QuoJob.shared.syncTrackings()
-			}.catch { error in
-				GlobalNotification.shared.deliverNotLoggedIn()
-			}
+		if (QuoJob.shared.lastSync?.jobs == nil) {
+			QuoJob.shared.isLoggedIn().done({ _ in
+				GlobalNotification.shared.deliverNotification(
+					withTitle: "Initiale Daten werden geladen.",
+					andInformationtext: "Dies kann bis zu einer Minute dauern, aber ich sage Bescheid, wenn ich fertig bin 😉"
+				)
+			}).catch({ _ in })
+		}
+
+		QuoJob.shared.syncData().then { _ -> Promise<Void> in
+			return QuoJob.shared.syncTrackings()
+		}.catch { error in
+			GlobalNotification.shared.deliverNotLoggedIn()
 		}
 
 		PFMoveToApplicationsFolderIfNecessary()
@@ -44,6 +58,30 @@ class AppDelegate: NSObject {
 		NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onScreenDidWake(notification:)), name: NSWorkspace.screensDidWakeNotification, object: nil) // return from locked screen
 
 		NSUserNotificationCenter.default.delegate = self
+
+		let queue = DispatchQueue(label: "Monitor")
+		monitor.pathUpdateHandler = { path in
+			DispatchQueue.main.sync {
+				self.networkChanged()
+			}
+		}
+		monitor.start(queue: queue)
+	}
+
+	private func networkChanged() {
+		let status = monitor.currentPath.status
+
+		switch status {
+		case .satisfied:
+			print("satisfied")
+		case .unsatisfied:
+			print("unsatisfied")
+		case .requiresConnection:
+			print("requiresConnection")
+		}
+
+		if (status == .unsatisfied) { // offline
+		}
 	}
 
 	@IBAction func openWebappMenuItem(sender: NSMenuItem) {
@@ -60,7 +98,7 @@ class AppDelegate: NSObject {
 		}).catch({ error in
 			if
 				let presentedViewControllers = self.window.contentViewController?.presentedViewControllers,
-				let _ = presentedViewControllers.first(where: { $0.isKind(of: Login.self) })
+				presentedViewControllers.filter({ $0.isKind(of: Login.self) }).count > 0
 			{
 				return
 			}

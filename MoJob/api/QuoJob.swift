@@ -68,11 +68,7 @@ class QuoJob: NSObject {
 	var lastSync: Sync? = nil
 	var keychain: Keychain!
 	var userId: String!
-	var sessionId: String! = "" {
-		didSet {
-			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateSession"), object: nil)
-		}
-	}
+	var sessionId: String! = ""
 
 	let context = CoreDataHelper.shared.persistentContainer.viewContext
 	var _fetchedResultsControllerSync: NSFetchedResultsController<Sync>? = nil
@@ -445,7 +441,14 @@ extension QuoJob {
 
 		if keys.count > 0, let name = keys.first, let pass = try? keychain.get(name) {
 			print("keychain data found -> login with userdata from keychain")
-			return loginWithUserData(userName: name, password: pass!)
+			return Promise { seal in
+				loginWithUserData(userName: name, password: pass!).done({
+					seal.fulfill_()
+				}).catch({ error in
+					self.keychain[name] = nil
+					seal.reject(error)
+				})
+			}
 		}
 
 		print("no keychain data")

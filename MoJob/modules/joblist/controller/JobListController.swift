@@ -28,10 +28,6 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	@IBOutlet weak var favoritesView: NSView!
 	@IBOutlet weak var stackView: NSStackView!
-	@IBOutlet weak var errorMessage: NSTextField!
-	@IBOutlet weak var warningView: NSView!
-	@IBOutlet weak var warningStackView: NSStackView!
-	@IBOutlet weak var warningButton: NSButton!
 
 	@IBOutlet weak var filterField: FilterField!
 	@IBOutlet weak var favoritesCollectionHeight: NSLayoutConstraint!
@@ -98,19 +94,9 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		favoritesCollectionView.registerForDraggedTypes([NSPasteboard.PasteboardType.string])
 		favoritesCollectionView.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: true)
 
-		warningView.wantsLayer = true
-		warningButton.target = self
-		warningButton.action = #selector(onSync)
-
-		if (fetchedResultControllerJobs.fetchedObjects?.count == 0) {
-			showWarning(error: "Es sind keine Jobs vorhanden. Jetzt mit QuoJob synchronisieren?")
-		}
-
 		let context = CoreDataHelper.shared.persistentContainer.viewContext
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: .NSManagedObjectContextDidSave, object: context)
-
-		NotificationCenter.default.addObserver(self, selector: #selector(onSessionUpdate(notification:)), name: NSNotification.Name(rawValue: "updateSession"), object: nil)
 	}
 
 	override func viewDidAppear() {
@@ -133,28 +119,6 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 			if let _ = updates.first as? Job {
 				reloadFavorites()
 			}
-		}
-	}
-
-	func showWarning(error: String) {
-		if (QuoJob.shared.sessionId == "") {
-			warningButton.image = NSImage(named: .loginImage)
-			warningButton.title = "Jetzt einloggen"
-			warningButton.action = #selector(onLogin)
-		}
-
-		errorMessage.stringValue = error
-		warningView.layer?.backgroundColor = NSColor.systemYellow.withAlphaComponent(0.75).cgColor
-		stackView.insertView(warningView, at: 1, in: .top)
-
-		let leftConstraint = NSLayoutConstraint(item: warningView, attribute: .leading, relatedBy: .equal, toItem: warningView.superview, attribute: .leading, multiplier: 1, constant: 0)
-		let rightConstraint = NSLayoutConstraint(item: warningView, attribute: .trailing, relatedBy: .equal, toItem: warningView.superview, attribute: .trailing, multiplier: 1, constant: 0)
-		stackView.addConstraints([leftConstraint, rightConstraint])
-	}
-
-	func hideWarning() {
-		if let warningView = stackView.subviews.first(where: { $0.isEqual(warningView) }) {
-			warningView.removeFromSuperview()
 		}
 	}
 
@@ -230,35 +194,6 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 		let appDelegate = (NSApp.delegate as! AppDelegate)
 		appDelegate.window.contentViewController?.presentAsSheet(loginVC)
-	}
-
-	@objc func onSync() {
-		QuoJob.shared.syncData()
-			.done {
-				self.warningView.isHidden = true
-
-				try! self.fetchedResultControllerJobs.performFetch()
-
-				if let jobs = self.fetchedResultControllerJobs.fetchedObjects {
-					self.favorites = jobs.filter({ $0.isFavorite })
-
-					if (jobs.count > 0) {
-						self.favoritesView.isHidden = false
-					}
-				}
-			}
-			.catch { error in
-				//Handle error or give feedback to the user
-				print(error.localizedDescription)
-			}
-	}
-
-	@objc private func onSessionUpdate(notification: NSNotification) {
-		if (warningView.isHidden == false) {
-			warningButton.image = NSImage(named: .reloadImage)
-			warningButton.title = "Jetzt synchronisieren"
-			warningButton.action = #selector(onSync)
-		}
 	}
 
 }

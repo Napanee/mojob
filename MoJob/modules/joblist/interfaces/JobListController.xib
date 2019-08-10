@@ -7,7 +7,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="JobListController" customModule="MoJob" customModuleProvider="target">
             <connections>
-                <outlet property="errorMessage" destination="LIJ-At-gPX" id="Qub-oD-TMz"/>
                 <outlet property="favoritesCollectionHeight" destination="qCq-gF-9Yn" id="HkQ-3R-MqB"/>
                 <outlet property="favoritesCollectionView" destination="r6J-iM-kkg" id="7aL-js-ho2"/>
                 <outlet property="favoritesView" destination="jx2-FW-tWk" id="8JT-vf-v7j"/>
@@ -16,9 +15,6 @@
                 <outlet property="jobsCollectionView" destination="moy-nP-Roy" id="RMr-S4-ypW"/>
                 <outlet property="stackView" destination="Qfx-cX-e9q" id="zJZ-h8-cTg"/>
                 <outlet property="view" destination="7cr-Zy-Kh6" id="dVy-gk-whJ"/>
-                <outlet property="warningButton" destination="JIl-FB-WIt" id="gbA-TR-okS"/>
-                <outlet property="warningStackView" destination="22F-fk-Pv4" id="bmQ-rU-ccd"/>
-                <outlet property="warningView" destination="CTM-rG-bJc" id="R68-67-qNg"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -204,53 +200,8 @@
             </scroller>
             <point key="canvasLocation" x="-757.5" y="1188"/>
         </scrollView>
-        <customView id="CTM-rG-bJc">
-            <rect key="frame" x="0.0" y="0.0" width="356" height="71"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <stackView distribution="fill" orientation="vertical" alignment="trailing" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="22F-fk-Pv4">
-                    <rect key="frame" x="10" y="10" width="336" height="51"/>
-                    <subviews>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LIJ-At-gPX">
-                            <rect key="frame" x="-2" y="33" width="340" height="18"/>
-                            <textFieldCell key="cell" selectable="YES" alignment="left" title="Fehlercode: 2003" id="o4O-7C-wB5">
-                                <font key="font" metaFont="systemThin" size="14"/>
-                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JIl-FB-WIt">
-                            <rect key="frame" x="182" y="0.0" width="154" height="18"/>
-                            <buttonCell key="cell" type="bevel" title="Jetzt synchronisieren" bezelStyle="rounded" image="reload" imagePosition="left" alignment="center" imageScaling="proportionallyDown" inset="2" id="td0-II-6MC">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="LIJ-At-gPX" firstAttribute="width" secondItem="22F-fk-Pv4" secondAttribute="width" id="O9A-Y9-pEE"/>
-                    </constraints>
-                    <visibilityPriorities>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                    </visibilityPriorities>
-                    <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                    </customSpacing>
-                </stackView>
-            </subviews>
-            <constraints>
-                <constraint firstAttribute="trailing" secondItem="22F-fk-Pv4" secondAttribute="trailing" constant="10" id="PSJ-Wx-t4m"/>
-                <constraint firstItem="22F-fk-Pv4" firstAttribute="leading" secondItem="CTM-rG-bJc" secondAttribute="leading" constant="10" id="Pdi-RA-3qi"/>
-                <constraint firstAttribute="bottom" secondItem="22F-fk-Pv4" secondAttribute="bottom" constant="10" id="VO6-ab-cFn"/>
-                <constraint firstItem="22F-fk-Pv4" firstAttribute="top" secondItem="CTM-rG-bJc" secondAttribute="top" constant="10" id="mfL-hk-Y9X"/>
-            </constraints>
-            <point key="canvasLocation" x="-489" y="766"/>
-        </customView>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="reload" width="20" height="18"/>
     </resources>
 </document>
