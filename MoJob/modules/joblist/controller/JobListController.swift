@@ -297,6 +297,11 @@ extension JobListController: FilterFieldDelegate {
 				newScrollPos = currentScrollPos + itemPosMinY
 			} else if (itemPosMaxY > clipViewHeight) {
 				newScrollPos = currentScrollPos + (itemPosMaxY - clipViewHeight)
+
+				if (self.jobListSelectedIndex == 0) {
+					// @TODO: This would be solve nicer
+					newScrollPos = newScrollPos! + CGFloat(integerLiteral: 100)
+				}
 			}
 
 			if let newScrollPos = newScrollPos {
