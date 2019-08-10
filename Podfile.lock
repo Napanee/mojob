@@ -10,7 +10,6 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/CorePromise (6.8.3)
   - Sparkle (1.21.3)
-  - SwiftLint (0.31.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.8)
@@ -20,7 +19,6 @@ DEPENDENCIES:
   - LetsMove (~> 1.24)
   - PromiseKit/Alamofire (~> 6.0)
   - Sparkle (~> 1.21)
-  - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -31,7 +29,6 @@ SPEC REPOS:
     - LetsMove
     - PromiseKit
     - Sparkle
-    - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
@@ -41,8 +38,7 @@ SPEC CHECKSUMS:
   LetsMove: fefe56bc7bc7fb7d37049e28a14f297961229fc5
   PromiseKit: 94c6e781838c5bf4717677d0d882b0e7250c80fc
   Sparkle: 3f75576db8b0265adef36c43249d747f22d0b708
-  SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: cf543e2366327f041280dc796e081a582e1455df
+PODFILE CHECKSUM: c59d66b2c2418524f9ce96b3c898593d9b3206d0
 
 COCOAPODS: 1.6.0
