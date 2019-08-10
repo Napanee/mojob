@@ -344,12 +344,12 @@ extension QuoJob {
 	}
 
 	func loginWithUserData(userName: String, password: String) -> Promise<Void> {
-		let params = [
+		let params: [String: Any] = [
 			"user": userName,
 			"device_id": "foo",
 			"client_type": "MoJobApp",
 			"language": "de",
-			"password": password.MD5 as Any,
+			"password": password.MD5,
 			"min_version": 1,
 			"max_version": 6
 		]
