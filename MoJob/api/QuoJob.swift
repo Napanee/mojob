@@ -436,7 +436,10 @@ extension QuoJob {
 				}.then { resultTrackings -> Promise<Void> in
 					if
 						let trackingsAll = (resultTrackings["hourbookings"] as? [[String: Any]])?.map({ $0["id"] as! String }),
-						let trackingsEdited = self.trackings?.filter({ trackingsAll.contains($0.id!) }),
+						let trackingsEdited = self.trackings?.filter({
+							guard let id = $0.id else { return false }
+							return trackingsAll.contains(id)
+						}),
 						trackingsEdited.count > 0
 					{
 						results.append(["type": "trackings_new", "order": 1, "text": "\(String(trackingsAll.count - trackingsEdited.count)) Trackings hinzugefügt"])
