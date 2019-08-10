@@ -57,7 +57,7 @@ class SettingsViewController: NSViewController {
 		activitySelect.reloadData()
 
 		if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity) {
-			if let index = activities.index(where: { $0.id == activityId }) {
+			if let index = activities.firstIndex(where: { $0.id == activityId }) {
 				activitySelect.selectItem(at: index)
 			}
 		}

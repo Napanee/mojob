@@ -797,6 +797,7 @@
 				TargetAttributes = {
 					E821178B220E07B1003D7578 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1030;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -1274,7 +1275,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MoJob/MoJob-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1298,7 +1299,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MoJob/MoJob-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

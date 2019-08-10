@@ -369,7 +369,7 @@ extension QuoJob {
 
 		if keys.count > 0, let name = keys.first, let pass = try? keychain.get(name) {
 			return Promise { seal in
-				loginWithUserData(userName: name, password: pass!).done({
+				loginWithUserData(userName: name, password: pass).done({
 					seal.fulfill_()
 				}).catch({ error in
 					self.keychain[name] = nil
@@ -475,7 +475,7 @@ extension QuoJob {
 
 		var params = defaultParams
 
-		if let types = try? taskContext.fetch(fetchRequest) as? [Type], let type = types?.first, let lastSync = type.sync {
+		if let types = try? taskContext.fetch(fetchRequest) as? [Type], let type = types.first, let lastSync = type.sync {
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -490,7 +490,7 @@ extension QuoJob {
 
 		var params = defaultParams
 
-		if let jobs = try? taskContext.fetch(fetchRequest) as? [Job], let job = jobs?.first, let lastSync = job.sync {
+		if let jobs = try? taskContext.fetch(fetchRequest) as? [Job], let job = jobs.first, let lastSync = job.sync {
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -505,7 +505,7 @@ extension QuoJob {
 
 		var params = defaultParams
 
-		if let activities = try? taskContext.fetch(fetchRequest) as? [Activity], let activity = activities?.first, let lastSync = activity.sync {
+		if let activities = try? taskContext.fetch(fetchRequest) as? [Activity], let activity = activities.first, let lastSync = activity.sync {
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -520,7 +520,7 @@ extension QuoJob {
 
 		var params = defaultParams
 
-		if let tasks = try? taskContext.fetch(fetchRequest) as? [Task], let task = tasks?.first, let lastSync = task.sync {
+		if let tasks = try? taskContext.fetch(fetchRequest) as? [Task], let task = tasks.first, let lastSync = task.sync {
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -535,7 +535,7 @@ extension QuoJob {
 
 		var params = defaultParams
 
-		if let trackings = try? taskContext.fetch(fetchRequest) as? [Tracking], let tracking = trackings?.first, let lastSync = tracking.sync {
+		if let trackings = try? taskContext.fetch(fetchRequest) as? [Tracking], let tracking = trackings.first, let lastSync = tracking.sync {
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -554,7 +554,7 @@ extension QuoJob {
 			"user_id": userId
 		]
 
-		if let trackings = try? taskContext.fetch(fetchRequest) as? [Tracking], let tracking = trackings?.first, let lastSync = tracking.sync {
+		if let trackings = try? taskContext.fetch(fetchRequest) as? [Tracking], let tracking = trackings.first, let lastSync = tracking.sync {
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -652,7 +652,7 @@ extension QuoJob {
 					if let job = self.jobs.first(where: { $0.id == id }) {
 						let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Type")
 						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
-						let type = (try? self.context.fetch(fetchRequest) as! [Type])?.first
+						let type = (try? self.context.fetch(fetchRequest) as? [Type])?.first
 
 						job.assigned = assigned_user_ids.contains(self.userId)
 						job.bookable = bookable
@@ -663,7 +663,7 @@ extension QuoJob {
 					} else {
 						let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Type")
 						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
-						let type = (try? self.taskContext.fetch(fetchRequest) as! [Type])?.first
+						let type = (try? self.taskContext.fetch(fetchRequest) as? [Type])?.first
 
 						let entity = NSEntityDescription.entity(forEntityName: "Job", in: self.taskContext)
 						let job = NSManagedObject(entity: entity!, insertInto: self.taskContext)
@@ -673,7 +673,7 @@ extension QuoJob {
 							"number": number,
 							"assigned": assigned_user_ids.contains(self.userId),
 							"bookable": bookable,
-							"type": type!,
+							"type": type as Any,
 							"sync": syncDate as Any
 						]
 						job.setValuesForKeys(jobValues)
@@ -764,10 +764,10 @@ extension QuoJob {
 //			})
 
 			let fetchRequestJob = NSFetchRequest<NSFetchRequestResult>(entityName: "Job")
-			let jobs = try? taskContext.fetch(fetchRequestJob) as! [Job]
+			let jobs = try? taskContext.fetch(fetchRequestJob) as? [Job]
 
 			let fetchRequestActivity = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
-			let activities = try? taskContext.fetch(fetchRequestActivity) as! [Activity]
+			let activities = try? taskContext.fetch(fetchRequestActivity) as? [Activity]
 
 			self.taskContext.perform {
 				for item in taskItems {
@@ -843,7 +843,7 @@ extension QuoJob {
 				return
 			}
 
-			let trackingsBackground = (try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Tracking")) as! [Tracking])
+			let trackingsBackground = try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Tracking")) as? [Tracking]
 
 			self.taskContext.perform {
 				for deletedId in deleted {
@@ -869,13 +869,13 @@ extension QuoJob {
 				return
 			}
 
-			let jobsBackground = (try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as! [Job])
-			let tasksBackground = (try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as! [Task])
-			let activitiesBackground = (try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as! [Activity])
+			let jobsBackground = try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as? [Job]
+			let tasksBackground = try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as? [Task]
+			let activitiesBackground = try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
 
-			let jobs = (try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as! [Job])
-			let tasks = (try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as! [Task])
-			let activities = (try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as! [Activity])
+			let jobs = try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as? [Job]
+			let tasks = try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as? [Task]
+			let activities = try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
 
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 

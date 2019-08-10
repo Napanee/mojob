@@ -59,7 +59,7 @@ class QuoJobSelections: NSViewController {
 		jobSelect.reloadData()
 
 		if let job = tempTracking?.job ?? tracking?.job {
-			if let index = jobs.index(where: { $0.id == job.id }) {
+			if let index = jobs.firstIndex(where: { $0.id == job.id }) {
 				jobSelect.selectItem(at: index)
 			}
 		} else if let customJob = tempTracking?.custom_job ?? tracking?.custom_job {
@@ -83,7 +83,7 @@ class QuoJobSelections: NSViewController {
 		}
 
 		if let task = tempTracking?.task ?? tracking?.task {
-			if let index = tasks.index(where: { $0.id == task.id }) {
+			if let index = tasks.firstIndex(where: { $0.id == task.id }) {
 				taskSelect.selectItem(at: index)
 			}
 		}
@@ -107,11 +107,11 @@ class QuoJobSelections: NSViewController {
 		activitySelect.reloadData()
 
 		if let activity = tempTracking?.activity ?? tracking?.activity, let activityId = activity.id {
-			if let index = activities.index(where: { $0.id == activityId }) {
+			if let index = activities.firstIndex(where: { $0.id == activityId }) {
 				activitySelect.selectItem(at: index)
 			}
 		} else if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity) {
-			if let activity = activities.first(where: { $0.id == activityId }), let index = activities.index(where: { $0 == activity }) {
+			if let activity = activities.first(where: { $0.id == activityId }), let index = activities.firstIndex(where: { $0 == activity }) {
 				activitySelect.selectItem(at: index)
 				tempTracking?.activity = activity
 			}
