@@ -938,7 +938,7 @@ extension QuoJob {
 						tracking.activity = activityObject
 						tracking.date_start = dateStart
 						tracking.date_end = dateEnd
-						tracking.comment = text
+						tracking.comment = text != "" ? text : nil
 						tracking.exported = SyncStatus.success.rawValue
 						tracking.sync = syncDate
 					} else {
@@ -966,7 +966,7 @@ extension QuoJob {
 							"activity": activityObject,
 							"date_start": dateStart,
 							"date_end": dateEnd,
-							"comment": text,
+							"comment": text != "" ? text : nil,
 							"exported": SyncStatus.success.rawValue,
 							"sync": syncDate
 						]
