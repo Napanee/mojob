@@ -12,7 +12,7 @@ class TrackingViewController: QuoJobSelections {
 
 	let starFilled = NSImage(named: .starFilledImage)?.tint(color: NSColor.systemYellow)
 	let starEmpty = NSImage(named: .starEmptyImage)
-	private var observer: NSObjectProtocol!
+	private var observer: NSObjectProtocol?
 
 	var isFavorite: Bool {
 		get {
@@ -80,7 +80,10 @@ class TrackingViewController: QuoJobSelections {
 
 	override func viewDidDisappear() {
 		super.viewDidDisappear()
-		NotificationCenter.default.removeObserver(observer)
+
+		if let observer = observer {
+			NotificationCenter.default.removeObserver(observer)
+		}
 	}
 
 	func reRender() {
