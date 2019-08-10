@@ -73,9 +73,30 @@ class AppDelegate: NSObject {
 
 		switch status {
 		case .satisfied:
-			print("satisfied")
+			if (!hasExternalConnection || !hasInternalConnection) {
+				QuoJob.shared.isConnectionPossible().done({ result in
+					if (!self.hasInternalConnection) {
+						GlobalNotification.shared.deliverNotification(withTitle: "VPN-Verbindung gefunden.", andInformationtext: "Kann losgehen.")
+					}
+
+					self.hasInternalConnection = true
+				}).catch({ error in
+					if (self.hasInternalConnection) {
+						GlobalNotification.shared.deliverNotification(withTitle: "Keine VPN-Verbindung.", andInformationtext: error.localizedDescription)
+					}
+				})
+
+				if (!self.hasExternalConnection) {
+					GlobalNotification.shared.deliverNotification(withTitle: "Du bist online.")
+				}
+
+				hasExternalConnection = true
+			}
 		case .unsatisfied:
-			print("unsatisfied")
+			if (hasExternalConnection) {
+				GlobalNotification.shared.deliverNotification(withTitle: "Du bist offline.", andInformationtext: "Stelle eine Internetverbindung her, damit deine Trackings an QuoJob übertragen werden können.")
+				hasExternalConnection = false
+			}
 		case .requiresConnection:
 			print("requiresConnection")
 		}

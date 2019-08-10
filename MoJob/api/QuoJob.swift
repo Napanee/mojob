@@ -282,6 +282,8 @@ class QuoJob: NSObject {
 						switch error.localizedDescription {
 						case "A server with the specified hostname could not be found.":
 							seal.reject(ApiError.withMessage(errorMessages.vpnProblem))
+						case "The Internet connection appears to be offline.":
+							seal.reject(ApiError.withMessage(errorMessages.offline))
 						default:
 							seal.reject(ApiError.withMessage(error.localizedDescription))
 						}
@@ -388,6 +390,16 @@ class QuoJob: NSObject {
 // MARK: - login
 
 extension QuoJob {
+
+	func isConnectionPossible() -> Promise<Bool> {
+		return Promise { seal in
+			return fetch(as: .session_isConnectionPossible, with: [:]).done({ _ in
+				seal.fulfill(true)
+			}).catch({ error in
+				seal.reject(error)
+			})
+		}
+	}
 
 	func login() -> Promise<Bool> {
 		print("try to login")

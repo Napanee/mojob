@@ -59,6 +59,8 @@ class Login: NSViewController {
 			QuoJob.shared.syncData().done {
 				QuoJob.shared.syncTrackings().catch({ _ in })
 			}.catch({ _ in })
+		} else {
+			GlobalNotification.shared.deliverNotification(withTitle: "Erfolgreich eingeloggt.")
 		}
 
 		DispatchQueue.main.async {

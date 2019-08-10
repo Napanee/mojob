@@ -25,7 +25,7 @@ enum errorMessages {
 	static let disabled = "Dein QuoJob-Account ist gesperrt. Bitte wende dich an den QuoJob-Verantwortlichen."
 	static let unknown = "Unbekannter Fehler. Bitte wende dich an Martin."
 	static let vpnProblem = "Du bist nicht per VPN mit dem Moccu-Netzwerk verbunden. Deine Trackings werden nicht an QuoJob übertragen."
-	static let offline = "Du bist offline. Deine Trackings werden nicht an QuoJob übertragen."
+	static let offline = "Du bist offline. Stelle eine Internetverbindung her und versuche es noch einmal."
 }
 
 enum SyncStatus: String {
