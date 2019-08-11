@@ -66,8 +66,8 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avi-ie-qko">
-                    <rect key="frame" x="30" y="149" width="608" height="22"/>
-                    <buttonCell key="cell" type="bevel" title="Automatisch bei Systemstart öffnen" bezelStyle="regularSquare" image="radio-unchecked" imagePosition="left" alternateImage="radio-checked" inset="2" id="EV6-9z-GXW">
+                    <rect key="frame" x="30" y="151" width="608" height="20"/>
+                    <buttonCell key="cell" type="bevel" title="Automatisch bei Systemstart öffnen" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="EV6-9z-GXW">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -76,7 +76,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gpy-Y8-smW">
-                    <rect key="frame" x="28" y="102" width="89" height="17"/>
+                    <rect key="frame" x="28" y="104" width="89" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Notifications:" id="p87-RU-Pip">
                         <font key="font" metaFont="systemSemibold" size="13"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -84,7 +84,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7rz-r8-uRV">
-                    <rect key="frame" x="28" y="73" width="34" height="17"/>
+                    <rect key="frame" x="28" y="75" width="34" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="nach" id="HJ6-s4-tCn">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -92,7 +92,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ld3-AC-m5E" customClass="TextField" customModule="MoJob" customModuleProvider="target">
-                    <rect key="frame" x="65" y="71" width="40" height="26"/>
+                    <rect key="frame" x="65" y="73" width="40" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="XwG-6J-VKd"/>
                         <constraint firstAttribute="height" constant="26" id="lP6-UK-B1b"/>
@@ -107,7 +107,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WWP-Rb-FJj">
-                    <rect key="frame" x="28" y="37" width="34" height="17"/>
+                    <rect key="frame" x="28" y="39" width="34" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="nach" id="AhZ-XW-5ha">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -115,7 +115,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90N-kN-2ot" customClass="TextField" customModule="MoJob" customModuleProvider="target">
-                    <rect key="frame" x="65" y="35" width="40" height="26"/>
+                    <rect key="frame" x="65" y="37" width="40" height="26"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="26" id="Xlv-9c-C9i"/>
                         <constraint firstAttribute="width" constant="40" id="jmN-r9-xkN"/>
@@ -130,7 +130,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Myb-pC-Rc0">
-                    <rect key="frame" x="108" y="73" width="510" height="17"/>
+                    <rect key="frame" x="108" y="75" width="510" height="17"/>
                     <textFieldCell key="cell" selectable="YES" title="Minuten Inaktivität erinnern, dass kein Tracking läuft (0 eingeben zum Deaktivieren)" id="jsa-f0-J0r">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -138,7 +138,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hgA-X8-qTP">
-                    <rect key="frame" x="108" y="37" width="515" height="17"/>
+                    <rect key="frame" x="108" y="39" width="515" height="17"/>
                     <textFieldCell key="cell" selectable="YES" title="Stunden daran erinnern, dass das Tagessoll erfüllt ist (0 eingeben zum Deaktivieren)" id="4ks-Up-jRA">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -183,7 +183,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="radio-checked" width="21" height="22"/>
-        <image name="radio-unchecked" width="21" height="22"/>
+        <image name="checked" width="23.5" height="20"/>
+        <image name="unchecked" width="23.5" height="20"/>
     </resources>
 </document>
