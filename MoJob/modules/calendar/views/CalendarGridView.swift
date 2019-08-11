@@ -8,13 +8,15 @@
 
 import Cocoa
 
+
 class CalendarGridView: NSGridView {
 
 	private let calendar = NSCalendar.current
 	private let empty = NSGridCell.emptyContentView
 	private let bgShapeLayer = CAShapeLayer()
 	private var gradientCircle = GradientCircle()
-	private var currentSelection = Date()
+	private var activeIndicator = ActiveIndicator()
+	private var currentSelection = Date().startOfDay!
 
 	private var observer: NSObjectProtocol?
 
@@ -38,7 +40,6 @@ class CalendarGridView: NSGridView {
 		subviews.removeAll()
 
 		gradientCircle.frame = NSRect(x: frame.maxX, y: frame.maxY, width: 150, height: 150)
-
 		subviews.insert(gradientCircle, at: 0)
 
 		// row with titles
@@ -76,11 +77,43 @@ class CalendarGridView: NSGridView {
 			self.subviews.forEach({
 				if let view = $0 as? CalendarDay, let viewDay = view.day {
 					view.isSelected = viewDay == day
+
+					if (viewDay == day) {
+						let frame = view.frame
+						let prevFrame = self.activeIndicator.frame
+
+						self.activeIndicator.setFrameSize(frame.size)
+						if (prevFrame.width > 0) {
+							NSAnimationContext.beginGrouping()
+							NSAnimationContext.current.duration = 0.5
+							self.activeIndicator.animator().setFrameOrigin(frame.origin)
+							NSAnimationContext.endGrouping()
+						} else {
+							self.activeIndicator.setFrameOrigin(frame.origin)
+						}
+					}
 				}
 			})
 
 			self.currentSelection = day
 		})
+	}
+
+	override func draw(_ dirtyRect: NSRect) {
+		super.draw(dirtyRect)
+
+		if let view = self.subviews.first(where: {
+			if (($0 as? CalendarDay)?.day == currentSelection) {
+				return true
+			}
+
+			return false
+		}), activeIndicator.frame.size.width == 0 {
+			let frame = view.frame
+
+			activeIndicator.setFrameOrigin(frame.origin)
+			activeIndicator.setFrameSize(frame.size)
+		}
 	}
 
 	func reloadData(withDate date: Date) {
@@ -125,6 +158,9 @@ class CalendarGridView: NSGridView {
 
 			day = calendar.date(byAdding: .day, value: 1, to: day!)
 		}
+
+		activeIndicator.setFrameSize(NSSize(width: 0, height: 0))
+		subviews.append(activeIndicator)
 	}
 
 	private func dayLabel(with dayNumber: String) -> NSTextField {

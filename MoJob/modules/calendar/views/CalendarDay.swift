@@ -21,10 +21,8 @@ class CalendarDay: NSView {
 	var isSelected: Bool? {
 		didSet {
 			if let isSelected = isSelected, isSelected {
-				contentView.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.2).cgColor
 				dayLabel.font = NSFont.systemFont(ofSize: 20, weight: .light)
 			} else {
-				contentView.layer?.backgroundColor = CGColor.clear
 				dayLabel.font = NSFont.systemFont(ofSize: 20, weight: .ultraLight)
 			}
 		}
