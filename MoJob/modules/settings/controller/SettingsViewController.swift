@@ -133,8 +133,9 @@ extension SettingsViewController: NSTextFieldDelegate {
 				.filter({ $0.title!.lowercased().contains(selectedValue.lowercased()) })
 				.sorted(by: { $0.title! < $1.title! })
 
+			comboBox.reloadData()
+
 			if (activities.count > 0) {
-				comboBox.reloadData()
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		}
