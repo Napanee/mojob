@@ -24,6 +24,8 @@ class CalendarController: NSViewController {
 			let isCurrentMonth = currentDate!.isInMonth(of: Date())
 			nextMonthButton.isEnabled = !isCurrentMonth
 			nextYearButton.isEnabled = !isCurrentMonth
+
+			calendarGridView.reloadData(withDate: currentDate!)
 		}
 	}
 
@@ -49,23 +51,19 @@ class CalendarController: NSViewController {
 
 	@IBAction func prevMonthButton(_ sender: NSButton) {
 		currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate ?? Date())!
-		calendarGridView.reloadData(withDate: currentDate!)
 	}
 
 	@IBAction func nextMonthButton(_ sender: NSButton) {
 		currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate ?? Date())!
-		calendarGridView.reloadData(withDate: currentDate!)
 	}
 
 	@IBAction func prevYearButton(_ sender: NSButton) {
 		currentDate = Calendar.current.date(byAdding: .year, value: -1, to: currentDate ?? Date())!
-		calendarGridView.reloadData(withDate: currentDate!)
 	}
 
 	@IBAction func nextYearButton(_ sender: NSButton) {
 		let nextDate = Calendar.current.date(byAdding: .year, value: 1, to: currentDate ?? Date())!
 		currentDate = nextDate.compare(Date()) == ComparisonResult.orderedAscending ? nextDate : Date()
-		calendarGridView.reloadData(withDate: currentDate!)
 	}
 
 	// MARK: - Observer
