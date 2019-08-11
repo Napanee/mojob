@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class CalendarSplitViewController: SplitViewController {
+class CalendarSplitViewController: EditorSplitViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()

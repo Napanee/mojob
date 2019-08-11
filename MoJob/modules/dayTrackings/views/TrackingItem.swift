@@ -180,7 +180,7 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onContextEdit() {
-		if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
+		if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController {
 			contentViewController.showEditor(with: tracking)
 		}
 	}
@@ -206,7 +206,7 @@ class TrackingItem: NSView {
 	override func mouseDown(with event: NSEvent) {
 //		if let theHitView = view.window?.contentView?.hitTest((view.window?.mouseLocationOutsideOfEventStream)!) {
 			if (event.clickCount == 2) {
-				if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
+				if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController {
 					contentViewController.showEditor(with: tracking)
 				}
 			}

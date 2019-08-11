@@ -85,6 +85,7 @@
 		E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2B22FFA0130014AFE4 /* CalendarWeek.swift */; };
 		E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2D22FFCBFB0014AFE4 /* CalendarGridView.swift */; };
 		E8D35A302300487E0014AFE4 /* GradientCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */; };
+		E8D35A3223008B0D0014AFE4 /* EditorSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A3123008B0D0014AFE4 /* EditorSplitViewController.swift */; };
 		E8E950892232C09F0070F57E /* EditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950882232C09F0070F57E /* EditorController.swift */; };
 		E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E9508A2232C0AF0070F57E /* EditorController.xib */; };
 		E8E9508F2232D62A0070F57E /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9508E2232D62A0070F57E /* TextField.swift */; };
@@ -220,6 +221,7 @@
 		E8D35A2B22FFA0130014AFE4 /* CalendarWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeek.swift; sourceTree = "<group>"; };
 		E8D35A2D22FFCBFB0014AFE4 /* CalendarGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGridView.swift; sourceTree = "<group>"; };
 		E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientCircle.swift; sourceTree = "<group>"; };
+		E8D35A3123008B0D0014AFE4 /* EditorSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSplitViewController.swift; sourceTree = "<group>"; };
 		E8E950882232C09F0070F57E /* EditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorController.swift; sourceTree = "<group>"; };
 		E8E9508A2232C0AF0070F57E /* EditorController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorController.xib; sourceTree = "<group>"; };
 		E8E9508E2232D62A0070F57E /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				E82117C4220E0FBD003D7578 /* SplitViewController.swift */,
 				E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */,
 				E8D35A2322FF86070014AFE4 /* CalendarSplitViewController.swift */,
+				E8D35A3123008B0D0014AFE4 /* EditorSplitViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -1145,6 +1148,7 @@
 				E8138A2622525BBF008DAA62 /* extensions.swift in Sources */,
 				E8E950892232C09F0070F57E /* EditorController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
+				E8D35A3223008B0D0014AFE4 /* EditorSplitViewController.swift in Sources */,
 				E8A270442210C3100030B61C /* TimerCount.swift in Sources */,
 				E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */,
 				E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */,
