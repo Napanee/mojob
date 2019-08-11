@@ -29,7 +29,7 @@ class TrackingSplitViewController: EditorSplitViewController {
 				toItem: leftController.view.superview,
 				attribute: .width,
 				multiplier: 1,
-				constant: 300
+				constant: 460
 			)
 		)
 
