@@ -18,86 +18,54 @@ class DayTrackingsController: NSViewController {
 	@IBOutlet weak var totalTimeForDay: NSTextField!
 	@IBOutlet weak var trackingsStackView: TrackingsStackView!
 
-	let context = CoreDataHelper.shared.persistentContainer.viewContext
-	var _fetchedResultsControllerTrackings: NSFetchedResultsController<Tracking>? = nil
-	var fetchedResultControllerTrackings: NSFetchedResultsController<Tracking> {
-		if (_fetchedResultsControllerTrackings != nil) {
-			return _fetchedResultsControllerTrackings!
-		}
-
-		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-
-		var compoundPredicates = [NSPredicate]()
-		compoundPredicates.append(NSPredicate(format: "date_end != nil"))
-
-		if
-			let todayStart = Date().startOfDay,
-			let todayEnd = Date().endOfDay
-		{
-			let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
-				NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [todayStart, todayEnd]),
-				NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd])
-			])
-			compoundPredicates.append(compound)
-		}
-
-		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
-
-		fetchRequest.sortDescriptors = [
-			NSSortDescriptor(key: "date_start", ascending: true)
-		]
-
-		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-
-		_fetchedResultsControllerTrackings = resultsController
-
-		do {
-			try _fetchedResultsControllerTrackings!.performFetch()
-		} catch {
-			let nserror = error as NSError
-			fatalError("Unresolved error \(nserror)")
-		}
-
-		return _fetchedResultsControllerTrackings!
-	}
+	private var currentDate: Date = Date()
+	private var observer: NSObjectProtocol?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let trackings = fetchedResultControllerTrackings.fetchedObjects {
+		if let trackings = CoreDataHelper.trackings(for: currentDate) {
 			trackingsStackView.reloadData(with: trackings)
-
-			let sum = trackings.map({ $0.date_end!.timeIntervalSince($0.date_start!) }).reduce(0.0, { $0 + $1 })
-			totalTimeForDay.stringValue = secondsToHoursMinutesSeconds(sec: Int(sum))
 		}
 
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
+		changeDate(with: currentDate)
+
+		let context = CoreDataHelper.context
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 
-		let today = Date()
-		dateDay.stringValue = today.day
-		dateMonth.stringValue = today.month
-		dateYear.stringValue = today.year
-
 		NotificationCenter.default.addObserver(self, selector: #selector(calendarDayChanged), name: .NSCalendarDayChanged, object: nil)
+
+		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "calendar:changedDate"), object: nil, queue: nil, using: { notification in
+			guard notification.name == .init("calendar:changedDate"), let date = notification.object as? [String: Any], let day = date["day"] as? Date else{ return }
+
+			self.currentDate = day
+			self.changeDate(with: day)
+		})
 	}
 
-	@objc func calendarDayChanged() {
+	private func changeDate(with date: Date) {
 		DispatchQueue.main.async {
-			let today = Date()
-			self.dateDay.stringValue = today.day
-			self.dateMonth.stringValue = today.month
-			self.dateYear.stringValue = today.year
+			self.dateDay.stringValue = date.day
+			self.dateMonth.stringValue = date.month
+			self.dateYear.stringValue = date.year
 
-			self._fetchedResultsControllerTrackings = nil
-			if let trackings = self.fetchedResultControllerTrackings.fetchedObjects {
+			if let trackings = CoreDataHelper.trackings(for: date) {
 				self.trackingsStackView.reloadData(with: trackings)
 
 				let sum = trackings.map({ $0.date_end!.timeIntervalSince($0.date_start!) }).reduce(0.0, { $0 + $1 })
-				self.totalTimeForDay.stringValue = secondsToHoursMinutesSeconds(sec: Int(sum))
+				let formatter = DateComponentsFormatter()
+				formatter.unitsStyle = .abbreviated
+				formatter.zeroFormattingBehavior = .pad
+				formatter.allowedUnits = [.hour, .minute]
+
+				self.totalTimeForDay.stringValue = formatter.string(from: sum)!
 			}
 		}
+	}
+
+	@objc func calendarDayChanged() {
+		changeDate(with: Date())
 	}
 
 	@IBAction func loginButton(_ sender: NSButton) {
@@ -111,23 +79,22 @@ class DayTrackingsController: NSViewController {
 
 	@objc func managedObjectContextDidSave(notification: NSNotification) {
 		guard let userInfo = notification.userInfo else { return }
-		try! fetchedResultControllerTrackings.performFetch()
-		guard let trackings = fetchedResultControllerTrackings.fetchedObjects else { return }
+		guard let trackings = CoreDataHelper.trackings(for: currentDate) else { return }
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
 			trackingsStackView.reloadData(with: trackings)
+			changeDate(with: currentDate)
 		}
 
 		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
 			trackingsStackView.reloadData(with: trackings)
+			changeDate(with: currentDate)
 		}
 
 		if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
 			trackingsStackView.reloadData(with: trackings)
+			changeDate(with: currentDate)
 		}
-
-		let sum = trackings.map({ $0.date_end!.timeIntervalSince($0.date_start!) }).reduce(0.0, { $0 + $1 })
-		totalTimeForDay.stringValue = secondsToHoursMinutesSeconds(sec: Int(sum))
 	}
 
 }

@@ -178,4 +178,52 @@ class CoreDataHelper {
 		return container
 	}()
 
+	static func trackings(for date: Date) -> [Tracking]? {
+		let context = CoreDataHelper.shared.persistentContainer.viewContext
+		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+
+		var compoundPredicates = [NSPredicate]()
+		compoundPredicates.append(NSPredicate(format: "date_end != nil"))
+
+		if
+			let todayStart = date.startOfDay,
+			let todayEnd = date.endOfDay
+		{
+			let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
+				NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [todayStart, todayEnd]),
+				NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd])
+				])
+			compoundPredicates.append(compound)
+		}
+
+		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
+
+		do {
+			return try context.fetch(fetchRequest)
+		} catch let error as NSError {
+			print("Could not fetch. \(error), \(error.userInfo)")
+			return nil
+		}
+	}
+
+	static func seconds(for date: Date) -> Double? {
+		let startOfDay = date.startOfDay!
+		let todayTrackings = CoreDataHelper.trackings(for: date)?.map({ (tracking) -> TimeInterval in
+			var dateStart = tracking.date_start!
+			let dateEnd = tracking.date_end!
+
+			if (tracking.date_start?.compare(startOfDay) == ComparisonResult.orderedAscending) {
+				dateStart = startOfDay
+			}
+
+			return dateEnd.timeIntervalSince(dateStart)
+		}).reduce(0, +)
+
+		if let todayTrackings = todayTrackings {
+			return todayTrackings
+		}
+
+		return 0
+	}
+
 }
