@@ -14,6 +14,9 @@ class CalendarGridView: NSGridView {
 	private let empty = NSGridCell.emptyContentView
 	private let bgShapeLayer = CAShapeLayer()
 	private var gradientCircle = GradientCircle()
+	private var currentSelection = Date()
+
+	private var observer: NSObjectProtocol?
 
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -66,6 +69,18 @@ class CalendarGridView: NSGridView {
 
 			return $0
 		}
+
+		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "calendar:changedDate"), object: nil, queue: nil, using: { notification in
+			guard notification.name == .init("calendar:changedDate"), let date = notification.object as? [String: Any], let day = date["day"] as? Date else{ return }
+
+			self.subviews.forEach({
+				if let view = $0 as? CalendarDay, let viewDay = view.day {
+					view.isSelected = viewDay == day
+				}
+			})
+
+			self.currentSelection = day
+		})
 	}
 
 	func reloadData(withDate date: Date) {
@@ -96,6 +111,11 @@ class CalendarGridView: NSGridView {
 			let content = CalendarDay()
 			content.day = day
 			content.isCurrentMonth = day!.isInMonth(of: date)
+
+			if calendar.dateComponents([.day, .month, .year], from: currentSelection) == calendar.dateComponents([.day, .month, .year], from: day!) {
+				content.isSelected = true
+			}
+
 			gridRow.append(content)
 
 			if (columnNumber == 6) {

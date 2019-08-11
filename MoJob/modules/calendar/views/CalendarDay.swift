@@ -18,6 +18,18 @@ class CalendarDay: NSView {
 
 	let calendar = Calendar.current
 
+	var isSelected: Bool? {
+		didSet {
+			if let isSelected = isSelected, isSelected {
+				contentView.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.2).cgColor
+				dayLabel.font = NSFont.systemFont(ofSize: 20, weight: .light)
+			} else {
+				contentView.layer?.backgroundColor = CGColor.clear
+				dayLabel.font = NSFont.systemFont(ofSize: 20, weight: .ultraLight)
+			}
+		}
+	}
+
 	var day: Date? {
 		didSet {
 			if let sum = CoreDataHelper.seconds(for: day!) {
@@ -36,10 +48,7 @@ class CalendarDay: NSView {
 
 	var isCurrentMonth: Bool? {
 		didSet {
-			if calendar.dateComponents([.day, .month, .year], from: Date()) == calendar.dateComponents([.day, .month, .year], from: day!) {
-				contentView.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.5).cgColor
-				dayLabel.font = NSFont.systemFont(ofSize: 20, weight: .regular)
-			} else if let isCurrentMonth = isCurrentMonth, isCurrentMonth {
+			if let isCurrentMonth = isCurrentMonth, isCurrentMonth {
 				dayLabel.textColor = NSColor.labelColor
 				timeLabel.textColor = NSColor.secondaryLabelColor
 			} else {
@@ -68,7 +77,6 @@ class CalendarDay: NSView {
 		contentView.frame = self.bounds
 		contentView.autoresizingMask = [.width, .height]
 		contentView.wantsLayer = true
-//		contentView.layer?.backgroundColor = NSColor.white.cgColor
 
 		dayLabel.font = NSFont.systemFont(ofSize: 20, weight: .ultraLight)
 
