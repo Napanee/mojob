@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CalendarController" customModule="MoJob" customModuleProvider="target">
+            <connections>
+                <outlet property="calendarGridView" destination="K7N-SG-7Ol" id="iXb-7h-V3o"/>
+                <outlet property="currentMonth" destination="7Lh-sx-CAr" id="FqS-jq-Fh2"/>
+                <outlet property="nextMonthButton" destination="DVv-CT-Qwg" id="dhD-3h-Dib"/>
+                <outlet property="nextYearButton" destination="GZS-4w-nEo" id="nKw-3z-yG4"/>
+                <outlet property="view" destination="c22-O7-iKe" id="fm2-KU-XEQ"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="460" height="326"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Lh-sx-CAr">
+                    <rect key="frame" x="28" y="260" width="160" height="36"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="August 2019" id="iVa-Si-I2D">
+                        <font key="font" metaFont="systemUltraLight" size="30"/>
+                        <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="gYq-mz-3Fm">
+                    <rect key="frame" x="30" y="30" width="400" height="200"/>
+                    <subviews>
+                        <gridView xPlacement="leading" yPlacement="bottom" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="K7N-SG-7Ol" customClass="CalendarGridView" customModule="MoJob" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="400" height="200"/>
+                            <rows>
+                                <gridRow id="TpB-9r-nJs"/>
+                            </rows>
+                            <columns>
+                                <gridColumn id="4pr-pc-BPu"/>
+                            </columns>
+                            <gridCells>
+                                <gridCell row="TpB-9r-nJs" column="4pr-pc-BPu" id="Mwx-kY-eh5"/>
+                            </gridCells>
+                        </gridView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="400" id="MRW-iS-Mxg"/>
+                        <constraint firstItem="K7N-SG-7Ol" firstAttribute="width" secondItem="gYq-mz-3Fm" secondAttribute="width" id="Nbl-ZD-Mht"/>
+                        <constraint firstItem="K7N-SG-7Ol" firstAttribute="centerY" secondItem="gYq-mz-3Fm" secondAttribute="centerY" id="WpR-0L-UIb"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="XVt-Gc-kDW"/>
+                        <constraint firstItem="K7N-SG-7Ol" firstAttribute="centerX" secondItem="gYq-mz-3Fm" secondAttribute="centerX" id="icR-4k-Nou"/>
+                        <constraint firstItem="K7N-SG-7Ol" firstAttribute="height" secondItem="gYq-mz-3Fm" secondAttribute="height" id="n6a-eH-ruy"/>
+                    </constraints>
+                </customView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lQb-nv-wGH">
+                    <rect key="frame" x="323" y="260" width="36" height="36"/>
+                    <buttonCell key="cell" type="bevel" title="prev month" bezelStyle="rounded" image="left-single" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Bh3-7s-4FK">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="prevMonthButton:" target="-2" id="SSi-bb-ENe"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DVv-CT-Qwg">
+                    <rect key="frame" x="369" y="260" width="36" height="36"/>
+                    <buttonCell key="cell" type="bevel" title="next month" bezelStyle="rounded" image="right-single" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="p9E-a4-zEp">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="nextMonthButton:" target="-2" id="PFv-Lj-sZ7"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GZS-4w-nEo">
+                    <rect key="frame" x="405" y="260" width="25" height="25"/>
+                    <buttonCell key="cell" type="bevel" title="next year" bezelStyle="regularSquare" image="right-double" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="ACY-Uz-NAA">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="nextYearButton:" target="-2" id="tUC-Fd-Ipk"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hnV-8h-nNO">
+                    <rect key="frame" x="298" y="260" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="m4J-e5-rct"/>
+                        <constraint firstAttribute="width" constant="25" id="m9x-0j-YuO"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="prev year" bezelStyle="rounded" image="left-double" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Imc-St-DoN">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="prevYearButton:" target="-2" id="USK-lz-DHC"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="GZS-4w-nEo" firstAttribute="width" secondItem="hnV-8h-nNO" secondAttribute="width" id="0YK-GD-OjW"/>
+                <constraint firstItem="7Lh-sx-CAr" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="2dc-SW-5SS"/>
+                <constraint firstItem="GZS-4w-nEo" firstAttribute="height" secondItem="hnV-8h-nNO" secondAttribute="height" id="GEk-tt-TxC"/>
+                <constraint firstItem="GZS-4w-nEo" firstAttribute="leading" secondItem="DVv-CT-Qwg" secondAttribute="trailing" id="Hdq-3K-8bb"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="gYq-mz-3Fm" secondAttribute="bottom" priority="490" constant="30" id="KD5-Bb-hAt"/>
+                <constraint firstItem="DVv-CT-Qwg" firstAttribute="centerY" secondItem="7Lh-sx-CAr" secondAttribute="centerY" id="QcN-e8-79x"/>
+                <constraint firstItem="lQb-nv-wGH" firstAttribute="leading" secondItem="hnV-8h-nNO" secondAttribute="trailing" id="Qfb-XI-tM9"/>
+                <constraint firstItem="gYq-mz-3Fm" firstAttribute="top" secondItem="7Lh-sx-CAr" secondAttribute="bottom" constant="30" id="TmO-Aw-p0v"/>
+                <constraint firstItem="lQb-nv-wGH" firstAttribute="centerY" secondItem="7Lh-sx-CAr" secondAttribute="centerY" id="UdT-xe-9OW"/>
+                <constraint firstItem="hnV-8h-nNO" firstAttribute="bottom" secondItem="lQb-nv-wGH" secondAttribute="bottom" id="Xpu-Yw-v70"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gYq-mz-3Fm" secondAttribute="bottom" priority="510" constant="30" id="ZNH-kS-n6G"/>
+                <constraint firstItem="GZS-4w-nEo" firstAttribute="bottom" secondItem="DVv-CT-Qwg" secondAttribute="bottom" id="aj9-ae-SIc"/>
+                <constraint firstItem="DVv-CT-Qwg" firstAttribute="leading" secondItem="lQb-nv-wGH" secondAttribute="trailing" constant="10" id="ied-3S-8pv"/>
+                <constraint firstItem="7Lh-sx-CAr" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="jeL-pB-TbJ"/>
+                <constraint firstAttribute="trailing" secondItem="gYq-mz-3Fm" secondAttribute="trailing" constant="30" id="nie-zg-598"/>
+                <constraint firstItem="GZS-4w-nEo" firstAttribute="trailing" secondItem="gYq-mz-3Fm" secondAttribute="trailing" id="uhf-Ry-Non"/>
+                <constraint firstItem="gYq-mz-3Fm" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="vLk-0g-mJG"/>
+            </constraints>
+            <point key="canvasLocation" x="84" y="291"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="left-double" width="36" height="36"/>
+        <image name="left-single" width="36" height="36"/>
+        <image name="right-double" width="36" height="36"/>
+        <image name="right-single" width="36" height="36"/>
+    </resources>
+</document>

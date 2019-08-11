@@ -35,6 +35,7 @@ extension NSNib.Name {
 	static let dayTrackingsControllerNib = "DayTrackingsController"
 	static let editorControllerNib = "EditorController"
 	static let wakeUpController = "WakeUp"
+	static let calendarControllerNib = "CalendarController"
 }
 
 extension NSImage.Name {
@@ -45,6 +46,8 @@ extension NSImage.Name {
 	static let reloadImage = "reload"
 	static let settingsActiveImage = "settings-active"
 	static let settingsImage = "settings"
+	static let calendarActiveImage = "calendar-active"
+	static let calendarImage = "calendar"
 	static let starEmptyImage = "star-empty"
 	static let starFilledImage = "star-filled"
 	static let stopImage = "stop"
@@ -116,6 +119,15 @@ extension Date {
 		return dateFormatter.string(from: self)
 	}
 
+	var startOfMonth: Date? {
+		return Calendar.current.date(from: Calendar.current.dateComponents([.month, .year], from: self))
+	}
+
+	var endOfMonth: Date? {
+		let firstDayOfNextMonth = Calendar.current.date(byAdding: .month, value: 1, to: self.startOfMonth!)
+		return Calendar.current.date(byAdding: .second, value: -1, to: firstDayOfNextMonth!)
+	}
+
 	var startOfDay: Date? {
 		return Calendar.current.date(from: Calendar.current.dateComponents([.day, .month, .year], from: self))
 	}
@@ -130,5 +142,11 @@ extension Date {
 
 	var endOfWeek: Date? {
 		return Calendar.current.date(byAdding: .day, value: 7, to: self.startOfWeek!)
+	}
+
+	func isInMonth(of date: Date) -> Bool {
+		let selfMonth = Calendar.current.dateComponents([.month, .year], from: self)
+		let dateMonth = Calendar.current.dateComponents([.month, .year], from: date)
+		return selfMonth == dateMonth
 	}
 }

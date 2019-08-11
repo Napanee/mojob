@@ -76,6 +76,15 @@
 		E8CACC782211DE6300675688 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
 		E8D35A1222FF54C50014AFE4 /* DeleteTrackingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */; };
 		E8D35A1622FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1522FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel */; };
+		E8D35A1C22FF5B0C0014AFE4 /* CalendarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A1B22FF5B0C0014AFE4 /* CalendarController.xib */; };
+		E8D35A1E22FF5B3B0014AFE4 /* CalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1D22FF5B3B0014AFE4 /* CalendarController.swift */; };
+		E8D35A2022FF6AC80014AFE4 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1F22FF6AC80014AFE4 /* CalendarDay.swift */; };
+		E8D35A2222FF6BA20014AFE4 /* CalendarDay.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A2122FF6BA20014AFE4 /* CalendarDay.xib */; };
+		E8D35A2422FF86070014AFE4 /* CalendarSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2322FF86070014AFE4 /* CalendarSplitViewController.swift */; };
+		E8D35A2622FF87480014AFE4 /* CalendarWeek.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A2522FF87480014AFE4 /* CalendarWeek.xib */; };
+		E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2B22FFA0130014AFE4 /* CalendarWeek.swift */; };
+		E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2D22FFCBFB0014AFE4 /* CalendarGridView.swift */; };
+		E8D35A302300487E0014AFE4 /* GradientCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */; };
 		E8E950892232C09F0070F57E /* EditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950882232C09F0070F57E /* EditorController.swift */; };
 		E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E9508A2232C0AF0070F57E /* EditorController.xib */; };
 		E8E9508F2232D62A0070F57E /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9508E2232D62A0070F57E /* TextField.swift */; };
@@ -202,6 +211,15 @@
 		E8D35A0F22FF530F0014AFE4 /* MoJob_002.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoJob_002.xcdatamodel; sourceTree = "<group>"; };
 		E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTrackingPolicy.swift; sourceTree = "<group>"; };
 		E8D35A1522FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_002.xcmappingmodel; sourceTree = "<group>"; };
+		E8D35A1B22FF5B0C0014AFE4 /* CalendarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarController.xib; sourceTree = "<group>"; };
+		E8D35A1D22FF5B3B0014AFE4 /* CalendarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarController.swift; sourceTree = "<group>"; };
+		E8D35A1F22FF6AC80014AFE4 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
+		E8D35A2122FF6BA20014AFE4 /* CalendarDay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarDay.xib; sourceTree = "<group>"; };
+		E8D35A2322FF86070014AFE4 /* CalendarSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSplitViewController.swift; sourceTree = "<group>"; };
+		E8D35A2522FF87480014AFE4 /* CalendarWeek.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarWeek.xib; sourceTree = "<group>"; };
+		E8D35A2B22FFA0130014AFE4 /* CalendarWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeek.swift; sourceTree = "<group>"; };
+		E8D35A2D22FFCBFB0014AFE4 /* CalendarGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGridView.swift; sourceTree = "<group>"; };
+		E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientCircle.swift; sourceTree = "<group>"; };
 		E8E950882232C09F0070F57E /* EditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorController.swift; sourceTree = "<group>"; };
 		E8E9508A2232C0AF0070F57E /* EditorController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorController.xib; sourceTree = "<group>"; };
 		E8E9508E2232D62A0070F57E /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -357,6 +375,7 @@
 				E82117BE220E0B20003D7578 /* MainWindowController.swift */,
 				E82117C4220E0FBD003D7578 /* SplitViewController.swift */,
 				E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */,
+				E8D35A2322FF86070014AFE4 /* CalendarSplitViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -373,6 +392,7 @@
 		E82117C6220E1116003D7578 /* modules */ = {
 			isa = PBXGroup;
 			children = (
+				E8D35A1722FF5A950014AFE4 /* calendar */,
 				E84FCE3A22FC3C8C002E41B4 /* wakeUp */,
 				E850996D22F6FD9800068ED8 /* settings */,
 				E863306122481B8100A8E946 /* login */,
@@ -656,6 +676,44 @@
 			path = Migrations;
 			sourceTree = "<group>";
 		};
+		E8D35A1722FF5A950014AFE4 /* calendar */ = {
+			isa = PBXGroup;
+			children = (
+				E8D35A1A22FF5ABC0014AFE4 /* controller */,
+				E8D35A1922FF5AB30014AFE4 /* interfaces */,
+				E8D35A1822FF5AA90014AFE4 /* views */,
+			);
+			path = calendar;
+			sourceTree = "<group>";
+		};
+		E8D35A1822FF5AA90014AFE4 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				E8D35A1F22FF6AC80014AFE4 /* CalendarDay.swift */,
+				E8D35A2B22FFA0130014AFE4 /* CalendarWeek.swift */,
+				E8D35A2D22FFCBFB0014AFE4 /* CalendarGridView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		E8D35A1922FF5AB30014AFE4 /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E8D35A1B22FF5B0C0014AFE4 /* CalendarController.xib */,
+				E8D35A2122FF6BA20014AFE4 /* CalendarDay.xib */,
+				E8D35A2522FF87480014AFE4 /* CalendarWeek.xib */,
+			);
+			path = interfaces;
+			sourceTree = "<group>";
+		};
+		E8D35A1A22FF5ABC0014AFE4 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				E8D35A1D22FF5B3B0014AFE4 /* CalendarController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
 		E8E950842231B3DD0070F57E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -707,6 +765,7 @@
 			children = (
 				E8E9508E2232D62A0070F57E /* TextField.swift */,
 				E850998122F7578200068ED8 /* ComboBox.swift */,
+				E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -873,10 +932,13 @@
 				E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */,
 				E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */,
 				E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */,
+				E8D35A1C22FF5B0C0014AFE4 /* CalendarController.xib in Resources */,
+				E8D35A2222FF6BA20014AFE4 /* CalendarDay.xib in Resources */,
 				E8211798220E07B2003D7578 /* MainMenu.xib in Resources */,
 				E863306522481BED00A8E946 /* Login.xib in Resources */,
 				E850996A22F6118B00068ED8 /* MoJob.clr in Resources */,
 				E81DEE6422F4A1CD004EF977 /* AddFavorite.xib in Resources */,
+				E8D35A2622FF87480014AFE4 /* CalendarWeek.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1047,6 +1109,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8D35A1E22FF5B3B0014AFE4 /* CalendarController.swift in Sources */,
 				E84FCE4022FC3ED7002E41B4 /* WakeUp.swift in Sources */,
 				E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */,
 				E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */,
@@ -1073,6 +1136,7 @@
 				E850996C22F6145700068ED8 /* ColorButton.swift in Sources */,
 				E8211804220F5991003D7578 /* FilterField.swift in Sources */,
 				E82117CA220E1169003D7578 /* NavigationController.swift in Sources */,
+				E8D35A302300487E0014AFE4 /* GradientCircle.swift in Sources */,
 				E8138A2422525B99008DAA62 /* structs.swift in Sources */,
 				E81DEE6822F4D78F004EF977 /* SplitTracking.swift in Sources */,
 				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
@@ -1082,7 +1146,10 @@
 				E8E950892232C09F0070F57E /* EditorController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
 				E8A270442210C3100030B61C /* TimerCount.swift in Sources */,
+				E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */,
+				E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */,
 				E8E950A2223591910070F57E /* NumberField.swift in Sources */,
+				E8D35A2022FF6AC80014AFE4 /* CalendarDay.swift in Sources */,
 				E86330602247AC1B00A8E946 /* QuoJob.swift in Sources */,
 				E8D35A1622FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel in Sources */,
 				E895D8562222FCE000DAAA4E /* TrackingItem.swift in Sources */,
@@ -1092,6 +1159,7 @@
 				E863306A2248232F00A8E946 /* Password.swift in Sources */,
 				E800AE8A22F9C42900E82EBE /* Job.swift in Sources */,
 				E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */,
+				E8D35A2422FF86070014AFE4 /* CalendarSplitViewController.swift in Sources */,
 				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,
 				E82117C5220E0FBD003D7578 /* SplitViewController.swift in Sources */,
 			);
