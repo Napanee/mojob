@@ -197,6 +197,7 @@ class CoreDataHelper {
 		}
 
 		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
+		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_start", ascending: true)]
 
 		do {
 			return try context.fetch(fetchRequest)
