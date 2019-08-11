@@ -36,7 +36,7 @@ class CalendarWeek: NSView {
 		contentView.layer?.backgroundColor = NSColor.white.cgColor
 
 		addConstraints([
-			NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 80)
+			NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50)
 		])
 	}
 
