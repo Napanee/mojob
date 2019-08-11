@@ -12,6 +12,7 @@ class NavigationController: NSViewController {
 
 	var window: NSWindow!
 	@IBOutlet weak var timeTrackerButton: NSButton!
+	@IBOutlet weak var calendarButton: NSButton!
 	@IBOutlet weak var settingsButton: NSButton!
 	
 	@IBAction func trackerView(_ sender: NSButton) {
@@ -21,6 +22,21 @@ class NavigationController: NSViewController {
 
 		sender.isEnabled = false
 		sender.image = NSImage(named: .timerActiveImage)
+		calendarButton.isEnabled = true
+		calendarButton.image = NSImage(named: .calendarImage)
+		settingsButton.isEnabled = true
+		settingsButton.image = NSImage(named: .settingsImage)
+	}
+
+	@IBAction func calendarView(_ sender: NSButton) {
+		let calendar = CalendarSplitViewController()
+
+		replaceContent(with: calendar)
+
+		sender.isEnabled = false
+		sender.image = NSImage(named: .calendarActiveImage)
+		timeTrackerButton.isEnabled = true
+		timeTrackerButton.image = NSImage(named: .timerImage)
 		settingsButton.isEnabled = true
 		settingsButton.image = NSImage(named: .settingsImage)
 	}
@@ -34,6 +50,8 @@ class NavigationController: NSViewController {
 		sender.image = NSImage(named: .settingsActiveImage)
 		timeTrackerButton.isEnabled = true
 		timeTrackerButton.image = NSImage(named: .timerImage)
+		calendarButton.isEnabled = true
+		calendarButton.image = NSImage(named: .calendarImage)
 	}
 	
 	override func viewDidLoad() {
@@ -45,6 +63,7 @@ class NavigationController: NSViewController {
 		self.window = window
 
 		(timeTrackerButton.cell as? NSButtonCell)?.imageDimsWhenDisabled = false
+		(calendarButton.cell as? NSButtonCell)?.imageDimsWhenDisabled = false
 		(settingsButton.cell as? NSButtonCell)?.imageDimsWhenDisabled = false
 	}
 

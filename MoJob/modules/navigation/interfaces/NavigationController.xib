@@ -7,6 +7,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NavigationController" customModule="MoJob" customModuleProvider="target">
             <connections>
+                <outlet property="calendarButton" destination="l7H-at-hMQ" id="cIv-Ss-QGI"/>
                 <outlet property="settingsButton" destination="WNR-0v-YYS" id="pcQ-ll-QpO"/>
                 <outlet property="timeTrackerButton" destination="gPp-hV-rlT" id="8N5-bq-7ga"/>
                 <outlet property="view" destination="c22-O7-iKe" id="ueD-6M-Dpv"/>
@@ -15,11 +16,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="70" height="272"/>
+            <rect key="frame" x="0.0" y="0.0" width="70" height="366"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gPp-hV-rlT">
-                    <rect key="frame" x="15" y="187" width="40" height="35"/>
+                    <rect key="frame" x="15" y="281" width="40" height="35"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="vuE-s5-YeM"/>
                     </constraints>
@@ -29,6 +30,19 @@
                     </buttonCell>
                     <connections>
                         <action selector="trackerView:" target="-2" id="Ec7-hX-uiM"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l7H-at-hMQ">
+                    <rect key="frame" x="15" y="214" width="40" height="47"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="47" id="B7I-cu-AAY"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="calendar" bezelStyle="rounded" image="calendar" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="WYz-Yq-vAT">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="calendarView:" target="-2" id="EwC-a2-RGa"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WNR-0v-YYS">
@@ -46,8 +60,11 @@
                 <constraint firstItem="gPp-hV-rlT" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="50" id="2uD-qI-513"/>
                 <constraint firstAttribute="bottom" secondItem="WNR-0v-YYS" secondAttribute="bottom" constant="30" id="3QP-yr-SwZ"/>
                 <constraint firstAttribute="trailing" secondItem="gPp-hV-rlT" secondAttribute="trailing" constant="15" id="56h-fF-qWw"/>
+                <constraint firstItem="l7H-at-hMQ" firstAttribute="top" secondItem="gPp-hV-rlT" secondAttribute="bottom" constant="20" id="5Zz-Kl-c73"/>
+                <constraint firstItem="l7H-at-hMQ" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="5nz-95-9hf"/>
                 <constraint firstItem="gPp-hV-rlT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="15" id="FiQ-oq-iMq"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="XO1-YI-nwa"/>
+                <constraint firstItem="l7H-at-hMQ" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="jqe-Yl-gru"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="qj2-yl-y4O"/>
             </constraints>
             <userDefinedRuntimeAttributes>
@@ -55,9 +72,11 @@
                     <color key="value" red="0.93725490196078431" green="0.94901960784313721" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="139" y="126"/>
         </customView>
     </objects>
     <resources>
+        <image name="calendar" width="84" height="94"/>
         <image name="settings" width="35" height="35"/>
         <image name="timer-active" width="35" height="35"/>
     </resources>
