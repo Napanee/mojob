@@ -10,10 +10,12 @@ import Cocoa
 
 class TrackingsStackView: NSStackView {
 
+	var currentDate: Date = Date()
+
 	func reloadData(with trackings: [Tracking]) {
 		subviews.removeAll()
 
-		var endTime: Date = Date().startOfDay!
+		var endTime: Date = currentDate.startOfDay!
 
 		for tracking in trackings {
 			if tracking.date_start!.timeIntervalSince(endTime) > 60 {
@@ -25,7 +27,9 @@ class TrackingsStackView: NSStackView {
 			endTime = tracking.date_end!
 		}
 
-		insertAddButton(from: endTime, until: Calendar.current.date(bySetting: .second, value: 0, of: Date())!)
+		if let date = currentDate.compare(endTime) == .orderedSame ? currentDate.endOfDay : currentDate, let until = Calendar.current.date(byAdding: .minute, value: -1, to: date) {
+			insertAddButton(from: endTime, until: Calendar.current.date(bySetting: .second, value: 0, of: until)!)
+		}
 	}
 
 	func insertTrackingView(with tracking: Tracking) {

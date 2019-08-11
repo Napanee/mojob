@@ -39,18 +39,20 @@ class DayTrackingsController: NSViewController {
 		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "calendar:changedDate"), object: nil, queue: nil, using: { notification in
 			guard notification.name == .init("calendar:changedDate"), let date = notification.object as? [String: Any], let day = date["day"] as? Date else{ return }
 
-			self.currentDate = day
 			self.changeDate(with: day)
 		})
 	}
 
 	private func changeDate(with date: Date) {
 		DispatchQueue.main.async {
+			self.currentDate = date
+
 			self.dateDay.stringValue = date.day
 			self.dateMonth.stringValue = date.month
 			self.dateYear.stringValue = date.year
 
 			if let trackings = CoreDataHelper.trackings(for: date) {
+				self.trackingsStackView.currentDate = date
 				self.trackingsStackView.reloadData(with: trackings)
 
 				let sum = trackings.map({ $0.date_end!.timeIntervalSince($0.date_start!) }).reduce(0.0, { $0 + $1 })
