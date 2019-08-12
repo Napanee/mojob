@@ -82,7 +82,7 @@ class EditorController: QuoJobSelections {
 		if let sourceTracking = sourceTracking {
 			sourceTracking.update(with: values).done({ _ in
 				if let _ = sourceTracking.job {
-					sourceTracking.export().done({ _ in }).catch({ _ in })
+					sourceTracking.export()
 				} else if let _ = sourceTracking.id {
 					sourceTracking.deleteFromServer().done({ _ in
 						sourceTracking.update(with: ["id": nil, "exported": nil]).done({ _ in }).catch({ _ in })
@@ -94,7 +94,7 @@ class EditorController: QuoJobSelections {
 		} else {
 			Tracking.insert(with: values).done({ tracking in
 				if (tracking?.job != nil) {
-					tracking?.export().done({ _ in }).catch({ _ in })
+					tracking?.export()
 				}
 			}).catch({ _ in })
 		}

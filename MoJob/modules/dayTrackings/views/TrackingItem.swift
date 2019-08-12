@@ -224,10 +224,6 @@ class TrackingItem: NSView {
 		sender.isEnabled = false
 
 		tracking?.export()
-			.done({ _ in
-				sender.isEnabled = false
-			})
-			.catch { _ in }
 	}
 
 }

@@ -193,6 +193,8 @@ class QuoJob: NSObject {
 								seal.reject(ApiError.withMessage(errorMessages.disabled))
 							case 4001: // Hourbooking is NOT editable
 								seal.reject(ApiError.withMessage("Hourbooking is NOT editable"))
+							case 4002: // Hourbooking is NOT deletable
+								seal.reject(ApiError.withMessage("Hourbooking is NOT deletable"))
 							default:
 								seal.reject(ApiError.other(statusCode))
 							}
@@ -265,47 +267,30 @@ class QuoJob: NSObject {
 						})
 					}
 				}.catch({ error in
+					GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Exportieren.", andInformationtext: error.localizedDescription)
 					seal.reject(error)
 				})
 			}).catch({ error in
-				self.loginWithKeyChain().done({ _ in
-					var params = self.defaultParams
-					params["hourbooking"] = [
-						"id": id,
-						"date": self.dateFormatterFull.string(from: tracking.date_start! as Date),
-						"time_from": self.dateFormatterTime.string(from: tracking.date_start! as Date),
-						"time_until": self.dateFormatterTime.string(from: tracking.date_end! as Date),
-						"job_id": tracking.job?.id,
-						"activity_id": activityId,
-						"jobtask_id": taskId,
-						"text": tracking.comment,
-						"booking_type": bookingTypeString
-					]
-
-					self.fetch(as: .myTime_putHourbooking, with: params).done { result in
-						if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-							tracking.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).done({ _ in
-								seal.fulfill_()
-							}).catch({ error in
-								seal.reject(error)
-							})
-						}
-					}.catch({ error in
-						seal.reject(error)
-					})
-				}).catch({ error in
-				})
+				GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Exportieren.", andInformationtext: error.localizedDescription)
+				seal.reject(error)
 			})
 		}
 	}
 
-	func deleteTracking(tracking: Tracking) -> Promise<[String: Any]> {
-		return login().then({ _ -> Promise<[String: Any]> in
-			var params = self.defaultParams
-			params["hourbooking_id"] = tracking.id
+	func deleteTracking(tracking: Tracking) -> Promise<Void> {
+		return Promise { seal in
+			login().then({ _ -> Promise<[String: Any]> in
+				var params = self.defaultParams
+				params["hourbooking_id"] = tracking.id
 
-			return self.fetch(as: .myTime_deleteHourbooking, with: params)
-		})
+				return self.fetch(as: .myTime_deleteHourbooking, with: params)
+			}).done({ _ in
+				seal.fulfill_()
+			}).catch({ error in
+				GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Löschen.", andInformationtext: error.localizedDescription)
+				seal.reject(error)
+			})
+		}
 	}
 
 }
@@ -372,7 +357,7 @@ extension QuoJob {
 				loginWithUserData(userName: name, password: pass).done({
 					seal.fulfill_()
 				}).catch({ error in
-					if (error.localizedDescription == errorMessages.wrongPassword) {
+					if (error.localizedDescription == errorMessages.wrongPassword || error.localizedDescription == errorMessages.notFound) {
 						self.keychain[name] = nil
 					}
 

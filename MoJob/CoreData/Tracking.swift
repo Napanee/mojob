@@ -69,7 +69,7 @@ extension Tracking {
 			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
 		]).done({ _ in
 			if let _ = self.job {
-				self.export().done({ _ in }).catch({ _ in })
+				self.export()
 			}
 
 			GlobalTimer.shared.startNoTrackingTimer()
@@ -98,12 +98,9 @@ extension Tracking {
 
 	func delete() {
 		if (self.id != nil) {
-			deleteFromServer().done({ result in
-				if let success = result["success"] as? Bool, success == true {
-					self.deleteLocal()
-				}
-			})
-			.catch({ _ in })
+			deleteFromServer().done({ _ in
+				self.deleteLocal()
+			}).catch({ _ in })
 		} else {
 			self.deleteLocal()
 		}
@@ -121,18 +118,13 @@ extension Tracking {
 		}
 	}
 
-	func deleteFromServer() -> Promise<[String: Any]>{
+	func deleteFromServer() -> Promise<Void>{
 		return QuoJob.shared.deleteTracking(tracking: self)
 	}
 
-	func export() -> Promise<Void> {
-		return Promise { seal in
-			QuoJob.shared.exportTracking(tracking: self).done({ _ in
-				seal.fulfill_()
-			}).catch { error in
-				seal.reject(error)
-				self.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
-			}
+	func export() {
+		QuoJob.shared.exportTracking(tracking: self).catch { error in
+			self.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
 		}
 	}
 
