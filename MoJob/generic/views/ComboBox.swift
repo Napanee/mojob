@@ -63,8 +63,6 @@ class ComboBox: NSComboBox {
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		if let subLayer = layer?.sublayers?.first(where: { $0.isEqual(to: underscoreLayer) }) as? CAShapeLayer {
 			subLayer.path = path.cgPath
 		}

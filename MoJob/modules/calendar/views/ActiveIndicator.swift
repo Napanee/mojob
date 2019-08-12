@@ -11,8 +11,6 @@ import Cocoa
 class ActiveIndicator: NSView {
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		wantsLayer = true
 		layer?.borderColor = NSColor.controlAccentColor.cgColor
 		layer?.borderWidth = 1

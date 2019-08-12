@@ -13,8 +13,6 @@ class DayTrackingControllerView: NSView {
 	@IBInspectable weak var viewBackgroundColor: NSColor! = NSColor.clear
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		wantsLayer = true
 		layer?.backgroundColor = viewBackgroundColor.cgColor
 	}

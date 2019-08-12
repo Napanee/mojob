@@ -116,8 +116,6 @@ class TrackingItem: NSView {
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		if (tracking?.custom_job != nil) {
 			statusImage.isHidden = true
 		} else {

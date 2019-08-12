@@ -46,10 +46,6 @@ class Password: NSSecureTextField {
 		layer?.addSublayer(underscore)
 	}
 
-	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-	}
-
 	override func becomeFirstResponder() -> Bool {
 		super.becomeFirstResponder()
 

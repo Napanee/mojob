@@ -88,8 +88,6 @@ class CalendarDay: NSView {
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		guard let context = NSGraphicsContext.current?.cgContext else { return }
 		context.addRect(CGRect(x: 1, y: 1, width: bounds.width - 2, height: bounds.height - 2))
 		context.setFillColor(NSColor.white.cgColor)

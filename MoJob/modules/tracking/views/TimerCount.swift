@@ -24,8 +24,6 @@ import Cocoa
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		drawBgShape()
 		drawTimeSecondsShape()
 

@@ -41,10 +41,6 @@ class AddButton: NSView {
 		])
 	}
 
-	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-	}
-
 	@IBAction func addTracking(_ sender: NSButton) {
 		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController {
 			let tracking = TempTracking(start: from, end: until)

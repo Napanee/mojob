@@ -100,8 +100,6 @@ class CalendarGridView: NSGridView {
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		if let view = self.subviews.first(where: {
 			if (($0 as? CalendarDay)?.day == currentSelection) {
 				return true

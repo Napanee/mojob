@@ -46,8 +46,6 @@ class ColorButton: NSButton {
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		layer?.backgroundColor = color.withAlphaComponent(0.3).cgColor
 		layer?.borderColor = color.cgColor
 	}

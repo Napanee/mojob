@@ -15,8 +15,6 @@ class CollectionItemView: NSView, CAAnimationDelegate {
 	@IBInspectable weak var backgroundColor: NSColor! = NSColor.clear
 
 	override func draw(_ dirtyRect: NSRect) {
-		super.draw(dirtyRect)
-
 		backgroundLayer.backgroundColor = CGColor.clear
 		backgroundLayer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
 
