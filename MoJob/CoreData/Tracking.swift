@@ -65,6 +65,7 @@ extension Tracking {
 		let date = dateEnd ?? Date()
 
 		self.update(with: [
+			"exported": SyncStatus.pending.rawValue,
 			"date_start": Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date),
 			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
 		]).done({ _ in
