@@ -33,6 +33,12 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	@IBOutlet weak var favoritesCollectionHeight: NSLayoutConstraint!
 	@IBOutlet weak var jobsCollectionHeight: NSLayoutConstraint!
 
+	var jobs: [Job] {
+		get {
+			try? fetchedResultControllerJobs.performFetch()
+			return fetchedResultControllerJobs.fetchedObjects ?? []
+		}
+	}
 	var favorites: [Job] = []
 	var jobsFiltered: [Job] = []
 	var jobListSelectedIndex: Int?
@@ -47,32 +53,32 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	let context = CoreDataHelper.context
-//	var _fetchedResultsControllerJobs: NSFetchedResultsController<Job>? = nil
-//	var fetchedResultControllerJobs: NSFetchedResultsController<Job> {
-//		if (_fetchedResultsControllerJobs != nil) {
-//			return _fetchedResultsControllerJobs!
-//		}
-//
-//		let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
-//		fetchRequest.predicate = NSPredicate(format: "assigned == true")
-//
-//		fetchRequest.sortDescriptors = [
-//			NSSortDescriptor(key: "type", ascending: true)
-//		]
-//
-//		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-//
-//		_fetchedResultsControllerJobs = resultsController
-//
-//		do {
-//			try _fetchedResultsControllerJobs!.performFetch()
-//		} catch {
-//			let nserror = error as NSError
-//			fatalError("Unresolved error \(nserror)")
-//		}
-//
-//		return _fetchedResultsControllerJobs!
-//	}
+	var _fetchedResultsControllerJobs: NSFetchedResultsController<Job>? = nil
+	var fetchedResultControllerJobs: NSFetchedResultsController<Job> {
+		if (_fetchedResultsControllerJobs != nil) {
+			return _fetchedResultsControllerJobs!
+		}
+
+		let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
+		fetchRequest.predicate = NSPredicate(format: "assigned == true")
+
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "type", ascending: true)
+		]
+
+		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+		_fetchedResultsControllerJobs = resultsController
+
+		do {
+			try _fetchedResultsControllerJobs!.performFetch()
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror)")
+		}
+
+		return _fetchedResultsControllerJobs!
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -80,8 +86,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		jobsCollectionView.isHidden = true
 		filterField.customDelegate = self
 
-		let jobs = QuoJob.shared.jobs
-		favorites = jobs.filter({ $0.isFavorite })
+		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
 		if (jobs.count == 0) {
 			favoritesView.isHidden = true
 		}
@@ -135,7 +140,6 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func onTextChange(with string: String) {
-		let jobs = QuoJob.shared.jobs
 		guard jobs.count > 0 else { return }
 
 		if (string.count > 0) {
@@ -163,7 +167,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func onDismiss() {
-		favorites = QuoJob.shared.jobs.filter({ $0.isFavorite })
+		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
 
 		favoritesCollectionView.reloadData()
 
@@ -173,7 +177,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func reloadFavorites() {
-		favorites = QuoJob.shared.jobs.filter({ $0.isFavorite })
+		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
 
 		favoritesCollectionView.reloadData()
 
@@ -183,7 +187,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func reloadJobs() {
-		if QuoJob.shared.jobs.count > 0 {
+		if jobs.count > 0 {
 			favoritesView.isHidden = false
 
 			if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
@@ -377,9 +381,11 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 		let itemCount = collectionView.numberOfItems(inSection: 0)
 		for i in 0..<itemCount {
 			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
-				item.job.update(with: ["favoriteOrder": Int16(i)]).done({ _ in }).catch({ _ in })
+				item.job.update(with: ["favoriteOrder": Int16(i)])
 			}
 		}
+
+		CoreDataHelper.saveContext()
 
 		return true
 	}
@@ -436,7 +442,7 @@ extension JobListController: NSCollectionViewDataSource, FavoritesItemDelegate {
 	}
 
 	func onDeleteFavorite() {
-		favorites = QuoJob.shared.jobs.filter({ $0.isFavorite })
+		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
 
 		favoritesCollectionView.reloadData()
 
