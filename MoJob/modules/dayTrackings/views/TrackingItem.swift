@@ -29,12 +29,15 @@ class TrackingItem: NSView {
 			case .success:
 				statusImage.image = NSImage(named: .syncSuccessImage)?.tint(color: NSColor(red: 0.180, green: 0.490, blue: 0.196, alpha: 1))
 				statusImage.isEnabled = false
+				statusImage.toolTip = "erfolgreich synchronisiert"
 			case .error:
 				statusImage.image = NSImage(named: .syncErrorImage)?.tint(color: NSColor(red: 0.835, green: 0, blue: 0, alpha: 1))
 				statusImage.isEnabled = true
+				statusImage.toolTip = "Fehler bei der Synchronisierung\nKlicken, um es erneut zu versuchen"
 			case .pending:
 				statusImage.image = NSImage(named: .syncPendingImage)?.tint(color: NSColor(red: 0.984, green: 0.753, blue: 0.176, alpha: 1))
 				statusImage.isEnabled = false
+				statusImage.toolTip = "Synchronisierung läuft"
 			}
 		}
 	}
