@@ -35,8 +35,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	var jobs: [Job] {
 		get {
-			try? fetchedResultControllerJobs.performFetch()
-			return fetchedResultControllerJobs.fetchedObjects ?? []
+			return QuoJob.shared.jobs
 		}
 	}
 	var favorites: [Job] = []
@@ -50,34 +49,6 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		get {
 			return jobsCollectionView.item(at: IndexPath(item: jobListSelectedIndex ?? 0, section: 0)) as? JobItem
 		}
-	}
-
-	let context = CoreDataHelper.context
-	var _fetchedResultsControllerJobs: NSFetchedResultsController<Job>? = nil
-	var fetchedResultControllerJobs: NSFetchedResultsController<Job> {
-		if (_fetchedResultsControllerJobs != nil) {
-			return _fetchedResultsControllerJobs!
-		}
-
-		let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
-		fetchRequest.predicate = NSPredicate(format: "assigned == true")
-
-		fetchRequest.sortDescriptors = [
-			NSSortDescriptor(key: "type", ascending: true)
-		]
-
-		let resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-
-		_fetchedResultsControllerJobs = resultsController
-
-		do {
-			try _fetchedResultsControllerJobs!.performFetch()
-		} catch {
-			let nserror = error as NSError
-			fatalError("Unresolved error \(nserror)")
-		}
-
-		return _fetchedResultsControllerJobs!
 	}
 
 	override func viewDidLoad() {
@@ -97,6 +68,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		favoritesCollectionView.registerForDraggedTypes([NSPasteboard.PasteboardType.string])
 		favoritesCollectionView.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: true)
 
+		let context = CoreDataHelper.context
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: .NSManagedObjectContextDidSave, object: context)
 	}
