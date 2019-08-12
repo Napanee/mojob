@@ -32,6 +32,7 @@ class AppDelegate: NSObject {
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		Fabric.with([Crashlytics.self, Answers.self])
 		UserDefaults.standard.register(defaults: [
+			"NSInitialToolTipDelay": 1,
 			"NSApplicationCrashOnExceptions": true
 		])
 
