@@ -891,7 +891,7 @@ extension QuoJob {
 						let timeUntilDate = Calendar.current.dateComponents([.hour, .minute], from: self.dateFormatterTime.date(from: timeUntil)!)
 
 						dateStart = Calendar.current.date(bySettingHour: timeFromDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
-						dateEnd = Calendar.current.date(bySettingHour: timeUntilDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
+						dateEnd = Calendar.current.date(bySettingHour: timeUntilDate.hour!, minute: timeUntilDate.minute!, second: 0, of: trackingDate!)
 					}
 
 					if let tracking = self.trackings.first(where: { $0.id == id }) {
