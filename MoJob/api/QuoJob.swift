@@ -372,7 +372,10 @@ extension QuoJob {
 				loginWithUserData(userName: name, password: pass).done({
 					seal.fulfill_()
 				}).catch({ error in
-					self.keychain[name] = nil
+					if (error.localizedDescription == errorMessages.wrongPassword) {
+						self.keychain[name] = nil
+					}
+
 					seal.reject(error)
 				})
 			}
