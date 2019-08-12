@@ -14,7 +14,8 @@ class CalendarController: NSViewController {
 	@IBOutlet weak var nextMonthButton: NSButton!
 	@IBOutlet weak var nextYearButton: NSButton!
 	@IBOutlet weak var currentMonth: NSTextField!
-	
+	@IBOutlet weak var todayButton: NSButton!
+
 	private var currentDate: Date? {
 		didSet {
 			let calendar = Calendar.current
@@ -34,6 +35,13 @@ class CalendarController: NSViewController {
 
 		currentDate = Date()
 		calendarGridView.reloadData(withDate: currentDate!)
+
+		todayButton.wantsLayer = true
+		todayButton.layer?.borderWidth = 1
+		todayButton.layer?.cornerRadius = 16
+		todayButton.layer?.borderColor = NSColor(red: 0.102, green: 0.102, blue: 0.102, alpha: 0.7).cgColor
+
+
 
 		let context = CoreDataHelper.context
 		let notificationCenter = NotificationCenter.default
@@ -64,6 +72,10 @@ class CalendarController: NSViewController {
 	@IBAction func nextYearButton(_ sender: NSButton) {
 		let nextDate = Calendar.current.date(byAdding: .year, value: 1, to: currentDate ?? Date())!
 		currentDate = nextDate.compare(Date()) == ComparisonResult.orderedAscending ? nextDate : Date()
+	}
+
+	@IBAction func todayButton(_ sender: NSButton) {
+		currentDate = Date()
 	}
 
 	// MARK: - Observer
