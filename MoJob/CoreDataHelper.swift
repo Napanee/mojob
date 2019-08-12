@@ -178,6 +178,14 @@ class CoreDataHelper {
 		return container
 	}()
 
+	static func saveContext() {
+		do {
+			try context.save()
+		} catch let error as NSError  {
+			print("Could not save \(error), \(error.userInfo)")
+		}
+	}
+
 	static func trackings(for date: Date) -> [Tracking]? {
 		let context = CoreDataHelper.shared.persistentContainer.viewContext
 		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()

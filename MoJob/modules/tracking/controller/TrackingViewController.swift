@@ -24,6 +24,7 @@ class TrackingViewController: QuoJobSelections {
 			guard let job = tracking?.job else { return }
 
 			job.update(with: ["isFavorite": newValue])
+			CoreDataHelper.saveContext()
 
 			favoriteTracking.image = newValue ? self.starFilled : self.starEmpty
 		}

@@ -36,6 +36,7 @@ class FavoriteItem: NSCollectionViewItem {
 
 	@IBAction func deleteButton(_ sender: NSButton) {
 		job.update(with: ["isFavorite": false])
+		CoreDataHelper.saveContext()
 
 		delegate.onDeleteFavorite()
 	}
