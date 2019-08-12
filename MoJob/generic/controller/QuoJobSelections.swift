@@ -208,7 +208,6 @@ class QuoJobSelections: NSViewController {
 			jobSelect.isEnabled = true
 			tempTracking?.activity = nil
 			tracking?.update(with: ["activity": nil]).done({ _ in }).catch({ _ in })
-			formIsValid = false
 		} else if let activity = QuoJob.shared.activities
 			.filter({
 				if let job = tempTracking?.job ?? tracking?.job {
@@ -230,8 +229,9 @@ class QuoJobSelections: NSViewController {
 
 			tempTracking?.activity = activity
 			tracking?.update(with: ["activity": activity]).done({ _ in }).catch({ _ in })
-			formIsValid = true
 		}
+
+		formIsValid = true
 	}
 
 }
