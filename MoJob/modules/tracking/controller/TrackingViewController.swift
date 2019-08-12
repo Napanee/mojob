@@ -111,6 +111,8 @@ class TrackingViewController: QuoJobSelections {
 				return
 			} else {
 				tracking.delete()
+				GlobalTimer.shared.startNoTrackingTimer()
+				GlobalTimer.shared.stopTimer()
 			}
 		} else {
 			tracking.stop()
