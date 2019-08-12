@@ -16,7 +16,6 @@ extension Tracking {
 	var isValid: Bool {
 		get {
 			return self.activity != nil &&
-				(self.date_end ?? Date()).timeIntervalSince(self.date_start ?? Date()) > 60 &&
 				(self.job != nil || self.custom_job != nil)
 		}
 	}

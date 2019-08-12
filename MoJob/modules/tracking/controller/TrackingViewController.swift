@@ -69,11 +69,9 @@ class TrackingViewController: QuoJobSelections {
 			let restSeconds = totalSeconds.remainder(dividingBy: 60)
 			self.timerCount.counter = round(CGFloat(restSeconds))
 			self.timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: Int(totalSeconds))
-
-			if (totalSeconds > 60) {
-				self.formIsValid = true
-			}
 		})
+
+		formIsValid = true
 
 		GlobalTimer.shared.startTimer()
 	}

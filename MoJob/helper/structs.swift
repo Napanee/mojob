@@ -31,7 +31,6 @@ struct TempTracking {
 	var isValid: Bool {
 		get {
 			return activity != nil &&
-			(date_end ?? Date()).timeIntervalSince(date_start) > 60 &&
 			(job != nil || custom_job != nil)
 		}
 	}
