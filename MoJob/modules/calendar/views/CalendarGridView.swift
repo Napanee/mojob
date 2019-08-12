@@ -80,16 +80,16 @@ class CalendarGridView: NSGridView {
 
 					if (viewDay == day) {
 						let frame = view.frame
-						let prevFrame = self.activeIndicator.frame
 
 						self.activeIndicator.setFrameSize(frame.size)
-						if (prevFrame.width > 0) {
+						if (self.activeIndicator.isHidden) {
+							self.activeIndicator.setFrameOrigin(frame.origin)
+							self.activeIndicator.isHidden = false
+						} else {
 							NSAnimationContext.beginGrouping()
 							NSAnimationContext.current.duration = 0.5
 							self.activeIndicator.animator().setFrameOrigin(frame.origin)
 							NSAnimationContext.endGrouping()
-						} else {
-							self.activeIndicator.setFrameOrigin(frame.origin)
 						}
 					}
 				}
@@ -121,6 +121,10 @@ class CalendarGridView: NSGridView {
 
 		subviews.removeAll(where: { !$0.isKind(of: NSTextField.self) && !$0.isKind(of: GradientCircle.self) })
 
+		if (!date.isInMonth(of: currentSelection)) {
+			activeIndicator.isHidden = true
+		}
+
 		// row for days
 		let firstDayOfCalender = date.startOfMonth?.startOfWeek
 		let lastDayOfCalendar = Calendar.current.date(byAdding: .second, value: -1, to: (date.endOfMonth?.endOfWeek)!)
@@ -144,6 +148,7 @@ class CalendarGridView: NSGridView {
 			content.isCurrentMonth = day!.isInMonth(of: date)
 
 			if calendar.dateComponents([.day, .month, .year], from: currentSelection) == calendar.dateComponents([.day, .month, .year], from: day!) {
+				activeIndicator.isHidden = false
 				content.isSelected = true
 			}
 
@@ -157,7 +162,6 @@ class CalendarGridView: NSGridView {
 			day = calendar.date(byAdding: .day, value: 1, to: day!)
 		}
 
-		activeIndicator.setFrameSize(NSSize(width: 0, height: 0))
 		subviews.append(activeIndicator)
 	}
 
