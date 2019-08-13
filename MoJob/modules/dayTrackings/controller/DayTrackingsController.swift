@@ -17,6 +17,7 @@ class DayTrackingsController: NSViewController {
 	@IBOutlet weak var dateYear: NSTextField!
 	@IBOutlet weak var totalTimeForDay: NSTextField!
 	@IBOutlet weak var trackingsStackView: TrackingsStackView!
+	@IBOutlet weak var graphView: GraphView!
 
 	private var currentDate: Date = Date()
 	private var observer: NSObjectProtocol?
@@ -25,6 +26,7 @@ class DayTrackingsController: NSViewController {
 		super.viewDidLoad()
 
 		if let trackings = CoreDataHelper.trackings(for: currentDate) {
+			graphView.trackings = trackings
 			trackingsStackView.reloadData(with: trackings)
 		}
 
@@ -52,6 +54,7 @@ class DayTrackingsController: NSViewController {
 			self.dateYear.stringValue = date.year
 
 			if let trackings = CoreDataHelper.trackings(for: date) {
+				self.graphView.trackings = trackings
 				self.trackingsStackView.currentDate = date
 				self.trackingsStackView.reloadData(with: trackings)
 
@@ -84,16 +87,19 @@ class DayTrackingsController: NSViewController {
 		guard let trackings = CoreDataHelper.trackings(for: currentDate) else { return }
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+			graphView.trackings = trackings
 			trackingsStackView.reloadData(with: trackings)
 			changeDate(with: currentDate)
 		}
 
 		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+			graphView.trackings = trackings
 			trackingsStackView.reloadData(with: trackings)
 			changeDate(with: currentDate)
 		}
 
 		if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
+			graphView.trackings = trackings
 			trackingsStackView.reloadData(with: trackings)
 			changeDate(with: currentDate)
 		}

@@ -13,6 +13,10 @@ import PromiseKit
 
 extension Tracking {
 
+	var duration: TimeInterval {
+		return (self.date_end ?? Date()).timeIntervalSince(self.date_start ?? Date())
+	}
+
 	var isValid: Bool {
 		get {
 			return self.activity != nil &&

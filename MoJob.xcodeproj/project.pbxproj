@@ -23,6 +23,7 @@
 		E81DEE6822F4D78F004EF977 /* SplitTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6722F4D78F004EF977 /* SplitTracking.swift */; };
 		E81DEE6A22F4DF6D004EF977 /* SplitJobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E81DEE6922F4DF6D004EF977 /* SplitJobItem.xib */; };
 		E81DEE6C22F4DF96004EF977 /* SplitJobItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6B22F4DF96004EF977 /* SplitJobItem.swift */; };
+		E81E75E7230314610071B90C /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E75E6230314610071B90C /* GraphView.swift */; };
 		E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E821178F220E07B1003D7578 /* AppDelegate.swift */; };
 		E8211793220E07B1003D7578 /* MoJob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8211791220E07B1003D7578 /* MoJob.xcdatamodeld */; };
 		E8211795220E07B2003D7578 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8211794220E07B2003D7578 /* Assets.xcassets */; };
@@ -148,6 +149,7 @@
 		E81DEE6722F4D78F004EF977 /* SplitTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitTracking.swift; sourceTree = "<group>"; };
 		E81DEE6922F4DF6D004EF977 /* SplitJobItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SplitJobItem.xib; sourceTree = "<group>"; };
 		E81DEE6B22F4DF96004EF977 /* SplitJobItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitJobItem.swift; sourceTree = "<group>"; };
+		E81E75E6230314610071B90C /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		E821178C220E07B1003D7578 /* MoJob.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoJob.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E821178F220E07B1003D7578 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E8211792220E07B1003D7578 /* MoJob.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoJob.xcdatamodel; sourceTree = "<group>"; };
@@ -612,6 +614,7 @@
 				E8E9509C223482940070F57E /* AddButton.swift */,
 				E8E9509E223526DB0070F57E /* TrackingsStackView.swift */,
 				E850996B22F6145700068ED8 /* ColorButton.swift */,
+				E81E75E6230314610071B90C /* GraphView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1138,6 +1141,7 @@
 				E8211800220F5364003D7578 /* JobItem.swift in Sources */,
 				E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */,
 				E8D35A1222FF54C50014AFE4 /* DeleteTrackingPolicy.swift in Sources */,
+				E81E75E7230314610071B90C /* GraphView.swift in Sources */,
 				E8211793220E07B1003D7578 /* MoJob.xcdatamodeld in Sources */,
 				E850996C22F6145700068ED8 /* ColorButton.swift in Sources */,
 				E8211804220F5991003D7578 /* FilterField.swift in Sources */,

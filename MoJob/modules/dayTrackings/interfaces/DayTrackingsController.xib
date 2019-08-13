@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -10,6 +11,7 @@
                 <outlet property="dateDay" destination="FYd-kL-Nf8" id="odh-Bl-qJm"/>
                 <outlet property="dateMonth" destination="Qbk-sT-Jo9" id="NuR-4G-RAz"/>
                 <outlet property="dateYear" destination="qNj-lU-mgp" id="3Y1-H6-ytu"/>
+                <outlet property="graphView" destination="O42-R0-tfV" id="9Vi-tT-2uw"/>
                 <outlet property="stackView" destination="DaL-Sq-CR7" id="kuW-Wu-ct3"/>
                 <outlet property="totalTimeForDay" destination="S9W-PJ-CWf" id="OmK-RX-Gbb"/>
                 <outlet property="trackingsStackView" destination="eqR-5L-Ybc" id="iC7-zj-ZUJ"/>
@@ -19,14 +21,14 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe" customClass="DayTrackingControllerView" customModule="MoJob" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="356" height="372"/>
+            <rect key="frame" x="0.0" y="0.0" width="356" height="478"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DaL-Sq-CR7">
-                    <rect key="frame" x="0.0" y="0.0" width="356" height="342"/>
+                    <rect key="frame" x="0.0" y="0.0" width="356" height="448"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="pCl-Py-OnP">
-                            <rect key="frame" x="30" y="247" width="296" height="95"/>
+                            <rect key="frame" x="30" y="353" width="296" height="95"/>
                             <subviews>
                                 <stackView distribution="fill" orientation="horizontal" alignment="baseline" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sah-E7-V9C">
                                     <rect key="frame" x="0.0" y="0.0" width="260" height="95"/>
@@ -139,17 +141,23 @@
                                 <constraint firstItem="Sah-E7-V9C" firstAttribute="top" secondItem="pCl-Py-OnP" secondAttribute="top" id="szy-w4-Ye3"/>
                             </constraints>
                         </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="O42-R0-tfV" customClass="GraphView" customModule="MoJob" customModuleProvider="target">
+                            <rect key="frame" x="30" y="328" width="296" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="bKb-hv-273"/>
+                            </constraints>
+                        </customView>
                         <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dsj-Wf-cYF">
-                            <rect key="frame" x="0.0" y="0.0" width="356" height="237"/>
+                            <rect key="frame" x="0.0" y="0.0" width="356" height="318"/>
                             <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="5an-3U-2Te">
-                                <rect key="frame" x="0.0" y="0.0" width="356" height="237"/>
+                                <rect key="frame" x="0.0" y="0.0" width="356" height="318"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view translatesAutoresizingMaskIntoConstraints="NO" id="JFJ-Pk-ecZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="356" height="222"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="356" height="303"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqR-5L-Ybc" customClass="TrackingsStackView" customModule="MoJob" customModuleProvider="target">
-                                                <rect key="frame" x="30" y="222" width="296" height="0.0"/>
+                                                <rect key="frame" x="30" y="303" width="296" height="0.0"/>
                                             </stackView>
                                         </subviews>
                                         <constraints>
@@ -169,26 +177,30 @@
                                 </constraints>
                             </clipView>
                             <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="MNo-wS-fWO">
-                                <rect key="frame" x="0.0" y="221" width="356" height="16"/>
+                                <rect key="frame" x="0.0" y="302" width="356" height="16"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                             <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="L28-Wi-u6T">
-                                <rect key="frame" x="340" y="0.0" width="16" height="237"/>
+                                <rect key="frame" x="340" y="0.0" width="16" height="318"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                         </scrollView>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="O42-R0-tfV" firstAttribute="trailing" secondItem="pCl-Py-OnP" secondAttribute="trailing" id="0Ca-Sh-o9B"/>
                         <constraint firstItem="Dsj-Wf-cYF" firstAttribute="leading" secondItem="DaL-Sq-CR7" secondAttribute="leading" id="Cwb-do-8R6"/>
                         <constraint firstAttribute="trailing" secondItem="Dsj-Wf-cYF" secondAttribute="trailing" id="LYn-3j-SYt"/>
                         <constraint firstItem="pCl-Py-OnP" firstAttribute="leading" secondItem="DaL-Sq-CR7" secondAttribute="leading" constant="30" id="eZb-au-Lwz"/>
                         <constraint firstAttribute="trailing" secondItem="pCl-Py-OnP" secondAttribute="trailing" constant="30" id="luB-sj-7Qi"/>
+                        <constraint firstItem="O42-R0-tfV" firstAttribute="leading" secondItem="pCl-Py-OnP" secondAttribute="leading" id="twV-W3-KYz"/>
                     </constraints>
                     <visibilityPriorities>
                         <integer value="1000"/>
                         <integer value="1000"/>
+                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
