@@ -751,26 +751,18 @@ extension QuoJob {
 //				return false
 //			})
 
-			let fetchRequestJob = NSFetchRequest<NSFetchRequestResult>(entityName: "Job")
-			let jobs = try? taskContext.fetch(fetchRequestJob) as? [Job]
-
-			let fetchRequestActivity = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
-			let activities = try? taskContext.fetch(fetchRequestActivity) as? [Activity]
-
 			self.taskContext.perform {
+				let fetchRequestJob = NSFetchRequest<NSFetchRequestResult>(entityName: "Job")
+				let jobsBackground = try? self.taskContext.fetch(fetchRequestJob) as? [Job]
+
+				let fetchRequestActivity = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
+				let activitiesBackground = try? self.taskContext.fetch(fetchRequestActivity) as? [Activity]
+
 				for item in taskItems {
 					let id = item["id"] as! String
 					let title = item["subject"] as! String
-
-					var jobObject: Job? = nil
-					if let jobId = item["job_id"] as? String, let job = jobs?.first(where: { $0.id == jobId }) {
-						jobObject = job
-					}
-
-					var activityObject: Activity? = nil
-					if let activityId = item["activity_id"] as? String, let activity = activities?.first(where: { $0.id == activityId }) {
-						activityObject = activity
-					}
+					let jobId = item["job_id"] as? String
+					let activityId = item["activity_id"] as? String
 
 					var hoursPlaned = Double()
 					if let hours_planed = item["hours_planed"] as? NSString {
@@ -787,13 +779,19 @@ extension QuoJob {
 					}
 
 					if let task = self.tasks.first(where: { $0.id == id }) {
+						let job = self.jobs.first(where: { $0.id == jobId })
+						let activity = self.activities.first(where: { $0.id == activityId })
+
 						task.title = title
 						task.hours_planed = hoursPlaned
 						task.hours_booked = hoursBooked
-						task.job = jobObject
-						task.activity = activityObject
+						task.job = job
+						task.activity = activity
 						task.sync = syncDate
 					} else {
+						let job = jobsBackground?.first(where: { $0.id == jobId })
+						let activity = activitiesBackground?.first(where: { $0.id == activityId })
+
 						let entity = NSEntityDescription.entity(forEntityName: "Task", in: self.taskContext)
 						let task = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let taskValues: [String: Any] = [
@@ -801,8 +799,8 @@ extension QuoJob {
 							"title": title,
 							"hours_planed": hoursPlaned,
 							"hours_booked": hoursBooked,
-							"job": jobObject as Any,
-							"activity": activityObject as Any,
+							"job": job as Any,
+							"activity": activity as Any,
 							"sync": syncDate as Any
 						]
 						task.setValuesForKeys(taskValues)
