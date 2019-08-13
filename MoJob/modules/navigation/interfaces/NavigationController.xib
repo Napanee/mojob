@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,9 +21,9 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gPp-hV-rlT">
-                    <rect key="frame" x="15" y="281" width="40" height="35"/>
+                    <rect key="frame" x="20" y="296" width="30" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="40" id="vuE-s5-YeM"/>
+                        <constraint firstAttribute="width" constant="30" id="vuE-s5-YeM"/>
                     </constraints>
                     <buttonCell key="cell" type="bevel" title="TimeTracker" bezelStyle="rounded" image="timer-active" imagePosition="only" alignment="center" enabled="NO" state="on" imageScaling="proportionallyDown" inset="2" id="Y3p-GQ-ef4">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -33,7 +34,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l7H-at-hMQ">
-                    <rect key="frame" x="15" y="214" width="40" height="47"/>
+                    <rect key="frame" x="20" y="239" width="30" height="47"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="47" id="B7I-cu-AAY"/>
                     </constraints>
@@ -46,7 +47,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WNR-0v-YYS">
-                    <rect key="frame" x="15" y="30" width="40" height="35"/>
+                    <rect key="frame" x="20" y="30" width="30" height="35"/>
                     <buttonCell key="cell" type="bevel" title="Settings" bezelStyle="rounded" image="settings" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="jsZ-Pm-3TB">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -57,12 +58,12 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="gPp-hV-rlT" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="50" id="2uD-qI-513"/>
+                <constraint firstItem="gPp-hV-rlT" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="35" id="2uD-qI-513"/>
                 <constraint firstAttribute="bottom" secondItem="WNR-0v-YYS" secondAttribute="bottom" constant="30" id="3QP-yr-SwZ"/>
-                <constraint firstAttribute="trailing" secondItem="gPp-hV-rlT" secondAttribute="trailing" constant="15" id="56h-fF-qWw"/>
-                <constraint firstItem="l7H-at-hMQ" firstAttribute="top" secondItem="gPp-hV-rlT" secondAttribute="bottom" constant="20" id="5Zz-Kl-c73"/>
+                <constraint firstAttribute="trailing" secondItem="gPp-hV-rlT" secondAttribute="trailing" constant="20" id="56h-fF-qWw"/>
+                <constraint firstItem="l7H-at-hMQ" firstAttribute="top" secondItem="gPp-hV-rlT" secondAttribute="bottom" constant="10" id="5Zz-Kl-c73"/>
                 <constraint firstItem="l7H-at-hMQ" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="5nz-95-9hf"/>
-                <constraint firstItem="gPp-hV-rlT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="15" id="FiQ-oq-iMq"/>
+                <constraint firstItem="gPp-hV-rlT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="FiQ-oq-iMq"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="XO1-YI-nwa"/>
                 <constraint firstItem="l7H-at-hMQ" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="jqe-Yl-gru"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="qj2-yl-y4O"/>
