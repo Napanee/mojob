@@ -21,23 +21,16 @@ class TrackingSplitViewController: EditorSplitViewController {
 			leftController = JobListController(nibName: .jobListControllerNib, bundle: nil)
 		}
 
-		leftController.view.addConstraint(
-			NSLayoutConstraint(
-				item: leftController.view,
-				attribute: .width,
-				relatedBy: .greaterThanOrEqual,
-				toItem: leftController.view.superview,
-				attribute: .width,
-				multiplier: 1,
-				constant: 460
-			)
-		)
+		let lessConstraint = NSLayoutConstraint(item: leftController.view, attribute: .width, relatedBy: .lessThanOrEqual, toItem: leftController.view.superview, attribute: .width, multiplier: 1, constant: 600)
+		let greaterConstraint = NSLayoutConstraint(item: leftController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: leftController.view.superview, attribute: .width, multiplier: 1, constant: 350)
+
+		leftController.view.addConstraints([lessConstraint, greaterConstraint])
 
 		let verticalSplitViewController = NSSplitViewController()
 		verticalSplitViewController.view.addConstraint(
 			NSLayoutConstraint(
-				item: verticalSplitViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual,
-				toItem: verticalSplitViewController.view.superview, attribute: .width, multiplier: 1, constant: 400
+				item: verticalSplitViewController.view, attribute: .width, relatedBy: .lessThanOrEqual,
+				toItem: verticalSplitViewController.view.superview, attribute: .width, multiplier: 1, constant: 515
 			)
 		)
 		let dayTrackings = DayTrackingsController(nibName: .dayTrackingsControllerNib, bundle: nil)
@@ -52,8 +45,6 @@ class TrackingSplitViewController: EditorSplitViewController {
 	func showTracking() {
 		if let jobListViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is JobListController }) {
 			let trackingViewController = TrackingViewController(nibName: .trackingViewControllerNib, bundle: nil)
-
-			trackingViewController.view.addConstraint(NSLayoutConstraint(item: trackingViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: trackingViewController.view.superview, attribute: .width, multiplier: 1, constant: 300))
 
 			NSAnimationContext.runAnimationGroup({ (context) -> Void in
 				context.duration = 0.3
@@ -71,7 +62,7 @@ class TrackingSplitViewController: EditorSplitViewController {
 		if let trackingViewControllerIndex = splitViewItems.firstIndex(where: { $0.viewController is TrackingViewController }) {
 			let jobListViewController = JobListController(nibName: .jobListControllerNib, bundle: nil)
 
-			jobListViewController.view.addConstraint(NSLayoutConstraint(item: jobListViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: jobListViewController.view.superview, attribute: .width, multiplier: 1, constant: 300))
+			jobListViewController.view.addConstraint(NSLayoutConstraint(item: jobListViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: jobListViewController.view.superview, attribute: .width, multiplier: 1, constant: 450))
 
 			NSAnimationContext.runAnimationGroup({ (context) -> Void in
 				context.duration = 0.3

@@ -79,7 +79,7 @@ class CalendarDay: NSView {
 		dayLabel.font = NSFont.systemFont(ofSize: 20, weight: .ultraLight)
 
 		addConstraints([
-			NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50)
+			NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 55)
 		])
 	}
 

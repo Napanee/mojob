@@ -16,8 +16,8 @@ class CalendarSplitViewController: EditorSplitViewController {
 		let verticalSplitViewController = NSSplitViewController()
 		verticalSplitViewController.view.addConstraint(
 			NSLayoutConstraint(
-				item: verticalSplitViewController.view, attribute: .width, relatedBy: .greaterThanOrEqual,
-				toItem: verticalSplitViewController.view.superview, attribute: .width, multiplier: 1, constant: 400
+				item: verticalSplitViewController.view, attribute: .width, relatedBy: .lessThanOrEqual,
+				toItem: verticalSplitViewController.view.superview, attribute: .width, multiplier: 1, constant: 515
 			)
 		)
 		let dayTrackings = DayTrackingsController(nibName: .dayTrackingsControllerNib, bundle: nil)

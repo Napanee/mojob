@@ -41,8 +41,6 @@ class CalendarController: NSViewController {
 		todayButton.layer?.cornerRadius = 16
 		todayButton.layer?.borderColor = NSColor(red: 0.102, green: 0.102, blue: 0.102, alpha: 0.7).cgColor
 
-
-
 		let context = CoreDataHelper.context
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
