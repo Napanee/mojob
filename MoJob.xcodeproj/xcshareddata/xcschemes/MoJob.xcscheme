@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1030"
-   version = "1.3">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -107,5 +107,23 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Do all of the work in a subdirectory of /tmp, and use a&#10;# unique ID so that there&apos;s no collision with previous builds.&#10;EXPORT_UUID=`uuidgen`&#10;EXPORT_PATH=&quot;/tmp/$PRODUCT_NAME-$EXPORT_UUID&quot;&#10;APP_PATH=&quot;$EXPORT_PATH/$FULL_PRODUCT_NAME&quot;&#10;BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c &quot;Print CFBundleShortVersionString&quot; &quot;${PROJECT_DIR}/${INFOPLIST_FILE}&quot;)&#10;BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c &quot;Print CFBundleVersion&quot; &quot;${PROJECT_DIR}/${INFOPLIST_FILE}&quot;)&#10;&#10;export XCODE_DEVELOPER_DIR_PATH=&quot;/Applications/Xcode.app/Contents/Developer/&quot;&#10;&#10;# Xcode doesn&apos;t show run script errors in build log.&#10;# Uncomment to save any messages aside.&#10;exec &gt; &quot;/tmp/Xcode run script.log&quot; 2&gt;&amp;1&#10;&#10;/usr/bin/osascript -e &apos;display notification &quot;Exporting application archive&#x2026;&quot; with title &quot;Submitting app for notarization&quot;&apos;&#10;&#10;# Build App&#10;/usr/bin/xcodebuild -exportArchive -archivePath &quot;$ARCHIVE_PATH&quot; -exportOptionsPlist &quot;$SRCROOT/$PRODUCT_NAME/ExportOptions.plist&quot; -exportPath &quot;$EXPORT_PATH&quot;&#10;&#10;# Create a UDIF bzip2-compressed disk image.&#10;cd &quot;$EXPORT_PATH/&quot;&#10;mkdir &quot;$PRODUCT_NAME&quot;&#10;mv &quot;$APP_PATH&quot; &quot;$PRODUCT_NAME&quot;&#10;&#10;osascript -e &apos;display notification &quot;Submitting UDIF Disk Image for notarization&#x2026;&quot; with title &quot;Submitting app for notarization&quot;&apos;&#10;&#10;cd &quot;$PRODUCT_NAME/&quot;&#10;zip &quot;$SRCROOT/../releases/$PRODUCT_NAME-$BUNDLE_VERSION-$BUILD_NUMBER.zip&quot; -r &quot;$FULL_PRODUCT_NAME&quot;&#10;cp &quot;$SRCROOT/$PRODUCT_NAME/release-notes/$PRODUCT_NAME-$BUNDLE_VERSION.html&quot; &quot;$SRCROOT/../releases/$PRODUCT_NAME-$BUNDLE_VERSION-$BUILD_NUMBER.html&quot;&#10;&#10;var=$($SRCROOT/../sparkle/bin/generate_appcast $SRCROOT/../releases/)&#10;&#10;osascript -e &apos;display notification &quot;&#x2026;done!&quot; with title &quot;Submitting app for notarization&quot; sound name &quot;Purr&quot;&apos;&#10;&#10;# Open the folder that was created to signal that the script is done.&#10;open &quot;$SRCROOT/../releases/&quot;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "E821178B220E07B1003D7578"
+                     BuildableName = "MoJob.app"
+                     BlueprintName = "MoJob"
+                     ReferencedContainer = "container:MoJob.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
    </ArchiveAction>
 </Scheme>
