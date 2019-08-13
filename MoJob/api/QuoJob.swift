@@ -40,7 +40,7 @@ class QuoJob: NSObject {
 	let dateFormatterTime = DateFormatter()
 	var defaultParams: [String: Any] {
 		get {
-			return ["session": sessionId!]
+			return ["session": sessionId]
 		}
 	}
 
@@ -140,8 +140,8 @@ class QuoJob: NSObject {
 	}
 
 	var keychain: Keychain!
-	var userId: String!
-	var sessionId: String! = ""
+	var userId: String = ""
+	var sessionId: String = ""
 
 	let context = CoreDataHelper.context
 	let taskContext = CoreDataHelper.backgroundContext
@@ -340,8 +340,12 @@ extension QuoJob {
 		]
 
 		return fetch(as: .session_login, with: params).done { result in
-			self.userId = result["user_id"] as? String
-			self.sessionId = result["session"] as? String
+			guard let userId = result["user_id"] as? String, let sessionId = result["session_id"] as? String else {
+				return
+			}
+
+			self.userId = userId
+			self.sessionId = sessionId
 
 			//			Crashlytics.sharedInstance().setUserName(userName)
 			//			Answers.logLogin(withMethod: "userData", success: true, customAttributes: [:])
