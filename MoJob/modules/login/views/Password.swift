@@ -73,7 +73,11 @@ class Password: NSSecureTextField {
 	private func setFocused() {
 		let lineWidth: CGFloat = 1
 		let posTop = bounds.maxY - (lineWidth / 2)
-		let lineColor = NSColor.controlAccentColor.cgColor
+
+		var lineColor = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0).cgColor
+		if #available(OSX 10.14, *) {
+			lineColor = NSColor.controlAccentColor.cgColor
+		}
 
 		let animation = CABasicAnimation(keyPath: "strokeEnd")
 		animation.fromValue = 0

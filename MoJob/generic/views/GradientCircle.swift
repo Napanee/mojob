@@ -20,7 +20,11 @@ class GradientCircle: NSView {
 
 		ellipseCenter.setClip()
 
-		let bottomGlowGradient = NSGradient(colorsAndLocations: (NSColor.controlAccentColor, 0.3), (NSColor.white.withAlphaComponent(0), 0.7), (NSColor.white.withAlphaComponent(0), 1))
+		var color = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0)
+		if #available(OSX 10.14, *) {
+			color = NSColor.controlAccentColor
+		}
+		let bottomGlowGradient = NSGradient(colorsAndLocations: (color, 0.3), (NSColor.white.withAlphaComponent(0), 0.7), (NSColor.white.withAlphaComponent(0), 1))
 		bottomGlowGradient?.draw(in: ellipseCenterRect, relativeCenterPosition: NSPoint(x: 0, y: 0))
 
 	}

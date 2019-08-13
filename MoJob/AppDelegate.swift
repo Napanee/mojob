@@ -20,7 +20,16 @@ class AppDelegate: NSObject {
 	@IBOutlet weak var syncDataMenuItem: NSMenuItem!
 	@IBOutlet weak var syncTrackingsMenuItem: NSMenuItem!
 
-	let monitor = NWPathMonitor()
+	private var _monitor: AnyObject?
+	@available(OSX 10.14, *)
+	var monitor: NWPathMonitor? {
+		get {
+			return _monitor as? NWPathMonitor
+		}
+		set {
+			_monitor = newValue
+		}
+	}
 
 	var window: NSWindow!
 	var mainWindowController: MainWindowController?
@@ -61,17 +70,20 @@ class AppDelegate: NSObject {
 
 		NSUserNotificationCenter.default.delegate = self
 
-		let queue = DispatchQueue(label: "Monitor")
-		monitor.pathUpdateHandler = { path in
-			DispatchQueue.main.sync {
-				self.networkChanged()
+		if #available(OSX 10.14, *) {
+			let queue = DispatchQueue(label: "Monitor")
+			monitor?.pathUpdateHandler = { path in
+				DispatchQueue.main.sync {
+					self.networkChanged()
+				}
 			}
+			monitor?.start(queue: queue)
 		}
-		monitor.start(queue: queue)
 	}
 
+	@available(OSX 10.14, *)
 	private func networkChanged() {
-		let status = monitor.currentPath.status
+		let status = monitor?.currentPath.status
 
 //		switch status {
 //		case .satisfied:
