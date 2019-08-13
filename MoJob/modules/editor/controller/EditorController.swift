@@ -11,8 +11,6 @@ import Cocoa
 protocol DateFieldDelegate {
 	func getFromMonth() -> Int?
 	func getFromYear() -> Int?
-	func getUntilMonth() -> Int?
-	func getUntilYear() -> Int?
 }
 
 class EditorController: QuoJobSelections {
@@ -112,14 +110,6 @@ extension EditorController: DateFieldDelegate {
 
 	func getFromYear() -> Int? {
 		return Int(fromYear!.stringValue)
-	}
-
-	func getUntilMonth() -> Int? {
-		return Int(untilMonth!.stringValue)
-	}
-
-	func getUntilYear() -> Int? {
-		return Int(untilYear!.stringValue)
 	}
 
 }

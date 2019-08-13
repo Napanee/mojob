@@ -46,16 +46,6 @@ class NumberField: TextField {
 			}
 			value = min(maxDays(month: month, year: year), value)
 			break
-		case "untilDay":
-			guard
-				let delegate = dateDelegate,
-				let year = delegate.getUntilYear(),
-				let month = delegate.getUntilMonth() else
-			{
-				break
-			}
-			value = min(maxDays(month: month, year: year), value)
-			break
 		default:
 			break
 		}

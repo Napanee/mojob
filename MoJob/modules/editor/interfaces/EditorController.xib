@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,11 +19,8 @@
                 <outlet property="jobSelect" destination="Z78-hW-Vo6" id="quu-v7-Yu4"/>
                 <outlet property="saveButton" destination="SJk-dW-6EJ" id="OUY-is-Fy0"/>
                 <outlet property="taskSelect" destination="PCu-pY-pc0" id="RJ9-X2-mzk"/>
-                <outlet property="untilDay" destination="6Gk-B7-Zib" id="8et-hj-jFi"/>
                 <outlet property="untilHour" destination="t3e-Cf-nTC" id="lrk-7Z-8SL"/>
                 <outlet property="untilMinute" destination="hzB-Th-6oG" id="qGC-DF-YGL"/>
-                <outlet property="untilMonth" destination="rdN-jF-jMm" id="GwQ-Eg-cyY"/>
-                <outlet property="untilYear" destination="5Fb-IL-gb3" id="Faa-kI-Thb"/>
                 <outlet property="view" destination="c22-O7-iKe" id="T6D-AN-7hl"/>
             </connections>
         </customObject>
@@ -248,8 +246,16 @@
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tUt-kI-Qil">
+                                    <rect key="frame" x="304" y="9" width="30" height="19"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="von" id="u1N-zP-gBo">
+                                        <font key="font" metaFont="systemUltraLight" size="16"/>
+                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Ud-0R-4Bu">
-                                    <rect key="frame" x="184" y="8" width="74" height="26"/>
+                                    <rect key="frame" x="337" y="8" width="74" height="26"/>
                                     <subviews>
                                         <textField identifier="fromHour" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PWX-Cr-K1r" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="33" height="26"/>
@@ -308,94 +314,8 @@
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
-                                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ige-yA-2s3">
-                                    <rect key="frame" x="382" y="8" width="134" height="26"/>
-                                    <subviews>
-                                        <textField identifier="untilDay" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Gk-B7-Zib" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="33" height="26"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="33" id="Ffv-xt-LF7"/>
-                                            </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="18" drawsBackground="YES" id="bXv-gf-Oxy">
-                                                <font key="font" metaFont="systemThin" size="20"/>
-                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <connections>
-                                                <outlet property="delegate" destination="-2" id="LxE-au-3nw"/>
-                                                <outlet property="nextKeyView" destination="rdN-jF-jMm" id="v3l-px-hJx"/>
-                                            </connections>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mjf-vL-jHD">
-                                            <rect key="frame" x="33" y="0.0" width="8" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="." id="Nzf-7S-lwj">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField identifier="untilMonth" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rdN-jF-jMm" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
-                                            <rect key="frame" x="41" y="0.0" width="33" height="26"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="05" drawsBackground="YES" id="0Cg-EJ-KNw">
-                                                <font key="font" metaFont="systemThin" size="20"/>
-                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <connections>
-                                                <outlet property="delegate" destination="-2" id="Fct-Jc-NEy"/>
-                                                <outlet property="nextKeyView" destination="5Fb-IL-gb3" id="HgU-2i-lVq"/>
-                                            </connections>
-                                        </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H2Z-4z-yEI">
-                                            <rect key="frame" x="74" y="0.0" width="8" height="17"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="." id="8Nc-1i-xPq">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField identifier="untilYear" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Fb-IL-gb3" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
-                                            <rect key="frame" x="82" y="0.0" width="52" height="26"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="52" id="SOA-jg-R7m"/>
-                                            </constraints>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="1984" drawsBackground="YES" id="ikk-2T-5x7">
-                                                <font key="font" metaFont="systemThin" size="20"/>
-                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                            <connections>
-                                                <outlet property="delegate" destination="-2" id="mZE-fP-zzg"/>
-                                                <outlet property="nextKeyView" destination="SJk-dW-6EJ" id="bnI-eE-t2Q"/>
-                                            </connections>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="rdN-jF-jMm" firstAttribute="bottom" secondItem="6Gk-B7-Zib" secondAttribute="bottom" id="35d-q0-77V"/>
-                                        <constraint firstItem="mjf-vL-jHD" firstAttribute="bottom" secondItem="6Gk-B7-Zib" secondAttribute="bottom" id="3zd-EP-Ido"/>
-                                        <constraint firstItem="H2Z-4z-yEI" firstAttribute="bottom" secondItem="6Gk-B7-Zib" secondAttribute="bottom" id="Jcl-XP-eLJ"/>
-                                        <constraint firstItem="rdN-jF-jMm" firstAttribute="top" secondItem="6Gk-B7-Zib" secondAttribute="top" id="KG1-rJ-ADO"/>
-                                        <constraint firstItem="5Fb-IL-gb3" firstAttribute="top" secondItem="6Gk-B7-Zib" secondAttribute="top" id="nEB-Gf-TSL"/>
-                                        <constraint firstItem="5Fb-IL-gb3" firstAttribute="bottom" secondItem="6Gk-B7-Zib" secondAttribute="bottom" id="tEj-o3-r1D"/>
-                                        <constraint firstItem="rdN-jF-jMm" firstAttribute="width" secondItem="6Gk-B7-Zib" secondAttribute="width" id="vfJ-qG-4e6"/>
-                                    </constraints>
-                                    <visibilityPriorities>
-                                        <integer value="1000"/>
-                                        <integer value="1000"/>
-                                        <integer value="1000"/>
-                                        <integer value="1000"/>
-                                        <integer value="1000"/>
-                                    </visibilityPriorities>
-                                    <customSpacing>
-                                        <real value="3.4028234663852886e+38"/>
-                                        <real value="3.4028234663852886e+38"/>
-                                        <real value="3.4028234663852886e+38"/>
-                                        <real value="3.4028234663852886e+38"/>
-                                        <real value="3.4028234663852886e+38"/>
-                                    </customSpacing>
-                                </stackView>
                                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0pp-DH-GjH">
-                                    <rect key="frame" x="288" y="8" width="74" height="26"/>
+                                    <rect key="frame" x="442" y="8" width="74" height="26"/>
                                     <subviews>
                                         <textField identifier="untilHour" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t3e-Cf-nTC" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="33" height="26"/>
@@ -429,7 +349,6 @@
                                             </textFieldCell>
                                             <connections>
                                                 <outlet property="delegate" destination="-2" id="jru-bQ-0eA"/>
-                                                <outlet property="nextKeyView" destination="6Gk-B7-Zib" id="mFi-kY-MfV"/>
                                             </connections>
                                         </textField>
                                     </subviews>
@@ -450,28 +369,34 @@
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lLv-BF-YXg">
+                                    <rect key="frame" x="414" y="9" width="25" height="19"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="bis" id="WX9-Oz-O4d">
+                                        <font key="font" metaFont="systemUltraLight" size="16"/>
+                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                             </subviews>
                             <constraints>
+                                <constraint firstItem="4Ud-0R-4Bu" firstAttribute="leading" secondItem="tUt-kI-Qil" secondAttribute="trailing" constant="5" id="1Tg-RG-sFk"/>
                                 <constraint firstItem="4Ud-0R-4Bu" firstAttribute="bottom" secondItem="uar-eH-r9y" secondAttribute="bottom" id="1hs-qz-GLr"/>
                                 <constraint firstItem="hzB-Th-6oG" firstAttribute="height" secondItem="pwd-lG-4Ll" secondAttribute="height" id="3ox-tE-9Fu"/>
                                 <constraint firstAttribute="bottom" secondItem="uar-eH-r9y" secondAttribute="bottom" constant="8" id="64S-KF-yHj"/>
                                 <constraint firstItem="uar-eH-r9y" firstAttribute="top" secondItem="D7U-NT-K5Y" secondAttribute="top" constant="8" id="7q1-05-5OF"/>
                                 <constraint firstItem="0pp-DH-GjH" firstAttribute="top" secondItem="uar-eH-r9y" secondAttribute="top" id="ElC-VQ-xDG"/>
-                                <constraint firstItem="4Ud-0R-4Bu" firstAttribute="leading" secondItem="uar-eH-r9y" secondAttribute="trailing" constant="20" id="IEF-zc-rW2"/>
-                                <constraint firstAttribute="trailing" secondItem="Ige-yA-2s3" secondAttribute="trailing" constant="30" id="JXC-GD-sXT"/>
-                                <constraint firstItem="Ige-yA-2s3" firstAttribute="top" secondItem="uar-eH-r9y" secondAttribute="top" id="Kd6-oW-GC8"/>
+                                <constraint firstItem="tUt-kI-Qil" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uar-eH-r9y" secondAttribute="trailing" constant="30" id="Ji9-G5-kif"/>
+                                <constraint firstItem="lLv-BF-YXg" firstAttribute="leading" secondItem="4Ud-0R-4Bu" secondAttribute="trailing" constant="5" id="M0u-mc-pRA"/>
+                                <constraint firstItem="lLv-BF-YXg" firstAttribute="firstBaseline" secondItem="0pp-DH-GjH" secondAttribute="firstBaseline" id="NDA-4z-zlp"/>
+                                <constraint firstItem="0pp-DH-GjH" firstAttribute="leading" secondItem="lLv-BF-YXg" secondAttribute="trailing" constant="5" id="PkW-uF-QnV"/>
                                 <constraint firstItem="uar-eH-r9y" firstAttribute="leading" secondItem="D7U-NT-K5Y" secondAttribute="leading" constant="30" id="PvL-Bh-SJa"/>
                                 <constraint firstItem="t3e-Cf-nTC" firstAttribute="height" secondItem="pwd-lG-4Ll" secondAttribute="height" id="TEL-Ba-Mf7"/>
-                                <constraint firstItem="0pp-DH-GjH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4Ud-0R-4Bu" secondAttribute="trailing" constant="30" id="a5R-5z-LIa"/>
                                 <constraint firstItem="4Ud-0R-4Bu" firstAttribute="top" secondItem="uar-eH-r9y" secondAttribute="top" id="bAA-qN-Wec"/>
-                                <constraint firstItem="5Fb-IL-gb3" firstAttribute="height" secondItem="pwd-lG-4Ll" secondAttribute="height" id="hZ2-EQ-hDb"/>
-                                <constraint firstItem="Ige-yA-2s3" firstAttribute="bottom" secondItem="uar-eH-r9y" secondAttribute="bottom" id="j30-ci-ei5"/>
-                                <constraint firstItem="Ige-yA-2s3" firstAttribute="leading" secondItem="0pp-DH-GjH" secondAttribute="trailing" constant="20" id="kzT-iK-Hji"/>
+                                <constraint firstAttribute="trailing" secondItem="0pp-DH-GjH" secondAttribute="trailing" constant="30" id="bE3-hc-6RQ"/>
+                                <constraint firstItem="tUt-kI-Qil" firstAttribute="firstBaseline" secondItem="4Ud-0R-4Bu" secondAttribute="firstBaseline" id="hv1-48-8r0"/>
                                 <constraint firstItem="PWX-Cr-K1r" firstAttribute="height" secondItem="pwd-lG-4Ll" secondAttribute="height" id="nwu-9n-ZAQ"/>
                                 <constraint firstItem="0pp-DH-GjH" firstAttribute="bottom" secondItem="uar-eH-r9y" secondAttribute="bottom" id="qmD-8K-zho"/>
-                                <constraint firstItem="rdN-jF-jMm" firstAttribute="height" secondItem="pwd-lG-4Ll" secondAttribute="height" id="suY-Rw-4dm"/>
                                 <constraint firstItem="imT-nJ-o00" firstAttribute="height" secondItem="pwd-lG-4Ll" secondAttribute="height" id="vf7-6H-a4D"/>
-                                <constraint firstItem="6Gk-B7-Zib" firstAttribute="height" secondItem="pwd-lG-4Ll" secondAttribute="height" id="w44-hP-Nto"/>
                             </constraints>
                         </customView>
                     </subviews>

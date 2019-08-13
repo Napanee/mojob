@@ -20,9 +20,6 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var fromMinute: NumberField!
 	@IBOutlet weak var untilHour: NumberField?
 	@IBOutlet weak var untilMinute: NumberField?
-	@IBOutlet weak var untilDay: NumberField?
-	@IBOutlet weak var untilMonth: NumberField?
-	@IBOutlet weak var untilYear: NumberField?
 	@IBOutlet weak var comment: NSTextField!
 
 	let userDefaults = UserDefaults()
@@ -144,13 +141,6 @@ class QuoJobSelections: NSViewController {
 
 	private func initEndDate() {
 		if let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
-			let day = Calendar.current.component(.day, from: dateEnd)
-			untilDay?.stringValue = String(format: "%02d", day)
-			let month = Calendar.current.component(.month, from: dateEnd)
-			untilMonth?.stringValue = String(format: "%02d", month)
-			let year = Calendar.current.component(.year, from: dateEnd)
-			untilYear?.stringValue = String(year)
-
 			let hour = Calendar.current.component(.hour, from: dateEnd)
 			untilHour?.stringValue = String(format: "%02d", hour)
 			let minute = Calendar.current.component(.minute, from: dateEnd)
@@ -278,37 +268,39 @@ extension QuoJobSelections: NSTextFieldDelegate {
 	}
 
 	private func handleTextChange(in textField: NSTextField) {
-		if let dateStart = tempTracking?.date_start ?? tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "" {
-			var comp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateStart)
+		if let dateStart = tempTracking?.date_start ?? tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "", let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
+			var compStart = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateStart)
+			var compEnd = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
 
 			if let fromYear = fromYear {
-				comp.year = fromYear.stringValue != "" ? Int(fromYear.stringValue) : comp.year
+				compStart.year = fromYear.stringValue != "" ? Int(fromYear.stringValue) : compStart.year
+				compEnd.year = fromYear.stringValue != "" ? Int(fromYear.stringValue) : compStart.year
 			}
 
 			if let fromMonth = fromMonth {
-				comp.month = fromMonth.stringValue != "" ? Int(fromMonth.stringValue) : comp.month
+				compStart.month = fromMonth.stringValue != "" ? Int(fromMonth.stringValue) : compStart.month
+				compEnd.month = fromMonth.stringValue != "" ? Int(fromMonth.stringValue) : compStart.month
 			}
 
 			if let fromDay = fromDay {
-				comp.day = fromDay.stringValue != "" ? Int(fromDay.stringValue) : comp.day
+				compStart.day = fromDay.stringValue != "" ? Int(fromDay.stringValue) : compStart.day
+				compEnd.day = fromDay.stringValue != "" ? Int(fromDay.stringValue) : compStart.day
 			}
 
-			comp.hour = fromHour.stringValue != "" ? Int(fromHour.stringValue) : comp.hour
-			comp.minute = fromMinute.stringValue != "" ? Int(fromMinute.stringValue) : comp.minute
+			compStart.hour = fromHour.stringValue != "" ? Int(fromHour.stringValue) : compStart.hour
+			compStart.minute = fromMinute.stringValue != "" ? Int(fromMinute.stringValue) : compStart.minute
 
-			if let newStartDate = Calendar.current.date(from: comp) {
+			if let newStartDate = Calendar.current.date(from: compStart), let newEndDate = Calendar.current.date(from: compEnd) {
 				tempTracking?.date_start = newStartDate
+				tempTracking?.date_end = newEndDate
 				tracking?.update(with: ["date_start": newStartDate]).done({ _ in }).catch({ _ in })
 				startDate = newStartDate
 				formIsValid = true
 			}
 		}
 
-		if let dateEnd = tempTracking?.date_end, [untilMinute, untilHour, untilDay, untilMonth, untilYear].contains(textField) {
+		if let dateEnd = tempTracking?.date_end, [untilMinute, untilHour].contains(textField) {
 			var comp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
-			comp.year = untilYear?.stringValue != "" ? Int(untilYear?.stringValue ?? Date().year) : comp.year
-			comp.month = untilMonth?.stringValue != "" ? Int(untilMonth?.stringValue ?? Date().month) : comp.month
-			comp.day = untilDay?.stringValue != "" ? Int(untilDay?.stringValue ?? Date().day) : comp.day
 			comp.hour = untilHour?.stringValue != "" ? Int(untilHour?.stringValue ?? "23") : comp.hour
 			comp.minute = untilMinute?.stringValue != "" ? Int(untilMinute?.stringValue ?? "59") : comp.minute
 
