@@ -23,8 +23,12 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var comment: NSTextField!
 
 	let userDefaults = UserDefaults()
-	var tempTracking: TempTracking?
-	var tracking: Tracking?
+	var tempTracking: TempTracking? {
+		didSet {
+			tracking = nil
+		}
+	}
+	var tracking: Tracking? = CoreDataHelper.shared.currentTracking
 	var jobs: [Job] = []
 	var tasks: [Task] = []
 	var activities: [Activity] = []
