@@ -49,11 +49,10 @@ class CalendarController: NSViewController {
 		todayButton.layer?.cornerRadius = 16
 		todayButton.layer?.borderColor = NSColor(red: 0.102, green: 0.102, blue: 0.102, alpha: 0.7).cgColor
 
-		monitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved, .mouseEntered, .mouseExited]) {
-			let location = $0.locationInWindow
+		monitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) {
+			let location = NSPoint(x: self.view.window!.mouseLocationOutsideOfEventStream.x, y: self.view.window!.mouseLocationOutsideOfEventStream.y)
+			let frame = self.calendarGridView.gradientCircle.frame
 			var localPoint = self.calendarGridView.convert(location, from: nil)
-			var frame = self.calendarGridView.gradientCircle.frame
-			frame.origin = localPoint
 
 			localPoint.x -= frame.width / 2
 			localPoint.y -= frame.height / 2
