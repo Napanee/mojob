@@ -30,7 +30,7 @@ class CoreDataHelper {
 
 	var currentTracking: Tracking? {
 		get {
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let context = CoreDataHelper.context
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 			fetchRequest.predicate = NSPredicate(format: "date_end == nil")
 
@@ -45,7 +45,7 @@ class CoreDataHelper {
 
 	var trackingsToday: [Tracking]? {
 		get {
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let context = CoreDataHelper.context
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
 			var compoundPredicates = [NSPredicate]()
@@ -75,7 +75,7 @@ class CoreDataHelper {
 
 	var trackingsWeek: [Tracking]? {
 		get {
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let context = CoreDataHelper.context
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
 			var compoundPredicates = [NSPredicate]()
@@ -187,7 +187,7 @@ class CoreDataHelper {
 	}
 
 	static func trackings(for date: Date) -> [Tracking]? {
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
+		let context = CoreDataHelper.context
 		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
 		var compoundPredicates = [NSPredicate]()

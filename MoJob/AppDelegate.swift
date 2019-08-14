@@ -186,7 +186,7 @@ extension AppDelegate: NSApplicationDelegate {
 
 	func windowWillReturnUndoManager(window: NSWindow) -> UndoManager? {
 		// Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-		return CoreDataHelper.shared.persistentContainer.viewContext.undoManager
+		return CoreDataHelper.context.undoManager
 	}
 
 	func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {

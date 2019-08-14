@@ -14,7 +14,7 @@ protocol DateFieldDelegate {
 }
 
 class EditorController: QuoJobSelections {
-	let context = CoreDataHelper.shared.persistentContainer.viewContext
+	let context = CoreDataHelper.context
 
 	var sourceTracking: Tracking? {
 		didSet {

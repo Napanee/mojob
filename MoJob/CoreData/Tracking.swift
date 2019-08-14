@@ -22,7 +22,7 @@ extension Tracking {
 
 	class func insert(with params: [String: Any?]) -> Promise<Tracking?> {
 		return Promise { seal in
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let context = CoreDataHelper.context
 			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
 			let tracking = NSManagedObject(entity: entity!, insertInto: context)
 
@@ -81,7 +81,7 @@ extension Tracking {
 
 	func update(with params: [String: Any?]) -> Promise<Void> {
 		return Promise { seal in
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let context = CoreDataHelper.context
 
 			for (key, value) in params {
 				setValue(value, forKey: key)
@@ -108,7 +108,7 @@ extension Tracking {
 	}
 
 	func deleteLocal() {
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
+		let context = CoreDataHelper.context
 
 		context.delete(self)
 
