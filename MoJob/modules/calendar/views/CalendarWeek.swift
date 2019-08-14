@@ -11,8 +11,8 @@ import Cocoa
 class CalendarWeek: NSView {
 
 	@IBOutlet var contentView: NSView!
-	@IBOutlet weak var week: NSTextField!
-	@IBOutlet weak var time: NSTextField!
+	@IBOutlet weak var weekLabel: NSTextField!
+	@IBOutlet weak var timeLabel: NSTextField!
 
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -36,7 +36,8 @@ class CalendarWeek: NSView {
 		contentView.layer?.backgroundColor = NSColor.white.cgColor
 
 		addConstraints([
-			NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 65)
+			NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 65),
+			NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40)
 		])
 	}
 

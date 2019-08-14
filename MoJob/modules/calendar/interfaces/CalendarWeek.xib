@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -8,19 +9,28 @@
         <customObject id="-2" userLabel="File's Owner" customClass="CalendarWeek" customModule="MoJob" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="c22-O7-iKe" id="ZDd-jy-BEe"/>
-                <outlet property="week" destination="Wpl-vb-gc1" id="UJF-mu-mVB"/>
+                <outlet property="timeLabel" destination="3NV-ve-UtH" id="jtr-9x-26i"/>
+                <outlet property="weekLabel" destination="Wpl-vb-gc1" id="0XP-D0-75h"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="295" height="237"/>
+            <rect key="frame" x="0.0" y="0.0" width="151" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wpl-vb-gc1">
-                    <rect key="frame" x="253" y="107" width="24" height="24"/>
+                    <rect key="frame" x="109" y="17" width="24" height="24"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="31" id="DMV-FG-oAg">
                         <font key="font" metaFont="systemUltraLight" size="20"/>
+                        <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3NV-ve-UtH">
+                    <rect key="frame" x="103" y="3" width="36" height="14"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="00:00" id="fQq-yD-i53">
+                        <font key="font" metaFont="systemLight" size="11"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -28,9 +38,12 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Wpl-vb-gc1" secondAttribute="trailing" constant="20" id="B6M-UD-SUw"/>
-                <constraint firstItem="Wpl-vb-gc1" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="hY1-DY-Zt1"/>
+                <constraint firstItem="3NV-ve-UtH" firstAttribute="centerX" secondItem="Wpl-vb-gc1" secondAttribute="centerX" id="DmN-cj-HPq"/>
+                <constraint firstAttribute="bottom" secondItem="3NV-ve-UtH" secondAttribute="bottom" constant="3" id="JAC-3G-qxn"/>
+                <constraint firstItem="Wpl-vb-gc1" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="3" id="V3i-eo-uNz"/>
+                <constraint firstItem="3NV-ve-UtH" firstAttribute="top" secondItem="Wpl-vb-gc1" secondAttribute="bottom" id="doW-BS-ONS"/>
             </constraints>
-            <point key="canvasLocation" x="46.5" y="136.5"/>
+            <point key="canvasLocation" x="-25.5" y="88.5"/>
         </customView>
     </objects>
 </document>

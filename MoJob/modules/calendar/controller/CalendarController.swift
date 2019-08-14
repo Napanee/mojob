@@ -78,10 +78,10 @@ class CalendarController: NSViewController {
 
 		if let job = QuoJob.shared.jobs.first(where: { $0.fullTitle.lowercased() == value }) {
 			calendarGridView.job = job
-			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": currentDate, "job": job as Any])
+			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": currentDate as Any, "job": job as Any])
 		} else {
 			calendarGridView.job = nil
-			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": currentDate])
+			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": currentDate as Any])
 		}
 	}
 

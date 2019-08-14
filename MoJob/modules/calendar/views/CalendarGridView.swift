@@ -149,23 +149,19 @@ class CalendarGridView: NSGridView {
 		var dayCount = lastDayOfCalendar?.timeIntervalSince(firstDayOfCalender!)
 		dayCount = round(dayCount! / 60 / 60 / 24) - 1
 		var day = firstDayOfCalender
+		var weekSum: Double = 0
 
 		var gridRow: [NSView] = []
 		for i in 0...Int(dayCount!) {
 			let columnNumber = i.remainderReportingOverflow(dividingBy: 7).partialValue
-
-			if (columnNumber == 0) {
-				let weekNumber = calendar.component(.weekOfYear, from: day!)
-				let content = CalendarWeek()
-				content.week.stringValue = String(weekNumber)
-				gridRow.append(content)
-			}
 
 			let sum = CoreDataHelper.seconds(for: day!, and: job)
 			let formatter = DateComponentsFormatter()
 			formatter.unitsStyle = .positional
 			formatter.zeroFormattingBehavior = .pad
 			formatter.allowedUnits = [.hour, .minute]
+
+			weekSum += sum ?? 0
 
 			let content = CalendarDay()
 			content.delegate = self
@@ -181,8 +177,15 @@ class CalendarGridView: NSGridView {
 			gridRow.append(content)
 
 			if (columnNumber == 6) {
+				let weekNumber = calendar.component(.weekOfYear, from: day!)
+				let content = CalendarWeek()
+				content.weekLabel.stringValue = String(weekNumber)
+				content.timeLabel.stringValue = formatter.string(from: weekSum)!
+				gridRow.insert(content, at: 0)
+
 				addRow(with: gridRow)
 				gridRow = []
+				weekSum = 0
 			}
 
 			day = calendar.date(byAdding: .day, value: 1, to: day!)
