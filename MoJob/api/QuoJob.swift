@@ -340,7 +340,7 @@ extension QuoJob {
 		]
 
 		return fetch(as: .session_login, with: params).done { result in
-			guard let userId = result["user_id"] as? String, let sessionId = result["session_id"] as? String else {
+			guard let userId = result["user_id"] as? String, let sessionId = result["session"] as? String else {
 				return
 			}
 
