@@ -335,7 +335,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 		if (comboBox.isEqual(jobSelect)) {
 			jobs = QuoJob.shared.jobs
-				.filter({ $0.fullTitle.lowercased().contains(value) })
+				.filter({ value == "" || $0.fullTitle.lowercased().contains(value) })
 				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
 			if (jobs.count > 0) {
@@ -343,7 +343,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 			}
 		} else if (comboBox.isEqual(taskSelect)) {
 			tasks = QuoJob.shared.tasks
-				.filter({ $0.job?.id == tempTracking?.job?.id ?? tracking?.job?.id && ($0.title ?? "").lowercased().contains(value) })
+				.filter({ $0.job?.id == tempTracking?.job?.id ?? tracking?.job?.id && (value == "" || ($0.title ?? "").lowercased().contains(value)) })
 				.sorted(by: { $0.title! < $1.title! })
 
 			if (tasks.count > 0) {
@@ -358,7 +358,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 					return $0.internal_service || (nfc ? $0.nfc : false)
 				})
-				.filter({ $0.title!.lowercased().contains(value) })
+				.filter({ value == "" || $0.title!.lowercased().contains(value) })
 				.sorted(by: { $0.title! < $1.title! })
 
 			if (activities.count > 0) {

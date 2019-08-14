@@ -160,7 +160,7 @@ extension CalendarController: NSTextFieldDelegate {
 
 		if (comboBox.isEqual(jobSelect)) {
 			jobs = QuoJob.shared.jobs
-				.filter({ $0.fullTitle.lowercased().contains(value) })
+				.filter({ value == "" || $0.fullTitle.lowercased().contains(value) })
 				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
 			if (jobs.count > 0) {
