@@ -9,6 +9,15 @@
 import Cocoa
 
 
+protocol CalendarDayDelegeate {
+	func select(_ day: Date)
+}
+
+extension CalendarDayDelegeate {
+	func select(_ day: Date) {}
+}
+
+
 class CalendarGridView: NSGridView {
 
 	private let calendar = NSCalendar.current
@@ -17,8 +26,15 @@ class CalendarGridView: NSGridView {
 	private var gradientCircle = GradientCircle()
 	private var activeIndicator = ActiveIndicator()
 	private var currentSelection = Date().startOfDay!
+	private var selectedMonth: DateComponents?
 
 	private var observer: NSObjectProtocol?
+
+	var job: Job? {
+		didSet {
+			reloadData(for: selectedMonth ?? calendar.dateComponents([.month, .year], from: currentSelection))
+		}
+	}
 
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -114,20 +130,22 @@ class CalendarGridView: NSGridView {
 		}
 	}
 
-	func reloadData(withDate date: Date) {
+	func reloadData(for month: DateComponents) {
+		selectedMonth = month
+
 		for _ in 1..<numberOfRows {
 			removeRow(at: 1)
 		}
 
 		subviews.removeAll(where: { !$0.isKind(of: NSTextField.self) && !$0.isKind(of: GradientCircle.self) })
 
-		if (!date.isInMonth(of: currentSelection)) {
+		if (!calendar.date(currentSelection, matchesComponents: month)) {
 			activeIndicator.isHidden = true
 		}
 
 		// row for days
-		let firstDayOfCalender = date.startOfMonth?.startOfWeek
-		let lastDayOfCalendar = Calendar.current.date(byAdding: .second, value: -1, to: (date.endOfMonth?.endOfWeek)!)
+		let firstDayOfCalender = calendar.date(from: month)?.startOfWeek
+		let lastDayOfCalendar = Calendar.current.date(byAdding: .second, value: -1, to: (calendar.date(from: month)?.endOfMonth?.endOfWeek)!)
 		var dayCount = lastDayOfCalendar?.timeIntervalSince(firstDayOfCalender!)
 		dayCount = round(dayCount! / 60 / 60 / 24) - 1
 		var day = firstDayOfCalender
@@ -143,9 +161,17 @@ class CalendarGridView: NSGridView {
 				gridRow.append(content)
 			}
 
+			let sum = CoreDataHelper.seconds(for: day!, and: job)
+			let formatter = DateComponentsFormatter()
+			formatter.unitsStyle = .positional
+			formatter.zeroFormattingBehavior = .pad
+			formatter.allowedUnits = [.hour, .minute]
+
 			let content = CalendarDay()
+			content.delegate = self
 			content.day = day
-			content.isCurrentMonth = day!.isInMonth(of: date)
+			content.isCurrentMonth = calendar.date(day!, matchesComponents: month)
+			content.timeLabel.stringValue = formatter.string(from: sum ?? 0)!
 
 			if calendar.dateComponents([.day, .month, .year], from: currentSelection) == calendar.dateComponents([.day, .month, .year], from: day!) {
 				activeIndicator.isHidden = false
@@ -186,6 +212,14 @@ class CalendarGridView: NSGridView {
 		)
 
 		return label
+	}
+
+}
+
+extension CalendarGridView: CalendarDayDelegeate {
+
+	func select(_ day: Date) {
+		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": day, "job": job as Any])
 	}
 
 }

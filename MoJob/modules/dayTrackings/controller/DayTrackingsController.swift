@@ -20,11 +20,12 @@ class DayTrackingsController: NSViewController {
 
 	private var currentDate: Date = Date()
 	private var observer: NSObjectProtocol?
+	private var filteredJob: Job?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let trackings = CoreDataHelper.trackings(for: currentDate) {
+		if let trackings = CoreDataHelper.trackings(for: currentDate, and: filteredJob) {
 			trackingsStackView.reloadData(with: trackings)
 		}
 
@@ -39,6 +40,7 @@ class DayTrackingsController: NSViewController {
 		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "calendar:changedDate"), object: nil, queue: nil, using: { notification in
 			guard notification.name == .init("calendar:changedDate"), let date = notification.object as? [String: Any], let day = date["day"] as? Date else{ return }
 
+			self.filteredJob = date["job"] as? Job
 			self.changeDate(with: day)
 		})
 	}
@@ -51,17 +53,17 @@ class DayTrackingsController: NSViewController {
 			self.dateMonth.stringValue = date.month
 			self.dateYear.stringValue = date.year
 
-			if let trackings = CoreDataHelper.trackings(for: date) {
+			if let trackings = CoreDataHelper.trackings(for: date, and: self.filteredJob) {
 				self.trackingsStackView.currentDate = date
 				self.trackingsStackView.reloadData(with: trackings)
 
-				let sum = trackings.map({ $0.date_end!.timeIntervalSince($0.date_start!) }).reduce(0.0, { $0 + $1 })
+				let sum = CoreDataHelper.seconds(for: date, and: self.filteredJob)
 				let formatter = DateComponentsFormatter()
 				formatter.unitsStyle = .abbreviated
 				formatter.zeroFormattingBehavior = .pad
 				formatter.allowedUnits = [.hour, .minute]
 
-				self.totalTimeForDay.stringValue = formatter.string(from: sum)!
+				self.totalTimeForDay.stringValue = formatter.string(from: sum ?? 0)!
 			}
 		}
 	}
@@ -81,7 +83,7 @@ class DayTrackingsController: NSViewController {
 
 	@objc func managedObjectContextDidSave(notification: NSNotification) {
 		guard let userInfo = notification.userInfo else { return }
-		guard let trackings = CoreDataHelper.trackings(for: currentDate) else { return }
+		guard let trackings = CoreDataHelper.trackings(for: currentDate, and: filteredJob) else { return }
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
 			trackingsStackView.reloadData(with: trackings)

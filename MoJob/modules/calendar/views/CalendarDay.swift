@@ -16,6 +16,7 @@ class CalendarDay: NSView {
 	@IBOutlet weak var dayLabel: NSTextField!
 	@IBOutlet weak var timeLabel: NSTextField!
 
+	var delegate: CalendarDayDelegeate?
 	let calendar = Calendar.current
 
 	var isSelected: Bool? {
@@ -30,15 +31,6 @@ class CalendarDay: NSView {
 
 	var day: Date? {
 		didSet {
-			if let sum = CoreDataHelper.seconds(for: day!) {
-				let formatter = DateComponentsFormatter()
-				formatter.unitsStyle = .positional
-				formatter.zeroFormattingBehavior = .pad
-				formatter.allowedUnits = [.hour, .minute]
-
-				timeLabel.stringValue = formatter.string(from: sum)!
-			}
-
 			let currentDay = calendar.component(.day, from: day!)
 			dayLabel.stringValue = String(currentDay)
 		}
@@ -59,11 +51,15 @@ class CalendarDay: NSView {
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
 
+		self.delegate = nil
+
 		commonInit()
 	}
 
 	required init?(coder decoder: NSCoder) {
 		super.init(coder: decoder)
+
+		self.delegate = nil
 
 		commonInit()
 	}
@@ -85,7 +81,7 @@ class CalendarDay: NSView {
 	}
 
 	@IBAction func button(_ sender: NSButton) {
-		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": day])
+		delegate?.select(day!)
 	}
 
 	override func draw(_ dirtyRect: NSRect) {

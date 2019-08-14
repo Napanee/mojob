@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="calendarGridView" destination="K7N-SG-7Ol" id="iXb-7h-V3o"/>
                 <outlet property="currentMonth" destination="7Lh-sx-CAr" id="FqS-jq-Fh2"/>
+                <outlet property="jobSelect" destination="GGy-Vf-z3w" id="1ZX-Px-iuE"/>
                 <outlet property="nextMonthButton" destination="DVv-CT-Qwg" id="dhD-3h-Dib"/>
                 <outlet property="nextYearButton" destination="GZS-4w-nEo" id="nKw-3z-yG4"/>
                 <outlet property="todayButton" destination="fdZ-Z1-YrO" id="dxU-3z-gTO"/>
@@ -19,11 +20,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="510" height="326"/>
+            <rect key="frame" x="0.0" y="0.0" width="510" height="446"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Lh-sx-CAr">
-                    <rect key="frame" x="28" y="260" width="209" height="36"/>
+                    <rect key="frame" x="28" y="380" width="209" height="36"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="September 2019" id="iVa-Si-I2D">
                         <font key="font" metaFont="systemUltraLight" size="30"/>
                         <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -31,7 +32,7 @@
                     </textFieldCell>
                 </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="gYq-mz-3Fm">
-                    <rect key="frame" x="30" y="30" width="450" height="200"/>
+                    <rect key="frame" x="30" y="130" width="450" height="200"/>
                     <subviews>
                         <gridView xPlacement="leading" yPlacement="bottom" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="K7N-SG-7Ol" customClass="CalendarGridView" customModule="MoJob" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="450" height="200"/>
@@ -56,7 +57,7 @@
                     </constraints>
                 </customView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lQb-nv-wGH">
-                    <rect key="frame" x="295" y="262" width="32" height="32"/>
+                    <rect key="frame" x="295" y="382" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="Zy5-Py-Ds0"/>
                         <constraint firstAttribute="height" constant="32" id="bcV-DC-cdn"/>
@@ -70,7 +71,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DVv-CT-Qwg">
-                    <rect key="frame" x="417" y="262" width="36" height="32"/>
+                    <rect key="frame" x="417" y="382" width="36" height="32"/>
                     <buttonCell key="cell" type="bevel" title="next month" bezelStyle="rounded" image="right-single" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="p9E-a4-zEp">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -80,7 +81,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GZS-4w-nEo">
-                    <rect key="frame" x="458" y="267" width="22" height="22"/>
+                    <rect key="frame" x="458" y="387" width="22" height="22"/>
                     <buttonCell key="cell" type="bevel" title="next year" bezelStyle="regularSquare" image="right-double" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="ACY-Uz-NAA">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -90,7 +91,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hnV-8h-nNO">
-                    <rect key="frame" x="268" y="267" width="22" height="22"/>
+                    <rect key="frame" x="268" y="387" width="22" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="m4J-e5-rct"/>
                         <constraint firstAttribute="width" constant="22" id="m9x-0j-YuO"/>
@@ -104,7 +105,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fdZ-Z1-YrO">
-                    <rect key="frame" x="332" y="262" width="80" height="32"/>
+                    <rect key="frame" x="332" y="382" width="80" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="nEq-jZ-qXg"/>
                     </constraints>
@@ -116,19 +117,40 @@
                         <action selector="todayButton:" target="-2" id="Vs6-VR-XNb"/>
                     </connections>
                 </button>
+                <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GGy-Vf-z3w" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="30" y="341" width="453" height="26"/>
+                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="3UI-eP-UI2">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <objectValues>
+                            <string>Item 1</string>
+                            <string>Item 2</string>
+                            <string>Item 3</string>
+                        </objectValues>
+                    </comboBoxCell>
+                    <connections>
+                        <action selector="jobSelect:" target="-2" id="ojc-Cu-9Cz"/>
+                        <outlet property="dataSource" destination="-2" id="4sZ-Zh-Nvq"/>
+                        <outlet property="delegate" destination="-2" id="LLu-C8-yOh"/>
+                    </connections>
+                </comboBox>
             </subviews>
             <constraints>
                 <constraint firstItem="GZS-4w-nEo" firstAttribute="width" secondItem="hnV-8h-nNO" secondAttribute="width" id="0YK-GD-OjW"/>
                 <constraint firstItem="7Lh-sx-CAr" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="2dc-SW-5SS"/>
                 <constraint firstItem="GZS-4w-nEo" firstAttribute="centerY" secondItem="DVv-CT-Qwg" secondAttribute="centerY" id="4o5-4m-wfx"/>
+                <constraint firstItem="GGy-Vf-z3w" firstAttribute="top" secondItem="7Lh-sx-CAr" secondAttribute="bottom" constant="15" id="9Qh-EC-SsB"/>
                 <constraint firstItem="fdZ-Z1-YrO" firstAttribute="leading" secondItem="lQb-nv-wGH" secondAttribute="trailing" constant="5" id="CtR-aA-qsL"/>
                 <constraint firstItem="GZS-4w-nEo" firstAttribute="height" secondItem="hnV-8h-nNO" secondAttribute="height" id="GEk-tt-TxC"/>
                 <constraint firstItem="GZS-4w-nEo" firstAttribute="leading" secondItem="DVv-CT-Qwg" secondAttribute="trailing" constant="5" id="Hdq-3K-8bb"/>
+                <constraint firstItem="GGy-Vf-z3w" firstAttribute="leading" secondItem="7Lh-sx-CAr" secondAttribute="leading" id="Mo3-dG-dmy"/>
                 <constraint firstItem="DVv-CT-Qwg" firstAttribute="centerY" secondItem="7Lh-sx-CAr" secondAttribute="centerY" id="QcN-e8-79x"/>
                 <constraint firstItem="lQb-nv-wGH" firstAttribute="leading" secondItem="hnV-8h-nNO" secondAttribute="trailing" constant="5" id="Qfb-XI-tM9"/>
-                <constraint firstItem="gYq-mz-3Fm" firstAttribute="top" secondItem="7Lh-sx-CAr" secondAttribute="bottom" constant="30" id="TmO-Aw-p0v"/>
                 <constraint firstItem="lQb-nv-wGH" firstAttribute="centerY" secondItem="7Lh-sx-CAr" secondAttribute="centerY" id="UdT-xe-9OW"/>
+                <constraint firstItem="GGy-Vf-z3w" firstAttribute="trailing" secondItem="GZS-4w-nEo" secondAttribute="trailing" id="Xdb-4Z-qIL"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gYq-mz-3Fm" secondAttribute="bottom" constant="30" id="ZNH-kS-n6G"/>
+                <constraint firstItem="gYq-mz-3Fm" firstAttribute="top" secondItem="GGy-Vf-z3w" secondAttribute="bottom" constant="15" id="ZhW-SN-gh7"/>
                 <constraint firstItem="fdZ-Z1-YrO" firstAttribute="centerY" secondItem="lQb-nv-wGH" secondAttribute="centerY" id="dA3-jr-lsR"/>
                 <constraint firstItem="7Lh-sx-CAr" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="jeL-pB-TbJ"/>
                 <constraint firstItem="gYq-mz-3Fm" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="nKD-ao-ZSn"/>
