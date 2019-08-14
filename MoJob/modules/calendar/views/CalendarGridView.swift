@@ -23,7 +23,7 @@ class CalendarGridView: NSGridView {
 	private let calendar = NSCalendar.current
 	private let empty = NSGridCell.emptyContentView
 	private let bgShapeLayer = CAShapeLayer()
-	private var gradientCircle = GradientCircle()
+	var gradientCircle = GradientCircle()
 	private var activeIndicator = ActiveIndicator()
 	private var currentSelection = Date().startOfDay!
 	private var selectedMonth: DateComponents?
@@ -73,19 +73,6 @@ class CalendarGridView: NSGridView {
 		rowSpacing = 0
 		setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 750), for: .horizontal)
 		setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 750), for: .vertical)
-
-		NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved, .mouseEntered, .mouseExited]) {
-			let location = $0.locationInWindow
-			var localPoint = self.convert(location, from: nil)
-			var frame = self.gradientCircle.frame
-			frame.origin = localPoint
-
-			localPoint.x -= frame.width / 2
-			localPoint.y -= frame.height / 2
-			self.gradientCircle.frame.origin = CGPoint(x: localPoint.x + $0.deltaX, y: localPoint.y - $0.deltaY)
-
-			return $0
-		}
 
 		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "calendar:changedDate"), object: nil, queue: nil, using: { notification in
 			guard notification.name == .init("calendar:changedDate"), let date = notification.object as? [String: Any], let day = date["day"] as? Date else{ return }

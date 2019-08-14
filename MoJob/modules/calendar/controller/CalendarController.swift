@@ -19,6 +19,7 @@ class CalendarController: NSViewController {
 
 	let calendar = Calendar.current
 	var jobs: [Job] = []
+	var monitor: Any?
 
 	private var currentDate: Date? {
 		didSet {
@@ -48,6 +49,19 @@ class CalendarController: NSViewController {
 		todayButton.layer?.cornerRadius = 16
 		todayButton.layer?.borderColor = NSColor(red: 0.102, green: 0.102, blue: 0.102, alpha: 0.7).cgColor
 
+		monitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved, .mouseEntered, .mouseExited]) {
+			let location = $0.locationInWindow
+			var localPoint = self.calendarGridView.convert(location, from: nil)
+			var frame = self.calendarGridView.gradientCircle.frame
+			frame.origin = localPoint
+
+			localPoint.x -= frame.width / 2
+			localPoint.y -= frame.height / 2
+			self.calendarGridView.gradientCircle.frame.origin = CGPoint(x: localPoint.x + $0.deltaX, y: localPoint.y - $0.deltaY)
+
+			return $0
+		}
+
 		let context = CoreDataHelper.context
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
@@ -60,6 +74,10 @@ class CalendarController: NSViewController {
 			NSLayoutConstraint(item: calendarGridView!, attribute: .width, relatedBy: .equal, toItem: calendarGridView.superview, attribute: .width, multiplier: 1, constant: 0),
 			NSLayoutConstraint(item: calendarGridView!, attribute: .height, relatedBy: .equal, toItem: calendarGridView.superview, attribute: .height, multiplier: 1, constant: 0)
 		])
+	}
+
+	override func viewDidDisappear() {
+		NSEvent.removeMonitor(monitor as Any)
 	}
 
 	private func initJobSelect() {
