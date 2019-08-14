@@ -46,6 +46,7 @@
 		E8211802220F5384003D7578 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
 		E8211804220F5991003D7578 /* FilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* FilterField.swift */; };
 		E83447742236735900621617 /* AddButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E83447732236735900621617 /* AddButton.xib */; };
+		E840F96E230402B600923A47 /* MoJob-3.0.3.html in Resources */ = {isa = PBXBuildFile; fileRef = E840F96D230402B600923A47 /* MoJob-3.0.3.html */; };
 		E849396D22FDFA0700D2A4C9 /* GlobalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E849396C22FDFA0700D2A4C9 /* GlobalNotification.swift */; };
 		E84FCE3E22FC3EA6002E41B4 /* WakeUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = E84FCE3D22FC3EA6002E41B4 /* WakeUp.xib */; };
 		E84FCE4022FC3ED7002E41B4 /* WakeUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */; };
@@ -182,6 +183,7 @@
 		E8211803220F5991003D7578 /* FilterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterField.swift; sourceTree = "<group>"; };
 		E82B2E6D224C1AF6001CCAC8 /* Mojob-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mojob-Bridging-Header.h"; sourceTree = "<group>"; };
 		E83447732236735900621617 /* AddButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddButton.xib; sourceTree = "<group>"; };
+		E840F96D230402B600923A47 /* MoJob-3.0.3.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.0.3.html"; sourceTree = "<group>"; };
 		E849396C22FDFA0700D2A4C9 /* GlobalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalNotification.swift; sourceTree = "<group>"; };
 		E84FCE3D22FC3EA6002E41B4 /* WakeUp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WakeUp.xib; sourceTree = "<group>"; };
 		E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeUp.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			children = (
 				E81E75ED230351A90071B90C /* MoJob-3.0.1.html */,
 				E81E75EB23034DF60071B90C /* MoJob-3.0.2.html */,
+				E840F96D230402B600923A47 /* MoJob-3.0.3.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -815,7 +818,6 @@
 				E821178A220E07B1003D7578 /* Resources */,
 				709109543FB4E546A9F47017 /* [CP] Embed Pods Frameworks */,
 				E8AA8CBB22F891660017698F /* CopyFiles */,
-				E800AE7C22F9586200E82EBE /* Increment Buildnumber */,
 				E800AE7D22F958E000E82EBE /* Fabric Keys */,
 			);
 			buildRules = (
@@ -945,6 +947,7 @@
 				E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */,
 				E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */,
 				E8211802220F5384003D7578 /* JobItem.xib in Resources */,
+				E840F96E230402B600923A47 /* MoJob-3.0.3.html in Resources */,
 				E82117D7220E1B04003D7578 /* JobListController.xib in Resources */,
 				E81E75E923033E900071B90C /* ExportOptions.plist in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
@@ -1069,24 +1072,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		E800AE7C22F9586200E82EBE /* Increment Buildnumber */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Buildnumber";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
 		E800AE7D22F958E000E82EBE /* Fabric Keys */ = {
 			isa = PBXShellScriptBuildPhase;
