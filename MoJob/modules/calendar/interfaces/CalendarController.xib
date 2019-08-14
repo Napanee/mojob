@@ -124,12 +124,11 @@
                 <constraint firstItem="fdZ-Z1-YrO" firstAttribute="leading" secondItem="lQb-nv-wGH" secondAttribute="trailing" constant="5" id="CtR-aA-qsL"/>
                 <constraint firstItem="GZS-4w-nEo" firstAttribute="height" secondItem="hnV-8h-nNO" secondAttribute="height" id="GEk-tt-TxC"/>
                 <constraint firstItem="GZS-4w-nEo" firstAttribute="leading" secondItem="DVv-CT-Qwg" secondAttribute="trailing" constant="5" id="Hdq-3K-8bb"/>
-                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="gYq-mz-3Fm" secondAttribute="bottom" priority="490" constant="30" id="KD5-Bb-hAt"/>
                 <constraint firstItem="DVv-CT-Qwg" firstAttribute="centerY" secondItem="7Lh-sx-CAr" secondAttribute="centerY" id="QcN-e8-79x"/>
                 <constraint firstItem="lQb-nv-wGH" firstAttribute="leading" secondItem="hnV-8h-nNO" secondAttribute="trailing" constant="5" id="Qfb-XI-tM9"/>
                 <constraint firstItem="gYq-mz-3Fm" firstAttribute="top" secondItem="7Lh-sx-CAr" secondAttribute="bottom" constant="30" id="TmO-Aw-p0v"/>
                 <constraint firstItem="lQb-nv-wGH" firstAttribute="centerY" secondItem="7Lh-sx-CAr" secondAttribute="centerY" id="UdT-xe-9OW"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gYq-mz-3Fm" secondAttribute="bottom" priority="510" constant="30" id="ZNH-kS-n6G"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gYq-mz-3Fm" secondAttribute="bottom" constant="30" id="ZNH-kS-n6G"/>
                 <constraint firstItem="fdZ-Z1-YrO" firstAttribute="centerY" secondItem="lQb-nv-wGH" secondAttribute="centerY" id="dA3-jr-lsR"/>
                 <constraint firstItem="7Lh-sx-CAr" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="jeL-pB-TbJ"/>
                 <constraint firstItem="gYq-mz-3Fm" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="nKD-ao-ZSn"/>
