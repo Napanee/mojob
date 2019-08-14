@@ -24,7 +24,7 @@ class QuoJobSelections: NSViewController {
 
 	let userDefaults = UserDefaults()
 	var tempTracking: TempTracking?
-	var tracking: Tracking? = CoreDataHelper.shared.currentTracking
+	var tracking: Tracking?
 	var jobs: [Job] = []
 	var tasks: [Task] = []
 	var activities: [Activity] = []
