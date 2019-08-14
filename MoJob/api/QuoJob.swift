@@ -38,6 +38,7 @@ class QuoJob: NSObject {
 	let utilityQueue = DispatchQueue.global(qos: .utility)
 	let dateFormatterFull = DateFormatter()
 	let dateFormatterTime = DateFormatter()
+	var results: [[String: Any]] = []
 	var defaultParams: [String: Any] {
 		get {
 			return ["session": sessionId]
@@ -380,8 +381,6 @@ extension QuoJob {
 extension QuoJob {
 
 	func syncData() -> Promise<Void> {
-		var results: [[String: Any]] = []
-
 		return login().done { result -> Void in
 			return when(fulfilled: self.fetchJobTypes(), self.fetchActivities())
 				.then { (resultTypes, resultActivities) -> Promise<Void> in
@@ -389,29 +388,10 @@ extension QuoJob {
 				}.then { _ -> Promise<[String: Any]> in
 					return self.fetchJobs()
 				}.then { resultJobs -> Promise<Void> in
-					if
-						let newJobs = (resultJobs["jobs"] as? [[String: Any]])?
-							.filter({
-								(($0["bookable"] as? Bool) ?? false) && ($0["assigned_user_ids"] as! [String]).contains(self.userId)
-							}),
-						newJobs.count > 0
-					{
-						results.append(["type": "jobs", "order": 1, "text": "\(String(newJobs.count)) Jobs"])
-					}
-
 					return self.handleJobs(with: resultJobs)
 				}.then { _ -> Promise<[String: Any]> in
 					return self.fetchTasks()
 				}.then { resultTasks -> Promise<Void> in
-					let jobsAll = self.jobs.filter({ $0.assigned && $0.bookable }).map({ $0.id })
-
-					if
-						let tasks = (resultTasks["jobtasks"] as? [[String: Any]])?.filter({ jobsAll.contains($0["job_id"] as? String) }),
-						tasks.count > 0
-					{
-						results.append(["type": "tasks", "order": 2, "text": "\(String(tasks.count)) Aufgaben"])
-					}
-
 					return self.handleTasks(with: resultTasks)
 				}.then { _ -> Promise<[String: Any]> in
 					return self.fetchTrackingChanges()
@@ -420,13 +400,6 @@ extension QuoJob {
 				}.then { result -> Promise<[String: Any]> in
 					return self.fetchTrackings(with: result)
 				}.then { resultTrackings -> Promise<Void> in
-					if
-						let trackings = (resultTrackings["hourbookings"] as? [[String: Any]])?.map({ $0["id"] as! String }),
-						trackings.count > 0
-					{
-						results.append(["type": "trackings", "order": 3, "text": "\(String(trackings.count)) Trackings"])
-					}
-
 					return self.handleTrackings(with: resultTrackings)
 				}.done { _ in
 					do {
@@ -438,21 +411,22 @@ extension QuoJob {
 					var title: String = ""
 					var text: String = ""
 
-					if (results.count == 0) {
+					if (self.results.count == 0) {
 						title = "Daten aktuell."
-						text = "Du kannst loslegen ;)"
+						text = "Du bist startklar."
 					} else {
 						title = "Daten erfolgreich synchronisiert."
 						text = "Es wurden "
 
-						text += results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
+						text += self.results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
 							return type["text"] as! String
 						}).joined(separator: ", ")
 
-						text += " importiert oder aktualisiert."
+						text += " synchronisiert."
 					}
 
 					GlobalNotification.shared.deliverNotification(withTitle: title, andInformationtext: text)
+					self.results = []
 				}.catch({ error in
 					print("SyncError: \(error)")
 				})
@@ -617,6 +591,7 @@ extension QuoJob {
 			}
 
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
+			var count = 0
 
 			// not active, because we want ALL jobs for the history
 //			var typeIds: [String] = []
@@ -640,13 +615,18 @@ extension QuoJob {
 					let title = item["title"] as! String
 					let typeId = item["job_type_id"] as! String
 					let assigned_user_ids = item["assigned_user_ids"] as! [String]
+					let isAssigned = assigned_user_ids.contains(self.userId)
 
 					if let job = self.jobs.first(where: { $0.id == id }) {
 						let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Type")
 						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
 						let type = (try? self.context.fetch(fetchRequest) as? [Type])?.first
 
-						job.assigned = assigned_user_ids.contains(self.userId)
+						if (job.assigned != isAssigned || job.bookable != bookable || job.number != number || job.title != title || job.type != type) {
+							count += 1
+						}
+
+						job.assigned = isAssigned
 						job.bookable = bookable
 						job.number = number
 						job.title = title
@@ -657,19 +637,27 @@ extension QuoJob {
 						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
 						let type = (try? self.taskContext.fetch(fetchRequest) as? [Type])?.first
 
+						if (isAssigned && bookable) {
+							count += 1
+						}
+
 						let entity = NSEntityDescription.entity(forEntityName: "Job", in: self.taskContext)
 						let job = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let jobValues: [String: Any] = [
 							"id": id,
 							"title": title,
 							"number": number,
-							"assigned": assigned_user_ids.contains(self.userId),
+							"assigned": isAssigned,
 							"bookable": bookable,
 							"type": type as Any,
 							"sync": syncDate as Any
 						]
 						job.setValuesForKeys(jobValues)
 					}
+				}
+
+				if (count > 0) {
+					self.results.append(["type": "jobs", "order": 1, "text": "\(String(count)) Jobs"])
 				}
 
 				do {
@@ -740,6 +728,7 @@ extension QuoJob {
 			}
 
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
+			var count = 0
 
 			// not active, because we want ALL tasks for the history
 //			var jobIds: [String] = []
@@ -786,6 +775,10 @@ extension QuoJob {
 						let job = self.jobs.first(where: { $0.id == jobId })
 						let activity = self.activities.first(where: { $0.id == activityId })
 
+						if (task.title != title || task.hours_planed != hoursPlaned || task.hours_booked != hoursBooked || task.job != job || task.activity != activity) {
+							count += 1
+						}
+
 						task.title = title
 						task.hours_planed = hoursPlaned
 						task.hours_booked = hoursBooked
@@ -793,8 +786,12 @@ extension QuoJob {
 						task.activity = activity
 						task.sync = syncDate
 					} else {
-						let job = jobsBackground?.first(where: { $0.id == jobId })
+						guard let job = jobsBackground?.first(where: { $0.id == jobId }) else { continue }
 						let activity = activitiesBackground?.first(where: { $0.id == activityId })
+
+						if (job.assigned && job.bookable) {
+							count += 1
+						}
 
 						let entity = NSEntityDescription.entity(forEntityName: "Task", in: self.taskContext)
 						let task = NSManagedObject(entity: entity!, insertInto: self.taskContext)
@@ -809,6 +806,10 @@ extension QuoJob {
 						]
 						task.setValuesForKeys(taskValues)
 					}
+				}
+
+				if (count > 0) {
+					self.results.append(["type": "tasks", "order": 2, "text": "\(String(count)) Aufgaben"])
 				}
 
 				do {
@@ -868,6 +869,7 @@ extension QuoJob {
 			let activities = try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
 
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
+			var count = 0
 
 			self.taskContext.perform {
 				for item in trackingItems {
@@ -912,12 +914,18 @@ extension QuoJob {
 							taskObject = task
 						}
 
+						let comment = text != "" ? text : nil
+
+						if (tracking.job != jobObject || tracking.task != taskObject || tracking.activity != activityObject || tracking.date_start != dateStart || tracking.date_end != dateEnd || tracking.comment != comment) {
+							count += 1
+						}
+
 						tracking.job = jobObject
 						tracking.task = taskObject
 						tracking.activity = activityObject
 						tracking.date_start = dateStart
 						tracking.date_end = dateEnd
-						tracking.comment = text != "" ? text : nil
+						tracking.comment = comment
 						tracking.exported = SyncStatus.success.rawValue
 						tracking.sync = syncDate
 					} else {
@@ -936,6 +944,8 @@ extension QuoJob {
 							taskObject = task
 						}
 
+						count += 1
+
 						let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.taskContext)
 						let tracking = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let trackingValues: [String: Any?] = [
@@ -952,6 +962,10 @@ extension QuoJob {
 
 						tracking.setValuesForKeys(trackingValues as [String: Any])
 					}
+				}
+
+				if (count > 0) {
+					self.results.append(["type": "trackings", "order": 3, "text": "\(String(count)) Trackings"])
 				}
 
 				do {
