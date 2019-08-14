@@ -25,7 +25,9 @@ class QuoJobSelections: NSViewController {
 	let userDefaults = UserDefaults()
 	var tempTracking: TempTracking? {
 		didSet {
-			tracking = nil
+			if let _ = tempTracking {
+				tracking = nil
+			}
 		}
 	}
 	var tracking: Tracking? = CoreDataHelper.shared.currentTracking
@@ -272,31 +274,38 @@ extension QuoJobSelections: NSTextFieldDelegate {
 	}
 
 	private func handleTextChange(in textField: NSTextField) {
-		if let dateStart = tempTracking?.date_start ?? tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "", let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
+		if let dateStart = tempTracking?.date_start ?? tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "" {
 			var compStart = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateStart)
-			var compEnd = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
 
 			if let fromYear = fromYear {
 				compStart.year = fromYear.stringValue != "" ? Int(fromYear.stringValue) : compStart.year
-				compEnd.year = fromYear.stringValue != "" ? Int(fromYear.stringValue) : compStart.year
 			}
 
 			if let fromMonth = fromMonth {
 				compStart.month = fromMonth.stringValue != "" ? Int(fromMonth.stringValue) : compStart.month
-				compEnd.month = fromMonth.stringValue != "" ? Int(fromMonth.stringValue) : compStart.month
 			}
 
 			if let fromDay = fromDay {
 				compStart.day = fromDay.stringValue != "" ? Int(fromDay.stringValue) : compStart.day
-				compEnd.day = fromDay.stringValue != "" ? Int(fromDay.stringValue) : compStart.day
 			}
 
 			compStart.hour = fromHour.stringValue != "" ? Int(fromHour.stringValue) : compStart.hour
 			compStart.minute = fromMinute.stringValue != "" ? Int(fromMinute.stringValue) : compStart.minute
 
-			if let newStartDate = Calendar.current.date(from: compStart), let newEndDate = Calendar.current.date(from: compEnd) {
+			if let newStartDate = Calendar.current.date(from: compStart) {
+				if let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
+					var compEnd = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
+
+					if let newEndDate = Calendar.current.date(from: compEnd) {
+						compEnd.year = compStart.year
+						compEnd.month = compStart.month
+						compEnd.day = compStart.day
+
+						tempTracking?.date_end = newEndDate
+					}
+				}
+
 				tempTracking?.date_start = newStartDate
-				tempTracking?.date_end = newEndDate
 				tracking?.update(with: ["date_start": newStartDate]).done({ _ in }).catch({ _ in })
 				startDate = newStartDate
 				formIsValid = true
