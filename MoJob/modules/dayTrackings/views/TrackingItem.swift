@@ -49,8 +49,8 @@ class TrackingItem: NSView {
 			formatter.dateFormat = "HH:mm"
 
 			var title = tracking.custom_job
-			if let job = tracking.job, let jobTitle = job.title {
-				title = jobTitle
+			if let job = tracking.job {
+				title = job.fullTitle
 			} else if let activity = tracking.activity, let activityTitle = activity.title {
 				title = activityTitle
 			}
