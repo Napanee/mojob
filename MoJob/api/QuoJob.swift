@@ -93,6 +93,7 @@ class QuoJob: NSObject {
 			fetchRequest.sortDescriptors = [
 				NSSortDescriptor(key: "title", ascending: false)
 			]
+			fetchRequest.predicate = NSPredicate(format: "done = %@", argumentArray: [false])
 
 			do {
 				result = try context.fetch(fetchRequest)
@@ -756,6 +757,7 @@ extension QuoJob {
 					let title = item["subject"] as! String
 					let jobId = item["job_id"] as? String
 					let activityId = item["activity_id"] as? String
+					let done = item["done"] as! Bool
 
 					var hoursPlaned = Double()
 					if let hours_planed = item["hours_planed"] as? NSString {
@@ -775,7 +777,7 @@ extension QuoJob {
 						let job = self.jobs.first(where: { $0.id == jobId })
 						let activity = self.activities.first(where: { $0.id == activityId })
 
-						if (task.title != title || task.hours_planed != hoursPlaned || task.hours_booked != hoursBooked || task.job != job || task.activity != activity) {
+						if (task.title != title || task.hours_planed != hoursPlaned || task.hours_booked != hoursBooked || task.job != job || task.activity != activity || task.done != done) {
 							count += 1
 						}
 
@@ -784,6 +786,7 @@ extension QuoJob {
 						task.hours_booked = hoursBooked
 						task.job = job
 						task.activity = activity
+						task.done = done
 						task.sync = syncDate
 					} else {
 						guard let job = jobsBackground?.first(where: { $0.id == jobId }) else { continue }
@@ -802,6 +805,7 @@ extension QuoJob {
 							"hours_booked": hoursBooked,
 							"job": job as Any,
 							"activity": activity as Any,
+							"done": done,
 							"sync": syncDate as Any
 						]
 						task.setValuesForKeys(taskValues)
