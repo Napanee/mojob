@@ -592,7 +592,11 @@ extension QuoJob {
 			}
 
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
-			var count = 0
+
+			let newJobs = jobItems.filter({(($0["bookable"] as? Bool) ?? false) && ($0["assigned_user_ids"] as! [String]).contains(self.userId)})
+			if (newJobs.count > 0) {
+				results.append(["type": "jobs", "order": 1, "text": "\(String(newJobs.count)) Jobs"])
+			}
 
 			// not active, because we want ALL jobs for the history
 //			var typeIds: [String] = []
@@ -623,10 +627,6 @@ extension QuoJob {
 						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
 						let type = (try? self.context.fetch(fetchRequest) as? [Type])?.first
 
-						if (job.assigned != isAssigned || job.bookable != bookable || job.number != number || job.title != title || job.type != type) {
-							count += 1
-						}
-
 						job.assigned = isAssigned
 						job.bookable = bookable
 						job.number = number
@@ -637,10 +637,6 @@ extension QuoJob {
 						let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Type")
 						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
 						let type = (try? self.taskContext.fetch(fetchRequest) as? [Type])?.first
-
-						if (isAssigned && bookable) {
-							count += 1
-						}
 
 						let entity = NSEntityDescription.entity(forEntityName: "Job", in: self.taskContext)
 						let job = NSManagedObject(entity: entity!, insertInto: self.taskContext)
@@ -655,10 +651,6 @@ extension QuoJob {
 						]
 						job.setValuesForKeys(jobValues)
 					}
-				}
-
-				if (count > 0) {
-					self.results.append(["type": "jobs", "order": 1, "text": "\(String(count)) Jobs"])
 				}
 
 				do {
@@ -729,7 +721,12 @@ extension QuoJob {
 			}
 
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
-			var count = 0
+
+			let jobsAll = self.jobs.filter({ $0.assigned && $0.bookable }).map({ $0.id })
+			let tasks = taskItems.filter({ jobsAll.contains($0["job_id"] as? String) && !($0["done"] as? Bool ?? true) })
+			if (tasks.count > 0) {
+				self.results.append(["type": "tasks", "order": 2, "text": "\(String(tasks.count)) Aufgaben"])
+			}
 
 			// not active, because we want ALL tasks for the history
 //			var jobIds: [String] = []
@@ -777,10 +774,6 @@ extension QuoJob {
 						let job = self.jobs.first(where: { $0.id == jobId })
 						let activity = self.activities.first(where: { $0.id == activityId })
 
-						if (task.title != title || task.hours_planed != hoursPlaned || task.hours_booked != hoursBooked || task.job != job || task.activity != activity || task.done != done) {
-							count += 1
-						}
-
 						task.title = title
 						task.hours_planed = hoursPlaned
 						task.hours_booked = hoursBooked
@@ -791,10 +784,6 @@ extension QuoJob {
 					} else {
 						guard let job = jobsBackground?.first(where: { $0.id == jobId }) else { continue }
 						let activity = activitiesBackground?.first(where: { $0.id == activityId })
-
-						if (job.assigned && job.bookable) {
-							count += 1
-						}
 
 						let entity = NSEntityDescription.entity(forEntityName: "Task", in: self.taskContext)
 						let task = NSManagedObject(entity: entity!, insertInto: self.taskContext)
@@ -810,10 +799,6 @@ extension QuoJob {
 						]
 						task.setValuesForKeys(taskValues)
 					}
-				}
-
-				if (count > 0) {
-					self.results.append(["type": "tasks", "order": 2, "text": "\(String(count)) Aufgaben"])
 				}
 
 				do {
@@ -868,12 +853,11 @@ extension QuoJob {
 			let tasksBackground = try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as? [Task]
 			let activitiesBackground = try? taskContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
 
-			let jobs = try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as? [Job]
-			let tasks = try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as? [Task]
-			let activities = try? context.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
-
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
-			var count = 0
+
+			if (trackingItems.count > 0) {
+				results.append(["type": "trackings", "order": 3, "text": "\(String(trackingItems.count)) Trackings"])
+			}
 
 			self.taskContext.perform {
 				for item in trackingItems {
@@ -903,73 +887,64 @@ extension QuoJob {
 					}
 
 					if let tracking = self.trackings.first(where: { $0.id == id }) {
-						var jobObject: Job? = nil
-						if let jobId = item["job_id"] as? String, let job = jobs?.first(where: { $0.id == jobId }) {
-							jobObject = job
-						}
-
-						var activityObject: Activity? = nil
-						if let activityId = item["activity_id"] as? String, let activity = activities?.first(where: { $0.id == activityId }) {
-							activityObject = activity
-						}
-
-						var taskObject: Task? = nil
-						if let taskId = item["jobtask_id"] as? String, let task = tasks?.first(where: { $0.id == taskId }) {
-							taskObject = task
-						}
-
-						let comment = text != "" ? text : nil
-
-						if (tracking.job != jobObject || tracking.task != taskObject || tracking.activity != activityObject || tracking.date_start != dateStart || tracking.date_end != dateEnd || tracking.comment != comment) {
-							count += 1
-						}
-
-						tracking.job = jobObject
-						tracking.task = taskObject
-						tracking.activity = activityObject
-						tracking.date_start = dateStart
-						tracking.date_end = dateEnd
-						tracking.comment = comment
-						tracking.exported = SyncStatus.success.rawValue
-						tracking.sync = syncDate
-					} else {
-						var jobObject: Job? = nil
-						if let jobId = item["job_id"] as? String, let job = jobsBackground?.first(where: { $0.id == jobId }) {
-							jobObject = job
-						}
-
-						var activityObject: Activity? = nil
-						if let activityId = item["activity_id"] as? String, let activity = activitiesBackground?.first(where: { $0.id == activityId }) {
-							activityObject = activity
-						}
-
-						var taskObject: Task? = nil
-						if let taskId = item["jobtask_id"] as? String, let task = tasksBackground?.first(where: { $0.id == taskId }) {
-							taskObject = task
-						}
-
-						count += 1
-
-						let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.taskContext)
-						let tracking = NSManagedObject(entity: entity!, insertInto: self.taskContext)
-						let trackingValues: [String: Any?] = [
-							"id": id,
-							"job": jobObject,
-							"task": taskObject,
-							"activity": activityObject,
-							"date_start": dateStart,
-							"date_end": dateEnd,
-							"comment": text != "" ? text : nil,
-							"exported": SyncStatus.success.rawValue,
-							"sync": syncDate
-						]
-
-						tracking.setValuesForKeys(trackingValues as [String: Any])
+						self.context.delete(tracking)
 					}
-				}
+//						var jobObject: Job? = nil
+//						if let jobId = item["job_id"] as? String, let job = self.jobs.first(where: { $0.id == jobId }) {
+//							jobObject = job
+//						}
+//
+//						var activityObject: Activity? = nil
+//						if let activityId = item["activity_id"] as? String, let activity = self.activities.first(where: { $0.id == activityId }) {
+//							activityObject = activity
+//						}
+//
+//						var taskObject: Task? = nil
+//						if let taskId = item["jobtask_id"] as? String, let task = self.tasks.first(where: { $0.id == taskId }) {
+//							taskObject = task
+//						}
+//
+//						let comment = text != "" ? text : nil
 
-				if (count > 0) {
-					self.results.append(["type": "trackings", "order": 3, "text": "\(String(count)) Trackings"])
+//						tracking.job = jobObject
+//						tracking.task = taskObject
+//						tracking.activity = activityObject
+//						tracking.date_start = dateStart
+//						tracking.date_end = dateEnd
+//						tracking.comment = comment
+//						tracking.exported = SyncStatus.success.rawValue
+//						tracking.sync = syncDate
+
+					var jobObject: Job? = nil
+					if let jobId = item["job_id"] as? String, let job = jobsBackground?.first(where: { $0.id == jobId }) {
+						jobObject = job
+					}
+
+					var activityObject: Activity? = nil
+					if let activityId = item["activity_id"] as? String, let activity = activitiesBackground?.first(where: { $0.id == activityId }) {
+						activityObject = activity
+					}
+
+					var taskObject: Task? = nil
+					if let taskId = item["jobtask_id"] as? String, let task = tasksBackground?.first(where: { $0.id == taskId }) {
+						taskObject = task
+					}
+
+					let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.taskContext)
+					let tracking = NSManagedObject(entity: entity!, insertInto: self.taskContext)
+					let trackingValues: [String: Any?] = [
+						"id": id,
+						"job": jobObject,
+						"task": taskObject,
+						"activity": activityObject,
+						"date_start": dateStart,
+						"date_end": dateEnd,
+						"comment": text != "" ? text : nil,
+						"exported": SyncStatus.success.rawValue,
+						"sync": syncDate
+					]
+
+					tracking.setValuesForKeys(trackingValues as [String: Any])
 				}
 
 				do {
