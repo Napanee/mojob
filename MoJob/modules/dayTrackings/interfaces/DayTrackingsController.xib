@@ -21,14 +21,14 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe" customClass="DayTrackingControllerView" customModule="MoJob" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="356" height="478"/>
+            <rect key="frame" x="0.0" y="0.0" width="356" height="519"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DaL-Sq-CR7">
-                    <rect key="frame" x="0.0" y="0.0" width="356" height="448"/>
+                <stackView distribution="fill" orientation="vertical" alignment="centerX" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DaL-Sq-CR7">
+                    <rect key="frame" x="0.0" y="0.0" width="356" height="489"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="pCl-Py-OnP">
-                            <rect key="frame" x="30" y="353" width="296" height="95"/>
+                            <rect key="frame" x="30" y="394" width="296" height="95"/>
                             <subviews>
                                 <stackView distribution="fill" orientation="horizontal" alignment="baseline" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sah-E7-V9C">
                                     <rect key="frame" x="0.0" y="0.0" width="260" height="95"/>
@@ -142,22 +142,22 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="O42-R0-tfV" customClass="GraphView" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="30" y="328" width="296" height="15"/>
+                            <rect key="frame" x="30" y="356" width="296" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="15" id="bKb-hv-273"/>
+                                <constraint firstAttribute="height" constant="30" id="bKb-hv-273"/>
                             </constraints>
                         </customView>
                         <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dsj-Wf-cYF">
-                            <rect key="frame" x="0.0" y="0.0" width="356" height="318"/>
+                            <rect key="frame" x="0.0" y="0.0" width="356" height="348"/>
                             <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="5an-3U-2Te">
-                                <rect key="frame" x="0.0" y="0.0" width="356" height="318"/>
+                                <rect key="frame" x="0.0" y="0.0" width="356" height="348"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view translatesAutoresizingMaskIntoConstraints="NO" id="JFJ-Pk-ecZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="356" height="303"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="356" height="333"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqR-5L-Ybc" customClass="TrackingsStackView" customModule="MoJob" customModuleProvider="target">
-                                                <rect key="frame" x="30" y="303" width="296" height="0.0"/>
+                                                <rect key="frame" x="30" y="333" width="296" height="0.0"/>
                                             </stackView>
                                         </subviews>
                                         <constraints>
@@ -177,11 +177,11 @@
                                 </constraints>
                             </clipView>
                             <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="MNo-wS-fWO">
-                                <rect key="frame" x="0.0" y="302" width="356" height="16"/>
+                                <rect key="frame" x="0.0" y="332" width="356" height="16"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                             <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="L28-Wi-u6T">
-                                <rect key="frame" x="340" y="0.0" width="16" height="318"/>
+                                <rect key="frame" x="340" y="0.0" width="16" height="348"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                         </scrollView>

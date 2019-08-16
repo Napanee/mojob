@@ -61,6 +61,15 @@ extension NSImage.Name {
 	static let radioCheckedImage = "radio-checked"
 }
 
+extension NSColorList {
+	static var moJobColorList: NSColorList {
+		get {
+			let path = Bundle.main.path(forResource: "MoJob", ofType: "clr")
+			return NSColorList(name: "MoJob", fromFile: path)!
+		}
+	}
+}
+
 extension UserDefaults {
 	public typealias Keys = String
 
