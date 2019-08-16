@@ -23,7 +23,13 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var comment: NSTextField!
 
 	let userDefaults = UserDefaults()
-	var tempTracking: TempTracking?
+	var tempTracking: TempTracking? {
+		didSet {
+			if let _ = tempTracking {
+				tracking = nil
+			}
+		}
+	}
 	var tracking: Tracking? = CoreDataHelper.shared.currentTracking
 	var jobs: [Job] = []
 	var tasks: [Task] = []
@@ -268,31 +274,38 @@ extension QuoJobSelections: NSTextFieldDelegate {
 	}
 
 	private func handleTextChange(in textField: NSTextField) {
-		if let dateStart = tempTracking?.date_start ?? tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "", let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
+		if let dateStart = tempTracking?.date_start ?? tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "" {
 			var compStart = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateStart)
-			var compEnd = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
 
 			if let fromYear = fromYear {
 				compStart.year = fromYear.stringValue != "" ? Int(fromYear.stringValue) : compStart.year
-				compEnd.year = fromYear.stringValue != "" ? Int(fromYear.stringValue) : compStart.year
 			}
 
 			if let fromMonth = fromMonth {
 				compStart.month = fromMonth.stringValue != "" ? Int(fromMonth.stringValue) : compStart.month
-				compEnd.month = fromMonth.stringValue != "" ? Int(fromMonth.stringValue) : compStart.month
 			}
 
 			if let fromDay = fromDay {
 				compStart.day = fromDay.stringValue != "" ? Int(fromDay.stringValue) : compStart.day
-				compEnd.day = fromDay.stringValue != "" ? Int(fromDay.stringValue) : compStart.day
 			}
 
 			compStart.hour = fromHour.stringValue != "" ? Int(fromHour.stringValue) : compStart.hour
 			compStart.minute = fromMinute.stringValue != "" ? Int(fromMinute.stringValue) : compStart.minute
 
-			if let newStartDate = Calendar.current.date(from: compStart), let newEndDate = Calendar.current.date(from: compEnd) {
+			if let newStartDate = Calendar.current.date(from: compStart) {
+				if let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
+					var compEnd = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
+
+					if let newEndDate = Calendar.current.date(from: compEnd) {
+						compEnd.year = compStart.year
+						compEnd.month = compStart.month
+						compEnd.day = compStart.day
+
+						tempTracking?.date_end = newEndDate
+					}
+				}
+
 				tempTracking?.date_start = newStartDate
-				tempTracking?.date_end = newEndDate
 				tracking?.update(with: ["date_start": newStartDate]).done({ _ in }).catch({ _ in })
 				startDate = newStartDate
 				formIsValid = true
@@ -322,7 +335,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 		if (comboBox.isEqual(jobSelect)) {
 			jobs = QuoJob.shared.jobs
-				.filter({ $0.fullTitle.lowercased().contains(value) })
+				.filter({ value == "" || $0.fullTitle.lowercased().contains(value) })
 				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
 			if (jobs.count > 0) {
@@ -330,7 +343,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 			}
 		} else if (comboBox.isEqual(taskSelect)) {
 			tasks = QuoJob.shared.tasks
-				.filter({ $0.job?.id == tempTracking?.job?.id ?? tracking?.job?.id && ($0.title ?? "").lowercased().contains(value) })
+				.filter({ $0.job?.id == tempTracking?.job?.id ?? tracking?.job?.id && (value == "" || ($0.title ?? "").lowercased().contains(value)) })
 				.sorted(by: { $0.title! < $1.title! })
 
 			if (tasks.count > 0) {
@@ -345,7 +358,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 					return $0.internal_service || (nfc ? $0.nfc : false)
 				})
-				.filter({ $0.title!.lowercased().contains(value) })
+				.filter({ value == "" || $0.title!.lowercased().contains(value) })
 				.sorted(by: { $0.title! < $1.title! })
 
 			if (activities.count > 0) {

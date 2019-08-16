@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Favorite" representedClassName="Favorite" syncable="YES" codeGenerationType="class">
-        <attribute name="activity_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="custom_job" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="job_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="task_id" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="Tracking" representedClassName="Tracking" syncable="YES" codeGenerationType="class">
-        <attribute name="activity_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="custom_job" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="date_end" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="date_start" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="exported" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="job_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="task_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type_id" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <elements>
-        <element name="Tracking" positionX="-81" positionY="90" width="128" height="180"/>
-        <element name="Favorite" positionX="-72" positionY="99" width="128" height="105"/>
-    </elements>
+    <elements/>
 </model>

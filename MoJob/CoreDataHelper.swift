@@ -30,7 +30,7 @@ class CoreDataHelper {
 
 	var currentTracking: Tracking? {
 		get {
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let context = CoreDataHelper.context
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 			fetchRequest.predicate = NSPredicate(format: "date_end == nil")
 
@@ -45,7 +45,7 @@ class CoreDataHelper {
 
 	var trackingsToday: [Tracking]? {
 		get {
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let context = CoreDataHelper.context
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
 			var compoundPredicates = [NSPredicate]()
@@ -75,7 +75,7 @@ class CoreDataHelper {
 
 	var trackingsWeek: [Tracking]? {
 		get {
-			let context = CoreDataHelper.shared.persistentContainer.viewContext
+			let context = CoreDataHelper.context
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
 			var compoundPredicates = [NSPredicate]()
@@ -186,12 +186,16 @@ class CoreDataHelper {
 		}
 	}
 
-	static func trackings(for date: Date) -> [Tracking]? {
-		let context = CoreDataHelper.shared.persistentContainer.viewContext
+	static func trackings(for date: Date, and job: Job? = nil) -> [Tracking]? {
+		let context = CoreDataHelper.context
 		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
 		var compoundPredicates = [NSPredicate]()
 		compoundPredicates.append(NSPredicate(format: "date_end != nil"))
+
+		if let job = job {
+			compoundPredicates.append(NSPredicate(format: "job == %@", argumentArray: [job]))
+		}
 
 		if
 			let todayStart = date.startOfDay,
@@ -200,7 +204,7 @@ class CoreDataHelper {
 			let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
 				NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [todayStart, todayEnd]),
 				NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd])
-				])
+			])
 			compoundPredicates.append(compound)
 		}
 
@@ -215,9 +219,9 @@ class CoreDataHelper {
 		}
 	}
 
-	static func seconds(for date: Date) -> Double? {
+	static func seconds(for date: Date, and job: Job? = nil) -> Double? {
 		let startOfDay = date.startOfDay!
-		let todayTrackings = CoreDataHelper.trackings(for: date)?.map({ (tracking) -> TimeInterval in
+		let todayTrackings = CoreDataHelper.trackings(for: date, and: job)?.map({ (tracking) -> TimeInterval in
 			var dateStart = tracking.date_start!
 			let dateEnd = tracking.date_end!
 
