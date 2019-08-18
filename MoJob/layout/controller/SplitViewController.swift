@@ -40,4 +40,18 @@ class SplitViewController: NSSplitViewController {
 		return NSRect(x: drawnRect.minX - 2, y: 0, width: drawnRect.width + 4, height: drawnRect.height)
 	}
 
+	func collapsePanel(_ number: Int = 0){
+		guard number < self.splitViewItems.count else {
+			return
+		}
+		let panel = self.splitViewItems[number]
+
+		if panel.isCollapsed {
+			panel.animator().isCollapsed = false
+		} else {
+			panel.animator().isCollapsed = true
+		}
+
+	}
+
 }
