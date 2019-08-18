@@ -20,6 +20,11 @@ class GraphView: NSView {
 	var trackingArea: NSTrackingArea?
 	var trackings: [Tracking]? {
 		didSet {
+			if let trackingArea = trackingArea {
+				removeTrackingArea(trackingArea)
+				self.trackingArea = nil
+			}
+
 			needsDisplay = true
 		}
 	}
@@ -34,6 +39,7 @@ class GraphView: NSView {
 		drawBarGraphInContext(context: context)
 
 		if (trackingArea == nil) {
+			print("no tracking area")
 			updateTrackingAreas()
 		}
 	}
@@ -43,10 +49,11 @@ class GraphView: NSView {
 
 		if let trackingArea = trackingArea {
 			removeTrackingArea(trackingArea)
+			self.trackingArea = nil
 		}
 
 		if let lastBounds = clipRectangles.last?.rect {
-			let trackingArea = NSTrackingArea(rect: CGRect(x: bounds.minX, y: bounds.minY, width: lastBounds.maxX, height: bounds.height / 2), options: [.activeAlways, .mouseEnteredAndExited, .mouseMoved], owner: self, userInfo: nil)
+			let trackingArea = NSTrackingArea(rect: CGRect(x: bounds.minX + 1, y: bounds.minY + 1, width: lastBounds.maxX - 2, height: bounds.height / 2 - 2), options: [.activeAlways, .mouseEnteredAndExited, .mouseMoved], owner: self, userInfo: nil)
 			addTrackingArea(trackingArea)
 
 			self.trackingArea = trackingArea
@@ -100,28 +107,19 @@ class GraphView: NSView {
 		return trackingSet
 	}
 
-	func drawRoundedRect(rect: CGRect, inContext context: CGContext?, radius: CGFloat, borderColor: CGColor, fillColor: CGColor) {
-		let path = CGMutablePath()
-
-		path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-		path.addArc(tangent1End: CGPoint(x: rect.maxX, y: rect.minY), tangent2End: CGPoint(x: rect.maxX, y: rect.maxY), radius: radius)
-		path.addArc(tangent1End: CGPoint(x: rect.maxX, y: rect.maxY), tangent2End: CGPoint(x: rect.minX, y: rect.maxY), radius: radius)
-		path.addArc(tangent1End: CGPoint(x: rect.minX, y: rect.maxY), tangent2End: CGPoint(x: rect.minX, y: rect.minY), radius: radius)
-		path.addArc(tangent1End: CGPoint(x: rect.minX, y: rect.minY), tangent2End: CGPoint(x: rect.maxX, y: rect.minY), radius: radius)
-		path.closeSubpath()
-
+	func drawRect(rect: CGRect, inContext context: CGContext?, borderColor: CGColor, fillColor: CGColor) {
 		context?.setLineWidth(1.0)
 		context?.setFillColor(fillColor)
 		context?.setStrokeColor(borderColor)
 
-		context?.addPath(path)
+		context?.addRect(rect)
 		context?.drawPath(using: .fillStroke)
 	}
 
 	func drawBarGraphInContext(context: CGContext?) {
-		let barChartRect = CGRect(origin: bounds.origin, size: NSSize(width: bounds.size.width, height: bounds.size.height / 2))
+		let barChartRect = CGRect(origin: NSPoint(x: 1, y: 1), size: NSSize(width: bounds.size.width - 2, height: bounds.size.height / 2 - 2))
 		var clipRect = barChartRect
-		drawRoundedRect(rect: barChartRect, inContext: context, radius: 5.0, borderColor: NSColor.tertiaryLabelColor.cgColor, fillColor: NSColor.white.cgColor)
+		drawRect(rect: barChartRect, inContext: context, borderColor: NSColor.tertiaryLabelColor.cgColor, fillColor: NSColor.white.cgColor)
 
 		guard let trackings = trackings else { return }
 
@@ -138,7 +136,7 @@ class GraphView: NSView {
 		for tracking in trackingSet() {
 			let clipWidth = round(barChartRect.width * CGFloat(tracking.duration / sum * sum / maxTime))
 
-			clipRect.size.width = clipWidth - 1
+			clipRect.size.width = clipWidth
 
 			clipRectangles.append((title: tracking.title, rect: clipRect))
 
@@ -150,7 +148,7 @@ class GraphView: NSView {
 				colors = (strokeColor: NSColor.tertiaryLabelColor, fillColor: color)
 			}
 
-			drawRoundedRect(rect: barChartRect, inContext: context, radius: 5.0, borderColor: colors.fillColor.cgColor, fillColor: colors.fillColor.cgColor)
+			drawRect(rect: barChartRect, inContext: context, borderColor: colors.fillColor.cgColor, fillColor: colors.fillColor.cgColor)
 
 			context?.restoreGState()
 
@@ -163,7 +161,7 @@ class GraphView: NSView {
 				drawText(with: "\(formatter.string(from: tracking.duration)!) - \(tracking.title)")
 			}
 
-			clipRect.origin.x = clipRect.maxX + 1
+			clipRect.origin.x = clipRect.maxX
 		}
 	}
 
