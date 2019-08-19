@@ -306,7 +306,14 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: NSCollectionView, writeItemsAt indexPaths: Set<IndexPath>, to pasteboard: NSPasteboard) -> Bool {
 		guard (collectionView == favoritesCollectionView) else { return false }
 
-		if let archiver = try? NSKeyedArchiver.archivedData(withRootObject: indexPaths, requiringSecureCoding: false) {
+		var archiver: Data?
+		if #available(OSX 10.13, *) {
+			archiver = try? NSKeyedArchiver.archivedData(withRootObject: indexPaths, requiringSecureCoding: false)
+		} else {
+			archiver = NSKeyedArchiver.archivedData(withRootObject: indexPaths)
+		}
+
+		if let archiver = archiver {
 			let indexData = Data(archiver)
 			pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: self)
 			pasteboard.setData(indexData, forType: NSPasteboard.PasteboardType.string)
