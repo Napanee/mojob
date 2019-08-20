@@ -137,23 +137,35 @@ class TrackingItem: NSView {
 			return
 		}
 
-		rightClickMenu.addItem(withTitle: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
+		let editItem = NSMenuItem(title: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
+		if (tracking?.date_end == nil) {
+			editItem.action = nil
+		}
+		rightClickMenu.addItem(editItem)
 
 		rightClickMenu.addItem(NSMenuItem.separator())
 
-		let splitItem = NSMenuItem(title: "Aufteilen", action: nil, keyEquivalent: "")
-		splitItem.action = tracking?.custom_job != nil ? #selector(onContextSplit) : nil
+		let splitItem = NSMenuItem(title: "Aufteilen", action: #selector(onContextSplit), keyEquivalent: "")
+		if (tracking?.job != nil || tracking?.date_end == nil) {
+			splitItem.action = nil
+		}
 		rightClickMenu.addItem(splitItem)
 
-		let toggleFavoriteItem = NSMenuItem(title: "zu Favoriten hinzufügen", action: nil, keyEquivalent: "")
-		toggleFavoriteItem.action = tracking?.job != nil ? #selector(onContextToggleFavorite) : nil
+		let toggleFavoriteItem = NSMenuItem(title: "zu Favoriten hinzufügen", action: #selector(onContextToggleFavorite), keyEquivalent: "")
+		if (tracking?.job == nil) {
+			toggleFavoriteItem.action = nil
+		}
 		if let job = tracking?.job, job.isFavorite {
 			toggleFavoriteItem.title = "von Favoriten entfernen"
 		}
 		rightClickMenu.addItem(toggleFavoriteItem)
 
 		rightClickMenu.addItem(NSMenuItem.separator())
-		rightClickMenu.addItem(withTitle: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
+		let deleteItem = NSMenuItem(title: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
+		if (tracking?.date_end == nil) {
+			deleteItem.action = nil
+		}
+		rightClickMenu.addItem(deleteItem)
 
 		rightClickMenu.addItem(NSMenuItem.separator())
 		rightClickMenu.addItem(withTitle: "Color:", action: nil, keyEquivalent: "")
@@ -221,13 +233,18 @@ class TrackingItem: NSView {
 	}
 
 	override func mouseDown(with event: NSEvent) {
-//		if let theHitView = view.window?.contentView?.hitTest((view.window?.mouseLocationOutsideOfEventStream)!) {
-			if (event.clickCount == 2) {
-				if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController {
-					contentViewController.showEditor(with: tracking)
-				}
-			}
-//		}
+		guard
+			tracking?.date_end != nil,
+			event.clickCount == 2,
+			let tracking = tracking,
+			let appDelegate = NSApp.delegate as? AppDelegate,
+			let mainWindowController = appDelegate.mainWindowController,
+			let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController else
+		{
+				return
+		}
+
+		contentViewController.showEditor(with: tracking)
 	}
 
 	@objc func onSelectColor(_ sender: NSButton) {
