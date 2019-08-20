@@ -157,7 +157,7 @@ class TrackingItem: NSView {
 
 		rightClickMenu.addItem(NSMenuItem.separator())
 		rightClickMenu.addItem(withTitle: "Color:", action: nil, keyEquivalent: "")
-		if let _ = tracking?.job, let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
+		if let job = tracking?.job, let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
 			let colors = NSColorList(name: "MoJob", fromFile: path) {
 			let buttons = colors.allKeys.map({ (key) -> NSButton in
 				let color = colors.color(withKey: key)
@@ -166,6 +166,10 @@ class TrackingItem: NSView {
 				button.action = #selector(onSelectColor(_:))
 				button.color = color
 				button.key = key
+
+				if (job.color == key) {
+					button.isEnabled = false
+				}
 
 				return button
 			})
@@ -181,6 +185,7 @@ class TrackingItem: NSView {
 		} else {
 			rightClickMenu.addItem(withTitle: "nicht verfügbar für custom Jobs", action: nil, keyEquivalent: "")
 		}
+		rightClickMenu.addItem(withTitle: "Farbe zurücksetzen", action: #selector(onContextResetColor), keyEquivalent: "")
 
 		NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
 	}
@@ -208,6 +213,11 @@ class TrackingItem: NSView {
 
 		let appDelegate = (NSApp.delegate as! AppDelegate)
 		appDelegate.window.contentViewController?.presentAsSheet(splitTrackingVC)
+	}
+
+	@objc func onContextResetColor() {
+		tracking?.job?.update(with: ["color": nil])
+		CoreDataHelper.saveContext()
 	}
 
 	override func mouseDown(with event: NSEvent) {
