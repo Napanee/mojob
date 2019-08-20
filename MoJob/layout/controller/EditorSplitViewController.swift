@@ -34,7 +34,12 @@ class EditorSplitViewController: SplitViewController {
 
 			editorViewController.sourceTracking = tracking
 
-			verticalSplitViewController.insertChild(editorViewController, at: 0)
+			let splitViewItem = NSSplitViewItem(viewController: editorViewController)
+			splitViewItem.isCollapsed = true
+
+			verticalSplitViewController.insertSplitViewItem(splitViewItem, at: 0)
+
+			splitViewItem.animator().isCollapsed = false
 		}
 	}
 
