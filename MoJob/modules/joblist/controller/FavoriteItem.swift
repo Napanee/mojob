@@ -11,6 +11,7 @@ import Cocoa
 class FavoriteItem: NSCollectionViewItem {
 
 	var job: Job!
+	var trackingArea: NSTrackingArea?
 	var delegate: FavoritesItemDelegate!
 	let indicatorLayer = CALayer()
 
@@ -18,6 +19,7 @@ class FavoriteItem: NSCollectionViewItem {
 	@IBOutlet weak var startButton: NSButton!
 
 	override func viewDidLayout() {
+		view.wantsLayer = true
 		view.layer?.sublayers?.removeAll(where: { $0.isEqual(to: indicatorLayer) })
 
 		if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
@@ -32,6 +34,21 @@ class FavoriteItem: NSCollectionViewItem {
 
 			view.layer?.addSublayer(indicatorLayer)
 		}
+
+		trackingArea = NSTrackingArea(
+			rect: view.bounds,
+			options: [NSTrackingArea.Options.activeAlways, NSTrackingArea.Options.mouseEnteredAndExited],
+			owner: self,
+			userInfo: nil
+		)
+
+		view.addTrackingArea(trackingArea!)
+	}
+
+	override func viewDidDisappear() {
+		if let trackingArea = trackingArea {
+			view.removeTrackingArea(trackingArea)
+		}
 	}
 
 	@IBAction func deleteButton(_ sender: NSButton) {
@@ -42,6 +59,32 @@ class FavoriteItem: NSCollectionViewItem {
 	}
 
 	@IBAction func startButton(_ sender: NSButton) {
+		startTracking()
+	}
+
+	override func mouseEntered(with event: NSEvent) {
+		super.mouseEntered(with: event)
+
+		if #available(OSX 10.14, *) {
+			view.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.2).cgColor
+		} else {
+			view.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
+		}
+	}
+
+	override func mouseExited(with event: NSEvent) {
+		super.mouseExited(with: event)
+
+		view.layer?.backgroundColor = nil
+	}
+
+	override func mouseDown(with event: NSEvent) {
+		super.mouseDown(with: event)
+
+		startTracking()
+	}
+
+	private func startTracking() {
 		Tracking.insert(with: ["job": job]).catch({ _ in })
 
 		if
