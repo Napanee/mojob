@@ -191,7 +191,6 @@ class CoreDataHelper {
 		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
 		var compoundPredicates = [NSPredicate]()
-		compoundPredicates.append(NSPredicate(format: "date_end != nil"))
 
 		if let job = job {
 			compoundPredicates.append(NSPredicate(format: "job == %@", argumentArray: [job]))
@@ -203,7 +202,8 @@ class CoreDataHelper {
 		{
 			let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
 				NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [todayStart, todayEnd]),
-				NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd])
+				NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd]),
+				NSPredicate(format: "date_start >= %@ AND date_start < %@ AND date_end == nil", argumentArray: [todayStart, todayEnd])
 			])
 			compoundPredicates.append(compound)
 		}
@@ -223,7 +223,7 @@ class CoreDataHelper {
 		let startOfDay = date.startOfDay!
 		let todayTrackings = CoreDataHelper.trackings(for: date, and: job)?.map({ (tracking) -> TimeInterval in
 			var dateStart = tracking.date_start!
-			let dateEnd = tracking.date_end!
+			let dateEnd = tracking.date_end ?? Date()
 
 			if (tracking.date_start?.compare(startOfDay) == ComparisonResult.orderedAscending) {
 				dateStart = startOfDay

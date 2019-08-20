@@ -36,11 +36,16 @@ class DayTrackingsController: NSViewController {
 		let context = CoreDataHelper.context
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
+		notificationCenter.addObserver(self, selector: #selector(calendarDayChanged), name: .NSCalendarDayChanged, object: nil)
 
-		NotificationCenter.default.addObserver(self, selector: #selector(calendarDayChanged), name: .NSCalendarDayChanged, object: nil)
+		notificationCenter.addObserver(forName: NSNotification.Name(rawValue: "counter:tick"), object: nil, queue: nil, using: { notification in
+			guard notification.name == .init("counter:tick") else { return }
 
-		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "calendar:changedDate"), object: nil, queue: nil, using: { notification in
-			guard notification.name == .init("calendar:changedDate"), let date = notification.object as? [String: Any], let day = date["day"] as? Date else{ return }
+			self.changeDate(with: self.currentDate)
+		})
+
+		observer = notificationCenter.addObserver(forName: NSNotification.Name(rawValue: "calendar:changedDate"), object: nil, queue: nil, using: { notification in
+			guard notification.name == .init("calendar:changedDate"), let date = notification.object as? [String: Any], let day = date["day"] as? Date else { return }
 
 			self.filteredJob = date["job"] as? Job
 			self.changeDate(with: day)
@@ -73,13 +78,6 @@ class DayTrackingsController: NSViewController {
 
 	@objc func calendarDayChanged() {
 		changeDate(with: Date())
-	}
-
-	@IBAction func loginButton(_ sender: NSButton) {
-		let loginVC = Login(nibName: .loginNib, bundle: nil)
-
-		let appDelegate = (NSApp.delegate as! AppDelegate)
-		appDelegate.window.contentViewController?.presentAsSheet(loginVC)
 	}
 
 	// MARK: - Observer

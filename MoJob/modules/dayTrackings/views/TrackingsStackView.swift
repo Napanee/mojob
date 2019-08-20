@@ -24,7 +24,7 @@ class TrackingsStackView: NSStackView {
 
 			insertTrackingView(with: tracking)
 
-			endTime = tracking.date_end!
+			endTime = tracking.date_end ?? Date()
 		}
 
 		if let date = currentDate.compare(endTime) == .orderedSame ? currentDate.endOfDay : currentDate, let until = Calendar.current.date(byAdding: .minute, value: -1, to: date) {
@@ -36,7 +36,7 @@ class TrackingsStackView: NSStackView {
 		let trackingView = TrackingItem()
 		trackingView.tracking = tracking
 
-		if let syncStatus = SyncStatus(rawValue: tracking.exported ?? "error") {
+		if let syncStatus = SyncStatus(rawValue: tracking.exported ?? "error"), tracking.date_end != nil {
 			trackingView.exportStatus = syncStatus
 		}
 

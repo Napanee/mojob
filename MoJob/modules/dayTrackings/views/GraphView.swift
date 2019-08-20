@@ -39,7 +39,6 @@ class GraphView: NSView {
 		drawBarGraphInContext(context: context)
 
 		if (trackingArea == nil) {
-			print("no tracking area")
 			updateTrackingAreas()
 		}
 	}

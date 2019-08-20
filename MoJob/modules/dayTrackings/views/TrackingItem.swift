@@ -56,7 +56,12 @@ class TrackingItem: NSView {
 			}
 
 			startTimeLabel.stringValue = formatter.string(from: tracking.date_start!)
-			endTimeLabel.stringValue = formatter.string(from: tracking.date_end!)
+			if let dateEnd = tracking.date_end {
+				endTimeLabel.stringValue = formatter.string(from: dateEnd)
+			} else {
+				endTimeLabel.stringValue = "..."
+			}
+
 			titleLabel.stringValue = title ?? "kein Job!"
 
 			if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
@@ -119,7 +124,7 @@ class TrackingItem: NSView {
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		if (tracking?.custom_job != nil) {
+		if (tracking?.custom_job != nil || tracking?.date_end == nil) {
 			statusImage.isHidden = true
 		} else {
 			statusImage.isHidden = false
