@@ -35,7 +35,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	var jobs: [Job] {
 		get {
-			return QuoJob.shared.jobs
+			return CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
 		}
 	}
 	var favorites: [Job] = []
@@ -212,9 +212,11 @@ extension JobListController: FilterFieldDelegate {
 				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
 			{
 				if let currentItem = currentItem, let job = currentItem.job {
-					Tracking.insert(with: ["job": job]).catch { _ in }
+					let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
+					tracking?.job = job
 				} else {
-					Tracking.insert(with: ["custom_job": filterField.stringValue]).catch { _ in }
+					let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
+					tracking?.custom_job = filterField.stringValue
 				}
 
 				contentViewController.showTracking()

@@ -80,13 +80,13 @@ class WakeUp: NSViewController {
 			break
 		case 3: // stop timer and start new tracking
 			currentTracking.stop(dateEnd: sleepTime)
-			Tracking.insert(with: [
-				"job": currentTracking.job,
-				"custom_job": currentTracking.custom_job,
-				"task": currentTracking.task,
-				"activity": currentTracking.activity,
-				"comment": currentTracking.comment
-			]).catch({ _ in })
+//			Tracking.insert(with: [
+//				"job": currentTracking.job,
+//				"custom_job": currentTracking.custom_job,
+//				"task": currentTracking.task,
+//				"activity": currentTracking.activity,
+//				"comment": currentTracking.comment
+//			]).catch({ _ in })
 
 			if
 				let appDelegate = NSApp.delegate as? AppDelegate,

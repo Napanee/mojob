@@ -91,7 +91,9 @@ class JobItem: NSCollectionViewItem {
 	}
 
 	private func startTracking() {
-		Tracking.insert(with: ["job": job]).catch({ _ in })
+		guard let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) else { return }
+
+		tracking.job = job
 
 		if
 			let appDelegate = NSApp.delegate as? AppDelegate,

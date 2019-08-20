@@ -24,32 +24,32 @@ extension Tracking {
 		}
 	}
 
-	class func insert(with params: [String: Any?]) -> Promise<Tracking?> {
-		return Promise { seal in
-			let context = CoreDataHelper.context
-			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-			let tracking = NSManagedObject(entity: entity!, insertInto: context)
-
-			tracking.setValue(Date(), forKey: "date_start")
-
-			for (key, value) in params {
-				tracking.setValue(value, forKey: key)
-			}
-
-			let userDefaults = UserDefaults()
-			if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity), let activity = QuoJob.shared.activities.first(where: { $0.id == activityId }) {
-				tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
-			}
-
-			do {
-				try context.save()
-
-				seal.fulfill(tracking as? Tracking)
-			} catch let error as NSError {
-				seal.reject(error)
-			}
-		}
-	}
+//	class func insert(with params: [String: Any?]) -> Promise<Tracking?> {
+//		return Promise { seal in
+//			let context = CoreDataHelper.context
+//			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
+//			let tracking = NSManagedObject(entity: entity!, insertInto: context)
+//
+//			tracking.setValue(Date(), forKey: "date_start")
+//
+//			for (key, value) in params {
+//				tracking.setValue(value, forKey: key)
+//			}
+//
+//			let userDefaults = UserDefaults()
+//			if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity), let activity = QuoJob.shared.activities.first(where: { $0.id == activityId }) {
+//				tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
+//			}
+//
+//			do {
+//				try context.save()
+//
+//				seal.fulfill(tracking as? Tracking)
+//			} catch let error as NSError {
+//				seal.reject(error)
+//			}
+//		}
+//	}
 
 //	func update(with params: [String: Any?]) {
 //		let context = CoreDataHelper.shared.persistentContainer.viewContext
@@ -73,6 +73,12 @@ extension Tracking {
 			"date_start": Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date),
 			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
 		]).done({ _ in
+			do {
+				try CoreDataHelper.context.save()
+			} catch let error {
+				print(error)
+			}
+
 			if let _ = self.job {
 				self.export()
 			}
@@ -85,7 +91,7 @@ extension Tracking {
 
 	func update(with params: [String: Any?]) -> Promise<Void> {
 		return Promise { seal in
-			let context = CoreDataHelper.context
+			guard let context = managedObjectContext else { return }
 
 			for (key, value) in params {
 				setValue(value, forKey: key)
@@ -101,6 +107,14 @@ extension Tracking {
 		}
 	}
 
+	func save() {
+		do {
+			try CoreDataHelper.context.save()
+		} catch let error as NSError {
+			print("Could not save \(error), \(error.userInfo)")
+		}
+	}
+
 	func delete() {
 		if (self.id != nil) {
 			deleteFromServer().done({ _ in
@@ -112,7 +126,7 @@ extension Tracking {
 	}
 
 	func deleteLocal() {
-		let context = CoreDataHelper.context
+		guard let context = managedObjectContext else { return }
 
 		context.delete(self)
 

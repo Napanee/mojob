@@ -28,9 +28,18 @@ class CoreDataHelper {
 		return context
 	}()
 
+	static let currentTrackingContext: NSManagedObjectContext = {
+		let parent = CoreDataHelper.context
+		let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+
+		context.parent = parent
+
+		return context
+	}()
+
 	var currentTracking: Tracking? {
 		get {
-			let context = CoreDataHelper.context
+			let context = CoreDataHelper.currentTrackingContext
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 			fetchRequest.predicate = NSPredicate(format: "date_end == nil")
 
@@ -178,6 +187,24 @@ class CoreDataHelper {
 		return container
 	}()
 
+	static func createTracking(in context: NSManagedObjectContext? = nil) -> Tracking? {
+		let context = (context ?? self.context)
+		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
+		let tracking = NSManagedObject(entity: entity!, insertInto: context)
+
+		tracking.setValue(Date(), forKey: "date_start")
+
+		let userDefaults = UserDefaults()
+		if
+			let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity),
+			let activity = activities(in: context).first(where: { $0.id == activityId })
+		{
+			tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
+		}
+
+		return tracking as? Tracking
+	}
+
 	static func saveContext() {
 		do {
 			try context.save()
@@ -237,6 +264,92 @@ class CoreDataHelper {
 		}
 
 		return 0
+	}
+
+	static func jobs(in context: NSManagedObjectContext? = nil) -> [Job] {
+		var result: [Job] = []
+		let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "title", ascending: false)
+		]
+		let predicates = NSCompoundPredicate(andPredicateWithSubpredicates: [
+			NSPredicate(format: "assigned = %@", argumentArray: [true]),
+			NSPredicate(format: "bookable = %@", argumentArray: [true])
+			])
+		fetchRequest.predicate = predicates
+
+		do {
+			result = try (context ?? self.context).fetch(fetchRequest)
+		} catch let error {
+			print(error)
+		}
+
+		return result
+	}
+
+	static func activities(in context: NSManagedObjectContext? = nil) -> [Activity] {
+		var result: [Activity] = []
+		let fetchRequest: NSFetchRequest<Activity> = Activity.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "title", ascending: false)
+		]
+
+		do {
+			result = try (context ?? self.context).fetch(fetchRequest)
+		} catch let error {
+			print(error)
+		}
+
+		return result
+	}
+
+	static func tasks(in context: NSManagedObjectContext? = nil) -> [Task] {
+		var result: [Task] = []
+		let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "title", ascending: false)
+		]
+		fetchRequest.predicate = NSPredicate(format: "done = %@", argumentArray: [false])
+
+		do {
+			result = try (context ?? self.context).fetch(fetchRequest)
+		} catch let error {
+			print(error)
+		}
+
+		return result
+	}
+
+	static func types(in context: NSManagedObjectContext? = nil) -> [Type] {
+		var result: [Type] = []
+		let fetchRequest: NSFetchRequest<Type> = Type.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "title", ascending: false)
+		]
+
+		do {
+			result = try (context ?? self.context).fetch(fetchRequest)
+		} catch let error {
+			print(error)
+		}
+
+		return result
+	}
+
+	static func trackings(in context: NSManagedObjectContext? = nil) -> [Tracking] {
+		var result: [Tracking] = []
+		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "id", ascending: false)
+		]
+
+		do {
+			result = try (context ?? self.context).fetch(fetchRequest)
+		} catch let error {
+			print(error)
+		}
+
+		return result
 	}
 
 }
