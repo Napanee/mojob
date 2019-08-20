@@ -48,6 +48,16 @@ class JobItem: NSCollectionViewItem {
 	}
 
 	@IBAction func startButton(_ sender: NSButton) {
+		startTracking()
+	}
+
+	override func mouseDown(with event: NSEvent) {
+		super.mouseDown(with: event)
+
+		startTracking()
+	}
+
+	private func startTracking() {
 		Tracking.insert(with: ["job": job]).catch({ _ in })
 
 		if
