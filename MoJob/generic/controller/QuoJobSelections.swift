@@ -295,12 +295,11 @@ extension QuoJobSelections: NSTextFieldDelegate {
 			if let newStartDate = Calendar.current.date(from: compStart) {
 				if let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
 					var compEnd = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
+					compEnd.year = compStart.year
+					compEnd.month = compStart.month
+					compEnd.day = compStart.day
 
 					if let newEndDate = Calendar.current.date(from: compEnd) {
-						compEnd.year = compStart.year
-						compEnd.month = compStart.month
-						compEnd.day = compStart.day
-
 						tempTracking?.date_end = newEndDate
 					}
 				}
