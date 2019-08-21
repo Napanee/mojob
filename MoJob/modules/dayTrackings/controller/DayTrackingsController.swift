@@ -19,17 +19,12 @@ class DayTrackingsController: NSViewController {
 	@IBOutlet weak var trackingsStackView: TrackingsStackView!
 	@IBOutlet weak var graphView: GraphView!
 
-	private var currentDate: Date = Date()
+	private var currentDate: Date = Date().startOfDay!
 	private var observer: NSObjectProtocol?
 	private var filteredJob: Job?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		if let trackings = CoreDataHelper.trackings(from: currentDate, byAdding: .day, and: filteredJob) {
-			graphView.trackings = trackings
-			trackingsStackView.reloadData(with: trackings)
-		}
 
 		changeDate(with: currentDate)
 
@@ -77,7 +72,7 @@ class DayTrackingsController: NSViewController {
 	}
 
 	@objc func calendarDayChanged() {
-		changeDate(with: Date())
+		changeDate(with: Date().startOfDay!)
 	}
 
 	// MARK: - Observer

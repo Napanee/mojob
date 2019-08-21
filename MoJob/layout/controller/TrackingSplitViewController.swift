@@ -15,7 +15,7 @@ class TrackingSplitViewController: EditorSplitViewController {
 
 		var leftController: NSViewController
 
-		if let _ = CoreDataHelper.shared.currentTracking {
+		if let _ = CoreDataHelper.currentTracking {
 			leftController = TrackingViewController(nibName: .trackingViewControllerNib, bundle: nil)
 		} else {
 			leftController = JobListController(nibName: .jobListControllerNib, bundle: nil)

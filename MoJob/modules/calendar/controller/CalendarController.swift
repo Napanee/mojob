@@ -21,9 +21,13 @@ class CalendarController: NSViewController {
 	var jobs: [Job] = []
 	var monitor: Any?
 
-	private var currentDate: Date? {
-		didSet {
-			guard let currentDate = currentDate else { return }
+	private var _currentDate: Date?
+	private var currentDate: Date {
+		get {
+			return _currentDate ?? Date().startOfDay!
+		}
+		set {
+			_currentDate = currentDate.startOfDay
 
 			let components = calendar.dateComponents([.month, .year], from: currentDate)
 			currentMonth.stringValue = "\(calendar.monthSymbols[components.month! - 1]) \(components.year!)"
@@ -41,8 +45,7 @@ class CalendarController: NSViewController {
 
 		initJobSelect()
 
-		currentDate = Date()
-		calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate!))
+		calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
 
 		todayButton.wantsLayer = true
 		todayButton.layer?.borderWidth = 1
@@ -103,19 +106,19 @@ class CalendarController: NSViewController {
 	}
 
 	@IBAction func prevMonthButton(_ sender: NSButton) {
-		currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate ?? Date())!
+		currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate)!
 	}
 
 	@IBAction func nextMonthButton(_ sender: NSButton) {
-		currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate ?? Date())!
+		currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate)!
 	}
 
 	@IBAction func prevYearButton(_ sender: NSButton) {
-		currentDate = Calendar.current.date(byAdding: .year, value: -1, to: currentDate ?? Date())!
+		currentDate = Calendar.current.date(byAdding: .year, value: -1, to: currentDate)!
 	}
 
 	@IBAction func nextYearButton(_ sender: NSButton) {
-		let nextDate = Calendar.current.date(byAdding: .year, value: 1, to: currentDate ?? Date())!
+		let nextDate = Calendar.current.date(byAdding: .year, value: 1, to: currentDate)!
 		currentDate = nextDate.compare(Date()) == ComparisonResult.orderedAscending ? nextDate : Date()
 	}
 
@@ -129,15 +132,15 @@ class CalendarController: NSViewController {
 		guard let userInfo = notification.userInfo else { return }
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate!))
+			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
 		}
 
 		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate!))
+			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
 		}
 
 		if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
-			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate!))
+			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
 		}
 	}
 

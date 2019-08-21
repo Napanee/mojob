@@ -75,6 +75,8 @@ class CoreDataHelper {
 	static func save(in context: NSManagedObjectContext? = nil) {
 		let context = context ?? mainContext
 
+		guard context.hasChanges else { return }
+
 		do {
 			try context.save()
 
@@ -181,7 +183,7 @@ class CoreDataHelper {
 // MARK: - Trackings
 extension CoreDataHelper {
 
-	var currentTracking: Tracking? {
+	static var currentTracking: Tracking? {
 		get {
 			let context = CoreDataHelper.currentTrackingContext
 			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
@@ -215,6 +217,7 @@ extension CoreDataHelper {
 	}
 
 	static func trackings(from dateStart: Date, byAdding component: Calendar.Component, and job: Job? = nil) -> [Tracking]? {
+		var trackings: [Tracking] = []
 		let context = CoreDataHelper.mainContext
 		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
 
@@ -229,18 +232,24 @@ extension CoreDataHelper {
 			NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [dateStart, dateUntil]),
 			NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [dateStart, dateUntil]),
 			NSPredicate(format: "date_start >= %@ AND date_start < %@ AND date_end == nil", argumentArray: [dateStart, dateUntil])
-			])
+		])
 		compoundPredicates.append(compound)
 
 		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
 		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_start", ascending: true)]
 
 		do {
-			return try context.fetch(fetchRequest)
+			trackings = try context.fetch(fetchRequest)
 		} catch let error as NSError {
 			print("Could not fetch. \(error), \(error.userInfo)")
 			return nil
 		}
+
+		if let currentTracking = currentTracking {
+			trackings.append(currentTracking)
+		}
+
+		return trackings
 	}
 
 	static func seconds(from dateStart: Date, byAdding component: Calendar.Component, and job: Job? = nil) -> Double? {

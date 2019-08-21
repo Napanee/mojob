@@ -68,11 +68,12 @@ extension Tracking {
 	func stop(dateEnd: Date? = nil) {
 		let date = dateEnd ?? Date()
 
-		self.update(with: [
-			"exported": SyncStatus.pending.rawValue,
-			"date_start": Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date),
-			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
-		]).done({ _ in
+		self.exported = SyncStatus.pending.rawValue
+		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date)
+		self.date_end = Calendar.current.date(bySetting: .second, value: 0, of: date)
+
+		do {
+			try managedObjectContext?.save()
 			CoreDataHelper.save()
 
 			if let _ = self.job {
@@ -80,31 +81,34 @@ extension Tracking {
 			}
 
 			GlobalTimer.shared.startNoTrackingTimer()
-		}).catch { error in print(error) }
-
-		GlobalTimer.shared.stopTimer()
-	}
-
-	func update(with params: [String: Any?]) -> Promise<Void> {
-		return Promise { seal in
-			guard let context = managedObjectContext else { return }
-
-			for (key, value) in params {
-				setValue(value, forKey: key)
-			}
-
-			do {
-				try context.save()
-				seal.fulfill_()
-			} catch let error as NSError  {
-				print("Could not save \(error), \(error.userInfo)")
-				seal.reject(error)
-			}
+			GlobalTimer.shared.stopTimer()
+		} catch let error as NSError  {
+			print("Could not save \(error), \(error.userInfo)")
 		}
 	}
 
+//	func update(with params: [String: Any?]) -> Promise<Void> {
+//		return Promise { seal in
+//			guard let context = managedObjectContext else { return }
+//
+//			for (key, value) in params {
+//				setValue(value, forKey: key)
+//			}
+//
+//			do {
+//				try context.save()
+//				seal.fulfill_()
+//			} catch let error as NSError  {
+//				print("Could not save \(error), \(error.userInfo)")
+//				seal.reject(error)
+//			}
+//		}
+//	}
+
 	func save() {
-		CoreDataHelper.save(in: managedObjectContext)
+		if (managedObjectContext?.hasChanges ?? false) {
+			CoreDataHelper.save(in: managedObjectContext)
+		}
 	}
 
 	func delete() {
@@ -118,15 +122,8 @@ extension Tracking {
 	}
 
 	func deleteLocal() {
-		guard let context = managedObjectContext else { return }
-
-		context.delete(self)
-
-		do {
-			try context.save()
-		} catch let error as NSError {
-			print("Could not delete \(error), \(error.userInfo)")
-		}
+		managedObjectContext?.delete(self)
+		save()
 	}
 
 	func deleteFromServer() -> Promise<Void>{
@@ -134,8 +131,16 @@ extension Tracking {
 	}
 
 	func export() {
-		QuoJob.shared.exportTracking(tracking: self).catch { error in
-			self.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
+		QuoJob.shared.exportTracking(tracking: self).done({ id in
+			self.id = id
+			self.exported = SyncStatus.success.rawValue
+			self.sync = Calendar.current.date(bySetting: .nanosecond, value: 0, of: Date())
+			self.save()
+
+			CoreDataHelper.save()
+		}).catch { error in
+			self.exported = SyncStatus.error.rawValue
+			CoreDataHelper.save()
 		}
 	}
 

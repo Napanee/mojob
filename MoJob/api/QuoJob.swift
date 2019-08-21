@@ -219,7 +219,7 @@ class QuoJob: NSObject {
 		}
 	}
 
-	func exportTracking(tracking: Tracking) -> Promise<Void> {
+	func exportTracking(tracking: Tracking) -> Promise<String> {
 		var id: String? = nil
 		var bookingTypeString: String! = "abw"
 		var activityId: String! = nil
@@ -262,11 +262,8 @@ class QuoJob: NSObject {
 
 				self.fetch(as: .myTime_putHourbooking, with: params).done { result in
 					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-						tracking.update(with: ["id": id, "exported": SyncStatus.success.rawValue]).done({ _ in
-							seal.fulfill_()
-						}).catch({ error in
-							seal.reject(error)
-						})
+						print(id)
+						seal.fulfill(id)
 					}
 				}.catch({ error in
 					GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Exportieren.", andInformationtext: error.localizedDescription)

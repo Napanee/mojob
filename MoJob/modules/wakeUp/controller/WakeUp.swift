@@ -71,7 +71,7 @@ class WakeUp: NSViewController {
 	@IBAction func confirm(_ sender: NSButton) {
 		guard
 			let selectedChoice = radioButtons.first(where: { $0.state == .on }),
-			let currentTracking = CoreDataHelper.shared.currentTracking
+			let currentTracking = CoreDataHelper.currentTracking
 		else { return }
 
 		switch selectedChoice.tag {
