@@ -52,7 +52,7 @@ class FavoriteItem: NSCollectionViewItem {
 	}
 
 	@IBAction func deleteButton(_ sender: NSButton) {
-		job.update(with: ["isFavorite": false])
+		job.isFavorite = false
 		CoreDataHelper.save()
 
 		delegate.onDeleteFavorite()
@@ -87,7 +87,8 @@ class FavoriteItem: NSCollectionViewItem {
 	private func startTracking() {
 		guard let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) else { return }
 
-		tracking.job = job
+		let jobTrackingContext = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
+		tracking.job = jobTrackingContext.first(where: { $0.id == job.id })
 
 		if
 			let appDelegate = NSApp.delegate as? AppDelegate,

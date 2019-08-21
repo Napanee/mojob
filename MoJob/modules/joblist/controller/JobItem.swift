@@ -93,7 +93,8 @@ class JobItem: NSCollectionViewItem {
 	private func startTracking() {
 		guard let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) else { return }
 
-		tracking.job = job
+		let jobTrackingContext = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
+		tracking.job = jobTrackingContext.first(where: { $0.id == job.id })
 
 		if
 			let appDelegate = NSApp.delegate as? AppDelegate,

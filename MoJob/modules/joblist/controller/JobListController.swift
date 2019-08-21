@@ -35,7 +35,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	var jobs: [Job] {
 		get {
-			return CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
+			return CoreDataHelper.jobs()
 		}
 	}
 	var favorites: [Job] = []
@@ -211,9 +211,10 @@ extension JobListController: FilterFieldDelegate {
 				let mainWindowController = appDelegate.mainWindowController,
 				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
 			{
-				if let currentItem = currentItem, let job = currentItem.job {
+				if let currentItem = currentItem, let itemJob = currentItem.job {
 					let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
-					tracking?.job = job
+					let job = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
+					tracking?.job = job.first(where: { $0.id == itemJob.id })
 				} else {
 					let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
 					tracking?.custom_job = filterField.stringValue
@@ -362,7 +363,7 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 		let itemCount = collectionView.numberOfItems(inSection: 0)
 		for i in 0..<itemCount {
 			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
-				item.job.update(with: ["favoriteOrder": Int16(i)])
+				item.job.favoriteOrder = Int16(i)
 			}
 		}
 

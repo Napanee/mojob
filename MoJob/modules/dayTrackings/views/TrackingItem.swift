@@ -210,7 +210,7 @@ class TrackingItem: NSView {
 
 	@objc func onContextToggleFavorite() {
 		if let isFavorite = tracking?.job?.isFavorite {
-			tracking?.job?.update(with: ["isFavorite": !isFavorite])
+			tracking?.job?.isFavorite = !isFavorite
 			CoreDataHelper.save()
 		}
 	}
@@ -228,7 +228,7 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onContextResetColor() {
-		tracking?.job?.update(with: ["color": nil])
+		tracking?.job?.color = nil
 		CoreDataHelper.save()
 	}
 
@@ -249,7 +249,7 @@ class TrackingItem: NSView {
 
 	@objc func onSelectColor(_ sender: NSButton) {
 		if let button = sender as? ColorButton, let job = tracking?.job {
-			job.update(with: ["color": button.key])
+			job.color = button.key
 			CoreDataHelper.save()
 			rightClickMenu.cancelTracking()
 		}

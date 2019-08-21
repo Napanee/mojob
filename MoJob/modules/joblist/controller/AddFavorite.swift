@@ -47,7 +47,7 @@ class AddFavorite: NSViewController {
 		let title = jobSelect.titleOfSelectedItem
 
 		if let job = CoreDataHelper.jobs().first(where: { "\($0.number!) - \($0.title!)" == title }) {
-			job.update(with: ["isFavorite": true])
+			job.isFavorite = true
 			CoreDataHelper.save()
 
 			delegate.onDismiss()
