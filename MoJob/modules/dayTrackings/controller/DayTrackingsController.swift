@@ -26,14 +26,14 @@ class DayTrackingsController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if let trackings = CoreDataHelper.trackings(for: currentDate, and: filteredJob) {
+		if let trackings = CoreDataHelper.trackings(from: currentDate, byAdding: .day, and: filteredJob) {
 			graphView.trackings = trackings
 			trackingsStackView.reloadData(with: trackings)
 		}
 
 		changeDate(with: currentDate)
 
-		let context = CoreDataHelper.context
+		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 		notificationCenter.addObserver(self, selector: #selector(calendarDayChanged), name: .NSCalendarDayChanged, object: nil)
@@ -60,12 +60,12 @@ class DayTrackingsController: NSViewController {
 			self.dateMonth.stringValue = date.month
 			self.dateYear.stringValue = date.year
 
-			if let trackings = CoreDataHelper.trackings(for: date, and: self.filteredJob) {
+			if let trackings = CoreDataHelper.trackings(from: date, byAdding: .day, and: self.filteredJob) {
 				self.graphView.trackings = trackings
 				self.trackingsStackView.currentDate = date
 				self.trackingsStackView.reloadData(with: trackings)
 
-				let sum = CoreDataHelper.seconds(for: date, and: self.filteredJob)
+				let sum = CoreDataHelper.seconds(from: date.startOfDay!, byAdding: .day, and: self.filteredJob)
 				let formatter = DateComponentsFormatter()
 				formatter.unitsStyle = .abbreviated
 				formatter.zeroFormattingBehavior = .pad
@@ -84,7 +84,7 @@ class DayTrackingsController: NSViewController {
 
 	@objc func managedObjectContextDidSave(notification: NSNotification) {
 		guard let userInfo = notification.userInfo else { return }
-		guard let trackings = CoreDataHelper.trackings(for: currentDate, and: filteredJob) else { return }
+		guard let trackings = CoreDataHelper.trackings(from: currentDate, byAdding: .day, and: filteredJob) else { return }
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
 			graphView.trackings = trackings

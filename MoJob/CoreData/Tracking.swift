@@ -73,11 +73,7 @@ extension Tracking {
 			"date_start": Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date),
 			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
 		]).done({ _ in
-			do {
-				try CoreDataHelper.context.save()
-			} catch let error {
-				print(error)
-			}
+			CoreDataHelper.save()
 
 			if let _ = self.job {
 				self.export()
@@ -108,11 +104,7 @@ extension Tracking {
 	}
 
 	func save() {
-		do {
-			try CoreDataHelper.context.save()
-		} catch let error as NSError {
-			print("Could not save \(error), \(error.userInfo)")
-		}
+		CoreDataHelper.save(in: managedObjectContext)
 	}
 
 	func delete() {

@@ -61,7 +61,7 @@ class CalendarController: NSViewController {
 			return $0
 		}
 
-		let context = CoreDataHelper.context
+		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 	}
@@ -82,7 +82,7 @@ class CalendarController: NSViewController {
 	private func initJobSelect() {
 		jobSelect.placeholderString = "Job filtern"
 
-		self.jobs = QuoJob.shared.jobs
+		self.jobs = CoreDataHelper.jobs()
 			.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
 		jobSelect.reloadData()
@@ -93,7 +93,7 @@ class CalendarController: NSViewController {
 
 		let value = cell.stringValue.lowercased()
 
-		if let job = QuoJob.shared.jobs.first(where: { $0.fullTitle.lowercased() == value }) {
+		if let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == value }) {
 			calendarGridView.job = job
 			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": currentDate as Any, "job": job as Any])
 		} else {
@@ -176,7 +176,7 @@ extension CalendarController: NSTextFieldDelegate {
 		let value = comboBoxCell.stringValue.lowercased()
 
 		if (comboBox.isEqual(jobSelect)) {
-			jobs = QuoJob.shared.jobs
+			jobs = CoreDataHelper.jobs()
 				.filter({ value == "" || $0.fullTitle.lowercased().contains(value) })
 				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 

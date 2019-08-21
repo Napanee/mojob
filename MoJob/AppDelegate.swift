@@ -48,7 +48,7 @@ class AppDelegate: NSObject {
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
 
-		if (QuoJob.shared.jobs.count == 0) {
+		if (CoreDataHelper.jobs().count == 0) {
 			QuoJob.shared.login().done({ _ in
 				GlobalNotification.shared.deliverNotification(
 					withTitle: "Initiale Daten werden geladen.",
@@ -186,7 +186,7 @@ extension AppDelegate: NSApplicationDelegate {
 
 	func windowWillReturnUndoManager(window: NSWindow) -> UndoManager? {
 		// Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-		return CoreDataHelper.context.undoManager
+		return CoreDataHelper.mainContext.undoManager
 	}
 
 	func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {

@@ -68,7 +68,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		favoritesCollectionView.registerForDraggedTypes([NSPasteboard.PasteboardType.string])
 		favoritesCollectionView.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: true)
 
-		let context = CoreDataHelper.context
+		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: .NSManagedObjectContextDidSave, object: context)
 	}
@@ -366,7 +366,7 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 			}
 		}
 
-		CoreDataHelper.saveContext()
+		CoreDataHelper.save()
 
 		return true
 	}

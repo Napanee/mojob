@@ -14,7 +14,6 @@ protocol DateFieldDelegate {
 }
 
 class EditorController: QuoJobSelections {
-	let context = CoreDataHelper.context
 
 	override var formIsValid: Bool {
 		get { return super.formIsValid }

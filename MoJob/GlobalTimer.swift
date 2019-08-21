@@ -35,8 +35,8 @@ class GlobalTimer: NSObject {
 
 		currentTracking = CoreDataHelper.shared.currentTracking
 
-		completedTrackingSecondsToday = CoreDataHelper.shared.secondsToday
-		completedTrackingSecondsWeek = CoreDataHelper.shared.secondsWeek
+		completedTrackingSecondsToday = CoreDataHelper.seconds(from: Date().startOfDay!, byAdding: .day)
+		completedTrackingSecondsWeek = CoreDataHelper.seconds(from: Date().startOfWeek!, byAdding: .weekOfYear)
 
 		updateTime()
 

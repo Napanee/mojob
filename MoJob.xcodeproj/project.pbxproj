@@ -440,14 +440,14 @@
 			isa = PBXGroup;
 			children = (
 				E8D35A1722FF5A950014AFE4 /* calendar */,
-				E84FCE3A22FC3C8C002E41B4 /* wakeUp */,
-				E850996D22F6FD9800068ED8 /* settings */,
-				E863306122481B8100A8E946 /* login */,
-				E8E950852232BC110070F57E /* editor */,
 				E895D8452221BB3D00DAAA4E /* dayTrackings */,
+				E8E950852232BC110070F57E /* editor */,
 				E82117CE220E163F003D7578 /* joblist */,
+				E863306122481B8100A8E946 /* login */,
 				E82117C7220E114D003D7578 /* navigation */,
+				E850996D22F6FD9800068ED8 /* settings */,
 				E8A2703B2210BA880030B61C /* tracking */,
+				E84FCE3A22FC3C8C002E41B4 /* wakeUp */,
 			);
 			path = modules;
 			sourceTree = "<group>";

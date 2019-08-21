@@ -45,107 +45,107 @@ class QuoJob: NSObject {
 		}
 	}
 
-	var jobs: [Job] {
-		get {
-			var result: [Job] = []
-			let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
-			fetchRequest.sortDescriptors = [
-				NSSortDescriptor(key: "title", ascending: false)
-			]
-			let predicates = NSCompoundPredicate(andPredicateWithSubpredicates: [
-				NSPredicate(format: "assigned = %@", argumentArray: [true]),
-				NSPredicate(format: "bookable = %@", argumentArray: [true])
-			])
-			fetchRequest.predicate = predicates
-
-			do {
-				result = try context.fetch(fetchRequest)
-			} catch let error {
-				print(error)
-			}
-
-			return result
-		}
-	}
-
-	var activities: [Activity] {
-		get {
-			var result: [Activity] = []
-			let fetchRequest: NSFetchRequest<Activity> = Activity.fetchRequest()
-			fetchRequest.sortDescriptors = [
-				NSSortDescriptor(key: "title", ascending: false)
-			]
-
-			do {
-				result = try context.fetch(fetchRequest)
-			} catch let error {
-				print(error)
-			}
-
-			return result
-		}
-	}
-
-	var tasks: [Task] {
-		get {
-			var result: [Task] = []
-			let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-			fetchRequest.sortDescriptors = [
-				NSSortDescriptor(key: "title", ascending: false)
-			]
-			fetchRequest.predicate = NSPredicate(format: "done = %@", argumentArray: [false])
-
-			do {
-				result = try context.fetch(fetchRequest)
-			} catch let error {
-				print(error)
-			}
-
-			return result
-		}
-	}
-
-	var types: [Type] {
-		get {
-			var result: [Type] = []
-			let fetchRequest: NSFetchRequest<Type> = Type.fetchRequest()
-			fetchRequest.sortDescriptors = [
-				NSSortDescriptor(key: "title", ascending: false)
-			]
-
-			do {
-				result = try context.fetch(fetchRequest)
-			} catch let error {
-				print(error)
-			}
-
-			return result
-		}
-	}
-
-	var trackings: [Tracking] {
-		get {
-			var result: [Tracking] = []
-			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-			fetchRequest.sortDescriptors = [
-				NSSortDescriptor(key: "id", ascending: false)
-			]
-
-			do {
-				result = try context.fetch(fetchRequest)
-			} catch let error {
-				print(error)
-			}
-
-			return result
-		}
-	}
+//	var jobs: [Job] {
+//		get {
+//			var result: [Job] = []
+//			let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
+//			fetchRequest.sortDescriptors = [
+//				NSSortDescriptor(key: "title", ascending: false)
+//			]
+//			let predicates = NSCompoundPredicate(andPredicateWithSubpredicates: [
+//				NSPredicate(format: "assigned = %@", argumentArray: [true]),
+//				NSPredicate(format: "bookable = %@", argumentArray: [true])
+//			])
+//			fetchRequest.predicate = predicates
+//
+//			do {
+//				result = try context.fetch(fetchRequest)
+//			} catch let error {
+//				print(error)
+//			}
+//
+//			return result
+//		}
+//	}
+//
+//	var activities: [Activity] {
+//		get {
+//			var result: [Activity] = []
+//			let fetchRequest: NSFetchRequest<Activity> = Activity.fetchRequest()
+//			fetchRequest.sortDescriptors = [
+//				NSSortDescriptor(key: "title", ascending: false)
+//			]
+//
+//			do {
+//				result = try context.fetch(fetchRequest)
+//			} catch let error {
+//				print(error)
+//			}
+//
+//			return result
+//		}
+//	}
+//
+//	var tasks: [Task] {
+//		get {
+//			var result: [Task] = []
+//			let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+//			fetchRequest.sortDescriptors = [
+//				NSSortDescriptor(key: "title", ascending: false)
+//			]
+//			fetchRequest.predicate = NSPredicate(format: "done = %@", argumentArray: [false])
+//
+//			do {
+//				result = try context.fetch(fetchRequest)
+//			} catch let error {
+//				print(error)
+//			}
+//
+//			return result
+//		}
+//	}
+//
+//	var types: [Type] {
+//		get {
+//			var result: [Type] = []
+//			let fetchRequest: NSFetchRequest<Type> = Type.fetchRequest()
+//			fetchRequest.sortDescriptors = [
+//				NSSortDescriptor(key: "title", ascending: false)
+//			]
+//
+//			do {
+//				result = try context.fetch(fetchRequest)
+//			} catch let error {
+//				print(error)
+//			}
+//
+//			return result
+//		}
+//	}
+//
+//	var trackings: [Tracking] {
+//		get {
+//			var result: [Tracking] = []
+//			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+//			fetchRequest.sortDescriptors = [
+//				NSSortDescriptor(key: "id", ascending: false)
+//			]
+//
+//			do {
+//				result = try context.fetch(fetchRequest)
+//			} catch let error {
+//				print(error)
+//			}
+//
+//			return result
+//		}
+//	}
 
 	var keychain: Keychain!
 	var userId: String = ""
 	var sessionId: String = ""
 
-	let context = CoreDataHelper.context
+	let context = CoreDataHelper.mainContext
 	let taskContext = CoreDataHelper.backgroundContext
 
 	private override init() {
@@ -229,7 +229,7 @@ class QuoJob: NSObject {
 			id = trackingId
 		}
 
-		if let bookingType = types.first(where: { $0.id == tracking.job?.type?.id }) {
+		if let bookingType = CoreDataHelper.types().first(where: { $0.id == tracking.job?.type?.id }) {
 			if (bookingType.internal_service) {
 				bookingTypeString = "int"
 			} else if (bookingType.productive_service) {
@@ -403,11 +403,7 @@ extension QuoJob {
 				}.then { resultTrackings -> Promise<Void> in
 					return self.handleTrackings(with: resultTrackings)
 				}.done { _ in
-					do {
-						try self.context.save()
-					} catch let error {
-						print(error)
-					}
+					CoreDataHelper.save()
 
 					var title: String = ""
 					var text: String = ""
@@ -553,7 +549,7 @@ extension QuoJob {
 					let internalService = item["internal"] as! Bool
 					let productiveService = item["productive"] as! Bool
 
-					if let type = self.types.first(where: { $0.id == id }) {
+					if let type = CoreDataHelper.types().first(where: { $0.id == id }) {
 						type.title = title
 						type.active = active
 						type.internal_service = internalService
@@ -622,7 +618,7 @@ extension QuoJob {
 					let assigned_user_ids = item["assigned_user_ids"] as! [String]
 					let isAssigned = assigned_user_ids.contains(self.userId)
 
-					if let job = self.jobs.first(where: { $0.id == id }) {
+					if let job = CoreDataHelper.jobs().first(where: { $0.id == id }) {
 						let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Type")
 						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
 						let type = (try? self.context.fetch(fetchRequest) as? [Type])?.first
@@ -682,7 +678,7 @@ extension QuoJob {
 					let external_service = item["external_service"] as! Bool
 					let nfc = item["nfc"] as! Bool
 
-					if let activity = self.activities.first(where: { $0.id == id }) {
+					if let activity = CoreDataHelper.activities().first(where: { $0.id == id }) {
 						activity.title = title
 						activity.internal_service = internal_service
 						activity.external_service = external_service
@@ -722,7 +718,7 @@ extension QuoJob {
 
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
-			let jobsAll = self.jobs.filter({ $0.assigned && $0.bookable }).map({ $0.id })
+			let jobsAll = CoreDataHelper.jobs().filter({ $0.assigned && $0.bookable }).map({ $0.id })
 			let tasks = taskItems.filter({ jobsAll.contains($0["job_id"] as? String) && !($0["done"] as? Bool ?? true) })
 			if (tasks.count > 0) {
 				self.results.append(["type": "tasks", "order": 2, "text": "\(String(tasks.count)) Aufgaben"])
@@ -770,9 +766,9 @@ extension QuoJob {
 						hoursBooked = hours_booked
 					}
 
-					if let task = self.tasks.first(where: { $0.id == id }) {
-						let job = self.jobs.first(where: { $0.id == jobId })
-						let activity = self.activities.first(where: { $0.id == activityId })
+					if let task = CoreDataHelper.tasks().first(where: { $0.id == id }) {
+						let job = CoreDataHelper.jobs().first(where: { $0.id == jobId })
+						let activity = CoreDataHelper.activities().first(where: { $0.id == activityId })
 
 						task.title = title
 						task.hours_planed = hoursPlaned
@@ -886,8 +882,8 @@ extension QuoJob {
 						dateEnd = Calendar.current.date(bySettingHour: timeUntilDate.hour!, minute: timeUntilDate.minute!, second: 0, of: trackingDate!)
 					}
 
-					if let tracking = self.trackings.first(where: { $0.id == id }) {
-						self.context.delete(tracking)
+					if let tracking = CoreDataHelper.trackings().first(where: { $0.id == id }) {
+						tracking.deleteLocal()
 					}
 //						var jobObject: Job? = nil
 //						if let jobId = item["job_id"] as? String, let job = self.jobs.first(where: { $0.id == jobId }) {

@@ -14,7 +14,7 @@ class SplitTracking: NSViewController {
 	@IBOutlet weak var jobsCollectionHeight: NSLayoutConstraint!
 	@IBOutlet weak var saveButton: NSButton!
 
-	var jobs = QuoJob.shared.jobs
+	var jobs = CoreDataHelper.jobs()
 	var sourceTracking: Tracking!
 	var jobsCount: Int = 2
 

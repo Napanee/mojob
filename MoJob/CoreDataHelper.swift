@@ -12,7 +12,7 @@ import CoreData
 
 class CoreDataHelper {
 
-	static let context: NSManagedObjectContext = {
+	static let mainContext: NSManagedObjectContext = {
 		let persistentContainer = CoreDataHelper.shared.persistentContainer
 		let context = persistentContainer.viewContext
 
@@ -20,7 +20,7 @@ class CoreDataHelper {
 	}()
 
 	static let backgroundContext: NSManagedObjectContext = {
-		let parent = CoreDataHelper.context
+		let parent = CoreDataHelper.mainContext
 		let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
 
 		context.parent = parent
@@ -29,128 +29,13 @@ class CoreDataHelper {
 	}()
 
 	static let currentTrackingContext: NSManagedObjectContext = {
-		let parent = CoreDataHelper.context
+		let parent = CoreDataHelper.mainContext
 		let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
 
 		context.parent = parent
 
 		return context
 	}()
-
-	var currentTracking: Tracking? {
-		get {
-			let context = CoreDataHelper.currentTrackingContext
-			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-			fetchRequest.predicate = NSPredicate(format: "date_end == nil")
-
-			do {
-				return try context.fetch(fetchRequest).first
-			} catch let error as NSError {
-				print("Could not fetch. \(error), \(error.userInfo)")
-				return nil
-			}
-		}
-	}
-
-	var trackingsToday: [Tracking]? {
-		get {
-			let context = CoreDataHelper.context
-			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-
-			var compoundPredicates = [NSPredicate]()
-			compoundPredicates.append(NSPredicate(format: "date_end != nil"))
-
-			if
-				let todayStart = Date().startOfDay,
-				let todayEnd = Date().endOfDay
-			{
-				let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
-					NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [todayStart, todayEnd]),
-					NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd])
-					])
-				compoundPredicates.append(compound)
-			}
-
-			fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
-
-			do {
-				return try context.fetch(fetchRequest)
-			} catch let error as NSError {
-				print("Could not fetch. \(error), \(error.userInfo)")
-				return nil
-			}
-		}
-	}
-
-	var trackingsWeek: [Tracking]? {
-		get {
-			let context = CoreDataHelper.context
-			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-
-			var compoundPredicates = [NSPredicate]()
-			compoundPredicates.append(NSPredicate(format: "date_end != nil"))
-
-			if
-				let weekStart = Date().startOfWeek,
-				let weekEnd = Date().endOfWeek
-			{
-				let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
-					NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [weekStart, weekEnd]),
-					NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [weekStart, weekEnd])
-				])
-				compoundPredicates.append(compound)
-			}
-
-			fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
-
-			do {
-				return try context.fetch(fetchRequest)
-			} catch let error as NSError {
-				print("Could not fetch. \(error), \(error.userInfo)")
-				return nil
-			}
-		}
-	}
-
-	var secondsToday: Double? {
-		let startOfDay = Date().startOfDay!
-		let todayTrackings = trackingsToday?.map({ (tracking) -> TimeInterval in
-			var dateStart = tracking.date_start!
-			let dateEnd = tracking.date_end!
-
-			if (tracking.date_start?.compare(startOfDay) == ComparisonResult.orderedAscending) {
-				dateStart = startOfDay
-			}
-
-			return dateEnd.timeIntervalSince(dateStart)
-		}).reduce(0, +)
-
-		if let todayTrackings = todayTrackings {
-			return todayTrackings
-		}
-
-		return 0
-	}
-
-	var secondsWeek: Double? {
-		let startOfWeek = Date().startOfWeek!
-		let weekTrackings = trackingsWeek?.map({ (tracking) -> TimeInterval in
-			var dateStart = tracking.date_start!
-			let dateEnd = tracking.date_end!
-
-			if (tracking.date_start?.compare(startOfWeek) == ComparisonResult.orderedAscending) {
-				dateStart = startOfWeek
-			}
-
-			return dateEnd.timeIntervalSince(dateStart)
-		}).reduce(0, +)
-
-		if let weekTrackings = weekTrackings {
-			return weekTrackings
-		}
-
-		return 0
-	}
 
 	static let shared = CoreDataHelper()
 
@@ -187,83 +72,22 @@ class CoreDataHelper {
 		return container
 	}()
 
-	static func createTracking(in context: NSManagedObjectContext? = nil) -> Tracking? {
-		let context = (context ?? self.context)
-		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-		let tracking = NSManagedObject(entity: entity!, insertInto: context)
+	static func save(in context: NSManagedObjectContext? = nil) {
+		let context = context ?? mainContext
 
-		tracking.setValue(Date(), forKey: "date_start")
-
-		let userDefaults = UserDefaults()
-		if
-			let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity),
-			let activity = activities(in: context).first(where: { $0.id == activityId })
-		{
-			tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
-		}
-
-		return tracking as? Tracking
-	}
-
-	static func saveContext() {
 		do {
 			try context.save()
+
+			if (context != mainContext) {
+				do {
+					try mainContext.save()
+				} catch let error as NSError  {
+					print("Could not save \(error), \(error.userInfo)")
+				}
+			}
 		} catch let error as NSError  {
 			print("Could not save \(error), \(error.userInfo)")
 		}
-	}
-
-	static func trackings(for date: Date, and job: Job? = nil) -> [Tracking]? {
-		let context = CoreDataHelper.context
-		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-
-		var compoundPredicates = [NSPredicate]()
-
-		if let job = job {
-			compoundPredicates.append(NSPredicate(format: "job == %@", argumentArray: [job]))
-		}
-
-		if
-			let todayStart = date.startOfDay,
-			let todayEnd = date.endOfDay
-		{
-			let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
-				NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [todayStart, todayEnd]),
-				NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [todayStart, todayEnd]),
-				NSPredicate(format: "date_start >= %@ AND date_start < %@ AND date_end == nil", argumentArray: [todayStart, todayEnd])
-			])
-			compoundPredicates.append(compound)
-		}
-
-		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
-		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_start", ascending: true)]
-
-		do {
-			return try context.fetch(fetchRequest)
-		} catch let error as NSError {
-			print("Could not fetch. \(error), \(error.userInfo)")
-			return nil
-		}
-	}
-
-	static func seconds(for date: Date, and job: Job? = nil) -> Double? {
-		let startOfDay = date.startOfDay!
-		let todayTrackings = CoreDataHelper.trackings(for: date, and: job)?.map({ (tracking) -> TimeInterval in
-			var dateStart = tracking.date_start!
-			let dateEnd = tracking.date_end ?? Date()
-
-			if (tracking.date_start?.compare(startOfDay) == ComparisonResult.orderedAscending) {
-				dateStart = startOfDay
-			}
-
-			return dateEnd.timeIntervalSince(dateStart)
-		}).reduce(0, +)
-
-		if let todayTrackings = todayTrackings {
-			return todayTrackings
-		}
-
-		return 0
 	}
 
 	static func jobs(in context: NSManagedObjectContext? = nil) -> [Job] {
@@ -279,7 +103,7 @@ class CoreDataHelper {
 		fetchRequest.predicate = predicates
 
 		do {
-			result = try (context ?? self.context).fetch(fetchRequest)
+			result = try (context ?? self.mainContext).fetch(fetchRequest)
 		} catch let error {
 			print(error)
 		}
@@ -295,7 +119,7 @@ class CoreDataHelper {
 		]
 
 		do {
-			result = try (context ?? self.context).fetch(fetchRequest)
+			result = try (context ?? self.mainContext).fetch(fetchRequest)
 		} catch let error {
 			print(error)
 		}
@@ -312,7 +136,7 @@ class CoreDataHelper {
 		fetchRequest.predicate = NSPredicate(format: "done = %@", argumentArray: [false])
 
 		do {
-			result = try (context ?? self.context).fetch(fetchRequest)
+			result = try (context ?? self.mainContext).fetch(fetchRequest)
 		} catch let error {
 			print(error)
 		}
@@ -328,7 +152,7 @@ class CoreDataHelper {
 		]
 
 		do {
-			result = try (context ?? self.context).fetch(fetchRequest)
+			result = try (context ?? self.mainContext).fetch(fetchRequest)
 		} catch let error {
 			print(error)
 		}
@@ -344,12 +168,98 @@ class CoreDataHelper {
 		]
 
 		do {
-			result = try (context ?? self.context).fetch(fetchRequest)
+			result = try (context ?? self.mainContext).fetch(fetchRequest)
 		} catch let error {
 			print(error)
 		}
 
 		return result
+	}
+
+}
+
+// MARK: - Trackings
+extension CoreDataHelper {
+
+	var currentTracking: Tracking? {
+		get {
+			let context = CoreDataHelper.currentTrackingContext
+			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+			fetchRequest.predicate = NSPredicate(format: "date_end == nil")
+
+			do {
+				return try context.fetch(fetchRequest).first
+			} catch let error as NSError {
+				print("Could not fetch. \(error), \(error.userInfo)")
+				return nil
+			}
+		}
+	}
+
+	static func createTracking(in context: NSManagedObjectContext? = nil) -> Tracking? {
+		let context = (context ?? self.mainContext)
+		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
+		let tracking = NSManagedObject(entity: entity!, insertInto: context)
+
+		tracking.setValue(Date(), forKey: "date_start")
+
+		let userDefaults = UserDefaults()
+		if
+			let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity),
+			let activity = activities(in: context).first(where: { $0.id == activityId })
+		{
+			tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
+		}
+
+		return tracking as? Tracking
+	}
+
+	static func trackings(from dateStart: Date, byAdding component: Calendar.Component, and job: Job? = nil) -> [Tracking]? {
+		let context = CoreDataHelper.mainContext
+		let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
+
+		var compoundPredicates = [NSPredicate]()
+
+		if let job = job {
+			compoundPredicates.append(NSPredicate(format: "job == %@", argumentArray: [job]))
+		}
+
+		let dateUntil = Calendar.current.date(byAdding: component, value: 1, to: dateStart)!
+		let compound = NSCompoundPredicate(orPredicateWithSubpredicates: [
+			NSPredicate(format: "date_start >= %@ AND date_start < %@", argumentArray: [dateStart, dateUntil]),
+			NSPredicate(format: "date_end >= %@ AND date_end < %@", argumentArray: [dateStart, dateUntil]),
+			NSPredicate(format: "date_start >= %@ AND date_start < %@ AND date_end == nil", argumentArray: [dateStart, dateUntil])
+			])
+		compoundPredicates.append(compound)
+
+		fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: compoundPredicates)
+		fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date_start", ascending: true)]
+
+		do {
+			return try context.fetch(fetchRequest)
+		} catch let error as NSError {
+			print("Could not fetch. \(error), \(error.userInfo)")
+			return nil
+		}
+	}
+
+	static func seconds(from dateStart: Date, byAdding component: Calendar.Component, and job: Job? = nil) -> Double? {
+		let todayTrackings = CoreDataHelper.trackings(from: dateStart, byAdding: component, and: job)?.map({ (tracking) -> TimeInterval in
+			var trackingDateStart = tracking.date_start!
+			let trackingDateEnd = tracking.date_end ?? Date()
+
+			if (trackingDateStart.compare(dateStart) == ComparisonResult.orderedAscending) {
+				trackingDateStart = dateStart
+			}
+
+			return trackingDateEnd.timeIntervalSince(trackingDateStart)
+		}).reduce(0, +)
+
+		if let todayTrackings = todayTrackings {
+			return todayTrackings
+		}
+
+		return 0
 	}
 
 }

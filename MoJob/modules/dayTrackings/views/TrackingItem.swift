@@ -211,7 +211,7 @@ class TrackingItem: NSView {
 	@objc func onContextToggleFavorite() {
 		if let isFavorite = tracking?.job?.isFavorite {
 			tracking?.job?.update(with: ["isFavorite": !isFavorite])
-			CoreDataHelper.saveContext()
+			CoreDataHelper.save()
 		}
 	}
 
@@ -229,7 +229,7 @@ class TrackingItem: NSView {
 
 	@objc func onContextResetColor() {
 		tracking?.job?.update(with: ["color": nil])
-		CoreDataHelper.saveContext()
+		CoreDataHelper.save()
 	}
 
 	override func mouseDown(with event: NSEvent) {
@@ -250,7 +250,7 @@ class TrackingItem: NSView {
 	@objc func onSelectColor(_ sender: NSButton) {
 		if let button = sender as? ColorButton, let job = tracking?.job {
 			job.update(with: ["color": button.key])
-			CoreDataHelper.saveContext()
+			CoreDataHelper.save()
 			rightClickMenu.cancelTracking()
 		}
 	}
