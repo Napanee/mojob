@@ -35,7 +35,6 @@ class QuoJob: NSObject {
 
 	static let shared = QuoJob()
 
-	let utilityQueue = DispatchQueue.global(qos: .utility)
 	let dateFormatterFull = DateFormatter()
 	let dateFormatterTime = DateFormatter()
 	var results: [[String: Any]] = []
@@ -44,102 +43,6 @@ class QuoJob: NSObject {
 			return ["session": sessionId]
 		}
 	}
-
-//	var jobs: [Job] {
-//		get {
-//			var result: [Job] = []
-//			let fetchRequest: NSFetchRequest<Job> = Job.fetchRequest()
-//			fetchRequest.sortDescriptors = [
-//				NSSortDescriptor(key: "title", ascending: false)
-//			]
-//			let predicates = NSCompoundPredicate(andPredicateWithSubpredicates: [
-//				NSPredicate(format: "assigned = %@", argumentArray: [true]),
-//				NSPredicate(format: "bookable = %@", argumentArray: [true])
-//			])
-//			fetchRequest.predicate = predicates
-//
-//			do {
-//				result = try context.fetch(fetchRequest)
-//			} catch let error {
-//				print(error)
-//			}
-//
-//			return result
-//		}
-//	}
-//
-//	var activities: [Activity] {
-//		get {
-//			var result: [Activity] = []
-//			let fetchRequest: NSFetchRequest<Activity> = Activity.fetchRequest()
-//			fetchRequest.sortDescriptors = [
-//				NSSortDescriptor(key: "title", ascending: false)
-//			]
-//
-//			do {
-//				result = try context.fetch(fetchRequest)
-//			} catch let error {
-//				print(error)
-//			}
-//
-//			return result
-//		}
-//	}
-//
-//	var tasks: [Task] {
-//		get {
-//			var result: [Task] = []
-//			let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-//			fetchRequest.sortDescriptors = [
-//				NSSortDescriptor(key: "title", ascending: false)
-//			]
-//			fetchRequest.predicate = NSPredicate(format: "done = %@", argumentArray: [false])
-//
-//			do {
-//				result = try context.fetch(fetchRequest)
-//			} catch let error {
-//				print(error)
-//			}
-//
-//			return result
-//		}
-//	}
-//
-//	var types: [Type] {
-//		get {
-//			var result: [Type] = []
-//			let fetchRequest: NSFetchRequest<Type> = Type.fetchRequest()
-//			fetchRequest.sortDescriptors = [
-//				NSSortDescriptor(key: "title", ascending: false)
-//			]
-//
-//			do {
-//				result = try context.fetch(fetchRequest)
-//			} catch let error {
-//				print(error)
-//			}
-//
-//			return result
-//		}
-//	}
-//
-//	var trackings: [Tracking] {
-//		get {
-//			var result: [Tracking] = []
-//			let fetchRequest: NSFetchRequest<Tracking> = Tracking.fetchRequest()
-//			fetchRequest.sortDescriptors = [
-//				NSSortDescriptor(key: "id", ascending: false)
-//			]
-//
-//			do {
-//				result = try context.fetch(fetchRequest)
-//			} catch let error {
-//				print(error)
-//			}
-//
-//			return result
-//		}
-//	}
 
 	var keychain: Keychain!
 	var userId: String = ""
@@ -158,6 +61,7 @@ class QuoJob: NSObject {
 	}
 
 	func fetch(as method: QuoJob.Method, with params: [String: Any]) -> Promise<[String: Any]> {
+		let utilityQueue = DispatchQueue.global(qos: .utility)
 		let parameters: [String: Any] = [
 			"jsonrpc": "2.0",
 			"method": method,
@@ -616,9 +520,7 @@ extension QuoJob {
 					let isAssigned = assigned_user_ids.contains(self.userId)
 
 					if let job = CoreDataHelper.jobs().first(where: { $0.id == id }) {
-						let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Type")
-						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
-						let type = (try? self.context.fetch(fetchRequest) as? [Type])?.first
+						let type = CoreDataHelper.types().first(where: { $0.id == typeId})
 
 						job.assigned = isAssigned
 						job.bookable = bookable

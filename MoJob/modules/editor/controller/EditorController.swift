@@ -59,8 +59,7 @@ class EditorController: QuoJobSelections {
 			tracking.exported = SyncStatus.pending.rawValue
 		}
 
-		tracking.save()
-		CoreDataHelper.save()
+		CoreDataHelper.save(in: tracking.managedObjectContext)
 
 		if let _ = tracking.job {
 			tracking.export()
