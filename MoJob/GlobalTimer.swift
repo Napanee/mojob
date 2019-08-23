@@ -33,10 +33,10 @@ class GlobalTimer: NSObject {
 			return
 		}
 
-		currentTracking = CoreDataHelper.shared.currentTracking
+		currentTracking = CoreDataHelper.currentTracking
 
-		completedTrackingSecondsToday = CoreDataHelper.shared.secondsToday
-		completedTrackingSecondsWeek = CoreDataHelper.shared.secondsWeek
+		completedTrackingSecondsToday = CoreDataHelper.seconds(from: Date().startOfDay!, byAdding: .day)
+		completedTrackingSecondsWeek = CoreDataHelper.seconds(from: Date().startOfWeek!, byAdding: .weekOfYear)
 
 		updateTime()
 
@@ -46,7 +46,7 @@ class GlobalTimer: NSObject {
 
 	func startNoTrackingTimer() {
 		let minutes = userDefaults.integer(forKey: UserDefaults.Keys.notificationNotracking)
-		if (minutes == 0 || timerNoTracking.isValid || CoreDataHelper.shared.currentTracking != nil) { return }
+		if (minutes == 0 || timerNoTracking.isValid || CoreDataHelper.currentTracking != nil) { return }
 
 		timerNoTracking = Timer.scheduledTimer(timeInterval: TimeInterval(minutes * 60), target: self, selector: #selector(noTrackingNotification), userInfo: nil, repeats: false)
 		RunLoop.main.add(timerNoTracking, forMode: .common)
@@ -98,7 +98,7 @@ class GlobalTimer: NSObject {
 	}
 
 	@objc func noTrackingNotification() {
-		guard (timerNoTracking.isValid && CoreDataHelper.shared.currentTracking == nil) else { return }
+		guard (timerNoTracking.isValid && CoreDataHelper.currentTracking == nil) else { return }
 
 		GlobalNotification.shared.deliverNotification(
 			withTitle: "Der Timer läuft nicht",

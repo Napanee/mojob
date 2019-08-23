@@ -23,14 +23,7 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var comment: NSTextField!
 
 	let userDefaults = UserDefaults()
-	var tempTracking: TempTracking? {
-		didSet {
-			if let _ = tempTracking {
-				tracking = nil
-			}
-		}
-	}
-	var tracking: Tracking? = CoreDataHelper.shared.currentTracking
+	var tracking: Tracking? = CoreDataHelper.currentTracking
 	var jobs: [Job] = []
 	var tasks: [Task] = []
 	var activities: [Activity] = []
@@ -38,7 +31,7 @@ class QuoJobSelections: NSViewController {
 	var nfc: Bool = true
 
 	var formIsValid: Bool {
-		get { return tempTracking?.isValid ?? false || tracking?.isValid ?? false }
+		get { return tracking?.isValid ?? false }
 		set { _ = newValue }
 	}
 
@@ -56,23 +49,23 @@ class QuoJobSelections: NSViewController {
 	private func initJobSelect() {
 		jobSelect.placeholderString = "Job wählen oder eingeben"
 
-		self.jobs = QuoJob.shared.jobs
+		self.jobs = CoreDataHelper.jobs(in: tracking?.managedObjectContext)
 			.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
 		jobSelect.reloadData()
 
-		if let job = tempTracking?.job ?? tracking?.job {
+		if let job = tracking?.job {
 			if let index = jobs.firstIndex(where: { $0.id == job.id }) {
 				jobSelect.selectItem(at: index)
 			}
-		} else if let customJob = tempTracking?.custom_job ?? tracking?.custom_job {
+		} else if let customJob = tracking?.custom_job {
 			jobSelect.stringValue = customJob
 		}
 	}
 
 	private func initTaskSelect() {
-		self.tasks = QuoJob.shared.tasks
-			.filter({ $0.job?.id == tempTracking?.job?.id ?? tracking?.job?.id })
+		self.tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
+			.filter({ $0.job?.id == tracking?.job?.id })
 			.sorted(by: { $0.title! < $1.title! })
 
 		taskSelect.reloadData()
@@ -85,7 +78,7 @@ class QuoJobSelections: NSViewController {
 			taskSelect.isEnabled = false
 		}
 
-		if let task = tempTracking?.task ?? tracking?.task {
+		if let task = tracking?.task {
 			if let index = tasks.firstIndex(where: { $0.id == task.id }) {
 				taskSelect.selectItem(at: index)
 			}
@@ -95,9 +88,9 @@ class QuoJobSelections: NSViewController {
 	private func initActivitySelect() {
 		activitySelect.placeholderString = "Leistungsart wählen oder eingeben"
 
-		self.activities = QuoJob.shared.activities
+		self.activities = CoreDataHelper.activities(in: tracking?.managedObjectContext)
 			.filter({
-				if let job = tempTracking?.job ?? tracking?.job {
+				if let job = tracking?.job {
 					return
 						(job.type?.internal_service ?? true && $0.internal_service) ||
 						(job.type?.productive_service ?? true && $0.external_service)
@@ -109,14 +102,13 @@ class QuoJobSelections: NSViewController {
 
 		activitySelect.reloadData()
 
-		if let activity = tempTracking?.activity ?? tracking?.activity, let activityId = activity.id {
+		if let activity = tracking?.activity, let activityId = activity.id {
 			if let index = activities.firstIndex(where: { $0.id == activityId }) {
 				activitySelect.selectItem(at: index)
 			}
 		} else if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity) {
 			if let activity = activities.first(where: { $0.id == activityId }), let index = activities.firstIndex(where: { $0 == activity }) {
 				activitySelect.selectItem(at: index)
-				tempTracking?.activity = activity
 				tracking?.activity = activity
 			}
 		}
@@ -125,12 +117,12 @@ class QuoJobSelections: NSViewController {
 	func initCommentText() {
 		comment.delegate = self
 
-		guard let commentText = tempTracking?.comment ?? tracking?.comment else { return }
+		guard let commentText = tracking?.comment else { return }
 		comment.stringValue = commentText
 	}
 
 	func initStartDate() {
-		guard let dateStart = tempTracking?.date_start ?? tracking?.date_start else { return }
+		guard let dateStart = tracking?.date_start else { return }
 
 		let day = Calendar.current.component(.day, from: dateStart)
 		fromDay?.stringValue = String(format: "%02d", day)
@@ -146,7 +138,7 @@ class QuoJobSelections: NSViewController {
 	}
 
 	private func initEndDate() {
-		if let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
+		if let dateEnd = tracking?.date_end {
 			let hour = Calendar.current.component(.hour, from: dateEnd)
 			untilHour?.stringValue = String(format: "%02d", hour)
 			let minute = Calendar.current.component(.minute, from: dateEnd)
@@ -160,20 +152,14 @@ class QuoJobSelections: NSViewController {
 		let value = cell.stringValue.lowercased()
 
 		if (value == "") {
-			tempTracking?.job = nil
-			tempTracking?.task = nil
-
-			tracking?.update(with: ["job": nil, "task": nil]).done({ _ in }).catch({ _ in })
-		} else if let job = QuoJob.shared.jobs.first(where: { $0.fullTitle.lowercased() == value }) {
-			tempTracking?.job = job
-			tempTracking?.custom_job = nil
-
-			tracking?.update(with: ["job": job, "custom_job": nil]).done({ _ in }).catch({ _ in })
+			tracking?.job = nil
+			tracking?.task = nil
+		} else if let job = CoreDataHelper.jobs(in: tracking?.managedObjectContext).first(where: { $0.fullTitle.lowercased() == value }) {
+			tracking?.job = job
+			tracking?.custom_job = nil
 		} else {
-			tempTracking?.job = nil
-			tempTracking?.custom_job = value
-
-			tracking?.update(with: ["job": nil, "custom_job": value]).done({ _ in }).catch({ _ in })
+			tracking?.job = nil
+			tracking?.custom_job = value
 		}
 
 		initTaskSelect()
@@ -188,11 +174,9 @@ class QuoJobSelections: NSViewController {
 		let value = cell.stringValue.lowercased()
 
 		if (value == "") {
-			tempTracking?.task = nil
-			tracking?.update(with: ["task": nil]).done({ _ in }).catch({ _ in })
-		} else if let task = QuoJob.shared.tasks.first(where: { $0.title?.lowercased() == value }) {
-			tempTracking?.task = task
-			tracking?.update(with: ["task": task]).done({ _ in }).catch({ _ in })
+			tracking?.task = nil
+		} else if let task = CoreDataHelper.tasks(in: tracking?.managedObjectContext).first(where: { $0.title?.lowercased() == value }) {
+			tracking?.task = task
 		}
 	}
 
@@ -203,11 +187,10 @@ class QuoJobSelections: NSViewController {
 
 		if (value == "") {
 			jobSelect.isEnabled = true
-			tempTracking?.activity = nil
-			tracking?.update(with: ["activity": nil]).done({ _ in }).catch({ _ in })
-		} else if let activity = QuoJob.shared.activities
+			tracking?.activity = nil
+		} else if let activity = CoreDataHelper.activities(in: tracking?.managedObjectContext)
 			.filter({
-				if let job = tempTracking?.job ?? tracking?.job {
+				if let job = tracking?.job {
 					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 				}
 
@@ -217,15 +200,13 @@ class QuoJobSelections: NSViewController {
 		{
 			if (nfc && activity.nfc) {
 				jobSelect.cell?.stringValue = ""
-				tempTracking?.job = nil
-				tracking?.update(with: ["job": nil]).done({ _ in }).catch({ _ in })
+				tracking?.job = nil
 				jobSelect.isEnabled = false
 			} else {
 				jobSelect.isEnabled = true
 			}
 
-			tempTracking?.activity = activity
-			tracking?.update(with: ["activity": activity]).done({ _ in }).catch({ _ in })
+			tracking?.activity = activity
 		}
 
 		formIsValid = true
@@ -274,7 +255,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 	}
 
 	private func handleTextChange(in textField: NSTextField) {
-		if let dateStart = tempTracking?.date_start ?? tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "" {
+		if let dateStart = tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "" {
 			var compStart = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateStart)
 
 			if let fromYear = fromYear {
@@ -293,39 +274,36 @@ extension QuoJobSelections: NSTextFieldDelegate {
 			compStart.minute = fromMinute.stringValue != "" ? Int(fromMinute.stringValue) : compStart.minute
 
 			if let newStartDate = Calendar.current.date(from: compStart) {
-				if let dateEnd = tempTracking?.date_end ?? tracking?.date_end {
+				if let dateEnd = tracking?.date_end {
 					var compEnd = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
+					compEnd.year = compStart.year
+					compEnd.month = compStart.month
+					compEnd.day = compStart.day
 
 					if let newEndDate = Calendar.current.date(from: compEnd) {
-						compEnd.year = compStart.year
-						compEnd.month = compStart.month
-						compEnd.day = compStart.day
-
-						tempTracking?.date_end = newEndDate
+						tracking?.date_end = newEndDate
 					}
 				}
 
-				tempTracking?.date_start = newStartDate
-				tracking?.update(with: ["date_start": newStartDate]).done({ _ in }).catch({ _ in })
+				tracking?.date_start = newStartDate
 				startDate = newStartDate
 				formIsValid = true
 			}
 		}
 
-		if let dateEnd = tempTracking?.date_end, [untilMinute, untilHour].contains(textField) {
+		if let dateEnd = tracking?.date_end, [untilMinute, untilHour].contains(textField) {
 			var comp = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateEnd)
 			comp.hour = untilHour?.stringValue != "" ? Int(untilHour?.stringValue ?? "23") : comp.hour
 			comp.minute = untilMinute?.stringValue != "" ? Int(untilMinute?.stringValue ?? "59") : comp.minute
 
 			if let newEndDate = Calendar.current.date(from: comp) {
-				tempTracking?.date_end = newEndDate
+				tracking?.date_end = newEndDate
 				formIsValid = true
 			}
 		}
 
 		if (textField == comment) {
-			tempTracking?.comment = textField.stringValue
-			tracking?.update(with: ["comment": textField.stringValue]).done({ _ in }).catch({ _ in })
+			tracking?.comment = textField.stringValue
 		}
 	}
 
@@ -334,7 +312,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 		let value = comboBoxCell.stringValue.lowercased()
 
 		if (comboBox.isEqual(jobSelect)) {
-			jobs = QuoJob.shared.jobs
+			jobs = CoreDataHelper.jobs(in: tracking?.managedObjectContext)
 				.filter({ value == "" || $0.fullTitle.lowercased().contains(value) })
 				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
@@ -342,17 +320,17 @@ extension QuoJobSelections: NSTextFieldDelegate {
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		} else if (comboBox.isEqual(taskSelect)) {
-			tasks = QuoJob.shared.tasks
-				.filter({ $0.job?.id == tempTracking?.job?.id ?? tracking?.job?.id && (value == "" || ($0.title ?? "").lowercased().contains(value)) })
+			tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
+				.filter({ $0.job?.id == tracking?.job?.id && (value == "" || ($0.title ?? "").lowercased().contains(value)) })
 				.sorted(by: { $0.title! < $1.title! })
 
 			if (tasks.count > 0) {
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		} else if (comboBox.isEqual(activitySelect)) {
-			activities = QuoJob.shared.activities
+			activities = CoreDataHelper.activities(in: tracking?.managedObjectContext)
 				.filter({
-					if let job = tempTracking?.job ?? tracking?.job {
+					if let job = tracking?.job {
 						return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 					}
 

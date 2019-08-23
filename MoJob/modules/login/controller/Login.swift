@@ -50,7 +50,7 @@ class Login: NSViewController {
 			keychain[name] = pass
 		}
 
-		if (QuoJob.shared.jobs.count == 0) {
+		if (CoreDataHelper.jobs().count == 0) {
 			GlobalNotification.shared.deliverNotification(
 				withTitle: "Initiale Daten werden geladen.",
 				andInformationtext: "Dies kann bis zu einer Minute dauern, aber ich sage Bescheid, wenn ich fertig bin 😉"

@@ -70,7 +70,6 @@
 		E877EC83224FCA8C002C3828 /* PopUpCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877EC82224FCA8C002C3828 /* PopUpCellText.swift */; };
 		E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */; };
 		E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */; };
-		E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */; };
 		E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D8532222E00600DAAA4E /* TrackingItem.xib */; };
 		E895D8562222FCE000DAAA4E /* TrackingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8552222FCE000DAAA4E /* TrackingItem.swift */; };
 		E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270392210A7590030B61C /* CollectionItemView.swift */; };
@@ -85,6 +84,7 @@
 		E8AA8CB522F890540017698F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8AA8CB322F890540017698F /* Main.storyboard */; };
 		E8AA8CBC22F891790017698F /* AutoLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E8BCC6E02305620B0078560F /* Model_MoJob_003.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8BCC6DF2305620B0078560F /* Model_MoJob_003.xcmappingmodel */; };
+		E8C07F72230CA74600299DC4 /* MoJob-3.4.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */; };
 		E8CACC782211DE6300675688 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
 		E8D35A1222FF54C50014AFE4 /* DeleteTrackingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */; };
 		E8D35A1622FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1522FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel */; };
@@ -216,7 +216,6 @@
 		E877EC82224FCA8C002C3828 /* PopUpCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCellText.swift; sourceTree = "<group>"; };
 		E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayTrackingsController.swift; path = MoJob/modules/dayTrackings/controller/DayTrackingsController.swift; sourceTree = SOURCE_ROOT; };
 		E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayTrackingsController.xib; sourceTree = "<group>"; };
-		E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayTrackingControllerView.swift; sourceTree = "<group>"; };
 		E895D8532222E00600DAAA4E /* TrackingItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackingItem.xib; sourceTree = "<group>"; };
 		E895D8552222FCE000DAAA4E /* TrackingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingItem.swift; sourceTree = "<group>"; };
 		E8A270392210A7590030B61C /* CollectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItemView.swift; sourceTree = "<group>"; };
@@ -235,6 +234,7 @@
 		E8AA8CB622F890540017698F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8AA8CB722F890540017698F /* AutoLaunchHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutoLaunchHelper.entitlements; sourceTree = "<group>"; };
 		E8BCC6DF2305620B0078560F /* Model_MoJob_003.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_003.xcmappingmodel; sourceTree = "<group>"; };
+		E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.4.0.html"; sourceTree = "<group>"; };
 		E8CACC772211DE6300675688 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 		E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTrackingPolicy.swift; sourceTree = "<group>"; };
 		E8D35A1522FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_002.xcmappingmodel; sourceTree = "<group>"; };
@@ -335,6 +335,7 @@
 				E86A74192305E75F00C77866 /* MoJob-3.2.0.html */,
 				E86A741B2305E99500C77866 /* MoJob-3.2.1.html */,
 				E8A926F4230A819A004E0F04 /* MoJob-3.3.0.html */,
+				E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -440,14 +441,14 @@
 			isa = PBXGroup;
 			children = (
 				E8D35A1722FF5A950014AFE4 /* calendar */,
-				E84FCE3A22FC3C8C002E41B4 /* wakeUp */,
-				E850996D22F6FD9800068ED8 /* settings */,
-				E863306122481B8100A8E946 /* login */,
-				E8E950852232BC110070F57E /* editor */,
 				E895D8452221BB3D00DAAA4E /* dayTrackings */,
+				E8E950852232BC110070F57E /* editor */,
 				E82117CE220E163F003D7578 /* joblist */,
+				E863306122481B8100A8E946 /* login */,
 				E82117C7220E114D003D7578 /* navigation */,
+				E850996D22F6FD9800068ED8 /* settings */,
 				E8A2703B2210BA880030B61C /* tracking */,
+				E84FCE3A22FC3C8C002E41B4 /* wakeUp */,
 			);
 			path = modules;
 			sourceTree = "<group>";
@@ -649,10 +650,9 @@
 		E895D84E2222AC0900DAAA4E /* views */ = {
 			isa = PBXGroup;
 			children = (
-				E895D84C2222AC0300DAAA4E /* DayTrackingControllerView.swift */,
-				E895D8552222FCE000DAAA4E /* TrackingItem.swift */,
-				E8E9509C223482940070F57E /* AddButton.swift */,
 				E8E9509E223526DB0070F57E /* TrackingsStackView.swift */,
+				E8E9509C223482940070F57E /* AddButton.swift */,
+				E895D8552222FCE000DAAA4E /* TrackingItem.swift */,
 				E850996B22F6145700068ED8 /* ColorButton.swift */,
 				E81E75E6230314610071B90C /* GraphView.swift */,
 			);
@@ -977,6 +977,7 @@
 				E86A741C2305E99500C77866 /* MoJob-3.2.1.html in Resources */,
 				E81E75E923033E900071B90C /* ExportOptions.plist in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
+				E8C07F72230CA74600299DC4 /* MoJob-3.4.0.html in Resources */,
 				E8A926F5230A819A004E0F04 /* MoJob-3.3.0.html in Resources */,
 				E81DEE6A22F4DF6D004EF977 /* SplitJobItem.xib in Resources */,
 				E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */,
@@ -1153,7 +1154,6 @@
 				E8D35A1E22FF5B3B0014AFE4 /* CalendarController.swift in Sources */,
 				E84FCE4022FC3ED7002E41B4 /* WakeUp.swift in Sources */,
 				E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */,
-				E895D84D2222AC0300DAAA4E /* DayTrackingControllerView.swift in Sources */,
 				E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */,
 				E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */,
 				E82117DA220E1B7E003D7578 /* enums.swift in Sources */,

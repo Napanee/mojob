@@ -14,15 +14,6 @@ protocol DateFieldDelegate {
 }
 
 class EditorController: QuoJobSelections {
-	let context = CoreDataHelper.context
-
-	var sourceTracking: Tracking? {
-		didSet {
-			if let sourceTracking = sourceTracking {
-				self.tempTracking = TempTracking(tracking: sourceTracking)
-			}
-		}
-	}
 
 	override var formIsValid: Bool {
 		get { return super.formIsValid }
@@ -36,7 +27,7 @@ class EditorController: QuoJobSelections {
 		super.viewDidLoad()
 
 		saveButton.isEnabled = formIsValid
-		deleteButton.isHidden = sourceTracking == nil
+		deleteButton.isHidden = tracking?.managedObjectContext == CoreDataHelper.backgroundContext
 	}
 
 //	private func validateData() -> Bool {
@@ -52,8 +43,7 @@ class EditorController: QuoJobSelections {
 //	}
 
 	@IBAction func deleteTracking(_ sender: NSButton) {
-		guard let sourceTracking = sourceTracking else { return }
-		sourceTracking.delete()
+		tracking?.delete()
 
 		removeFromParent()
 	}
@@ -63,38 +53,25 @@ class EditorController: QuoJobSelections {
 	}
 
 	@IBAction func save(_ sender: NSButton) {
-		var values: [String: Any] = [:]
+		guard let tracking = tracking else { return }
 
-		let mirror = Mirror(reflecting: tempTracking!)
-
-		for (label, value) in mirror.children  {
-			guard let label = label else { continue }
-
-			values[label] = value
+		if (tracking.job != nil) {
+			tracking.exported = SyncStatus.pending.rawValue
 		}
 
-		if (tempTracking?.job != nil || values["job"] != nil) {
-			values["exported"] = SyncStatus.pending.rawValue
-		}
+		CoreDataHelper.save(in: tracking.managedObjectContext)
 
-		if let sourceTracking = sourceTracking {
-			sourceTracking.update(with: values).done({ _ in
-				if let _ = sourceTracking.job {
-					sourceTracking.export()
-				} else if let _ = sourceTracking.id {
-					sourceTracking.deleteFromServer().done({ _ in
-						sourceTracking.update(with: ["id": nil, "exported": nil]).done({ _ in }).catch({ _ in })
-					}).catch({ error in
-						sourceTracking.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
-					})
-				}
-			}).catch { error in print(error) }
-		} else {
-			Tracking.insert(with: values).done({ tracking in
-				if (tracking?.job != nil) {
-					tracking?.export()
-				}
-			}).catch({ _ in })
+		if let _ = tracking.job {
+			tracking.export()
+		} else if let _ = tracking.id {
+			tracking.deleteFromServer().done({ _ in
+				tracking.id = nil
+				tracking.exported = nil
+				CoreDataHelper.save()
+			}).catch({ error in
+				tracking.exported = SyncStatus.error.rawValue
+				CoreDataHelper.save()
+			})
 		}
 
 		removeFromParent()

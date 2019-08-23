@@ -35,7 +35,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	var jobs: [Job] {
 		get {
-			return QuoJob.shared.jobs
+			return CoreDataHelper.jobs()
 		}
 	}
 	var favorites: [Job] = []
@@ -68,7 +68,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		favoritesCollectionView.registerForDraggedTypes([NSPasteboard.PasteboardType.string])
 		favoritesCollectionView.setDraggingSourceOperationMask(NSDragOperation.move, forLocal: true)
 
-		let context = CoreDataHelper.context
+		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: .NSManagedObjectContextDidSave, object: context)
 	}
@@ -211,10 +211,13 @@ extension JobListController: FilterFieldDelegate {
 				let mainWindowController = appDelegate.mainWindowController,
 				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
 			{
-				if let currentItem = currentItem, let job = currentItem.job {
-					Tracking.insert(with: ["job": job]).catch { _ in }
+				let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
+
+				if let currentItem = currentItem, let itemJob = currentItem.job {
+					let job = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
+					tracking?.job = job.first(where: { $0.id == itemJob.id })
 				} else {
-					Tracking.insert(with: ["custom_job": filterField.stringValue]).catch { _ in }
+					tracking?.custom_job = filterField.stringValue
 				}
 
 				contentViewController.showTracking()
@@ -360,11 +363,11 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 		let itemCount = collectionView.numberOfItems(inSection: 0)
 		for i in 0..<itemCount {
 			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
-				item.job.update(with: ["favoriteOrder": Int16(i)])
+				item.job.favoriteOrder = Int16(i)
 			}
 		}
 
-		CoreDataHelper.saveContext()
+		CoreDataHelper.save()
 
 		return true
 	}

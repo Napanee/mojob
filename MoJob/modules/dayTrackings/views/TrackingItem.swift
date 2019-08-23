@@ -56,7 +56,12 @@ class TrackingItem: NSView {
 			}
 
 			startTimeLabel.stringValue = formatter.string(from: tracking.date_start!)
-			endTimeLabel.stringValue = formatter.string(from: tracking.date_end!)
+			if let dateEnd = tracking.date_end {
+				endTimeLabel.stringValue = formatter.string(from: dateEnd)
+			} else {
+				endTimeLabel.stringValue = "..."
+			}
+
 			titleLabel.stringValue = title ?? "kein Job!"
 
 			if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
@@ -119,7 +124,7 @@ class TrackingItem: NSView {
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		if (tracking?.custom_job != nil) {
+		if (tracking?.custom_job != nil || tracking?.date_end == nil) {
 			statusImage.isHidden = true
 		} else {
 			statusImage.isHidden = false
@@ -132,27 +137,39 @@ class TrackingItem: NSView {
 			return
 		}
 
-		rightClickMenu.addItem(withTitle: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
+		let editItem = NSMenuItem(title: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
+		if (tracking?.date_end == nil) {
+			editItem.action = nil
+		}
+		rightClickMenu.addItem(editItem)
 
 		rightClickMenu.addItem(NSMenuItem.separator())
 
-		let splitItem = NSMenuItem(title: "Aufteilen", action: nil, keyEquivalent: "")
-		splitItem.action = tracking?.custom_job != nil ? #selector(onContextSplit) : nil
+		let splitItem = NSMenuItem(title: "Aufteilen", action: #selector(onContextSplit), keyEquivalent: "")
+		if (tracking?.job != nil || tracking?.date_end == nil) {
+			splitItem.action = nil
+		}
 		rightClickMenu.addItem(splitItem)
 
-		let toggleFavoriteItem = NSMenuItem(title: "zu Favoriten hinzufügen", action: nil, keyEquivalent: "")
-		toggleFavoriteItem.action = tracking?.job != nil ? #selector(onContextToggleFavorite) : nil
+		let toggleFavoriteItem = NSMenuItem(title: "zu Favoriten hinzufügen", action: #selector(onContextToggleFavorite), keyEquivalent: "")
+		if (tracking?.job == nil) {
+			toggleFavoriteItem.action = nil
+		}
 		if let job = tracking?.job, job.isFavorite {
 			toggleFavoriteItem.title = "von Favoriten entfernen"
 		}
 		rightClickMenu.addItem(toggleFavoriteItem)
 
 		rightClickMenu.addItem(NSMenuItem.separator())
-		rightClickMenu.addItem(withTitle: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
+		let deleteItem = NSMenuItem(title: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
+		if (tracking?.date_end == nil) {
+			deleteItem.action = nil
+		}
+		rightClickMenu.addItem(deleteItem)
 
 		rightClickMenu.addItem(NSMenuItem.separator())
 		rightClickMenu.addItem(withTitle: "Color:", action: nil, keyEquivalent: "")
-		if let _ = tracking?.job, let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
+		if let job = tracking?.job, let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
 			let colors = NSColorList(name: "MoJob", fromFile: path) {
 			let buttons = colors.allKeys.map({ (key) -> NSButton in
 				let color = colors.color(withKey: key)
@@ -161,6 +178,10 @@ class TrackingItem: NSView {
 				button.action = #selector(onSelectColor(_:))
 				button.color = color
 				button.key = key
+
+				if (job.color == key) {
+					button.isEnabled = false
+				}
 
 				return button
 			})
@@ -176,6 +197,7 @@ class TrackingItem: NSView {
 		} else {
 			rightClickMenu.addItem(withTitle: "nicht verfügbar für custom Jobs", action: nil, keyEquivalent: "")
 		}
+		rightClickMenu.addItem(withTitle: "Farbe zurücksetzen", action: #selector(onContextResetColor), keyEquivalent: "")
 
 		NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
 	}
@@ -188,8 +210,8 @@ class TrackingItem: NSView {
 
 	@objc func onContextToggleFavorite() {
 		if let isFavorite = tracking?.job?.isFavorite {
-			tracking?.job?.update(with: ["isFavorite": !isFavorite])
-			CoreDataHelper.saveContext()
+			tracking?.job?.isFavorite = !isFavorite
+			CoreDataHelper.save()
 		}
 	}
 
@@ -205,20 +227,30 @@ class TrackingItem: NSView {
 		appDelegate.window.contentViewController?.presentAsSheet(splitTrackingVC)
 	}
 
+	@objc func onContextResetColor() {
+		tracking?.job?.color = nil
+		CoreDataHelper.save()
+	}
+
 	override func mouseDown(with event: NSEvent) {
-//		if let theHitView = view.window?.contentView?.hitTest((view.window?.mouseLocationOutsideOfEventStream)!) {
-			if (event.clickCount == 2) {
-				if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController {
-					contentViewController.showEditor(with: tracking)
-				}
-			}
-//		}
+		guard
+			tracking?.date_end != nil,
+			event.clickCount == 2,
+			let tracking = tracking,
+			let appDelegate = NSApp.delegate as? AppDelegate,
+			let mainWindowController = appDelegate.mainWindowController,
+			let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController else
+		{
+				return
+		}
+
+		contentViewController.showEditor(with: tracking)
 	}
 
 	@objc func onSelectColor(_ sender: NSButton) {
 		if let button = sender as? ColorButton, let job = tracking?.job {
-			job.update(with: ["color": button.key])
-			CoreDataHelper.saveContext()
+			job.color = button.key
+			CoreDataHelper.save()
 			rightClickMenu.cancelTracking()
 		}
 	}

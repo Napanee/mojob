@@ -21,9 +21,13 @@ class CalendarController: NSViewController {
 	var jobs: [Job] = []
 	var monitor: Any?
 
-	private var currentDate: Date? {
-		didSet {
-			guard let currentDate = currentDate else { return }
+	private var _currentDate: Date?
+	private var currentDate: Date {
+		get {
+			return _currentDate ?? Date().startOfDay!
+		}
+		set {
+			_currentDate = currentDate.startOfDay
 
 			let components = calendar.dateComponents([.month, .year], from: currentDate)
 			currentMonth.stringValue = "\(calendar.monthSymbols[components.month! - 1]) \(components.year!)"
@@ -41,8 +45,7 @@ class CalendarController: NSViewController {
 
 		initJobSelect()
 
-		currentDate = Date()
-		calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate!))
+		calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
 
 		todayButton.wantsLayer = true
 		todayButton.layer?.borderWidth = 1
@@ -61,7 +64,7 @@ class CalendarController: NSViewController {
 			return $0
 		}
 
-		let context = CoreDataHelper.context
+		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 	}
@@ -82,7 +85,7 @@ class CalendarController: NSViewController {
 	private func initJobSelect() {
 		jobSelect.placeholderString = "Job filtern"
 
-		self.jobs = QuoJob.shared.jobs
+		self.jobs = CoreDataHelper.jobs()
 			.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
 		jobSelect.reloadData()
@@ -93,7 +96,7 @@ class CalendarController: NSViewController {
 
 		let value = cell.stringValue.lowercased()
 
-		if let job = QuoJob.shared.jobs.first(where: { $0.fullTitle.lowercased() == value }) {
+		if let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == value }) {
 			calendarGridView.job = job
 			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": currentDate as Any, "job": job as Any])
 		} else {
@@ -103,19 +106,19 @@ class CalendarController: NSViewController {
 	}
 
 	@IBAction func prevMonthButton(_ sender: NSButton) {
-		currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate ?? Date())!
+		currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate)!
 	}
 
 	@IBAction func nextMonthButton(_ sender: NSButton) {
-		currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate ?? Date())!
+		currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate)!
 	}
 
 	@IBAction func prevYearButton(_ sender: NSButton) {
-		currentDate = Calendar.current.date(byAdding: .year, value: -1, to: currentDate ?? Date())!
+		currentDate = Calendar.current.date(byAdding: .year, value: -1, to: currentDate)!
 	}
 
 	@IBAction func nextYearButton(_ sender: NSButton) {
-		let nextDate = Calendar.current.date(byAdding: .year, value: 1, to: currentDate ?? Date())!
+		let nextDate = Calendar.current.date(byAdding: .year, value: 1, to: currentDate)!
 		currentDate = nextDate.compare(Date()) == ComparisonResult.orderedAscending ? nextDate : Date()
 	}
 
@@ -129,15 +132,15 @@ class CalendarController: NSViewController {
 		guard let userInfo = notification.userInfo else { return }
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate!))
+			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
 		}
 
 		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate!))
+			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
 		}
 
 		if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
-			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate!))
+			calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
 		}
 	}
 
@@ -176,7 +179,7 @@ extension CalendarController: NSTextFieldDelegate {
 		let value = comboBoxCell.stringValue.lowercased()
 
 		if (comboBox.isEqual(jobSelect)) {
-			jobs = QuoJob.shared.jobs
+			jobs = CoreDataHelper.jobs()
 				.filter({ value == "" || $0.fullTitle.lowercased().contains(value) })
 				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 

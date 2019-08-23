@@ -23,8 +23,7 @@ class TrackingViewController: QuoJobSelections {
 		set {
 			guard let job = tracking?.job else { return }
 
-			job.update(with: ["isFavorite": newValue])
-			CoreDataHelper.saveContext()
+			job.isFavorite = newValue
 
 			favoriteTracking.image = newValue ? self.starFilled : self.starEmpty
 		}
@@ -42,7 +41,7 @@ class TrackingViewController: QuoJobSelections {
 	@IBOutlet weak var favoriteTracking: NSButton!
 	
 	override func viewDidLoad() {
-		tracking = CoreDataHelper.shared.currentTracking
+		tracking = CoreDataHelper.currentTracking
 
 		super.viewDidLoad()
 
@@ -85,7 +84,7 @@ class TrackingViewController: QuoJobSelections {
 	}
 
 	func reRender() {
-		tracking = CoreDataHelper.shared.currentTracking
+		tracking = CoreDataHelper.currentTracking
 		GlobalTimer.shared.stopNoTrackingTimer()
 		GlobalTimer.shared.startTimer()
 
@@ -112,7 +111,7 @@ class TrackingViewController: QuoJobSelections {
 			if answer == .alertSecondButtonReturn {
 				return
 			} else {
-				tracking.delete()
+				tracking.managedObjectContext?.reset()
 				GlobalTimer.shared.startNoTrackingTimer()
 				GlobalTimer.shared.stopTimer()
 			}

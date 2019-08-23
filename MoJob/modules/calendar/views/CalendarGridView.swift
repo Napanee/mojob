@@ -142,7 +142,7 @@ class CalendarGridView: NSGridView {
 		for i in 0...Int(dayCount!) {
 			let columnNumber = i.remainderReportingOverflow(dividingBy: 7).partialValue
 
-			let sum = CoreDataHelper.seconds(for: day!, and: job)
+			let sum = CoreDataHelper.seconds(from: (day?.startOfDay)!, byAdding: .day, and: job)
 			let formatter = DateComponentsFormatter()
 			formatter.unitsStyle = .positional
 			formatter.zeroFormattingBehavior = .pad

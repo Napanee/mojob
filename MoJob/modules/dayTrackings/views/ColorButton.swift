@@ -46,11 +46,19 @@ class ColorButton: NSButton {
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
-		layer?.backgroundColor = color.withAlphaComponent(0.3).cgColor
-		layer?.borderColor = color.cgColor
+		if (isEnabled) {
+			layer?.backgroundColor = color.withAlphaComponent(0.3).cgColor
+			layer?.borderColor = color.cgColor
+		} else {
+			layer?.backgroundColor = color.withAlphaComponent(0.8).cgColor
+			layer?.borderColor = NSColor.darkGray.cgColor
+			layer?.borderWidth = 2
+		}
 	}
 
 	override func mouseEntered(with event: NSEvent) {
+		guard isEnabled else { return }
+
 		layer?.borderWidth = 2
 		let animation = CABasicAnimation(keyPath: "borderWidth")
 		animation.fromValue = 1
@@ -74,6 +82,8 @@ class ColorButton: NSButton {
 	}
 
 	override func mouseExited(with event: NSEvent) {
+		guard isEnabled else { return }
+
 		layer?.borderWidth = 1
 		layer?.borderColor = color.cgColor
 		layer?.backgroundColor = color.withAlphaComponent(0.3).cgColor

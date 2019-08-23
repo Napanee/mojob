@@ -48,7 +48,7 @@ class AppDelegate: NSObject {
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
 
-		if (QuoJob.shared.jobs.count == 0) {
+		if (CoreDataHelper.jobs().count == 0) {
 			QuoJob.shared.login().done({ _ in
 				GlobalNotification.shared.deliverNotification(
 					withTitle: "Initiale Daten werden geladen.",
@@ -153,7 +153,7 @@ class AppDelegate: NSObject {
 	// MARK: - Sleephandling
 
 	@objc private func onScreenDidSleep(notification: NSNotification) {
-		guard CoreDataHelper.shared.currentTracking != nil else {
+		guard CoreDataHelper.currentTracking != nil else {
 			GlobalTimer.shared.stopNoTrackingTimer()
 			return
 		}
@@ -169,7 +169,7 @@ class AppDelegate: NSObject {
 	}
 
 	@objc private func onScreenDidWake(notification: NSNotification) {
-		guard CoreDataHelper.shared.currentTracking != nil else {
+		guard CoreDataHelper.currentTracking != nil else {
 			GlobalTimer.shared.startNoTrackingTimer()
 			return
 		}
@@ -186,11 +186,11 @@ extension AppDelegate: NSApplicationDelegate {
 
 	func windowWillReturnUndoManager(window: NSWindow) -> UndoManager? {
 		// Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-		return CoreDataHelper.context.undoManager
+		return CoreDataHelper.mainContext.undoManager
 	}
 
 	func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-		guard let currentTracking = CoreDataHelper.shared.currentTracking else { return .terminateNow }
+		guard let currentTracking = CoreDataHelper.currentTracking else { return .terminateNow }
 
 		let question = NSLocalizedString("Could not save changes while quitting. Quit anyway?", comment: "Quit without saves error question message")
 		let info = NSLocalizedString("Quitting now will lose any changes you have made since the last successful save", comment: "Quit without saves error question info")

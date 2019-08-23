@@ -21,7 +21,7 @@ class AddFavorite: NSViewController {
 
 		jobSelect.removeAllItems()
 
-		let jobTitles = QuoJob.shared.jobs
+		let jobTitles = CoreDataHelper.jobs()
 			.filter({ $0.number != nil && $0.title != nil })
 			.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 			.map({ "\($0.number!) - \($0.title!)" })
@@ -35,7 +35,7 @@ class AddFavorite: NSViewController {
 	@IBAction func jobSelect(_ sender: NSPopUpButton) {
 		let title = sender.titleOfSelectedItem
 
-		guard let _ = QuoJob.shared.jobs.first(where: { "\($0.number!) - \($0.title!)" == title }) else {
+		guard let _ = CoreDataHelper.jobs().first(where: { "\($0.number!) - \($0.title!)" == title }) else {
 			saveButton.isEnabled = false
 			return
 		}
@@ -46,9 +46,9 @@ class AddFavorite: NSViewController {
 	@IBAction func save(_ sender: NSButton) {
 		let title = jobSelect.titleOfSelectedItem
 
-		if let job = QuoJob.shared.jobs.first(where: { "\($0.number!) - \($0.title!)" == title }) {
-			job.update(with: ["isFavorite": true])
-			CoreDataHelper.saveContext()
+		if let job = CoreDataHelper.jobs().first(where: { "\($0.number!) - \($0.title!)" == title }) {
+			job.isFavorite = true
+			CoreDataHelper.save()
 
 			delegate.onDismiss()
 

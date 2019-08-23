@@ -24,80 +24,25 @@ extension Tracking {
 		}
 	}
 
-	class func insert(with params: [String: Any?]) -> Promise<Tracking?> {
-		return Promise { seal in
-			let context = CoreDataHelper.context
-			let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
-			let tracking = NSManagedObject(entity: entity!, insertInto: context)
-
-			tracking.setValue(Date(), forKey: "date_start")
-
-			for (key, value) in params {
-				tracking.setValue(value, forKey: key)
-			}
-
-			let userDefaults = UserDefaults()
-			if let activityId = userDefaults.string(forKey: UserDefaults.Keys.activity), let activity = QuoJob.shared.activities.first(where: { $0.id == activityId }) {
-				tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
-			}
-
-			do {
-				try context.save()
-
-				seal.fulfill(tracking as? Tracking)
-			} catch let error as NSError {
-				seal.reject(error)
-			}
-		}
-	}
-
-//	func update(with params: [String: Any?]) {
-//		let context = CoreDataHelper.shared.persistentContainer.viewContext
-//
-//		for (key, value) in params {
-//			setValue(value, forKey: key)
-//		}
-//
-//		do {
-//			try context.save()
-//		} catch let error as NSError  {
-//			print("Could not save \(error), \(error.userInfo)")
-//		}
-//	}
-
 	func stop(dateEnd: Date? = nil) {
 		let date = dateEnd ?? Date()
 
-		self.update(with: [
-			"exported": SyncStatus.pending.rawValue,
-			"date_start": Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date),
-			"date_end": Calendar.current.date(bySetting: .second, value: 0, of: date)
-		]).done({ _ in
+		self.exported = SyncStatus.pending.rawValue
+		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date)
+		self.date_end = Calendar.current.date(bySetting: .second, value: 0, of: date)
+
+		do {
+			try managedObjectContext?.save()
+			CoreDataHelper.save()
+
 			if let _ = self.job {
 				self.export()
 			}
 
 			GlobalTimer.shared.startNoTrackingTimer()
-		}).catch { error in print(error) }
-
-		GlobalTimer.shared.stopTimer()
-	}
-
-	func update(with params: [String: Any?]) -> Promise<Void> {
-		return Promise { seal in
-			let context = CoreDataHelper.context
-
-			for (key, value) in params {
-				setValue(value, forKey: key)
-			}
-
-			do {
-				try context.save()
-				seal.fulfill_()
-			} catch let error as NSError  {
-				print("Could not save \(error), \(error.userInfo)")
-				seal.reject(error)
-			}
+			GlobalTimer.shared.stopTimer()
+		} catch let error as NSError  {
+			print("Could not save \(error), \(error.userInfo)")
 		}
 	}
 
@@ -112,15 +57,8 @@ extension Tracking {
 	}
 
 	func deleteLocal() {
-		let context = CoreDataHelper.context
-
-		context.delete(self)
-
-		do {
-			try context.save()
-		} catch let error as NSError {
-			print("Could not delete \(error), \(error.userInfo)")
-		}
+		managedObjectContext?.delete(self)
+		CoreDataHelper.save(in: managedObjectContext)
 	}
 
 	func deleteFromServer() -> Promise<Void>{
@@ -128,8 +66,15 @@ extension Tracking {
 	}
 
 	func export() {
-		QuoJob.shared.exportTracking(tracking: self).catch { error in
-			self.update(with: ["exported": SyncStatus.error.rawValue]).done({ _ in }).catch({ _ in })
+		QuoJob.shared.exportTracking(tracking: self).done({ id in
+			self.id = id
+			self.exported = SyncStatus.success.rawValue
+			self.sync = Calendar.current.date(bySetting: .nanosecond, value: 0, of: Date())
+
+			CoreDataHelper.save(in: self.managedObjectContext)
+		}).catch { error in
+			self.exported = SyncStatus.error.rawValue
+			CoreDataHelper.save()
 		}
 	}
 
