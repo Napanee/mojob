@@ -85,6 +85,7 @@
 		E8AA8CB522F890540017698F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8AA8CB322F890540017698F /* Main.storyboard */; };
 		E8AA8CBC22F891790017698F /* AutoLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E8BCC6E02305620B0078560F /* Model_MoJob_003.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8BCC6DF2305620B0078560F /* Model_MoJob_003.xcmappingmodel */; };
+		E8C07F72230CA74600299DC4 /* MoJob-3.4.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */; };
 		E8CACC782211DE6300675688 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
 		E8D35A1222FF54C50014AFE4 /* DeleteTrackingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */; };
 		E8D35A1622FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1522FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel */; };
@@ -235,6 +236,7 @@
 		E8AA8CB622F890540017698F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8AA8CB722F890540017698F /* AutoLaunchHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutoLaunchHelper.entitlements; sourceTree = "<group>"; };
 		E8BCC6DF2305620B0078560F /* Model_MoJob_003.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_003.xcmappingmodel; sourceTree = "<group>"; };
+		E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.4.0.html"; sourceTree = "<group>"; };
 		E8CACC772211DE6300675688 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 		E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTrackingPolicy.swift; sourceTree = "<group>"; };
 		E8D35A1522FF56B90014AFE4 /* Model_MoJob_002.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_002.xcmappingmodel; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				E86A74192305E75F00C77866 /* MoJob-3.2.0.html */,
 				E86A741B2305E99500C77866 /* MoJob-3.2.1.html */,
 				E8A926F4230A819A004E0F04 /* MoJob-3.3.0.html */,
+				E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -977,6 +980,7 @@
 				E86A741C2305E99500C77866 /* MoJob-3.2.1.html in Resources */,
 				E81E75E923033E900071B90C /* ExportOptions.plist in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
+				E8C07F72230CA74600299DC4 /* MoJob-3.4.0.html in Resources */,
 				E8A926F5230A819A004E0F04 /* MoJob-3.3.0.html in Resources */,
 				E81DEE6A22F4DF6D004EF977 /* SplitJobItem.xib in Resources */,
 				E82117C2220E0B71003D7578 /* MainWindowController.xib in Resources */,
