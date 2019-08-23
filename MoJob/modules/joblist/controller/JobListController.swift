@@ -211,12 +211,12 @@ extension JobListController: FilterFieldDelegate {
 				let mainWindowController = appDelegate.mainWindowController,
 				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
 			{
+				let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
+
 				if let currentItem = currentItem, let itemJob = currentItem.job {
-					let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
 					let job = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
 					tracking?.job = job.first(where: { $0.id == itemJob.id })
 				} else {
-					let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
 					tracking?.custom_job = filterField.stringValue
 				}
 
