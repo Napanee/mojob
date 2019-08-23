@@ -650,9 +650,9 @@
 		E895D84E2222AC0900DAAA4E /* views */ = {
 			isa = PBXGroup;
 			children = (
-				E895D8552222FCE000DAAA4E /* TrackingItem.swift */,
-				E8E9509C223482940070F57E /* AddButton.swift */,
 				E8E9509E223526DB0070F57E /* TrackingsStackView.swift */,
+				E8E9509C223482940070F57E /* AddButton.swift */,
+				E895D8552222FCE000DAAA4E /* TrackingItem.swift */,
 				E850996B22F6145700068ED8 /* ColorButton.swift */,
 				E81E75E6230314610071B90C /* GraphView.swift */,
 			);
