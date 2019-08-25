@@ -16,8 +16,8 @@ class SplitViewController: NSSplitViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		if (splitViewItems.count == 3) {
-			splitView.autosaveName = "save_divider"
+		if let identifier = identifier {
+			splitView.autosaveName = "\(identifier)+Divider"
 		}
 	}
 
@@ -51,7 +51,18 @@ class SplitViewController: NSSplitViewController {
 		} else {
 			panel.animator().isCollapsed = true
 		}
+	}
 
+	func replaceView(at index: Int, with viewController: NSViewController) {
+		NSAnimationContext.runAnimationGroup({ (context) -> Void in
+			context.duration = 0.3
+			children[index].view.animator().alphaValue = 0
+		}, completionHandler: { () -> Void in
+			viewController.view.alphaValue = 0
+			self.removeChild(at: index)
+			self.insertChild(viewController, at: index)
+			self.children[index].view.animator().alphaValue = 1
+		})
 	}
 
 }

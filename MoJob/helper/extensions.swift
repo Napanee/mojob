@@ -36,6 +36,7 @@ extension NSNib.Name {
 	static let editorControllerNib = "EditorController"
 	static let wakeUpController = "WakeUp"
 	static let calendarControllerNib = "CalendarController"
+	static let settingsControllerNib = "SettingsViewController"
 }
 
 extension NSImage.Name {

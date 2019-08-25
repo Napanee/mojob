@@ -53,7 +53,6 @@
 		E84FCE4022FC3ED7002E41B4 /* WakeUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */; };
 		E850996A22F6118B00068ED8 /* MoJob.clr in Resources */ = {isa = PBXBuildFile; fileRef = E850996922F6118B00068ED8 /* MoJob.clr */; };
 		E850996C22F6145700068ED8 /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850996B22F6145700068ED8 /* ColorButton.swift */; };
-		E850997222F6FEF600068ED8 /* TrackingSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */; };
 		E850997822F7078C00068ED8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997722F7078C00068ED8 /* SettingsViewController.swift */; };
 		E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E850997922F708E600068ED8 /* SettingsViewController.xib */; };
 		E850998222F7578200068ED8 /* ComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850998122F7578200068ED8 /* ComboBox.swift */; };
@@ -92,12 +91,10 @@
 		E8D35A1E22FF5B3B0014AFE4 /* CalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1D22FF5B3B0014AFE4 /* CalendarController.swift */; };
 		E8D35A2022FF6AC80014AFE4 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1F22FF6AC80014AFE4 /* CalendarDay.swift */; };
 		E8D35A2222FF6BA20014AFE4 /* CalendarDay.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A2122FF6BA20014AFE4 /* CalendarDay.xib */; };
-		E8D35A2422FF86070014AFE4 /* CalendarSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2322FF86070014AFE4 /* CalendarSplitViewController.swift */; };
 		E8D35A2622FF87480014AFE4 /* CalendarWeek.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A2522FF87480014AFE4 /* CalendarWeek.xib */; };
 		E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2B22FFA0130014AFE4 /* CalendarWeek.swift */; };
 		E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2D22FFCBFB0014AFE4 /* CalendarGridView.swift */; };
 		E8D35A302300487E0014AFE4 /* GradientCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */; };
-		E8D35A3223008B0D0014AFE4 /* EditorSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A3123008B0D0014AFE4 /* EditorSplitViewController.swift */; };
 		E8D35A34230097A30014AFE4 /* ActiveIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A33230097A30014AFE4 /* ActiveIndicator.swift */; };
 		E8E950892232C09F0070F57E /* EditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950882232C09F0070F57E /* EditorController.swift */; };
 		E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E9508A2232C0AF0070F57E /* EditorController.xib */; };
@@ -105,6 +102,9 @@
 		E8E9509D223482940070F57E /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509C223482940070F57E /* AddButton.swift */; };
 		E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509E223526DB0070F57E /* TrackingsStackView.swift */; };
 		E8E950A2223591910070F57E /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950A1223591910070F57E /* NumberField.swift */; };
+		E8FF02E3231279DA00E7686A /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */; };
+		E8FF02E5231279EF00E7686A /* ContentSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */; };
+		E8FF02E723127A0000E7686A /* DaySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E623127A0000E7686A /* DaySplitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,7 +198,6 @@
 		E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WakeUp.swift; sourceTree = "<group>"; };
 		E850996922F6118B00068ED8 /* MoJob.clr */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = MoJob.clr; sourceTree = "<group>"; };
 		E850996B22F6145700068ED8 /* ColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
-		E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingSplitViewController.swift; sourceTree = "<group>"; };
 		E850997722F7078C00068ED8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E850997922F708E600068ED8 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		E850998122F7578200068ED8 /* ComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboBox.swift; sourceTree = "<group>"; };
@@ -242,12 +241,10 @@
 		E8D35A1D22FF5B3B0014AFE4 /* CalendarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarController.swift; sourceTree = "<group>"; };
 		E8D35A1F22FF6AC80014AFE4 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
 		E8D35A2122FF6BA20014AFE4 /* CalendarDay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarDay.xib; sourceTree = "<group>"; };
-		E8D35A2322FF86070014AFE4 /* CalendarSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSplitViewController.swift; sourceTree = "<group>"; };
 		E8D35A2522FF87480014AFE4 /* CalendarWeek.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarWeek.xib; sourceTree = "<group>"; };
 		E8D35A2B22FFA0130014AFE4 /* CalendarWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeek.swift; sourceTree = "<group>"; };
 		E8D35A2D22FFCBFB0014AFE4 /* CalendarGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGridView.swift; sourceTree = "<group>"; };
 		E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientCircle.swift; sourceTree = "<group>"; };
-		E8D35A3123008B0D0014AFE4 /* EditorSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSplitViewController.swift; sourceTree = "<group>"; };
 		E8D35A33230097A30014AFE4 /* ActiveIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveIndicator.swift; sourceTree = "<group>"; };
 		E8E950882232C09F0070F57E /* EditorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorController.swift; sourceTree = "<group>"; };
 		E8E9508A2232C0AF0070F57E /* EditorController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditorController.xib; sourceTree = "<group>"; };
@@ -255,6 +252,9 @@
 		E8E9509C223482940070F57E /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
 		E8E9509E223526DB0070F57E /* TrackingsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingsStackView.swift; sourceTree = "<group>"; };
 		E8E950A1223591910070F57E /* NumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberField.swift; sourceTree = "<group>"; };
+		E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
+		E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSplitViewController.swift; sourceTree = "<group>"; };
+		E8FF02E623127A0000E7686A /* DaySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySplitViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -421,9 +421,9 @@
 			children = (
 				E82117BE220E0B20003D7578 /* MainWindowController.swift */,
 				E82117C4220E0FBD003D7578 /* SplitViewController.swift */,
-				E850997122F6FEF600068ED8 /* TrackingSplitViewController.swift */,
-				E8D35A2322FF86070014AFE4 /* CalendarSplitViewController.swift */,
-				E8D35A3123008B0D0014AFE4 /* EditorSplitViewController.swift */,
+				E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */,
+				E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */,
+				E8FF02E623127A0000E7686A /* DaySplitViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -1160,7 +1160,6 @@
 				E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */,
 				E8E9508F2232D62A0070F57E /* TextField.swift in Sources */,
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
-				E850997222F6FEF600068ED8 /* TrackingSplitViewController.swift in Sources */,
 				E8CACC782211DE6300675688 /* functions.swift in Sources */,
 				E849396D22FDFA0700D2A4C9 /* GlobalNotification.swift in Sources */,
 				E800AE8C22FA1A4100E82EBE /* GlobalTimer.swift in Sources */,
@@ -1172,6 +1171,8 @@
 				E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */,
 				E863305D2245863600A8E946 /* PopUpCell.swift in Sources */,
 				E8211800220F5364003D7578 /* JobItem.swift in Sources */,
+				E8FF02E723127A0000E7686A /* DaySplitViewController.swift in Sources */,
+				E8FF02E3231279DA00E7686A /* MainSplitViewController.swift in Sources */,
 				E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */,
 				E8D35A1222FF54C50014AFE4 /* DeleteTrackingPolicy.swift in Sources */,
 				E81E75E7230314610071B90C /* GraphView.swift in Sources */,
@@ -1188,7 +1189,6 @@
 				E8138A2622525BBF008DAA62 /* extensions.swift in Sources */,
 				E8E950892232C09F0070F57E /* EditorController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
-				E8D35A3223008B0D0014AFE4 /* EditorSplitViewController.swift in Sources */,
 				E8A270442210C3100030B61C /* TimerCount.swift in Sources */,
 				E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */,
 				E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */,
@@ -1202,9 +1202,9 @@
 				E850998222F7578200068ED8 /* ComboBox.swift in Sources */,
 				E863306A2248232F00A8E946 /* Password.swift in Sources */,
 				E8BCC6E02305620B0078560F /* Model_MoJob_003.xcmappingmodel in Sources */,
+				E8FF02E5231279EF00E7686A /* ContentSplitViewController.swift in Sources */,
 				E800AE8A22F9C42900E82EBE /* Job.swift in Sources */,
 				E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */,
-				E8D35A2422FF86070014AFE4 /* CalendarSplitViewController.swift in Sources */,
 				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,
 				E80F6F4F23055EBD007A642E /* DeleteTaskPolicy.swift in Sources */,
 				E82117C5220E0FBD003D7578 /* SplitViewController.swift in Sources */,

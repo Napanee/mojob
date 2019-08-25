@@ -16,9 +16,7 @@ class NavigationController: NSViewController {
 	@IBOutlet weak var settingsButton: NSButton!
 	
 	@IBAction func trackerView(_ sender: NSButton) {
-		let tracking = TrackingSplitViewController()
-
-		replaceContent(with: tracking)
+		(NSApp.mainWindow?.windowController as? MainWindowController)?.showJobList()
 
 		sender.isEnabled = false
 		sender.image = NSImage(named: .timerActiveImage)
@@ -29,9 +27,7 @@ class NavigationController: NSViewController {
 	}
 
 	@IBAction func calendarView(_ sender: NSButton) {
-		let calendar = CalendarSplitViewController()
-
-		replaceContent(with: calendar)
+		(NSApp.mainWindow?.windowController as? MainWindowController)?.showCalendar()
 
 		sender.isEnabled = false
 		sender.image = NSImage(named: .calendarActiveImage)
@@ -42,9 +38,7 @@ class NavigationController: NSViewController {
 	}
 
 	@IBAction func settingsView(_ sender: NSButton) {
-		let settings = SettingsViewController()
-
-		replaceContent(with: settings)
+		(NSApp.mainWindow?.windowController as? MainWindowController)?.showSettings()
 
 		sender.isEnabled = false
 		sender.image = NSImage(named: .settingsActiveImage)

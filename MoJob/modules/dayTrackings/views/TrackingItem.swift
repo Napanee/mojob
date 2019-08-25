@@ -203,8 +203,18 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onContextEdit() {
-		if let tracking = tracking, let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController {
-			contentViewController.showEditor(with: tracking)
+		if
+			tracking?.date_end != nil,
+			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController,
+			let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.backgroundContext)
+		{
+			let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
+			editor.tracking = tracking
+			let splitViewItem = NSSplitViewItem(viewController: editor)
+			splitViewItem.isCollapsed = true
+
+			daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
+			daySplitViewController.collapsePanel(0)
 		}
 	}
 
@@ -233,18 +243,20 @@ class TrackingItem: NSView {
 	}
 
 	override func mouseDown(with event: NSEvent) {
-		guard
-			tracking?.date_end != nil,
+		if
 			event.clickCount == 2,
-			let tracking = tracking,
-			let appDelegate = NSApp.delegate as? AppDelegate,
-			let mainWindowController = appDelegate.mainWindowController,
-			let contentViewController = mainWindowController.currentContentViewController as? EditorSplitViewController else
+			tracking?.date_end != nil,
+			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController,
+			let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.backgroundContext)
 		{
-				return
-		}
+			let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
+			editor.tracking = tracking
+			let splitViewItem = NSSplitViewItem(viewController: editor)
+			splitViewItem.isCollapsed = true
 
-		contentViewController.showEditor(with: tracking)
+			daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
+			daySplitViewController.collapsePanel(0)
+		}
 	}
 
 	@objc func onSelectColor(_ sender: NSButton) {

@@ -118,10 +118,6 @@ class TrackingViewController: QuoJobSelections {
 		} else {
 			tracking.stop()
 		}
-
-		if let appDelegate = NSApp.delegate as? AppDelegate, let mainWindowController = appDelegate.mainWindowController, let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController {
-			contentViewController.showJobList()
-		}
 	}
 
 	@IBAction func favoriteTracking(_ sender: NSButton) {

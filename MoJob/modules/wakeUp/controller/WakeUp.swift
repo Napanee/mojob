@@ -80,24 +80,6 @@ class WakeUp: NSViewController {
 			break
 		case 3: // stop timer and start new tracking
 			currentTracking.stop(dateEnd: sleepTime)
-//			Tracking.insert(with: [
-//				"job": currentTracking.job,
-//				"custom_job": currentTracking.custom_job,
-//				"task": currentTracking.task,
-//				"activity": currentTracking.activity,
-//				"comment": currentTracking.comment
-//			]).catch({ _ in })
-
-			if
-				let appDelegate = NSApp.delegate as? AppDelegate,
-				let mainWindowController = appDelegate.mainWindowController,
-				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController,
-				let trackingViewController = contentViewController.children.first(where: { $0.isKind(of: TrackingViewController.self) }) as? TrackingViewController
-			{
-				trackingViewController.reRender()
-			} else {
-				GlobalTimer.shared.startTimer()
-			}
 			break
 		case 4: // stop timer now
 			currentTracking.stop()
@@ -107,13 +89,7 @@ class WakeUp: NSViewController {
 		}
 
 		if ([2, 4].contains(selectedChoice.tag)) {
-			if
-				let appDelegate = NSApp.delegate as? AppDelegate,
-				let mainWindowController = appDelegate.mainWindowController,
-				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
-			{
-				contentViewController.showJobList()
-			}
+
 		}
 
 		dismiss(self)

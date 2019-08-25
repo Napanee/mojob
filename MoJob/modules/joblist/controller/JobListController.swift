@@ -54,6 +54,11 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		let lessConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .lessThanOrEqual, toItem: view.superview, attribute: .width, multiplier: 1, constant: 600)
+		let greaterConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: view.superview, attribute: .width, multiplier: 1, constant: 350)
+
+		view.addConstraints([lessConstraint, greaterConstraint])
+
 		jobsCollectionView.isHidden = true
 		filterField.customDelegate = self
 
@@ -206,21 +211,13 @@ extension JobListController: FilterFieldDelegate {
 		guard [125, 126, 36].contains(keyCode) else { return }
 
 		if (keyCode == 36) { // key enter
-			if
-				let appDelegate = NSApp.delegate as? AppDelegate,
-				let mainWindowController = appDelegate.mainWindowController,
-				let contentViewController = mainWindowController.currentContentViewController as? TrackingSplitViewController
-			{
-				let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
+			let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
 
-				if let currentItem = currentItem, let itemJob = currentItem.job {
-					let job = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
-					tracking?.job = job.first(where: { $0.id == itemJob.id })
-				} else {
-					tracking?.custom_job = filterField.stringValue
-				}
-
-				contentViewController.showTracking()
+			if let currentItem = currentItem, let itemJob = currentItem.job {
+				let job = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
+				tracking?.job = job.first(where: { $0.id == itemJob.id })
+			} else {
+				tracking?.custom_job = filterField.stringValue
 			}
 		}
 
