@@ -256,7 +256,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 	private func handleTextChange(in textField: NSTextField) {
 		if let dateStart = tracking?.date_start, [fromMinute, fromHour, fromDay, fromMonth, fromYear].contains(textField), textField.stringValue != "" {
-			var compStart = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateStart)
+			var compStart = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: dateStart)
 
 			if let fromYear = fromYear {
 				compStart.year = fromYear.stringValue != "" ? Int(fromYear.stringValue) : compStart.year

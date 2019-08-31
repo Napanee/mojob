@@ -35,7 +35,7 @@ class TrackingViewController: QuoJobSelections {
 	}
 
 	@IBOutlet weak var timeLabel: NSTextField!
-	@IBOutlet weak var stopTracking: NSButton!
+	@IBOutlet weak var stopTracking: StopButton!
 	@IBOutlet weak var favoriteTracking: NSButton!
 	@IBOutlet weak var required: NSView!
 	
