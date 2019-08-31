@@ -166,7 +166,6 @@ class QuoJob: NSObject {
 
 				self.fetch(as: .myTime_putHourbooking, with: params).done { result in
 					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-						print(id)
 						seal.fulfill(id)
 					}
 				}.catch({ error in
