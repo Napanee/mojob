@@ -199,6 +199,10 @@ extension CoreDataHelper {
 	}
 
 	static func createTracking(in context: NSManagedObjectContext? = nil) -> Tracking? {
+		if let currentTracking = currentTracking {
+			currentTracking.stop()
+		}
+
 		let context = (context ?? self.mainContext)
 		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
 		let tracking = NSManagedObject(entity: entity!, insertInto: context)
@@ -212,6 +216,13 @@ extension CoreDataHelper {
 		{
 			tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
 		}
+
+		return tracking as? Tracking
+	}
+
+	static func tracking(with objectId: NSManagedObjectID) -> Tracking? {
+		let context = CoreDataHelper.mainContext
+		let tracking = context.object(with: objectId)
 
 		return tracking as? Tracking
 	}

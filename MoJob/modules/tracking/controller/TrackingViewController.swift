@@ -49,14 +49,16 @@ class TrackingViewController: QuoJobSelections {
 		viewHeightConstraint = NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 50)
 		view.addConstraint(viewHeightConstraint)
 
+		jobSelect.backgroundColor = NSColor.clear
+		jobSelect.textColor = NSColor.white
+		jobSelect.hasColoredBackground = true
+
 		required.wantsLayer = true
 		if #available(OSX 10.14, *) {
 			required.layer?.backgroundColor = NSColor.controlAccentColor.cgColor
 		} else {
 			required.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
 		}
-
-		jobSelect.hasColoredBackground = true
 
 		if let job = tracking?.job {
 			favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
@@ -74,10 +76,6 @@ class TrackingViewController: QuoJobSelections {
 
 	override func viewDidAppear() {
 		super.viewDidAppear()
-
-		jobSelect.backgroundColor = NSColor.clear
-		jobSelect.textColor = NSColor.white
-		stopTracking.image = stopTracking.image?.tint(color: NSColor.white)
 
 		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "counter:tick"), object: nil, queue: nil, using: { notification in
 			guard let totalSeconds = (notification.object as? NSDictionary)?["totalSeconds"] as? Double else { return }
@@ -106,16 +104,6 @@ class TrackingViewController: QuoJobSelections {
 		if let observer = observer {
 			NotificationCenter.default.removeObserver(observer)
 		}
-	}
-
-	func reRender() {
-		tracking = CoreDataHelper.currentTracking
-		GlobalTimer.shared.stopNoTrackingTimer()
-		GlobalTimer.shared.startTimer()
-
-		initStartDate()
-
-		formIsValid = true
 	}
 
 	@IBAction func toggle(_ sender: NSButton) {
@@ -150,8 +138,6 @@ class TrackingViewController: QuoJobSelections {
 		} else {
 			tracking.stop()
 		}
-
-		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()
 	}
 
 	@IBAction func favoriteTracking(_ sender: NSButton) {

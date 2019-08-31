@@ -31,19 +31,15 @@ extension Tracking {
 		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date)
 		self.date_end = Calendar.current.date(bySetting: .second, value: 0, of: date)
 
-		do {
-			try managedObjectContext?.save()
-			CoreDataHelper.save()
+		CoreDataHelper.save(in: managedObjectContext)
 
-			if let _ = self.job {
-				self.export()
-			}
-
-			GlobalTimer.shared.startNoTrackingTimer()
-			GlobalTimer.shared.stopTimer()
-		} catch let error as NSError  {
-			print("Could not save \(error), \(error.userInfo)")
+		if let _ = self.job {
+			self.export()
 		}
+
+		GlobalTimer.shared.startNoTrackingTimer()
+		GlobalTimer.shared.stopTimer()
+		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()
 	}
 
 	func delete() {
@@ -66,14 +62,16 @@ extension Tracking {
 	}
 
 	func export() {
-		QuoJob.shared.exportTracking(tracking: self).done({ id in
-			self.id = id
-			self.exported = SyncStatus.success.rawValue
-			self.sync = Calendar.current.date(bySetting: .nanosecond, value: 0, of: Date())
+		guard let tracking = CoreDataHelper.tracking(with: objectID) else { return }
 
-			CoreDataHelper.save(in: self.managedObjectContext)
+		QuoJob.shared.exportTracking(tracking: self).done({ id in
+			tracking.id = id
+			tracking.exported = SyncStatus.success.rawValue
+			tracking.sync = Calendar.current.date(bySetting: .nanosecond, value: 0, of: Date())
+
+			CoreDataHelper.save()
 		}).catch { error in
-			self.exported = SyncStatus.error.rawValue
+			tracking.exported = SyncStatus.error.rawValue
 			CoreDataHelper.save()
 		}
 	}
