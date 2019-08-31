@@ -199,7 +199,7 @@ extension CoreDataHelper {
 	}
 
 	static func createTracking(in context: NSManagedObjectContext? = nil) -> Tracking? {
-		if let currentTracking = currentTracking {
+		if let currentTracking = currentTracking, context == currentTrackingContext {
 			currentTracking.stop()
 		}
 
