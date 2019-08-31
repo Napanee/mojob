@@ -26,58 +26,95 @@ class MainWindowController: NSWindowController {
 		window?.backgroundColor = NSColor.controlBackgroundColor
 
 		let daySplitViewController = DaySplitViewController() // Editor + Day
-		let contentSplitViewController = ContentSplitViewController() // Calendar || JobList
-		let mainSplitViewController = MainSplitViewController() // Content + CurrentTracking
+		self.daySplitViewController = daySplitViewController
 
-		// App Views => Navigation | MainContent
-		let appViewController = SplitViewController()
-		appViewController.identifier = NSUserInterfaceItemIdentifier("AppViews")
-		appViewController.addChild(NavigationController(nibName: .navigationControllerNib, bundle: nil))
-		appViewController.addChild(mainSplitViewController)
+		let contentSplitViewController = initContentSplitViewController(with: "jobList", and: daySplitViewController)
+		let mainSplitViewController = initMainSplitViewController(with: contentSplitViewController)
+		let appViewController = initAppViewController(with: mainSplitViewController)
 
 		contentViewController = appViewController
-
-		mainSplitViewController.addChild(contentSplitViewController)
-		contentSplitViewController.showJobList()
-		contentSplitViewController.addChild(daySplitViewController)
-
-		self.mainSplitViewController = mainSplitViewController
-		self.contentSplitViewController = contentSplitViewController
-		self.daySplitViewController = daySplitViewController
 	}
 
 	override func mouseDown(with event: NSEvent) {
 		window?.makeFirstResponder(nil)
 	}
 
-	func showContent() {
-		contentSplitViewController = ContentSplitViewController()
-		mainSplitViewController?.replaceView(at: 0, with: contentSplitViewController!)
+	func initContentSplitViewController(with primaryChild: String, and secondaryChild: SplitViewController) -> ContentSplitViewController {
+		if let contentSplitViewController = contentSplitViewController {
+			if (primaryChild == "calendar") {
+				contentSplitViewController.showCalendar()
+			} else {
+				contentSplitViewController.showJobList()
+			}
+
+			return contentSplitViewController
+		}
+
+		let contentSplitViewController = ContentSplitViewController() // Calendar || JobList
+		if (primaryChild == "calendar") {
+			contentSplitViewController.showCalendar()
+		} else {
+			contentSplitViewController.showJobList()
+		}
+		contentSplitViewController.addChild(secondaryChild)
+
+		self.contentSplitViewController = contentSplitViewController
+
+		return contentSplitViewController
+	}
+
+	func initMainSplitViewController(with child: SplitViewController) -> MainSplitViewController {
+		if let mainSplitViewController = mainSplitViewController {
+			return mainSplitViewController
+		}
+
+		let mainSplitViewController = MainSplitViewController() // Content + CurrentTracking
+		mainSplitViewController.addChild(child)
+
+		if CoreDataHelper.currentTracking != nil {
+			let trackingViewController = TrackingViewController(nibName: .trackingViewControllerNib, bundle: nil)
+			mainSplitViewController.addChild(trackingViewController)
+		}
+
+		self.mainSplitViewController = mainSplitViewController
+
+		return mainSplitViewController
+	}
+
+	func initAppViewController(with child: SplitViewController) -> SplitViewController {
+		let appViewController = SplitViewController() // App Views => Navigation | MainContent
+		appViewController.identifier = NSUserInterfaceItemIdentifier("AppViews")
+		appViewController.addChild(NavigationController(nibName: .navigationControllerNib, bundle: nil))
+		appViewController.addChild(child)
+
+		return appViewController
 	}
 
 	func showJobList() {
-		if let contentSplitViewController = contentSplitViewController {
-			contentSplitViewController.showJobList()
-		} else {
-			showContent()
-			contentSplitViewController?.showJobList()
-			contentSplitViewController?.addChild(daySplitViewController!)
+		let contentSplitViewController = initContentSplitViewController(with: "jobList", and: daySplitViewController!)
+
+		if let contentViewController = contentViewController as? SplitViewController, mainSplitViewController == nil {
+			let mainSplitViewController = initMainSplitViewController(with: contentSplitViewController)
+			contentViewController.replaceView(at: 1, with: mainSplitViewController)
 		}
 	}
 
 	func showCalendar() {
-		if let contentSplitViewController = contentSplitViewController {
-			contentSplitViewController.showCalendar()
-		} else {
-			showContent()
-			contentSplitViewController?.showCalendar()
-			contentSplitViewController?.addChild(daySplitViewController!)
+		let contentSplitViewController = initContentSplitViewController(with: "calendar", and: daySplitViewController!)
+
+		if let contentViewController = contentViewController as? SplitViewController, mainSplitViewController == nil {
+			let mainSplitViewController = initMainSplitViewController(with: contentSplitViewController)
+			contentViewController.replaceView(at: 1, with: mainSplitViewController)
 		}
 	}
 
 	func showSettings() {
-		mainSplitViewController?.showSettings()
-		contentSplitViewController = nil
+		let settings = SettingsViewController(nibName: .settingsControllerNib, bundle: nil)
+		if let contentViewController = contentViewController as? SplitViewController {
+			contentViewController.replaceView(at: 1, with: settings)
+		}
+
+		mainSplitViewController = nil
 	}
 
 }

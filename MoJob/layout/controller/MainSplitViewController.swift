@@ -17,11 +17,28 @@ class MainSplitViewController: SplitViewController {
 		identifier = NSUserInterfaceItemIdentifier("ContentSplitView+CurrentTracking")
 	}
 
-	func showSettings() {
-		let settings = SettingsViewController(nibName: .settingsControllerNib, bundle: nil)
-		replaceView(at: 0, with: settings)
+	func toggleTracking() {
+		NSAnimationContext.runAnimationGroup({context in
+			context.duration = 0.25
+			context.allowsImplicitAnimation = true
 
-		identifier = NSUserInterfaceItemIdentifier("Settings")
+			if let height = NSApp.mainWindow?.contentView?.frame.height {
+				splitView.setPosition(height - 238, ofDividerAt: 0)
+			}
+		}, completionHandler: nil)
+	}
+
+	func showTracking() {
+		let trackingViewController = TrackingViewController(nibName: .trackingViewControllerNib, bundle: nil)
+		let splitViewItem = NSSplitViewItem(viewController: trackingViewController)
+
+		insertSplitViewItem(splitViewItem, at: 1)
+	}
+
+	func removeTracking() {
+		if let index = children.firstIndex(where: { $0.isKind(of: TrackingViewController.self) }) {
+			removeChild(at: index)
+		}
 	}
 
 }

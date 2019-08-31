@@ -219,6 +219,8 @@ extension JobListController: FilterFieldDelegate {
 			} else {
 				tracking?.custom_job = filterField.stringValue
 			}
+
+			(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
 		}
 
 		let maxValues = jobsCollectionView.numberOfItems(inSection: 0)

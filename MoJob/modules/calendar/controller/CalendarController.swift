@@ -52,18 +52,6 @@ class CalendarController: NSViewController {
 		todayButton.layer?.cornerRadius = 16
 		todayButton.layer?.borderColor = NSColor(red: 0.102, green: 0.102, blue: 0.102, alpha: 0.7).cgColor
 
-		monitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) {
-			let location = NSPoint(x: self.view.window!.mouseLocationOutsideOfEventStream.x, y: self.view.window!.mouseLocationOutsideOfEventStream.y)
-			let frame = self.calendarGridView.gradientCircle.frame
-			var localPoint = self.calendarGridView.convert(location, from: nil)
-
-			localPoint.x -= frame.width / 2
-			localPoint.y -= frame.height / 2
-			self.calendarGridView.gradientCircle.frame.origin = CGPoint(x: localPoint.x + $0.deltaX, y: localPoint.y - $0.deltaY)
-
-			return $0
-		}
-
 		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
 		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
@@ -76,6 +64,18 @@ class CalendarController: NSViewController {
 			NSLayoutConstraint(item: calendarGridView!, attribute: .width, relatedBy: .equal, toItem: calendarGridView.superview, attribute: .width, multiplier: 1, constant: 0),
 			NSLayoutConstraint(item: calendarGridView!, attribute: .height, relatedBy: .equal, toItem: calendarGridView.superview, attribute: .height, multiplier: 1, constant: 0)
 		])
+
+		monitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) {
+			let location = NSPoint(x: self.view.window!.mouseLocationOutsideOfEventStream.x, y: self.view.window!.mouseLocationOutsideOfEventStream.y)
+			let frame = self.calendarGridView.gradientCircle.frame
+			var localPoint = self.calendarGridView.convert(location, from: nil)
+
+			localPoint.x -= frame.width / 2
+			localPoint.y -= frame.height / 2
+			self.calendarGridView.gradientCircle.frame.origin = CGPoint(x: localPoint.x + $0.deltaX, y: localPoint.y - $0.deltaY)
+
+			return $0
+		}
 	}
 
 	override func viewDidDisappear() {

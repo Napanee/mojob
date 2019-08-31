@@ -36,14 +36,26 @@ class TrackingViewController: QuoJobSelections {
 
 	@IBOutlet weak var timerCount: TimerCount!
 	@IBOutlet weak var timeLabel: NSTextField!
-	@IBOutlet weak var commentLabel: TextField!
 	@IBOutlet weak var stopTracking: NSButton!
 	@IBOutlet weak var favoriteTracking: NSButton!
+	@IBOutlet weak var required: NSView!
 	
+	var viewHeightConstraint: NSLayoutConstraint!
+
 	override func viewDidLoad() {
 		tracking = CoreDataHelper.currentTracking
 
 		super.viewDidLoad()
+
+		viewHeightConstraint = NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 50)
+		view.addConstraint(viewHeightConstraint)
+
+		required.wantsLayer = true
+		if #available(OSX 10.14, *) {
+			required.layer?.backgroundColor = NSColor.controlAccentColor.cgColor
+		} else {
+			required.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
+		}
 
 		if let job = tracking?.job {
 			favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
@@ -62,12 +74,26 @@ class TrackingViewController: QuoJobSelections {
 	override func viewDidAppear() {
 		super.viewDidAppear()
 
+		jobSelect.backgroundColor = NSColor.clear
+		jobSelect.textColor = NSColor.white
+		stopTracking.image = stopTracking.image?.tint(color: NSColor.white)
+
 		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "counter:tick"), object: nil, queue: nil, using: { notification in
 			guard let totalSeconds = (notification.object as? NSDictionary)?["totalSeconds"] as? Double else { return }
 
-			let restSeconds = totalSeconds.remainder(dividingBy: 60)
-			self.timerCount.counter = round(CGFloat(restSeconds))
-			self.timeLabel.stringValue = secondsToHoursMinutesSeconds(sec: Int(totalSeconds))
+//			let restSeconds = totalSeconds.remainder(dividingBy: 60)
+//			self.timerCount.counter = round(CGFloat(restSeconds))
+			let formatter = DateComponentsFormatter()
+			formatter.unitsStyle = .positional
+			formatter.zeroFormattingBehavior = .pad
+
+			if (totalSeconds < 60 * 60) { // more than an hour
+				formatter.allowedUnits = [.minute, .second]
+			} else {
+				formatter.allowedUnits = [.hour, .minute]
+			}
+
+			self.timeLabel.stringValue = formatter.string(from: totalSeconds) ?? "00:00"
 		})
 
 		formIsValid = true
@@ -91,6 +117,13 @@ class TrackingViewController: QuoJobSelections {
 		initStartDate()
 
 		formIsValid = true
+	}
+
+	@IBAction func toggle(_ sender: NSButton) {
+		viewHeightConstraint.constant = viewHeightConstraint.constant == 50 ? 238 : 50
+		if let mainSplitViewController = parent as? MainSplitViewController {
+			mainSplitViewController.toggleTracking()
+		}
 	}
 
 	@IBAction func stopTracking(_ sender: NSButton) {
@@ -118,6 +151,8 @@ class TrackingViewController: QuoJobSelections {
 		} else {
 			tracking.stop()
 		}
+
+		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()
 	}
 
 	@IBAction func favoriteTracking(_ sender: NSButton) {

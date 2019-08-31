@@ -212,11 +212,6 @@
                 <constraint firstAttribute="trailing" secondItem="DaL-Sq-CR7" secondAttribute="trailing" id="JES-Ou-Cuv"/>
                 <constraint firstItem="DaL-Sq-CR7" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="cvm-pg-VxJ"/>
             </constraints>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="color" keyPath="viewBackgroundColor">
-                    <color key="value" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                </userDefinedRuntimeAttribute>
-            </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="225" y="1001"/>
         </customView>
     </objects>

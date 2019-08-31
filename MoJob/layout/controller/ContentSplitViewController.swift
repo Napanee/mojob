@@ -28,19 +28,13 @@ class ContentSplitViewController: SplitViewController {
 	}
 
 	func showJobList() {
-		var contentView: NSViewController!
-
-		if let _ = CoreDataHelper.currentTracking {
-			contentView = TrackingViewController(nibName: .trackingViewControllerNib, bundle: nil)
-		} else {
-			contentView = JobListController(nibName: .jobListControllerNib, bundle: nil)
-		}
+		let jobList = JobListController(nibName: .jobListControllerNib, bundle: nil)
 
 		if (children.count > 1) {
-			replaceView(at: 0, with: contentView)
+			replaceView(at: 0, with: jobList)
 			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "calendar:changedDate"), object: ["day": Date().startOfDay as Any, "job": nil])
 		} else {
-			addChild(contentView)
+			addChild(jobList)
 		}
 	}
 

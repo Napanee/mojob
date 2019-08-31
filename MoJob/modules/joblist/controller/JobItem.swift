@@ -95,6 +95,8 @@ class JobItem: NSCollectionViewItem {
 
 		let jobTrackingContext = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
 		tracking.job = jobTrackingContext.first(where: { $0.id == job.id })
+
+		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
 	}
 
 }
