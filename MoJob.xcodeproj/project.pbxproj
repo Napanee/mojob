@@ -74,10 +74,10 @@
 		E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270392210A7590030B61C /* CollectionItemView.swift */; };
 		E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A2703E2210BACF0030B61C /* TrackingViewController.swift */; };
 		E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A270402210BAE80030B61C /* TrackingViewController.xib */; };
-		E8A270442210C3100030B61C /* TimerCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270432210C3100030B61C /* TimerCount.swift */; };
 		E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */; };
 		E8A926CE2307709E004E0F04 /* MoJob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8A926CA2307709E004E0F04 /* MoJob.xcdatamodeld */; };
 		E8A926F5230A819A004E0F04 /* MoJob-3.3.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8A926F4230A819A004E0F04 /* MoJob-3.3.0.html */; };
+		E8A977F72315C5610028CD9D /* StopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A977F62315C5610028CD9D /* StopButton.swift */; };
 		E8AA8CAE22F890520017698F /* HelperAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA8CAD22F890520017698F /* HelperAppDelegate.swift */; };
 		E8AA8CB222F890540017698F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8AA8CB122F890540017698F /* Assets.xcassets */; };
 		E8AA8CB522F890540017698F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8AA8CB322F890540017698F /* Main.storyboard */; };
@@ -220,12 +220,12 @@
 		E8A270392210A7590030B61C /* CollectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionItemView.swift; sourceTree = "<group>"; };
 		E8A2703E2210BACF0030B61C /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		E8A270402210BAE80030B61C /* TrackingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackingViewController.xib; sourceTree = "<group>"; };
-		E8A270432210C3100030B61C /* TimerCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerCount.swift; sourceTree = "<group>"; };
 		E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath-cgPath.swift"; sourceTree = "<group>"; };
 		E8A926CB2307709E004E0F04 /* MoJob.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoJob.xcdatamodel; sourceTree = "<group>"; };
 		E8A926CC2307709E004E0F04 /* MoJob_002.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoJob_002.xcdatamodel; sourceTree = "<group>"; };
 		E8A926CD2307709E004E0F04 /* MoJob_003.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoJob_003.xcdatamodel; sourceTree = "<group>"; };
 		E8A926F4230A819A004E0F04 /* MoJob-3.3.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.3.0.html"; sourceTree = "<group>"; };
+		E8A977F62315C5610028CD9D /* StopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopButton.swift; sourceTree = "<group>"; };
 		E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLaunchHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8AA8CAD22F890520017698F /* HelperAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperAppDelegate.swift; sourceTree = "<group>"; };
 		E8AA8CB122F890540017698F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -698,7 +698,7 @@
 			isa = PBXGroup;
 			children = (
 				E877EC82224FCA8C002C3828 /* PopUpCellText.swift */,
-				E8A270432210C3100030B61C /* TimerCount.swift */,
+				E8A977F62315C5610028CD9D /* StopButton.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1158,6 +1158,7 @@
 				E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */,
 				E82117DA220E1B7E003D7578 /* enums.swift in Sources */,
 				E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */,
+				E8A977F72315C5610028CD9D /* StopButton.swift in Sources */,
 				E8E9508F2232D62A0070F57E /* TextField.swift in Sources */,
 				E8211790220E07B1003D7578 /* AppDelegate.swift in Sources */,
 				E8CACC782211DE6300675688 /* functions.swift in Sources */,
@@ -1189,7 +1190,6 @@
 				E8138A2622525BBF008DAA62 /* extensions.swift in Sources */,
 				E8E950892232C09F0070F57E /* EditorController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
-				E8A270442210C3100030B61C /* TimerCount.swift in Sources */,
 				E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */,
 				E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */,
 				E8E950A2223591910070F57E /* NumberField.swift in Sources */,

@@ -34,7 +34,6 @@ class TrackingViewController: QuoJobSelections {
 		set { stopTracking.isEnabled = newValue && super.formIsValid }
 	}
 
-	@IBOutlet weak var timerCount: TimerCount!
 	@IBOutlet weak var timeLabel: NSTextField!
 	@IBOutlet weak var stopTracking: NSButton!
 	@IBOutlet weak var favoriteTracking: NSButton!
@@ -81,8 +80,6 @@ class TrackingViewController: QuoJobSelections {
 		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "counter:tick"), object: nil, queue: nil, using: { notification in
 			guard let totalSeconds = (notification.object as? NSDictionary)?["totalSeconds"] as? Double else { return }
 
-//			let restSeconds = totalSeconds.remainder(dividingBy: 60)
-//			self.timerCount.counter = round(CGFloat(restSeconds))
 			let formatter = DateComponentsFormatter()
 			formatter.unitsStyle = .positional
 			formatter.zeroFormattingBehavior = .pad
