@@ -19,6 +19,18 @@ class ComboBox: NSComboBox {
 	let underscoreLayer = CAShapeLayer()
 	let underscoreLayerActive = CALayer()
 	let borderColor: NSColor = NSColor.placeholderTextColor
+	var underlineColor: CGColor = NSColor.quaternaryLabelColor.cgColor
+	var underlineColorActive: CGColor = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0).cgColor
+	var hasColoredBackground: Bool {
+		didSet {
+			if (hasColoredBackground) {
+				underlineColor = NSColor.white.withAlphaComponent(0.3).cgColor
+				underlineColorActive = NSColor.white.cgColor
+
+				underscoreLayer.strokeColor = underlineColor
+			}
+		}
+	}
 	var path: NSBezierPath {
 		get {
 			let lineWidth: CGFloat = 1
@@ -32,12 +44,16 @@ class ComboBox: NSComboBox {
 	}
 
 	override init(frame frameRect: NSRect) {
+		hasColoredBackground = false
+
 		super.init(frame: frameRect)
 
 		commonInit()
 	}
 
 	required init?(coder decoder: NSCoder) {
+		hasColoredBackground = false
+
 		super.init(coder: decoder)
 
 		commonInit()
@@ -52,11 +68,12 @@ class ComboBox: NSComboBox {
 		wantsLayer = true
 		lineBreakMode = .byTruncatingTail
 
-		let lineWidth: CGFloat = 1
-		let lineColor = NSColor.quaternaryLabelColor.cgColor
+		if #available(OSX 10.14, *) {
+			underlineColorActive = NSColor.controlAccentColor.cgColor
+		}
 
-		underscoreLayer.strokeColor = lineColor
-		underscoreLayer.lineWidth = lineWidth
+		underscoreLayer.strokeColor = underlineColor
+		underscoreLayer.lineWidth = 1
 		underscoreLayer.path = path.cgPath
 
 		layer?.addSublayer(underscoreLayer)
@@ -97,11 +114,6 @@ class ComboBox: NSComboBox {
 		let lineWidth: CGFloat = 1
 		let posTop = bounds.maxY - (lineWidth / 2)
 
-		var lineColor = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0).cgColor
-		if #available(OSX 10.14, *) {
-			lineColor = NSColor.controlAccentColor.cgColor
-		}
-
 		let animation = CABasicAnimation(keyPath: "strokeEnd")
 		animation.fromValue = 0
 		animation.duration = 0.2
@@ -110,7 +122,7 @@ class ComboBox: NSComboBox {
 		leftPath.move(to: NSPoint(x: bounds.width / 2, y: posTop))
 		leftPath.line(to: NSPoint(x: 0, y: posTop))
 		let leftUnderscore = CAShapeLayer()
-		leftUnderscore.strokeColor = lineColor
+		leftUnderscore.strokeColor = underlineColorActive
 		leftUnderscore.lineWidth = lineWidth
 		leftUnderscore.path = leftPath.cgPath
 		leftUnderscore.add(animation, forKey: "underscoreLeft")
@@ -119,7 +131,7 @@ class ComboBox: NSComboBox {
 		rightPath.move(to: NSPoint(x: bounds.width / 2, y: posTop))
 		rightPath.line(to: NSPoint(x: bounds.width, y: posTop))
 		let rightUnderscore = CAShapeLayer()
-		rightUnderscore.strokeColor = lineColor
+		rightUnderscore.strokeColor = underlineColorActive
 		rightUnderscore.lineWidth = lineWidth
 		rightUnderscore.path = rightPath.cgPath
 		rightUnderscore.add(animation, forKey: "underscoreRight")

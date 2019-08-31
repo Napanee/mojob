@@ -56,6 +56,8 @@ class TrackingViewController: QuoJobSelections {
 			required.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
 		}
 
+		jobSelect.hasColoredBackground = true
+
 		if let job = tracking?.job {
 			favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
 			favoriteTracking.state = job.isFavorite ? .on : .off

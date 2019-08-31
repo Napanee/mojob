@@ -10,9 +10,9 @@ import Cocoa
 
 class QuoJobSelections: NSViewController {
 
-	@IBOutlet weak var jobSelect: NSComboBox!
-	@IBOutlet weak var taskSelect: NSComboBox!
-	@IBOutlet weak var activitySelect: NSComboBox!
+	@IBOutlet weak var jobSelect: ComboBox!
+	@IBOutlet weak var taskSelect: ComboBox!
+	@IBOutlet weak var activitySelect: ComboBox!
 	@IBOutlet weak var fromDay: NumberField?
 	@IBOutlet weak var fromMonth: NumberField?
 	@IBOutlet weak var fromYear: NumberField?
