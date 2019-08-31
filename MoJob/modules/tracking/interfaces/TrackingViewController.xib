@@ -50,15 +50,15 @@
                                 <constraint firstAttribute="width" constant="60" id="OFC-WT-I9B"/>
                             </constraints>
                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="00:00" id="YD5-lp-tHg">
-                                <font key="font" metaFont="systemThin" size="20"/>
+                                <font key="font" metaFont="systemMedium" size="20"/>
                                 <color key="textColor" name="selectedMenuItemTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JuF-jE-fLD" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="140" y="11" width="291" height="26"/>
+                            <rect key="frame" x="140" y="13" width="330" height="23"/>
                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="thO-E2-i7w">
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="system" size="11"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <objectValues>
@@ -74,7 +74,7 @@
                             </connections>
                         </comboBox>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I2q-9u-hth">
-                            <rect key="frame" x="438" y="15" width="20" height="20"/>
+                            <rect key="frame" x="477" y="15" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="20" id="1ud-Jx-GNf"/>
                                 <constraint firstAttribute="height" constant="20" id="n7b-dJ-6nO"/>
@@ -87,9 +87,13 @@
                                 <action selector="favoriteTracking:" target="-2" id="R7G-RP-bxQ"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zjx-FH-mMv">
-                            <rect key="frame" x="462" y="8" width="81" height="32"/>
-                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ErW-E1-58E">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zjx-FH-mMv" customClass="ToggleButton" customModule="MoJob" customModuleProvider="target">
+                            <rect key="frame" x="507" y="10" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="Mo6-bZ-pwU"/>
+                                <constraint firstAttribute="height" constant="30" id="gNr-0a-vCx"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="ErW-E1-58E">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -185,10 +189,10 @@
                             </customSpacing>
                         </stackView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="d3I-Gi-eNU">
-                            <rect key="frame" x="124" y="127" width="413" height="51"/>
+                            <rect key="frame" x="124" y="90" width="413" height="88"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fJ5-C6-PRn">
-                                    <rect key="frame" x="-2" y="34" width="62" height="17"/>
+                                    <rect key="frame" x="-2" y="71" width="62" height="17"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Aufgabe:" id="KcA-uS-uJP">
                                         <font key="font" metaFont="systemSemibold" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -196,7 +200,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lds-i2-z5u" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="1" width="200" height="26"/>
+                                    <rect key="frame" x="0.0" y="38" width="200" height="26"/>
                                     <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="1A6-He-L8k">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -214,7 +218,7 @@
                                     </connections>
                                 </comboBox>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nFV-aO-e0w">
-                                    <rect key="frame" x="215" y="34" width="63" height="17"/>
+                                    <rect key="frame" x="215" y="71" width="63" height="17"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Tätigkeit:" id="6MS-0Z-0Fx">
                                         <font key="font" metaFont="systemSemibold" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -222,7 +226,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eiv-iP-EWs" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="217" y="1" width="199" height="26"/>
+                                    <rect key="frame" x="217" y="38" width="199" height="26"/>
                                     <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="oab-Bp-Avk">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -278,9 +282,9 @@
                         <constraint firstItem="eiL-vO-c1t" firstAttribute="trailing" secondItem="d3I-Gi-eNU" secondAttribute="trailing" id="6Qb-WE-6rX"/>
                         <constraint firstItem="FuK-8I-mxU" firstAttribute="top" secondItem="lVZ-4j-Vcr" secondAttribute="bottom" constant="5" id="Bnc-Ky-TmM"/>
                         <constraint firstItem="lVZ-4j-Vcr" firstAttribute="leading" secondItem="zIW-7e-17z" secondAttribute="leading" constant="30" id="FXT-Wr-Tki"/>
+                        <constraint firstItem="eiL-vO-c1t" firstAttribute="top" secondItem="d3I-Gi-eNU" secondAttribute="bottom" id="GH6-0L-4aT"/>
                         <constraint firstItem="eiL-vO-c1t" firstAttribute="leading" secondItem="lVZ-4j-Vcr" secondAttribute="leading" id="Ghc-Wz-hB4"/>
                         <constraint firstItem="SdS-WH-WLV" firstAttribute="top" secondItem="FuK-8I-mxU" secondAttribute="bottom" constant="15" id="I1a-JC-n6X"/>
-                        <constraint firstItem="d3I-Gi-eNU" firstAttribute="bottom" secondItem="FuK-8I-mxU" secondAttribute="bottom" id="K5g-8u-p09"/>
                         <constraint firstItem="eiv-iP-EWs" firstAttribute="centerY" secondItem="FuK-8I-mxU" secondAttribute="centerY" id="NMA-Rw-fBQ"/>
                         <constraint firstAttribute="trailing" secondItem="d3I-Gi-eNU" secondAttribute="trailing" constant="30" id="Naa-wR-2eH"/>
                         <constraint firstItem="eiL-vO-c1t" firstAttribute="top" secondItem="SdS-WH-WLV" secondAttribute="bottom" constant="5" id="RgA-xk-WDG"/>

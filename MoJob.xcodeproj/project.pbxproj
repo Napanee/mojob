@@ -78,6 +78,7 @@
 		E8A926CE2307709E004E0F04 /* MoJob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8A926CA2307709E004E0F04 /* MoJob.xcdatamodeld */; };
 		E8A926F5230A819A004E0F04 /* MoJob-3.3.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8A926F4230A819A004E0F04 /* MoJob-3.3.0.html */; };
 		E8A977F72315C5610028CD9D /* StopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A977F62315C5610028CD9D /* StopButton.swift */; };
+		E8A977F9231AD9FF0028CD9D /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A977F8231AD9FF0028CD9D /* ToggleButton.swift */; };
 		E8AA8CAE22F890520017698F /* HelperAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AA8CAD22F890520017698F /* HelperAppDelegate.swift */; };
 		E8AA8CB222F890540017698F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8AA8CB122F890540017698F /* Assets.xcassets */; };
 		E8AA8CB522F890540017698F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8AA8CB322F890540017698F /* Main.storyboard */; };
@@ -226,6 +227,7 @@
 		E8A926CD2307709E004E0F04 /* MoJob_003.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoJob_003.xcdatamodel; sourceTree = "<group>"; };
 		E8A926F4230A819A004E0F04 /* MoJob-3.3.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.3.0.html"; sourceTree = "<group>"; };
 		E8A977F62315C5610028CD9D /* StopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopButton.swift; sourceTree = "<group>"; };
+		E8A977F8231AD9FF0028CD9D /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoLaunchHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8AA8CAD22F890520017698F /* HelperAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperAppDelegate.swift; sourceTree = "<group>"; };
 		E8AA8CB122F890540017698F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -699,6 +701,7 @@
 			children = (
 				E877EC82224FCA8C002C3828 /* PopUpCellText.swift */,
 				E8A977F62315C5610028CD9D /* StopButton.swift */,
+				E8A977F8231AD9FF0028CD9D /* ToggleButton.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1190,6 +1193,7 @@
 				E8138A2622525BBF008DAA62 /* extensions.swift in Sources */,
 				E8E950892232C09F0070F57E /* EditorController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
+				E8A977F9231AD9FF0028CD9D /* ToggleButton.swift in Sources */,
 				E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */,
 				E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */,
 				E8E950A2223591910070F57E /* NumberField.swift in Sources */,
