@@ -13,7 +13,7 @@ class StopButton: NSButton {
 	let timeSecondsShapeLayer = CAShapeLayer()
 	let startAngle: CGFloat = -90
 	let endAngle: CGFloat = 270
-	let strokeWidth: CGFloat = 2.0
+	let strokeWidth: CGFloat = 1.0
 
 	var center: CGPoint!
 	var radius: CGFloat!

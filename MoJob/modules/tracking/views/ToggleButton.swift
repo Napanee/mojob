@@ -10,7 +10,7 @@ import Cocoa
 
 class ToggleButton: NSButton {
 
-	let strokeWidth: CGFloat = 2.0
+	let strokeWidth: CGFloat = 1.0
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
