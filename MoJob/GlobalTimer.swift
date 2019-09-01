@@ -11,6 +11,8 @@ import Cocoa
 
 class GlobalTimer: NSObject {
 
+	var statusItem: NSStatusItem?
+	var attributes: [NSAttributedString.Key: Any] = [:]
 	var timer: Timer = Timer()
 	private var timerNoTracking: Timer = Timer()
 	var currentTracking: Tracking!
@@ -32,6 +34,13 @@ class GlobalTimer: NSObject {
 			updateTime()
 			return
 		}
+
+		statusItem = (NSApp.delegate as? AppDelegate)?.statusItem
+//		statusItem?.length = 60
+		statusItem?.button?.alignment = .left
+
+		attributes[NSAttributedString.Key.foregroundColor] = NSColor.black
+		attributes[NSAttributedString.Key.font] = NSFont.systemFont(ofSize: 12, weight: .medium)
 
 		currentTracking = CoreDataHelper.currentTracking
 
@@ -55,6 +64,10 @@ class GlobalTimer: NSObject {
 	func stopTimer() {
 		timer.invalidate()
 		appBadge.badgeLabel = ""
+
+		if let statusItem = (NSApp.delegate as? AppDelegate)?.statusItem {
+			statusItem.button?.imagePosition = .imageOnly
+		}
 	}
 
 	func stopNoTrackingTimer() {
@@ -82,6 +95,12 @@ class GlobalTimer: NSObject {
 			appBadge.badgeLabel = formatter.string(from: diff)
 		} else {
 			appBadge.badgeLabel = ""
+		}
+
+		if let statusItem = statusItem {
+			let attributed = NSAttributedString(string: formatter.string(from: diff) ?? "", attributes: attributes)
+			statusItem.button?.attributedTitle = attributed
+			statusItem.button?.imagePosition = .imageRight
 		}
 
 		if dayHours > 0, let completedTrackingSeconds = completedTrackingSecondsToday, completedTrackingSeconds + totalSeconds == dayHours * 3600 {

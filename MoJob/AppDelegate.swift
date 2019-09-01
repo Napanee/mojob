@@ -94,35 +94,31 @@ class AppDelegate: NSObject {
 		initStatusBarApp()
 	}
 
-	func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-		if (flag) {
-			window.orderFront(self)
-		} else {
-			window.makeKeyAndOrderFront(self)
-		}
-
-		return true
-	}
-
 	private func initStatusBarApp() {
 		statusItem = NSStatusBar.system.statusItem(withLength: -1)
+		statusItem?.view?.wantsLayer = true
 
-		let icon = NSImage(named: .statusIcon)
+		let icon = NSImage(named: .statusBarImage)
 		icon?.isTemplate = true
 		statusItem?.menu = appMenu
 		statusItem?.button?.image = icon
-		statusItem?.button?.title = "23:34"
-		statusItem?.button?.font = NSFont.systemFont(ofSize: 11, weight: .bold)
-		statusItem?.button?.imagePosition = .imageRight
-		statusItem?.button?.wantsLayer = true
+		statusItem?.button?.imagePosition = .imageOnly
+
+		let subview = NSView.init(frame: statusItem!.button!.frame)
+		subview.wantsLayer = true
+		statusItem?.button?.addSubview(subview)
 
 		let indicatorLayer: CALayer! = CALayer()
 		if let height = statusItem?.button?.frame.height, let width = statusItem?.button?.frame.width {
 			indicatorLayer.frame = CGRect(x: 0, y: 3, width: width, height: height - 6)
 		}
-		indicatorLayer.backgroundColor = NSColor(red: 1, green: 0.376, blue: 0, alpha: 0.5).cgColor
+		if #available(OSX 10.14, *) {
+			indicatorLayer.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.5).cgColor
+		} else {
+			// Fallback on earlier versions
+		}
 		indicatorLayer.cornerRadius = 3
-		statusItem?.button?.layer?.insertSublayer(indicatorLayer, at: 0)
+//		subview.layer?.addSublayer(indicatorLayer)
 	}
 
 	@IBAction func openApp(_ sender: NSMenuItem) {

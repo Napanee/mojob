@@ -60,6 +60,7 @@ extension NSImage.Name {
 	static let uncheckedImage = "unchecked"
 	static let radioUncheckedImage = "radio-unchecked"
 	static let radioCheckedImage = "radio-checked"
+	static let statusBarImage = "statusIcon"
 }
 
 extension NSColorList {
