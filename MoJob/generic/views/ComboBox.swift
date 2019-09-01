@@ -16,9 +16,9 @@ class ComboBox: NSComboBox {
 		}
 	}
 
+	let lineWidth: CGFloat = 1.0
 	let underscoreLayer = CAShapeLayer()
-	let underscoreLayerActive = CALayer()
-	let borderColor: NSColor = NSColor.placeholderTextColor
+
 	var underlineColor: CGColor = NSColor.quaternaryLabelColor.cgColor
 	var underlineColorActive: CGColor = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0).cgColor
 	var hasColoredBackground: Bool {
@@ -29,17 +29,6 @@ class ComboBox: NSComboBox {
 
 				underscoreLayer.strokeColor = underlineColor
 			}
-		}
-	}
-	var path: NSBezierPath {
-		get {
-			let lineWidth: CGFloat = 1
-			let posTop = bounds.maxY - (lineWidth / 2)
-			let path = NSBezierPath()
-			path.move(to: NSPoint(x: bounds.width, y: posTop))
-			path.line(to: NSPoint(x: 0, y: posTop))
-
-			return path
 		}
 	}
 
@@ -71,20 +60,20 @@ class ComboBox: NSComboBox {
 		if #available(OSX 10.14, *) {
 			underlineColorActive = NSColor.controlAccentColor.cgColor
 		}
-
-		underscoreLayer.strokeColor = underlineColor
-		underscoreLayer.lineWidth = 1
-		underscoreLayer.path = path.cgPath
-
-		layer?.addSublayer(underscoreLayer)
 	}
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 
-		if let subLayer = layer?.sublayers?.first(where: { $0.isEqual(to: underscoreLayer) }) as? CAShapeLayer {
-			subLayer.path = path.cgPath
-		}
+		let context = NSGraphicsContext.current?.cgContext
+		context?.setLineWidth(lineWidth)
+		context?.setStrokeColor(underlineColor)
+
+		let path = CGMutablePath()
+		path.move(to: CGPoint(x: bounds.minX, y: bounds.maxY))
+		path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
+		context?.addPath(path)
+		context?.drawPath(using: .stroke)
 	}
 
 	override func becomeFirstResponder() -> Bool {
@@ -106,40 +95,32 @@ class ComboBox: NSComboBox {
 	override func textDidEndEditing(_ notification: Notification) {
 		super.textDidEndEditing(notification)
 
-		layer?.sublayers?.first(where: { $0.isEqual(underscoreLayerActive) })?.removeFromSuperlayer()
-		underscoreLayerActive.sublayers?.removeAll()
+		layer?.sublayers?.first(where: { $0.isEqual(underscoreLayer) })?.removeFromSuperlayer()
+		underscoreLayer.sublayers?.removeAll()
 	}
 
 	private func setFocused() {
-		let lineWidth: CGFloat = 1
-		let posTop = bounds.maxY - (lineWidth / 2)
+		underscoreLayer.addSublayer(underscoreLayer(end: NSPoint(x: bounds.minX, y: bounds.maxY)))
+		underscoreLayer.addSublayer(underscoreLayer(end: NSPoint(x: bounds.maxX, y: bounds.maxY)))
 
+		layer?.addSublayer(underscoreLayer)
+	}
+
+	private func underscoreLayer(end: NSPoint) -> CALayer {
 		let animation = CABasicAnimation(keyPath: "strokeEnd")
 		animation.fromValue = 0
 		animation.duration = 0.2
 
-		let leftPath = NSBezierPath()
-		leftPath.move(to: NSPoint(x: bounds.width / 2, y: posTop))
-		leftPath.line(to: NSPoint(x: 0, y: posTop))
-		let leftUnderscore = CAShapeLayer()
-		leftUnderscore.strokeColor = underlineColorActive
-		leftUnderscore.lineWidth = lineWidth
-		leftUnderscore.path = leftPath.cgPath
-		leftUnderscore.add(animation, forKey: "underscoreLeft")
+		let path = NSBezierPath()
+		let layer = CAShapeLayer()
+		path.move(to: NSPoint(x: bounds.midX, y: bounds.maxY))
+		path.line(to: end)
+		layer.path = path.cgPath
+		layer.strokeColor = underlineColorActive
+		layer.lineWidth = lineWidth
+		layer.add(animation, forKey: nil)
 
-		let rightPath = NSBezierPath()
-		rightPath.move(to: NSPoint(x: bounds.width / 2, y: posTop))
-		rightPath.line(to: NSPoint(x: bounds.width, y: posTop))
-		let rightUnderscore = CAShapeLayer()
-		rightUnderscore.strokeColor = underlineColorActive
-		rightUnderscore.lineWidth = lineWidth
-		rightUnderscore.path = rightPath.cgPath
-		rightUnderscore.add(animation, forKey: "underscoreRight")
-
-		underscoreLayerActive.addSublayer(leftUnderscore)
-		underscoreLayerActive.addSublayer(rightUnderscore)
-
-		layer?.addSublayer(underscoreLayerActive)
+		return layer
 	}
 
 }

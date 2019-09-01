@@ -10,8 +10,8 @@ import Cocoa
 
 class TextField: NSTextField {
 
-	let underscoreLayer = CALayer()
-	let borderColor: NSColor = NSColor.placeholderTextColor
+	let lineWidth: CGFloat = 1.0
+	let underscoreLayer = CAShapeLayer()
 
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -29,21 +29,20 @@ class TextField: NSTextField {
 		isBordered = false
 		backgroundColor = NSColor.clear
 		focusRingType = .none
-		wantsLayer = true
+	}
 
-		let lineWidth: CGFloat = 1
-		let posTop = bounds.maxY - (lineWidth / 2)
-		let lineColor = NSColor.quaternaryLabelColor.cgColor
+	override func draw(_ dirtyRect: NSRect) {
+		super.draw(dirtyRect)
 
-		let path = NSBezierPath()
-		path.move(to: NSPoint(x: bounds.width, y: posTop))
-		path.line(to: NSPoint(x: 0, y: posTop))
-		let underscore = CAShapeLayer()
-		underscore.strokeColor = lineColor
-		underscore.lineWidth = lineWidth
-		underscore.path = path.cgPath
+		let context = NSGraphicsContext.current?.cgContext
+		context?.setLineWidth(lineWidth)
+		context?.setStrokeColor(NSColor.quaternaryLabelColor.cgColor)
 
-		layer?.addSublayer(underscore)
+		let path = CGMutablePath()
+		path.move(to: CGPoint(x: bounds.minX, y: bounds.maxY))
+		path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.maxY))
+		context?.addPath(path)
+		context?.drawPath(using: .stroke)
 	}
 
 	override func becomeFirstResponder() -> Bool {
@@ -68,10 +67,14 @@ class TextField: NSTextField {
 	}
 
 	private func setFocused() {
-		let lineWidth: CGFloat = 1
-		let posTop = bounds.maxY - (lineWidth / 2)
-		var lineColor = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0).cgColor
+		underscoreLayer.addSublayer(underscoreLayer(end: NSPoint(x: bounds.minX, y: bounds.maxY)))
+		underscoreLayer.addSublayer(underscoreLayer(end: NSPoint(x: bounds.maxX, y: bounds.maxY)))
 
+		layer?.addSublayer(underscoreLayer)
+	}
+
+	private func underscoreLayer(end: NSPoint) -> CALayer {
+		var lineColor = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0).cgColor
 		if #available(OSX 10.14, *) {
 			lineColor = NSColor.controlAccentColor.cgColor
 		}
@@ -80,28 +83,16 @@ class TextField: NSTextField {
 		animation.fromValue = 0
 		animation.duration = 0.2
 
-		let leftPath = NSBezierPath()
-		leftPath.move(to: NSPoint(x: bounds.width / 2, y: posTop))
-		leftPath.line(to: NSPoint(x: 0, y: posTop))
-		let leftUnderscore = CAShapeLayer()
-		leftUnderscore.strokeColor = lineColor
-		leftUnderscore.lineWidth = lineWidth
-		leftUnderscore.path = leftPath.cgPath
-		leftUnderscore.add(animation, forKey: "underscoreLeft")
+		let path = NSBezierPath()
+		let layer = CAShapeLayer()
+		path.move(to: NSPoint(x: bounds.midX, y: bounds.maxY))
+		path.line(to: end)
+		layer.path = path.cgPath
+		layer.strokeColor = lineColor
+		layer.lineWidth = lineWidth
+		layer.add(animation, forKey: nil)
 
-		let rightPath = NSBezierPath()
-		rightPath.move(to: NSPoint(x: bounds.width / 2, y: posTop))
-		rightPath.line(to: NSPoint(x: bounds.width, y: posTop))
-		let rightUnderscore = CAShapeLayer()
-		rightUnderscore.strokeColor = lineColor
-		rightUnderscore.lineWidth = lineWidth
-		rightUnderscore.path = rightPath.cgPath
-		rightUnderscore.add(animation, forKey: "underscoreRight")
-
-		underscoreLayer.addSublayer(leftUnderscore)
-		underscoreLayer.addSublayer(rightUnderscore)
-
-		layer?.addSublayer(underscoreLayer)
+		return layer
 	}
 
 }
