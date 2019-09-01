@@ -27,9 +27,9 @@ class CalendarController: NSViewController {
 			return _currentDate ?? Date().startOfDay!
 		}
 		set {
-			_currentDate = currentDate.startOfDay
+			_currentDate = newValue.startOfDay
 
-			let components = calendar.dateComponents([.month, .year], from: currentDate)
+			let components = calendar.dateComponents([.month, .year], from: newValue)
 			currentMonth.stringValue = "\(calendar.monthSymbols[components.month! - 1]) \(components.year!)"
 
 			let isCurrentMonth = calendar.date(Date(), matchesComponents: components)
