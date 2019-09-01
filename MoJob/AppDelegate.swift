@@ -57,9 +57,9 @@ class AppDelegate: NSObject {
 			}).catch({ _ in })
 		}
 
-//		QuoJob.shared.syncData().catch { error in
-//			GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Synchronisieren", andInformationtext: error.localizedDescription)
-//		}
+		QuoJob.shared.syncData().catch { error in
+			GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Synchronisieren", andInformationtext: error.localizedDescription)
+		}
 
 		PFMoveToApplicationsFolderIfNecessary()
 
