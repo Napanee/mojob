@@ -15,7 +15,9 @@ class SettingsViewController: NSViewController {
 	@IBOutlet weak var autoLaunchCheckbox: NSButton!
 	@IBOutlet weak var noTrackingNotification: TextField!
 	@IBOutlet weak var dayCompleteNotification: TextField!
+	@IBOutlet weak var extendSettings: NSView!
 
+	var keyDownEventMonitor: Any?
 	var userDefaults = UserDefaults()
 	var activities: [Activity] = []
 	let helperBundleName = "de.martinschneider.AutoLaunchHelper"
@@ -24,6 +26,16 @@ class SettingsViewController: NSViewController {
 		super.viewDidLoad()
 
 		initActivitySelect()
+
+		NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+			self.keyDown(with: $0)
+			return $0
+		}
+
+		extendSettings.wantsLayer = true
+		extendSettings.layer?.borderColor = NSColor.red.cgColor
+		extendSettings.layer?.borderWidth = 2.0
+		extendSettings.layer?.backgroundColor = NSColor.red.withAlphaComponent(0.5).cgColor
 
 		let foundHelper = NSWorkspace.shared.runningApplications.contains {
 			$0.bundleIdentifier == helperBundleName
@@ -63,6 +75,15 @@ class SettingsViewController: NSViewController {
 		}
 	}
 
+	override func keyDown(with event: NSEvent) {
+		switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+		case [.command] where event.characters == "d":
+			extendSettings.isHidden = false
+		default:
+			break
+		}
+	}
+
 	@IBAction func activitySelect(_ sender: NSComboBox) {
 		guard let cell = sender.cell else { return }
 
@@ -78,6 +99,10 @@ class SettingsViewController: NSViewController {
 	@IBAction func toggleAutoLaunch(_ sender: NSButton) {
 		let isAuto = sender.state == .on
 		SMLoginItemSetEnabled(helperBundleName as CFString, isAuto)
+	}
+
+	@IBAction func resetData(_ sender: NSButton) {
+		CoreDataHelper.resetData()
 	}
 
 }

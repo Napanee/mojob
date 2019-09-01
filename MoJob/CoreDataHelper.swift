@@ -178,6 +178,22 @@ class CoreDataHelper {
 		return result
 	}
 
+	static func resetData() {
+		let uniqueNames = CoreDataHelper.shared.persistentContainer.managedObjectModel.entities.compactMap({ $0.name })
+
+		uniqueNames.forEach { (name) in
+			let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+			let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+			do {
+				try CoreDataHelper.shared.persistentContainer.viewContext.execute(batchDeleteRequest)
+			} catch {
+				let nserror = error as NSError
+				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+			}
+		}
+	}
+
 }
 
 // MARK: - Trackings
