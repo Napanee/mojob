@@ -56,8 +56,10 @@ class TrackingItem: NSView {
 			}
 
 			startTimeLabel.stringValue = formatter.string(from: tracking.date_start!)
+			startTimeLabel.toolTip = tracking.date_start?.asString
 			if let dateEnd = tracking.date_end {
 				endTimeLabel.stringValue = formatter.string(from: dateEnd)
+				endTimeLabel.toolTip = tracking.date_end?.asString
 			} else {
 				endTimeLabel.stringValue = "..."
 			}

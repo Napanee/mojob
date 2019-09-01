@@ -102,6 +102,13 @@ extension NSImage {
 }
 
 extension Date {
+	var asString: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "dd.MM.YYYY HH:mm"
+		dateFormatter.locale = Locale(identifier: "de_DE")
+		return dateFormatter.string(from: self)
+	}
+
 	var month: String {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "MMMM"
