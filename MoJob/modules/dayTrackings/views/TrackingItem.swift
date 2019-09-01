@@ -137,6 +137,9 @@ class TrackingItem: NSView {
 			return
 		}
 
+		let restartItem = NSMenuItem(title: "Erneut starten", action: #selector(onContextRestart), keyEquivalent: "")
+		rightClickMenu.addItem(restartItem)
+
 		let editItem = NSMenuItem(title: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
 		if (tracking?.date_end == nil) {
 			editItem.action = nil
@@ -202,11 +205,32 @@ class TrackingItem: NSView {
 		NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
 	}
 
+	@objc func onContextRestart() {
+		guard let source = tracking, let clone = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) else { return }
+
+		var keyedValues = source.dictionaryWithValues(forKeys: ["custom_job", "comment", "job", "activity", "task"])
+
+		if let sourceJob = source.job {
+			keyedValues["job"] = CoreDataHelper.currentTrackingContext.object(with: sourceJob.objectID)
+		}
+
+		if let sourceActivity = source.activity {
+			keyedValues["activity"] = CoreDataHelper.currentTrackingContext.object(with: sourceActivity.objectID)
+		}
+
+		if let sourceTask = source.task {
+			keyedValues["task"] = CoreDataHelper.currentTrackingContext.object(with: sourceTask.objectID)
+		}
+
+		clone.setValuesForKeys(keyedValues)
+
+		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
+	}
+
 	@objc func onContextEdit() {
 		if
 			tracking?.date_end != nil,
-			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController,
-			let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.backgroundContext)
+			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController
 		{
 			let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
 			editor.tracking = tracking
@@ -246,8 +270,7 @@ class TrackingItem: NSView {
 		if
 			event.clickCount == 2,
 			tracking?.date_end != nil,
-			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController,
-			let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.backgroundContext)
+			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController
 		{
 			let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
 			editor.tracking = tracking
