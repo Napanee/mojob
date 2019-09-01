@@ -52,7 +52,7 @@ class ComboBox: NSComboBox {
 		isBordered = false
 		isButtonBordered = false
 		focusRingType = .none
-		font = NSFont.systemFont(ofSize: 20, weight: .light)
+		font = NSFont.systemFont(ofSize: 18, weight: .light)
 		usesDataSource = true
 		wantsLayer = true
 		lineBreakMode = .byTruncatingTail
