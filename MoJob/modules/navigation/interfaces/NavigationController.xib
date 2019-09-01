@@ -68,11 +68,6 @@
                 <constraint firstItem="l7H-at-hMQ" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="jqe-Yl-gru"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="qj2-yl-y4O"/>
             </constraints>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                    <color key="value" red="0.93725490196078431" green="0.94901960784313721" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </userDefinedRuntimeAttribute>
-            </userDefinedRuntimeAttributes>
             <point key="canvasLocation" x="139" y="126"/>
         </customView>
     </objects>
