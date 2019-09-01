@@ -17,6 +17,7 @@ import PromiseKit
 @NSApplicationMain
 class AppDelegate: NSObject {
 
+	@IBOutlet weak var appMenu: NSMenu!
 	@IBOutlet weak var syncDataMenuItem: NSMenuItem!
 	@IBOutlet weak var syncTrackingsMenuItem: NSMenuItem!
 
@@ -35,6 +36,7 @@ class AppDelegate: NSObject {
 	var mainWindowController: MainWindowController?
 	var hasInternalConnection: Bool = false
 	var hasExternalConnection: Bool = false
+	var statusItem: NSStatusItem?
 
 	private var timerSleep: Date?
 
@@ -88,6 +90,50 @@ class AppDelegate: NSObject {
 
 			alert.runModal()
 		}
+
+		initStatusBarApp()
+	}
+
+	func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+		if (flag) {
+			window.orderFront(self)
+		} else {
+			window.makeKeyAndOrderFront(self)
+		}
+
+		return true
+	}
+
+	private func initStatusBarApp() {
+		statusItem = NSStatusBar.system.statusItem(withLength: -1)
+
+		let icon = NSImage(named: .statusIcon)
+		icon?.isTemplate = true
+		statusItem?.menu = appMenu
+		statusItem?.button?.image = icon
+		statusItem?.button?.title = "23:34"
+		statusItem?.button?.font = NSFont.systemFont(ofSize: 11, weight: .bold)
+		statusItem?.button?.imagePosition = .imageRight
+		statusItem?.button?.wantsLayer = true
+
+		let indicatorLayer: CALayer! = CALayer()
+		if let height = statusItem?.button?.frame.height, let width = statusItem?.button?.frame.width {
+			indicatorLayer.frame = CGRect(x: 0, y: 3, width: width, height: height - 6)
+		}
+		indicatorLayer.backgroundColor = NSColor(red: 1, green: 0.376, blue: 0, alpha: 0.5).cgColor
+		indicatorLayer.cornerRadius = 3
+		statusItem?.button?.layer?.insertSublayer(indicatorLayer, at: 0)
+	}
+
+	@IBAction func openApp(_ sender: NSMenuItem) {
+		NSApp.setActivationPolicy(.regular)
+		window?.center()
+		window?.makeKeyAndOrderFront(nil)
+		NSApp.activate(ignoringOtherApps: true)
+	}
+
+	@IBAction func quitApp(_ sender: NSMenuItem) {
+		NSApp.terminate(self)
 	}
 
 	@available(OSX 10.14, *)

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class MainWindowController: NSWindowController {
+class MainWindowController: NSWindowController, NSWindowDelegate {
 
 	override var windowNibName: NSNib.Name? { return "MainWindowController" }
 	override var owner: AnyObject? { return self }
@@ -37,6 +37,12 @@ class MainWindowController: NSWindowController {
 
 	override func mouseDown(with event: NSEvent) {
 		window?.makeFirstResponder(nil)
+	}
+
+	func windowShouldClose(_ sender: NSWindow) -> Bool {
+		NSApp.setActivationPolicy(.prohibited)
+
+		return true
 	}
 
 	func initContentSplitViewController(with primaryChild: String, and secondaryChild: SplitViewController) -> ContentSplitViewController {
