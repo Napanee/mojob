@@ -256,7 +256,7 @@ extension CoreDataHelper {
 			return nil
 		}
 
-		if let currentTracking = currentTracking {
+		if let currentTracking = currentTracking, Calendar.current.isDate(currentTracking.date_start!, inSameDayAs: dateStart) {
 			trackings.append(currentTracking)
 		}
 
