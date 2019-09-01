@@ -83,6 +83,7 @@ extension UserDefaults.Keys {
 	static let notificationNotracking = "notification:notracking"
 	static let notificationDaycomplete = "notification:daycomplete"
 	static let activity = "activity"
+	static let badgeIconLabel = "badgeIconLabel"
 }
 
 extension NSImage {

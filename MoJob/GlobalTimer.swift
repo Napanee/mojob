@@ -78,7 +78,11 @@ class GlobalTimer: NSObject {
 			formatter.allowedUnits = [.hour, .minute]
 		}
 
-		appBadge.badgeLabel = formatter.string(from: diff)
+		if (userDefaults.object(forKey: UserDefaults.Keys.badgeIconLabel) == nil || userDefaults.bool(forKey: UserDefaults.Keys.badgeIconLabel)) {
+			appBadge.badgeLabel = formatter.string(from: diff)
+		} else {
+			appBadge.badgeLabel = ""
+		}
 
 		if dayHours > 0, let completedTrackingSeconds = completedTrackingSecondsToday, completedTrackingSeconds + totalSeconds == dayHours * 3600 {
 			GlobalNotification.shared.deliverNotification(

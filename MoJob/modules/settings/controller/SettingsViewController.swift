@@ -13,6 +13,7 @@ class SettingsViewController: NSViewController {
 
 	@IBOutlet weak var activitySelect: NSComboBox!
 	@IBOutlet weak var autoLaunchCheckbox: NSButton!
+	@IBOutlet weak var badgeIconLabel: NSButton!
 	@IBOutlet weak var noTrackingNotification: TextField!
 	@IBOutlet weak var dayCompleteNotification: TextField!
 	@IBOutlet weak var extendSettings: NSView!
@@ -51,6 +52,12 @@ class SettingsViewController: NSViewController {
 		)
 
 		autoLaunchCheckbox.state = foundHelper ? .on : .off
+
+		if (userDefaults.object(forKey: UserDefaults.Keys.badgeIconLabel) == nil || userDefaults.bool(forKey: UserDefaults.Keys.badgeIconLabel)) {
+			badgeIconLabel.state = .on
+		} else {
+			badgeIconLabel.state = .off
+		}
 
 		let noTrackingValue = userDefaults.integer(forKey: UserDefaults.Keys.notificationNotracking)
 		noTrackingNotification.stringValue = userDefaults.contains(key: UserDefaults.Keys.notificationNotracking) ? String(noTrackingValue) : String(userDefaultValues.notificationNotracking)
@@ -99,6 +106,10 @@ class SettingsViewController: NSViewController {
 	@IBAction func toggleAutoLaunch(_ sender: NSButton) {
 		let isAuto = sender.state == .on
 		SMLoginItemSetEnabled(helperBundleName as CFString, isAuto)
+	}
+
+	@IBAction func toggleBadgIconLabel(_ sender: NSButton) {
+		userDefaults.set(sender.state == .on, forKey: UserDefaults.Keys.badgeIconLabel)
 	}
 
 	@IBAction func resetData(_ sender: NSButton) {
