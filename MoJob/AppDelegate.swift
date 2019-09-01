@@ -78,6 +78,15 @@ class AppDelegate: NSObject {
 				}
 			}
 			monitor?.start(queue: queue)
+		} else {
+			let alert = NSAlert()
+			alert.alertStyle = .critical
+			alert.messageText = "Betriebssystem veraltet!"
+			alert.informativeText = "Wegen DIR muss ich hier extra Code schreiben. Mach endlich ein Update! 😤"
+			alert.addButton(withTitle: "Es tut mir leid")
+			alert.addButton(withTitle: "Mir doch egal")
+
+			alert.runModal()
 		}
 	}
 
