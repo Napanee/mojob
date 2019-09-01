@@ -52,6 +52,10 @@ class FavoriteItem: NSCollectionViewItem {
 	}
 
 	@IBAction func deleteButton(_ sender: NSButton) {
+		if let currentTracking = CoreDataHelper.currentTracking {
+			currentTracking.job?.isFavorite = false
+		}
+
 		job.isFavorite = false
 		CoreDataHelper.save()
 

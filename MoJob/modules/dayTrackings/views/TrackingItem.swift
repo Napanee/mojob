@@ -245,6 +245,9 @@ class TrackingItem: NSView {
 	@objc func onContextToggleFavorite() {
 		if let isFavorite = tracking?.job?.isFavorite {
 			tracking?.job?.isFavorite = !isFavorite
+
+			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
+			job.isFavorite = !isFavorite
 			CoreDataHelper.save()
 		}
 	}

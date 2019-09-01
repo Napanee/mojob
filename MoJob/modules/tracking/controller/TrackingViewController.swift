@@ -21,9 +21,11 @@ class TrackingViewController: QuoJobSelections {
 		}
 
 		set {
-			guard let job = tracking?.job else { return }
+			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
 
+			currentJob.isFavorite = newValue
 			job.isFavorite = newValue
+			CoreDataHelper.save()
 
 			favoriteTracking.image = newValue ? self.starFilled : self.starEmpty
 		}
@@ -72,6 +74,10 @@ class TrackingViewController: QuoJobSelections {
 		nfc = false
 
 		GlobalTimer.shared.stopNoTrackingTimer()
+
+		let context = CoreDataHelper.mainContext
+		let notificationCenter = NotificationCenter.default
+		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
 	}
 
 	override func viewDidAppear() {
@@ -142,6 +148,19 @@ class TrackingViewController: QuoJobSelections {
 
 	@IBAction func favoriteTracking(_ sender: NSButton) {
 		isFavorite = sender.state == .on
+	}
+
+	// MARK: - Observer
+
+	@objc func managedObjectContextDidSave(notification: NSNotification) {
+		guard let userInfo = notification.userInfo else { return }
+
+		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+			if let job = updates.first as? Job, job.id == tracking?.job?.id {
+				favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
+				favoriteTracking.state = job.isFavorite ? .on : .off
+			}
+		}
 	}
 
 }
