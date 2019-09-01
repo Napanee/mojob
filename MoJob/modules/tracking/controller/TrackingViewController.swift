@@ -69,8 +69,6 @@ class TrackingViewController: QuoJobSelections {
 			favoriteTracking.isHidden = true
 		}
 
-		taskSelect.font = NSFont.systemFont(ofSize: 14, weight: .light)
-
 		nfc = false
 
 		GlobalTimer.shared.stopNoTrackingTimer()
