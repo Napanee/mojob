@@ -138,11 +138,21 @@ class QuoJobSelections: NSViewController {
 	}
 
 	private func initEndDate() {
-		if let dateEnd = tracking?.date_end {
-			let hour = Calendar.current.component(.hour, from: dateEnd)
-			untilHour?.stringValue = String(format: "%02d", hour)
-			let minute = Calendar.current.component(.minute, from: dateEnd)
-			untilMinute?.stringValue = String(format: "%02d", minute)
+		guard let dateEnd = tracking?.date_end else { return }
+
+		let hour = Calendar.current.component(.hour, from: dateEnd)
+		untilHour?.stringValue = String(format: "%02d", hour)
+		let minute = Calendar.current.component(.minute, from: dateEnd)
+		untilMinute?.stringValue = String(format: "%02d", minute)
+
+		if let dateStart = tracking?.date_start {
+			var comp = Calendar.current.dateComponents([.year, .month, .day], from: dateStart)
+			comp.hour = hour
+			comp.minute = minute
+
+			if let newEndDate = Calendar.current.date(from: comp) {
+				tracking?.date_end = newEndDate
+			}
 		}
 	}
 
