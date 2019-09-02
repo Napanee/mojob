@@ -399,7 +399,7 @@ extension QuoJob {
 		var params = defaultParams
 
 		if let trackings = try? taskContext.fetch(fetchRequest) as? [Tracking], let tracking = trackings.first, let lastSync = tracking.sync {
-			params["last_sync"] = dateFormatterFull.string(from: lastSync)
+			params["last_sync"] = dateFormatterFull.string(from: lastSync.addingTimeInterval(-7200)) // subtract 2 hours, because quojob ist stupid...
 		}
 
 		return fetch(as: .myTime_getHourbookingChanges, with: params)
@@ -418,7 +418,7 @@ extension QuoJob {
 		]
 
 		if let trackings = try? taskContext.fetch(fetchRequest) as? [Tracking], let tracking = trackings.first, let lastSync = tracking.sync {
-			params["last_sync"] = dateFormatterFull.string(from: lastSync)
+			params["last_sync"] = dateFormatterFull.string(from: lastSync.addingTimeInterval(-7200)) // subtract 2 hours, because quojob ist stupid...
 		}
 
 		return fetch(as: .myTime_getHourbookings, with: params)
