@@ -56,6 +56,7 @@
 		E850997822F7078C00068ED8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997722F7078C00068ED8 /* SettingsViewController.swift */; };
 		E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E850997922F708E600068ED8 /* SettingsViewController.xib */; };
 		E850998222F7578200068ED8 /* ComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850998122F7578200068ED8 /* ComboBox.swift */; };
+		E85FFC23231C7300006CA1CB /* MoJob-3.5.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */; };
 		E863305D2245863600A8E946 /* PopUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305C2245863600A8E946 /* PopUpCell.swift */; };
 		E86330602247AC1B00A8E946 /* QuoJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305F2247AC1B00A8E946 /* QuoJob.swift */; };
 		E863306522481BED00A8E946 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E863306422481BED00A8E946 /* Login.xib */; };
@@ -202,6 +203,7 @@
 		E850997722F7078C00068ED8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E850997922F708E600068ED8 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		E850998122F7578200068ED8 /* ComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboBox.swift; sourceTree = "<group>"; };
+		E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.5.0.html"; sourceTree = "<group>"; };
 		E863305C2245863600A8E946 /* PopUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCell.swift; sourceTree = "<group>"; };
 		E863305F2247AC1B00A8E946 /* QuoJob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJob.swift; sourceTree = "<group>"; };
 		E863306422481BED00A8E946 /* Login.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				E86A741B2305E99500C77866 /* MoJob-3.2.1.html */,
 				E8A926F4230A819A004E0F04 /* MoJob-3.3.0.html */,
 				E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */,
+				E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -978,6 +981,7 @@
 				E840F96E230402B600923A47 /* MoJob-3.0.3.html in Resources */,
 				E82117D7220E1B04003D7578 /* JobListController.xib in Resources */,
 				E86A741C2305E99500C77866 /* MoJob-3.2.1.html in Resources */,
+				E85FFC23231C7300006CA1CB /* MoJob-3.5.0.html in Resources */,
 				E81E75E923033E900071B90C /* ExportOptions.plist in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
 				E8C07F72230CA74600299DC4 /* MoJob-3.4.0.html in Resources */,
