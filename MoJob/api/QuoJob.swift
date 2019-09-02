@@ -449,7 +449,7 @@ extension QuoJob {
 					let internalService = item["internal"] as! Bool
 					let productiveService = item["productive"] as! Bool
 
-					if let type = CoreDataHelper.types().first(where: { $0.id == id }) {
+					if let type = CoreDataHelper.types(in: self.taskContext).first(where: { $0.id == id }) {
 						type.title = title
 						type.active = active
 						type.internal_service = internalService
@@ -503,10 +503,9 @@ extension QuoJob {
 					let typeId = item["job_type_id"] as! String
 					let assigned_user_ids = item["assigned_user_ids"] as! [String]
 					let isAssigned = assigned_user_ids.contains(self.userId)
+					let type = CoreDataHelper.types(in: self.taskContext).first(where: { $0.id == typeId})
 
-					if let job = CoreDataHelper.jobs().first(where: { $0.id == id }) {
-						let type = CoreDataHelper.types().first(where: { $0.id == typeId})
-
+					if let job = CoreDataHelper.jobs(in: self.taskContext).first(where: { $0.id == id }) {
 						job.assigned = isAssigned
 						job.bookable = bookable
 						job.number = number
@@ -514,10 +513,6 @@ extension QuoJob {
 						job.type = type
 						job.sync = syncDate
 					} else {
-						let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Type")
-						fetchRequest.predicate = NSPredicate(format: "id == %@", argumentArray: [typeId])
-						let type = (try? self.taskContext.fetch(fetchRequest) as? [Type])?.first
-
 						let entity = NSEntityDescription.entity(forEntityName: "Job", in: self.taskContext)
 						let job = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let jobValues: [String: Any] = [
@@ -622,6 +617,9 @@ extension QuoJob {
 					let activityId = item["activity_id"] as? String
 					let done = item["done"] as! Bool
 
+					let job = CoreDataHelper.jobs(in: self.taskContext).first(where: { $0.id == jobId })
+					let activity = CoreDataHelper.activities(in: self.taskContext).first(where: { $0.id == activityId })
+
 					var hoursPlaned = Double()
 					if let hours_planed = item["hours_planed"] as? NSString {
 						hoursPlaned = hours_planed.doubleValue
@@ -637,9 +635,6 @@ extension QuoJob {
 					}
 
 					if let task = CoreDataHelper.tasks().first(where: { $0.id == id }) {
-						let job = CoreDataHelper.jobs().first(where: { $0.id == jobId })
-						let activity = CoreDataHelper.activities().first(where: { $0.id == activityId })
-
 						task.title = title
 						task.hours_planed = hoursPlaned
 						task.hours_booked = hoursBooked
@@ -648,9 +643,6 @@ extension QuoJob {
 						task.done = done
 						task.sync = syncDate
 					} else {
-						guard let job = jobsBackground?.first(where: { $0.id == jobId }) else { continue }
-						let activity = activitiesBackground?.first(where: { $0.id == activityId })
-
 						let entity = NSEntityDescription.entity(forEntityName: "Task", in: self.taskContext)
 						let task = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let taskValues: [String: Any] = [
@@ -753,23 +745,22 @@ extension QuoJob {
 					}
 
 					var jobObject: Job? = nil
+					if let jobId = item["job_id"] as? String, let job = jobsBackground?.first(where: { $0.id == jobId }) {
+						jobObject = job
+					}
+
 					var activityObject: Activity? = nil
+					if let activityId = item["activity_id"] as? String, let activity = activitiesBackground?.first(where: { $0.id == activityId }) {
+						activityObject = activity
+					}
+
 					var taskObject: Task? = nil
+					if let taskId = item["jobtask_id"] as? String, let task = tasksBackground?.first(where: { $0.id == taskId }) {
+						taskObject = task
+					}
 
-					if let tracking = CoreDataHelper.trackings().first(where: { $0.id == id }) {
+					if let tracking = CoreDataHelper.trackings(in: self.taskContext).first(where: { $0.id == id }) {
 //						tracking.deleteLocal()
-						if let jobId = item["job_id"] as? String, let job = CoreDataHelper.jobs().first(where: { $0.id == jobId }) {
-							jobObject = job
-						}
-
-						if let activityId = item["activity_id"] as? String, let activity = CoreDataHelper.activities().first(where: { $0.id == activityId }) {
-							activityObject = activity
-						}
-
-						if let taskId = item["jobtask_id"] as? String, let task = CoreDataHelper.tasks().first(where: { $0.id == taskId }) {
-							taskObject = task
-						}
-
 						let comment = text != "" ? text : nil
 
 						tracking.job = jobObject
@@ -781,18 +772,6 @@ extension QuoJob {
 						tracking.exported = SyncStatus.success.rawValue
 						tracking.sync = syncDate
 					} else {
-						if let jobId = item["job_id"] as? String, let job = jobsBackground?.first(where: { $0.id == jobId }) {
-							jobObject = job
-						}
-
-						if let activityId = item["activity_id"] as? String, let activity = activitiesBackground?.first(where: { $0.id == activityId }) {
-							activityObject = activity
-						}
-
-						if let taskId = item["jobtask_id"] as? String, let task = tasksBackground?.first(where: { $0.id == taskId }) {
-							taskObject = task
-						}
-
 						let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.taskContext)
 						let tracking = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let trackingValues: [String: Any?] = [
