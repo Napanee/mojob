@@ -759,35 +759,35 @@ extension QuoJob {
 						taskObject = task
 					}
 
-					if let tracking = CoreDataHelper.trackings(in: self.taskContext).first(where: { $0.id == id }) {
-//						tracking.deleteLocal()
-						let comment = text != "" ? text : nil
-
-						tracking.job = jobObject
-						tracking.task = taskObject
-						tracking.activity = activityObject
-						tracking.date_start = dateStart
-						tracking.date_end = dateEnd
-						tracking.comment = comment
-						tracking.exported = SyncStatus.success.rawValue
-						tracking.sync = syncDate
-					} else {
-						let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.taskContext)
-						let tracking = NSManagedObject(entity: entity!, insertInto: self.taskContext)
-						let trackingValues: [String: Any?] = [
-							"id": id,
-							"job": jobObject,
-							"task": taskObject,
-							"activity": activityObject,
-							"date_start": dateStart,
-							"date_end": dateEnd,
-							"comment": text != "" ? text : nil,
-							"exported": SyncStatus.success.rawValue,
-							"sync": syncDate
-						]
-
-						tracking.setValuesForKeys(trackingValues as [String: Any])
+					if let tracking = CoreDataHelper.trackings().first(where: { $0.id == id }) {
+						tracking.deleteLocal()
 					}
+//						let comment = text != "" ? text : nil
+//
+//						tracking.job = jobObject
+//						tracking.task = taskObject
+//						tracking.activity = activityObject
+//						tracking.date_start = dateStart
+//						tracking.date_end = dateEnd
+//						tracking.comment = comment
+//						tracking.exported = SyncStatus.success.rawValue
+//						tracking.sync = syncDate
+//					} else {
+					let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.taskContext)
+					let tracking = NSManagedObject(entity: entity!, insertInto: self.taskContext)
+					let trackingValues: [String: Any?] = [
+						"id": id,
+						"job": jobObject,
+						"task": taskObject,
+						"activity": activityObject,
+						"date_start": dateStart,
+						"date_end": dateEnd,
+						"comment": text != "" ? text : nil,
+						"exported": SyncStatus.success.rawValue,
+						"sync": syncDate
+					]
+
+					tracking.setValuesForKeys(trackingValues as [String: Any])
 				}
 
 				do {
