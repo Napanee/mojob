@@ -249,8 +249,7 @@ extension QuoJob {
 			self.userId = userId
 			self.sessionId = sessionId
 
-			//			Crashlytics.sharedInstance().setUserName(userName)
-			//			Answers.logLogin(withMethod: "userData", success: true, customAttributes: [:])
+			Crashlytics.sharedInstance().setUserName(userName)
 		}
 	}
 
