@@ -8,6 +8,7 @@
 
 import PromiseKit
 import Alamofire
+import Crashlytics
 import Foundation
 import KeychainAccess
 
