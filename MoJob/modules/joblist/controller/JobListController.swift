@@ -232,6 +232,9 @@ extension JobListController: FilterFieldDelegate {
 				tracking.custom_job = filterField.stringValue
 			}
 
+			filterField.stringValue = ""
+			onTextChange(with: "")
+
 			(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
 		}
 
