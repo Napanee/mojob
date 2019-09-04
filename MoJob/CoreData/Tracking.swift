@@ -41,6 +41,8 @@ extension Tracking {
 				return
 			} else {
 				managedObjectContext?.reset()
+
+				NotificationCenter.default.post(name: NSNotification.Name(rawValue: "counter:tick"), object: nil)
 			}
 		} else {
 			let date = dateEnd ?? Date()
