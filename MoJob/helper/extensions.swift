@@ -84,6 +84,8 @@ extension UserDefaults.Keys {
 	static let notificationDaycomplete = "notification:daycomplete"
 	static let activity = "activity"
 	static let badgeIconLabel = "badgeIconLabel"
+	static let syncOnStart = "syncOnStart"
+	static let crashOnSync = "crashOnSync"
 }
 
 extension NSImage {

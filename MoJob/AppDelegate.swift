@@ -35,6 +35,7 @@ class AppDelegate: NSObject {
 	var mainWindowController: MainWindowController?
 	var hasInternalConnection: Bool = false
 	var hasExternalConnection: Bool = false
+	var userDefaults = UserDefaults()
 
 	private var timerSleep: Date?
 
@@ -57,9 +58,16 @@ class AppDelegate: NSObject {
 			}).catch({ _ in })
 		}
 
-//		QuoJob.shared.syncData().catch { error in
-//			GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Synchronisieren", andInformationtext: error.localizedDescription)
-//		}
+		if (
+			(userDefaults.object(forKey: UserDefaults.Keys.crashOnSync) == nil || !userDefaults.bool(forKey: UserDefaults.Keys.crashOnSync)) &&
+			(userDefaults.object(forKey: UserDefaults.Keys.syncOnStart) == nil || userDefaults.bool(forKey: UserDefaults.Keys.syncOnStart)))
+		{
+			QuoJob.shared.syncData().catch { error in
+				GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Synchronisieren", andInformationtext: error.localizedDescription)
+			}
+		}
+
+		userDefaults.set(true, forKey: UserDefaults.Keys.crashOnSync)
 
 		PFMoveToApplicationsFolderIfNecessary()
 
@@ -231,7 +239,7 @@ extension AppDelegate: NSApplicationDelegate {
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {
-		// Insert code here to tear down your application
+		userDefaults.set(false, forKey: UserDefaults.Keys.crashOnSync)
 	}
 
 	//	@IBAction func saveAction(_ sender: AnyObject?) {

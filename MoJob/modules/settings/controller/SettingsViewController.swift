@@ -14,6 +14,7 @@ class SettingsViewController: NSViewController {
 	@IBOutlet weak var activitySelect: NSComboBox!
 	@IBOutlet weak var autoLaunchCheckbox: NSButton!
 	@IBOutlet weak var badgeIconLabel: NSButton!
+	@IBOutlet weak var syncOnStartCheckbox: NSButton!
 	@IBOutlet weak var noTrackingNotification: TextField!
 	@IBOutlet weak var dayCompleteNotification: TextField!
 	@IBOutlet weak var extendSettings: NSView!
@@ -57,6 +58,12 @@ class SettingsViewController: NSViewController {
 			badgeIconLabel.state = .on
 		} else {
 			badgeIconLabel.state = .off
+		}
+
+		if (userDefaults.object(forKey: UserDefaults.Keys.syncOnStart) == nil || userDefaults.bool(forKey: UserDefaults.Keys.syncOnStart)) {
+			syncOnStartCheckbox.state = .on
+		} else {
+			syncOnStartCheckbox.state = .off
 		}
 
 		let noTrackingValue = userDefaults.integer(forKey: UserDefaults.Keys.notificationNotracking)
@@ -110,6 +117,10 @@ class SettingsViewController: NSViewController {
 
 	@IBAction func toggleBadgIconLabel(_ sender: NSButton) {
 		userDefaults.set(sender.state == .on, forKey: UserDefaults.Keys.badgeIconLabel)
+	}
+
+	@IBAction func toggleSyncOnStart(_ sender: NSButton) {
+		userDefaults.set(sender.state == .on, forKey: UserDefaults.Keys.syncOnStart)
 	}
 
 	@IBAction func resetData(_ sender: NSButton) {
