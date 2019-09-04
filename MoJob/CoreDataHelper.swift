@@ -23,6 +23,7 @@ class CoreDataHelper {
 		let parent = CoreDataHelper.mainContext
 		let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
 
+		context.automaticallyMergesChangesFromParent = true
 		context.parent = parent
 
 		return context
@@ -32,6 +33,7 @@ class CoreDataHelper {
 		let parent = CoreDataHelper.mainContext
 		let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
 
+		context.automaticallyMergesChangesFromParent = true
 		context.parent = parent
 
 		return context

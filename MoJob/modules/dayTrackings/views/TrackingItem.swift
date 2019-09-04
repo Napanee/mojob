@@ -245,19 +245,10 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onContextToggleFavorite() {
-		if let isFavorite = tracking?.job?.isFavorite {
-			tracking?.job?.isFavorite = !isFavorite
+		guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
+		job.isFavorite = !job.isFavorite
 
-			if (tracking?.managedObjectContext == CoreDataHelper.mainContext) {
-				guard let currentJob = tracking?.job, let job = CoreDataHelper.currentTrackingContext.object(with: currentJob.objectID) as? Job else { return }
-				job.isFavorite = !isFavorite
-			} else {
-				guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
-				job.isFavorite = !isFavorite
-			}
-
-			CoreDataHelper.save()
-		}
+		CoreDataHelper.save()
 	}
 
 	@objc func onContextDelete() {
@@ -273,15 +264,8 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onContextResetColor() {
-		tracking?.job?.color = nil
-
-		if (tracking?.managedObjectContext == CoreDataHelper.mainContext) {
-			guard let currentJob = tracking?.job, let job = CoreDataHelper.currentTrackingContext.object(with: currentJob.objectID) as? Job else { return }
-			job.color = nil
-		} else {
-			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
-			job.color = nil
-		}
+		guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
+		job.color = nil
 
 		CoreDataHelper.save()
 	}
@@ -303,16 +287,9 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onSelectColor(_ sender: NSButton) {
-		if let button = sender as? ColorButton, let job = tracking?.job {
+		if let button = sender as? ColorButton {
+			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
 			job.color = button.key
-
-			if (tracking?.managedObjectContext == CoreDataHelper.mainContext) {
-				guard let currentJob = tracking?.job, let job = CoreDataHelper.currentTrackingContext.object(with: currentJob.objectID) as? Job else { return }
-				job.color = button.key
-			} else {
-				guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
-				job.color = button.key
-			}
 
 			CoreDataHelper.save()
 			rightClickMenu.cancelTracking()
