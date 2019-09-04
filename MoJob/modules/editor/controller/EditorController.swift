@@ -49,6 +49,7 @@ class EditorController: QuoJobSelections {
 	}
 	
 	@IBAction func cancel(_ sender: NSButton) {
+		tracking?.managedObjectContext?.rollback()
 		removeFromParent()
 	}
 
