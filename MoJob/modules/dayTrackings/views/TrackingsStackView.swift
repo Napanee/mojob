@@ -27,7 +27,7 @@ class TrackingsStackView: NSStackView {
 			endTime = tracking.date_end ?? Date()
 		}
 
-		if let date = currentDate.compare(endTime) == .orderedSame ? currentDate.endOfDay : currentDate, let until = Calendar.current.date(byAdding: .minute, value: -1, to: date) {
+		if let date = currentDate.compare(endTime) == .orderedSame ? currentDate.endOfDay : Date(), let until = Calendar.current.date(byAdding: .minute, value: -1, to: date) {
 			insertAddButton(from: endTime, until: Calendar.current.date(bySetting: .second, value: 0, of: until)!)
 		}
 	}
