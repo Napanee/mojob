@@ -153,7 +153,7 @@ extension Date {
 	}
 
 	var endOfDay: Date? {
-		return Calendar.current.date(byAdding: .day, value: 1, to: self.startOfDay!)
+		return Calendar.current.date(bySettingHour: 23, minute: 59, second: 0, of: self)
 	}
 
 	var startOfWeek: Date? {

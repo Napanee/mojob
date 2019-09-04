@@ -26,7 +26,7 @@ class DayTrackingsController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		changeDate(with: Date())
+		changeDate(with: currentDate)
 
 		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
@@ -57,7 +57,8 @@ class DayTrackingsController: NSViewController {
 
 			if let trackings = CoreDataHelper.trackings(from: date, byAdding: .day, and: self.filteredJob) {
 				self.graphView.trackings = trackings
-				self.trackingsStackView.currentDate = date
+				let calendar = Calendar.current
+				self.trackingsStackView.currentDate = calendar.isDateInToday(date) ? Date() : date
 
 				DispatchQueue.main.async {
 					self.trackingsStackView.reloadData(with: trackings)
