@@ -21,11 +21,15 @@ class GraphView: NSView {
 	var trackings: [Tracking]? {
 		didSet {
 			if let trackingArea = trackingArea {
-				removeTrackingArea(trackingArea)
-				self.trackingArea = nil
+				DispatchQueue.main.async {
+					self.removeTrackingArea(trackingArea)
+					self.trackingArea = nil
+				}
 			}
 
-			needsDisplay = true
+			DispatchQueue.main.async {
+				self.needsDisplay = true
+			}
 		}
 	}
 	var userDefaults = UserDefaults()

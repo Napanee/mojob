@@ -62,6 +62,7 @@ class QuoJob: NSObject {
 	}
 
 	func fetch(as method: QuoJob.Method, with params: [String: Any]) -> Promise<[String: Any]> {
+		print("fetch \(method)")
 		let utilityQueue = DispatchQueue.global(qos: .utility)
 		let parameters: [String: Any] = [
 			"jsonrpc": "2.0",
@@ -449,13 +450,17 @@ extension QuoJob {
 					let internalService = item["internal"] as! Bool
 					let productiveService = item["productive"] as! Bool
 
+					print("task \(id)")
+
 					if let type = CoreDataHelper.types(in: self.taskContext).first(where: { $0.id == id }) {
+						print("existing")
 						type.title = title
 						type.active = active
 						type.internal_service = internalService
 						type.productive_service = productiveService
 						type.sync = syncDate
 					} else {
+						print("neu")
 						let entity = NSEntityDescription.entity(forEntityName: "Type", in: self.taskContext)
 						let type = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let typeValues: [String: Any] = [
@@ -505,7 +510,10 @@ extension QuoJob {
 					let isAssigned = assigned_user_ids.contains(self.userId)
 					let type = CoreDataHelper.types(in: self.taskContext).first(where: { $0.id == typeId})
 
+					print("job \(id)")
+
 					if let job = CoreDataHelper.jobs(in: self.taskContext).first(where: { $0.id == id }) {
+						print("existing")
 						job.assigned = isAssigned
 						job.bookable = bookable
 						job.number = number
@@ -513,6 +521,7 @@ extension QuoJob {
 						job.type = type
 						job.sync = syncDate
 					} else {
+						print("neu")
 						let entity = NSEntityDescription.entity(forEntityName: "Job", in: self.taskContext)
 						let job = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let jobValues: [String: Any] = [
@@ -557,13 +566,17 @@ extension QuoJob {
 					let external_service = item["external_service"] as! Bool
 					let nfc = item["nfc"] as! Bool
 
-					if let activity = CoreDataHelper.activities().first(where: { $0.id == id }) {
+					print("activity \(id)")
+
+					if let activity = CoreDataHelper.activities(in: self.taskContext).first(where: { $0.id == id }) {
+						print("existing")
 						activity.title = title
 						activity.internal_service = internal_service
 						activity.external_service = external_service
 						activity.nfc = nfc
 						activity.sync = syncDate
 					} else {
+						print("neu")
 						let entity = NSEntityDescription.entity(forEntityName: "Activity", in: self.taskContext)
 						let activity = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let activityValues: [String: Any] = [
@@ -597,25 +610,21 @@ extension QuoJob {
 
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
-			let jobsAll = CoreDataHelper.jobs().filter({ $0.assigned && $0.bookable }).map({ $0.id })
+			let jobsAll = CoreDataHelper.jobs(in: self.taskContext).filter({ $0.assigned && $0.bookable }).map({ $0.id })
 			let tasks = taskItems.filter({ jobsAll.contains($0["job_id"] as? String) && !($0["done"] as? Bool ?? true) })
 			if (tasks.count > 0) {
 				self.results.append(["type": "tasks", "order": 2, "text": "\(String(tasks.count)) Aufgaben"])
 			}
 
 			self.taskContext.perform {
-				let fetchRequestJob = NSFetchRequest<NSFetchRequestResult>(entityName: "Job")
-				let jobsBackground = try? self.taskContext.fetch(fetchRequestJob) as? [Job]
-
-				let fetchRequestActivity = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
-				let activitiesBackground = try? self.taskContext.fetch(fetchRequestActivity) as? [Activity]
-
 				for item in taskItems {
 					let id = item["id"] as! String
 					let title = item["subject"] as! String
 					let jobId = item["job_id"] as? String
 					let activityId = item["activity_id"] as? String
 					let done = item["done"] as! Bool
+
+					print("task \(id)")
 
 					let job = CoreDataHelper.jobs(in: self.taskContext).first(where: { $0.id == jobId })
 					let activity = CoreDataHelper.activities(in: self.taskContext).first(where: { $0.id == activityId })
@@ -634,7 +643,8 @@ extension QuoJob {
 						hoursBooked = hours_booked
 					}
 
-					if let task = CoreDataHelper.tasks().first(where: { $0.id == id }) {
+					if let task = CoreDataHelper.tasks(in: self.taskContext).first(where: { $0.id == id }) {
+						print("existing")
 						task.title = title
 						task.hours_planed = hoursPlaned
 						task.hours_booked = hoursBooked
@@ -643,6 +653,7 @@ extension QuoJob {
 						task.done = done
 						task.sync = syncDate
 					} else {
+						print("neu")
 						let entity = NSEntityDescription.entity(forEntityName: "Task", in: self.taskContext)
 						let task = NSManagedObject(entity: entity!, insertInto: self.taskContext)
 						let taskValues: [String: Any] = [
@@ -726,6 +737,8 @@ extension QuoJob {
 					let timeUntil = item["time_until"] as! String
 					let text = item["text"] as! String
 
+					print("tracking \(id)")
+
 					if let timeInterval = self.dateFormatterFull.date(from: date)?.timeIntervalSince1970, timeInterval < 0 {
 						date = item["date_created"] as! String
 					}
@@ -759,35 +772,36 @@ extension QuoJob {
 						taskObject = task
 					}
 
-					if let tracking = CoreDataHelper.trackings().first(where: { $0.id == id }) {
-						tracking.deleteLocal()
-					}
-//						let comment = text != "" ? text : nil
-//
-//						tracking.job = jobObject
-//						tracking.task = taskObject
-//						tracking.activity = activityObject
-//						tracking.date_start = dateStart
-//						tracking.date_end = dateEnd
-//						tracking.comment = comment
-//						tracking.exported = SyncStatus.success.rawValue
-//						tracking.sync = syncDate
-//					} else {
-					let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.taskContext)
-					let tracking = NSManagedObject(entity: entity!, insertInto: self.taskContext)
-					let trackingValues: [String: Any?] = [
-						"id": id,
-						"job": jobObject,
-						"task": taskObject,
-						"activity": activityObject,
-						"date_start": dateStart,
-						"date_end": dateEnd,
-						"comment": text != "" ? text : nil,
-						"exported": SyncStatus.success.rawValue,
-						"sync": syncDate
-					]
+					if let tracking = CoreDataHelper.trackings(in: self.taskContext).first(where: { $0.id == id }) {
+						print("existing")
+						let comment = text != "" ? text : nil
 
-					tracking.setValuesForKeys(trackingValues as [String: Any])
+						tracking.job = jobObject
+						tracking.task = taskObject
+						tracking.activity = activityObject
+						tracking.date_start = dateStart
+						tracking.date_end = dateEnd
+						tracking.comment = comment
+						tracking.exported = SyncStatus.success.rawValue
+						tracking.sync = syncDate
+					} else {
+						print("neu")
+						let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: self.taskContext)
+						let tracking = NSManagedObject(entity: entity!, insertInto: self.taskContext)
+						let trackingValues: [String: Any?] = [
+							"id": id,
+							"job": jobObject,
+							"task": taskObject,
+							"activity": activityObject,
+							"date_start": dateStart,
+							"date_end": dateEnd,
+							"comment": text != "" ? text : nil,
+							"exported": SyncStatus.success.rawValue,
+							"sync": syncDate
+						]
+
+						tracking.setValuesForKeys(trackingValues as [String: Any])
+					}
 				}
 
 				do {

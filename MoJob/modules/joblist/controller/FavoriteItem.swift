@@ -47,7 +47,9 @@ class FavoriteItem: NSCollectionViewItem {
 
 	override func viewDidDisappear() {
 		if let trackingArea = trackingArea {
-			view.removeTrackingArea(trackingArea)
+			DispatchQueue.main.async {
+				self.view.removeTrackingArea(trackingArea)
+			}
 		}
 	}
 

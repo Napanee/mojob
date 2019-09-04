@@ -96,22 +96,28 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
 			if (inserts.contains(where: { $0.isKind(of: Job.self) })) {
-				reloadFavorites()
-				reloadJobs()
+				DispatchQueue.main.async {
+					self.reloadFavorites()
+					self.reloadJobs()
+				}
 			}
 		}
 
 		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
 			if (updates.contains(where: { $0.isKind(of: Job.self) })) {
-				reloadFavorites()
-				reloadJobs()
+				DispatchQueue.main.async {
+					self.reloadFavorites()
+					self.reloadJobs()
+				}
 			}
 		}
 
 		if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
 			if (deletes.contains(where: { $0.isKind(of: Job.self) })) {
-				reloadFavorites()
-				reloadJobs()
+				DispatchQueue.main.async {
+					self.reloadFavorites()
+					self.reloadJobs()
+				}
 			}
 		}
 	}
@@ -134,22 +140,28 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 			self.jobListSelectedIndex = nil
 		}
 
-		jobsCollectionView.reloadData()
+		DispatchQueue.main.async {
+			self.jobsCollectionView.reloadData()
 
-		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
-			let heightJobsCollection = jobsCollectionView.collectionViewLayout?.collectionViewContentSize.height {
-			favoritesCollectionHeight.constant = heightFavoritesCollection
-			jobsCollectionHeight.constant = heightJobsCollection
+			if
+				let heightFavoritesCollection = self.favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height,
+				let heightJobsCollection = self.jobsCollectionView.collectionViewLayout?.collectionViewContentSize.height
+			{
+				self.favoritesCollectionHeight.constant = heightFavoritesCollection
+				self.jobsCollectionHeight.constant = heightJobsCollection
+			}
 		}
 	}
 
 	func onDismiss() {
 		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
 
-		favoritesCollectionView.reloadData()
+		DispatchQueue.main.async {
+			self.favoritesCollectionView.reloadData()
 
-		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
-			favoritesCollectionHeight.constant = heightFavoritesCollection
+			if let heightFavoritesCollection = self.favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
+				self.favoritesCollectionHeight.constant = heightFavoritesCollection
+			}
 		}
 	}
 
@@ -425,10 +437,12 @@ extension JobListController: NSCollectionViewDataSource, FavoritesItemDelegate {
 	func onDeleteFavorite() {
 		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
 
-		favoritesCollectionView.reloadData()
+		DispatchQueue.main.async {
+			self.favoritesCollectionView.reloadData()
 
-		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
-			favoritesCollectionHeight.constant = heightFavoritesCollection
+			if let heightFavoritesCollection = self.favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
+				self.favoritesCollectionHeight.constant = heightFavoritesCollection
+			}
 		}
 	}
 
