@@ -248,8 +248,14 @@ class TrackingItem: NSView {
 		if let isFavorite = tracking?.job?.isFavorite {
 			tracking?.job?.isFavorite = !isFavorite
 
-			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
-			job.isFavorite = !isFavorite
+			if (tracking?.managedObjectContext == CoreDataHelper.mainContext) {
+				guard let currentJob = tracking?.job, let job = CoreDataHelper.currentTrackingContext.object(with: currentJob.objectID) as? Job else { return }
+				job.isFavorite = !isFavorite
+			} else {
+				guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
+				job.isFavorite = !isFavorite
+			}
+
 			CoreDataHelper.save()
 		}
 	}
@@ -268,6 +274,15 @@ class TrackingItem: NSView {
 
 	@objc func onContextResetColor() {
 		tracking?.job?.color = nil
+
+		if (tracking?.managedObjectContext == CoreDataHelper.mainContext) {
+			guard let currentJob = tracking?.job, let job = CoreDataHelper.currentTrackingContext.object(with: currentJob.objectID) as? Job else { return }
+			job.color = nil
+		} else {
+			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
+			job.color = nil
+		}
+
 		CoreDataHelper.save()
 	}
 
@@ -290,6 +305,15 @@ class TrackingItem: NSView {
 	@objc func onSelectColor(_ sender: NSButton) {
 		if let button = sender as? ColorButton, let job = tracking?.job {
 			job.color = button.key
+
+			if (tracking?.managedObjectContext == CoreDataHelper.mainContext) {
+				guard let currentJob = tracking?.job, let job = CoreDataHelper.currentTrackingContext.object(with: currentJob.objectID) as? Job else { return }
+				job.color = button.key
+			} else {
+				guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
+				job.color = button.key
+			}
+
 			CoreDataHelper.save()
 			rightClickMenu.cancelTracking()
 		}
