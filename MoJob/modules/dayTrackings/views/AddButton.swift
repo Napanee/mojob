@@ -42,21 +42,18 @@ class AddButton: NSView {
 	}
 
 	@IBAction func addTracking(_ sender: NSButton) {
-		if
-			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController,
-			let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.backgroundContext)
-		{
-			tracking.date_start = from
-			tracking.date_end = until
+		guard let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController, let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.backgroundContext) else { return }
 
-			let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
-			editor.tracking = tracking
-			let splitViewItem = NSSplitViewItem(viewController: editor)
-			splitViewItem.isCollapsed = true
+		tracking.date_start = from
+		tracking.date_end = until
 
-			daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
-			daySplitViewController.collapsePanel(0)
-		}
+		let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
+		editor.tracking = tracking
+		let splitViewItem = NSSplitViewItem(viewController: editor)
+		splitViewItem.isCollapsed = true
+
+		daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
+		daySplitViewController.collapsePanel(0)
 	}
 
 }

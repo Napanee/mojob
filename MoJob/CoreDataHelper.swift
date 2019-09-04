@@ -219,6 +219,8 @@ extension CoreDataHelper {
 			currentTracking.stop()
 		}
 
+		if let _ = currentTracking { return nil }
+
 		let context = (context ?? self.mainContext)
 		let entity = NSEntityDescription.entity(forEntityName: "Tracking", in: context)
 		let tracking = NSManagedObject(entity: entity!, insertInto: context)

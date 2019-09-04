@@ -25,16 +25,35 @@ extension Tracking {
 	}
 
 	func stop(dateEnd: Date? = nil) {
-		let date = dateEnd ?? Date()
+		if let date_start = date_start, Date().timeIntervalSince(date_start) < 60 {
+			let question = "Tracking wird verworfen. Möchtest du fortfahren?"
+			let info = "QuoJob akzeptiert nur Trackings, die mindestens eine Minute dauern."
+			let confirmButton = "Tracking verwerfen"
+			let cancelButton = "Abbrechen"
+			let alert = NSAlert()
+			alert.messageText = question
+			alert.informativeText = info
+			alert.addButton(withTitle: confirmButton)
+			alert.addButton(withTitle: cancelButton)
 
-		self.exported = SyncStatus.pending.rawValue
-		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date)
-		self.date_end = Calendar.current.date(bySetting: .second, value: 0, of: date)
+			let answer = alert.runModal()
+			if answer == .alertSecondButtonReturn {
+				return
+			} else {
+				managedObjectContext?.reset()
+			}
+		} else {
+			let date = dateEnd ?? Date()
 
-		CoreDataHelper.save(in: managedObjectContext)
+			self.exported = SyncStatus.pending.rawValue
+			self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date)
+			self.date_end = Calendar.current.date(bySetting: .second, value: 0, of: date)
 
-		if let _ = self.job {
-			self.export()
+			CoreDataHelper.save(in: managedObjectContext)
+
+			if let _ = self.job {
+				self.export()
+			}
 		}
 
 		GlobalTimer.shared.startNoTrackingTimer()

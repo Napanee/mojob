@@ -120,28 +120,7 @@ class TrackingViewController: QuoJobSelections {
 	@IBAction func stopTracking(_ sender: NSButton) {
 		guard let tracking = tracking else { return }
 
-		if (Date().timeIntervalSince(tracking.date_start!) < 60) {
-			let question = "Tracking wird verworfen. Möchtest du fortfahren?"
-			let info = "QuoJob akzeptiert nur Trackings, die mindestens eine Minute dauern."
-			let confirmButton = "Tracking verwerfen"
-			let cancelButton = "Abbrechen"
-			let alert = NSAlert()
-			alert.messageText = question
-			alert.informativeText = info
-			alert.addButton(withTitle: confirmButton)
-			alert.addButton(withTitle: cancelButton)
-
-			let answer = alert.runModal()
-			if answer == .alertSecondButtonReturn {
-				return
-			} else {
-				tracking.managedObjectContext?.reset()
-				GlobalTimer.shared.startNoTrackingTimer()
-				GlobalTimer.shared.stopTimer()
-			}
-		} else {
-			tracking.stop()
-		}
+		tracking.stop()
 	}
 
 	@IBAction func favoriteTracking(_ sender: NSButton) {

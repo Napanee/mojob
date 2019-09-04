@@ -223,13 +223,13 @@ extension JobListController: FilterFieldDelegate {
 		guard [125, 126, 36].contains(keyCode) else { return }
 
 		if (keyCode == 36) { // key enter
-			let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext)
+			guard let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) else { return }
 
 			if let currentItem = currentItem, let itemJob = currentItem.job {
 				let job = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
-				tracking?.job = job.first(where: { $0.id == itemJob.id })
+				tracking.job = job.first(where: { $0.id == itemJob.id })
 			} else {
-				tracking?.custom_job = filterField.stringValue
+				tracking.custom_job = filterField.stringValue
 			}
 
 			(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
