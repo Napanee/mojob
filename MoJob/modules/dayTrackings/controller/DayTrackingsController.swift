@@ -26,7 +26,7 @@ class DayTrackingsController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		changeDate(with: currentDate)
+		changeDate(with: Date())
 
 		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
