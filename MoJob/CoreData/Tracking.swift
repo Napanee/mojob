@@ -85,10 +85,10 @@ extension Tracking {
 	func export() {
 		guard let tracking = CoreDataHelper.tracking(with: objectID) else { return }
 
-		QuoJob.shared.exportTracking(tracking: self).done({ id in
+		QuoJob.shared.exportTracking(tracking: self).done({ (id, date) in
 			tracking.id = id
 			tracking.exported = SyncStatus.success.rawValue
-			tracking.sync = Calendar.current.date(bySetting: .nanosecond, value: 0, of: Date())
+			tracking.sync = date
 
 			CoreDataHelper.save()
 		}).catch { error in

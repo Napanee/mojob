@@ -132,7 +132,7 @@ class QuoJob: NSObject {
 		}
 	}
 
-	func exportTracking(tracking: Tracking) -> Promise<String> {
+	func exportTracking(tracking: Tracking) -> Promise<(id: String, timestamp: Date)> {
 		var id: String? = nil
 		var bookingTypeString: String! = "abw"
 		var activityId: String! = nil
@@ -165,7 +165,7 @@ class QuoJob: NSObject {
 				var params = self.defaultParams
 				params["hourbooking"] = [
 					"id": id,
-					"date": self.dateFormatterFull.string(from: tracking.date_start! as Date),
+					"date": self.dateFormatterFull.string(from: Date()),
 					"time_from": self.dateFormatterTime.string(from: tracking.date_start! as Date),
 					"time_until": self.dateFormatterTime.string(from: tracking.date_end! as Date),
 					"job_id": tracking.job?.id,
@@ -176,8 +176,8 @@ class QuoJob: NSObject {
 				]
 
 				self.fetch(as: .myTime_putHourbooking, with: params).done { result in
-					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String {
-						seal.fulfill(id)
+					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String, let timestamp = hourbooking["date_created"] as? String, let date = self.dateFormatterFull.date(from: timestamp) {
+						seal.fulfill((id: id, timestamp: date))
 					}
 				}.catch({ error in
 					GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Exportieren.", andInformationtext: error.localizedDescription)
