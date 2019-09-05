@@ -428,6 +428,8 @@ extension QuoJob {
 				return false
 			})
 
+			let types = CoreDataHelper.types(in: backgroundContext)
+
 			backgroundContext.perform {
 				for item in typeItems {
 					let id = item["id"] as! String
@@ -438,7 +440,7 @@ extension QuoJob {
 
 //					print("task \(id)")
 
-					if let type = CoreDataHelper.types(in: self.backgroundContext).first(where: { $0.id == id }) {
+					if let type = types.first(where: { $0.id == id }) {
 //						print("existing")
 						type.title = title
 						type.active = active
@@ -486,6 +488,9 @@ extension QuoJob {
 				results.append(["type": "jobs", "order": 1, "text": "\(String(newJobs.count)) Jobs"])
 			}
 
+			let types = CoreDataHelper.types(in: backgroundContext)
+			let jobs = CoreDataHelper.jobs(in: backgroundContext)
+
 			backgroundContext.perform {
 				for item in jobItems {
 					let id = item["id"] as! String
@@ -495,11 +500,11 @@ extension QuoJob {
 					let typeId = item["job_type_id"] as! String
 					let assigned_user_ids = item["assigned_user_ids"] as! [String]
 					let isAssigned = assigned_user_ids.contains(self.userId)
-					let type = CoreDataHelper.types(in: self.backgroundContext).first(where: { $0.id == typeId})
+					let type = types.first(where: { $0.id == typeId})
 
 //					print("job \(id)")
 
-					if let job = CoreDataHelper.jobs(in: self.backgroundContext).first(where: { $0.id == id }) {
+					if let job = jobs.first(where: { $0.id == id }) {
 //						print("existing")
 						job.assigned = isAssigned
 						job.bookable = bookable
@@ -546,7 +551,9 @@ extension QuoJob {
 
 			activityItems = activityItems.filter({ $0["active"] as? Bool ?? false })
 
-			self.backgroundContext.perform {
+			let activities = CoreDataHelper.activities(in: backgroundContext)
+
+			backgroundContext.perform {
 				for item in activityItems {
 					let id = item["id"] as! String
 					let title = item["name"] as! String
@@ -556,7 +563,7 @@ extension QuoJob {
 
 //					print("activity \(id)")
 
-					if let activity = CoreDataHelper.activities(in: self.backgroundContext).first(where: { $0.id == id }) {
+					if let activity = activities.first(where: { $0.id == id }) {
 //						print("existing")
 						activity.title = title
 						activity.internal_service = internal_service
@@ -599,24 +606,31 @@ extension QuoJob {
 			dateFormatterFull.timeZone = TimeZone.current
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
-			let jobsAll = CoreDataHelper.jobs(in: self.backgroundContext).filter({ $0.assigned && $0.bookable }).map({ $0.id })
-			let tasks = taskItems.filter({ jobsAll.contains($0["job_id"] as? String) && !($0["done"] as? Bool ?? true) })
-			if (tasks.count > 0) {
-				self.results.append(["type": "tasks", "order": 2, "text": "\(String(tasks.count)) Aufgaben"])
+			let jobsAll = CoreDataHelper.jobs(in: backgroundContext).filter({ $0.assigned && $0.bookable }).map({ $0.id })
+			let resultTasks = taskItems.filter({ jobsAll.contains($0["job_id"] as? String) && !($0["done"] as? Bool ?? true) })
+			if (resultTasks.count > 0) {
+				self.results.append(["type": "tasks", "order": 2, "text": "\(String(resultTasks.count)) Aufgaben"])
 			}
 
-			self.backgroundContext.perform {
+			let jobs = CoreDataHelper.jobs(in: backgroundContext)
+			let activities = CoreDataHelper.activities(in: backgroundContext)
+			let tasks = CoreDataHelper.tasks(in: backgroundContext)
+
+			backgroundContext.perform {
 				for item in taskItems {
 					let id = item["id"] as! String
 					let title = item["subject"] as! String
 					let jobId = item["job_id"] as? String
 					let activityId = item["activity_id"] as? String
-					let done = item["done"] as! Bool
+					let status = item["status"] as! String
+					let active = item["active"] as! Int
+					var done = item["done"] as! Bool
 
+					done = done || status != "active" || active != 1
 //					print("task \(id)")
 
-					let job = CoreDataHelper.jobs(in: self.backgroundContext).first(where: { $0.id == jobId })
-					let activity = CoreDataHelper.activities(in: self.backgroundContext).first(where: { $0.id == activityId })
+					let job = jobs.first(where: { $0.id == jobId })
+					let activity = activities.first(where: { $0.id == activityId })
 
 					var hoursPlaned = Double()
 					if let hours_planed = item["hours_planed"] as? NSString {
@@ -632,7 +646,7 @@ extension QuoJob {
 						hoursBooked = hours_booked
 					}
 
-					if let task = CoreDataHelper.tasks(in: self.backgroundContext).first(where: { $0.id == id }) {
+					if let task = tasks.first(where: { $0.id == id }) {
 //						print("existing")
 						task.title = title
 						task.hours_planed = hoursPlaned
@@ -676,9 +690,10 @@ extension QuoJob {
 				return
 			}
 
-			let jobsBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as? [Job]
-			let tasksBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as? [Task]
-			let activitiesBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
+			let jobsBackground = CoreDataHelper.jobs(in: backgroundContext)
+			let tasksBackground = CoreDataHelper.tasks(in: backgroundContext)
+			let activitiesBackground = CoreDataHelper.activities(in: backgroundContext)
+			let trackingsBackground = CoreDataHelper.trackings(in: backgroundContext)
 
 			dateFormatterFull.timeZone = TimeZone.current
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
@@ -687,7 +702,7 @@ extension QuoJob {
 				results.append(["type": "trackings", "order": 3, "text": "\(String(trackingItems.count)) Trackings"])
 			}
 
-			self.backgroundContext.perform {
+			backgroundContext.perform {
 				for item in trackingItems {
 					let id = item["id"] as! String
 					let quantity = item["quantity"] as! Double
@@ -718,21 +733,21 @@ extension QuoJob {
 					}
 
 					var jobObject: Job? = nil
-					if let jobId = item["job_id"] as? String, let job = jobsBackground?.first(where: { $0.id == jobId }) {
+					if let jobId = item["job_id"] as? String, let job = jobsBackground.first(where: { $0.id == jobId }) {
 						jobObject = job
 					}
 
 					var activityObject: Activity? = nil
-					if let activityId = item["activity_id"] as? String, let activity = activitiesBackground?.first(where: { $0.id == activityId }) {
+					if let activityId = item["activity_id"] as? String, let activity = activitiesBackground.first(where: { $0.id == activityId }) {
 						activityObject = activity
 					}
 
 					var taskObject: Task? = nil
-					if let taskId = item["jobtask_id"] as? String, let task = tasksBackground?.first(where: { $0.id == taskId }) {
+					if let taskId = item["jobtask_id"] as? String, let task = tasksBackground.first(where: { $0.id == taskId }) {
 						taskObject = task
 					}
 
-					if let tracking = CoreDataHelper.trackings(in: self.backgroundContext).first(where: { $0.id == id }) {
+					if let tracking = trackingsBackground.first(where: { $0.id == id }) {
 //						print("existing")
 						let comment = text != "" ? text : nil
 
