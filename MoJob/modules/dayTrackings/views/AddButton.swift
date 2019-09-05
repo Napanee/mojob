@@ -42,13 +42,12 @@ class AddButton: NSView {
 	}
 
 	@IBAction func addTracking(_ sender: NSButton) {
-		guard let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController, let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.backgroundContext) else { return }
-
-		tracking.date_start = from
-		tracking.date_end = until
+		guard let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController else { return }
 
 		let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
-		editor.tracking = tracking
+		editor.dateStart = from
+		editor.dateEnd = until
+
 		let splitViewItem = NSSplitViewItem(viewController: editor)
 		splitViewItem.isCollapsed = true
 
