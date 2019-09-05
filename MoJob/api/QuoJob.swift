@@ -158,7 +158,7 @@ class QuoJob: NSObject {
 			taskId = task.id
 		}
 
-		dateFormatterFull.timeZone = TimeZone.current
+		dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 
 		return Promise { seal in
 			login().done({ _ in
@@ -417,7 +417,7 @@ extension QuoJob {
 				return
 			}
 
-			dateFormatterFull.timeZone = TimeZone.current
+			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			typeItems = typeItems.filter({
@@ -428,7 +428,7 @@ extension QuoJob {
 				return false
 			})
 
-			let types = CoreDataHelper.types(in: backgroundContext)
+			let typesBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Type")) as? [Type]
 
 			backgroundContext.perform {
 				for item in typeItems {
@@ -440,7 +440,7 @@ extension QuoJob {
 
 //					print("task \(id)")
 
-					if let type = types.first(where: { $0.id == id }) {
+					if let type = typesBackground?.first(where: { $0.id == id }) {
 //						print("existing")
 						type.title = title
 						type.active = active
@@ -480,7 +480,7 @@ extension QuoJob {
 				return
 			}
 
-			dateFormatterFull.timeZone = TimeZone.current
+			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			let newJobs = jobItems.filter({(($0["bookable"] as? Bool) ?? false) && ($0["assigned_user_ids"] as! [String]).contains(self.userId)})
@@ -488,8 +488,8 @@ extension QuoJob {
 				results.append(["type": "jobs", "order": 1, "text": "\(String(newJobs.count)) Jobs"])
 			}
 
-			let types = CoreDataHelper.types(in: backgroundContext)
-			let jobs = CoreDataHelper.jobs(in: backgroundContext)
+			let jobsBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as? [Job]
+			let typesBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Type")) as? [Type]
 
 			backgroundContext.perform {
 				for item in jobItems {
@@ -500,11 +500,11 @@ extension QuoJob {
 					let typeId = item["job_type_id"] as! String
 					let assigned_user_ids = item["assigned_user_ids"] as! [String]
 					let isAssigned = assigned_user_ids.contains(self.userId)
-					let type = types.first(where: { $0.id == typeId})
+					let type = typesBackground?.first(where: { $0.id == typeId})
 
 //					print("job \(id)")
 
-					if let job = jobs.first(where: { $0.id == id }) {
+					if let job = jobsBackground?.first(where: { $0.id == id }) {
 //						print("existing")
 						job.assigned = isAssigned
 						job.bookable = bookable
@@ -546,12 +546,12 @@ extension QuoJob {
 				return
 			}
 
-			dateFormatterFull.timeZone = TimeZone.current
+			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			activityItems = activityItems.filter({ $0["active"] as? Bool ?? false })
 
-			let activities = CoreDataHelper.activities(in: backgroundContext)
+			let activitiesBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
 
 			backgroundContext.perform {
 				for item in activityItems {
@@ -563,7 +563,7 @@ extension QuoJob {
 
 //					print("activity \(id)")
 
-					if let activity = activities.first(where: { $0.id == id }) {
+					if let activity = activitiesBackground?.first(where: { $0.id == id }) {
 //						print("existing")
 						activity.title = title
 						activity.internal_service = internal_service
@@ -603,7 +603,7 @@ extension QuoJob {
 				return
 			}
 
-			dateFormatterFull.timeZone = TimeZone.current
+			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			let jobsAll = CoreDataHelper.jobs(in: backgroundContext).filter({ $0.assigned && $0.bookable }).map({ $0.id })
@@ -612,9 +612,9 @@ extension QuoJob {
 				self.results.append(["type": "tasks", "order": 2, "text": "\(String(resultTasks.count)) Aufgaben"])
 			}
 
-			let jobs = CoreDataHelper.jobs(in: backgroundContext)
-			let activities = CoreDataHelper.activities(in: backgroundContext)
-			let tasks = CoreDataHelper.tasks(in: backgroundContext)
+			let jobsBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as? [Job]
+			let tasksBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as? [Task]
+			let activitiesBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
 
 			backgroundContext.perform {
 				for item in taskItems {
@@ -629,8 +629,8 @@ extension QuoJob {
 					done = done || status != "active" || active != 1
 //					print("task \(id)")
 
-					let job = jobs.first(where: { $0.id == jobId })
-					let activity = activities.first(where: { $0.id == activityId })
+					let job = jobsBackground?.first(where: { $0.id == jobId })
+					let activity = activitiesBackground?.first(where: { $0.id == activityId })
 
 					var hoursPlaned = Double()
 					if let hours_planed = item["hours_planed"] as? NSString {
@@ -646,7 +646,7 @@ extension QuoJob {
 						hoursBooked = hours_booked
 					}
 
-					if let task = tasks.first(where: { $0.id == id }) {
+					if let task = tasksBackground?.first(where: { $0.id == id }) {
 //						print("existing")
 						task.title = title
 						task.hours_planed = hoursPlaned
@@ -690,12 +690,12 @@ extension QuoJob {
 				return
 			}
 
-			let jobsBackground = CoreDataHelper.jobs(in: backgroundContext)
-			let tasksBackground = CoreDataHelper.tasks(in: backgroundContext)
-			let activitiesBackground = CoreDataHelper.activities(in: backgroundContext)
-			let trackingsBackground = CoreDataHelper.trackings(in: backgroundContext)
+			let jobsBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Job")) as? [Job]
+			let tasksBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Task")) as? [Task]
+			let activitiesBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
+			let trackingsBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Tracking")) as? [Tracking]
 
-			dateFormatterFull.timeZone = TimeZone.current
+			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			if (trackingItems.count > 0) {
@@ -713,7 +713,7 @@ extension QuoJob {
 
 //					print("tracking \(id)")
 
-					self.dateFormatterFull.timeZone = TimeZone.current
+					self.dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 					if let timeInterval = self.dateFormatterFull.date(from: date)?.timeIntervalSince1970, timeInterval < 0 {
 						date = item["date_created"] as! String
 					}
@@ -733,21 +733,21 @@ extension QuoJob {
 					}
 
 					var jobObject: Job? = nil
-					if let jobId = item["job_id"] as? String, let job = jobsBackground.first(where: { $0.id == jobId }) {
+					if let jobId = item["job_id"] as? String, let job = jobsBackground?.first(where: { $0.id == jobId }) {
 						jobObject = job
 					}
 
 					var activityObject: Activity? = nil
-					if let activityId = item["activity_id"] as? String, let activity = activitiesBackground.first(where: { $0.id == activityId }) {
+					if let activityId = item["activity_id"] as? String, let activity = activitiesBackground?.first(where: { $0.id == activityId }) {
 						activityObject = activity
 					}
 
 					var taskObject: Task? = nil
-					if let taskId = item["jobtask_id"] as? String, let task = tasksBackground.first(where: { $0.id == taskId }) {
+					if let taskId = item["jobtask_id"] as? String, let task = tasksBackground?.first(where: { $0.id == taskId }) {
 						taskObject = task
 					}
 
-					if let tracking = trackingsBackground.first(where: { $0.id == id }) {
+					if let tracking = trackingsBackground?.first(where: { $0.id == id }) {
 //						print("existing")
 						let comment = text != "" ? text : nil
 
