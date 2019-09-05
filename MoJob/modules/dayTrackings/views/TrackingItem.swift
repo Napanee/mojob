@@ -51,6 +51,8 @@ class TrackingItem: NSView {
 			var title = tracking.custom_job
 			if let job = tracking.job {
 				title = job.fullTitle
+			} else if let customJob = tracking.custom_job {
+				title = customJob
 			} else if let activity = tracking.activity, let activityTitle = activity.title {
 				title = activityTitle
 			}
