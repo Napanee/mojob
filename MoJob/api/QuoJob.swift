@@ -292,6 +292,8 @@ extension QuoJob {
 extension QuoJob {
 
 	func syncData() -> Promise<Void> {
+		let start = Date()
+
 		return login().done { result -> Void in
 			return when(fulfilled: self.fetchJobTypes(), self.fetchActivities())
 				.then { (resultTypes, resultActivities) -> Promise<Void> in
@@ -311,6 +313,16 @@ extension QuoJob {
 				}.done { _ in
 					CoreDataHelper.save()
 
+					let end = Date()
+					let diff = end.timeIntervalSince(start)
+					var calendar = Calendar.current
+					calendar.locale = Locale(identifier: "de")
+					let formatter = DateComponentsFormatter()
+					formatter.unitsStyle = .full
+					formatter.zeroFormattingBehavior = .dropAll
+					formatter.allowedUnits = [.minute, .second]
+					formatter.calendar = calendar
+
 					var title: String = ""
 					var text: String = ""
 
@@ -324,6 +336,10 @@ extension QuoJob {
 						text += self.results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
 							return type["text"] as! String
 						}).joined(separator: ", ")
+
+						if let seconds = formatter.string(from: diff) {
+							text += " in \(seconds)"
+						}
 
 						text += " synchronisiert."
 					}
