@@ -84,8 +84,8 @@ class FavoriteItem: NSCollectionViewItem {
 		view.layer?.backgroundColor = nil
 	}
 
-	override func mouseDown(with event: NSEvent) {
-		super.mouseDown(with: event)
+	override func mouseUp(with event: NSEvent) {
+		super.mouseUp(with: event)
 
 		startTracking()
 	}
