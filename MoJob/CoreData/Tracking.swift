@@ -25,21 +25,42 @@ extension Tracking {
 	}
 
 	func stop(dateEnd: Date? = nil) {
-		let date = dateEnd ?? Date()
+		if let date_start = date_start, Date().timeIntervalSince(date_start) < 60 {
+			let question = "Tracking wird verworfen. Möchtest du fortfahren?"
+			let info = "QuoJob akzeptiert nur Trackings, die mindestens eine Minute dauern."
+			let confirmButton = "Tracking verwerfen"
+			let cancelButton = "Abbrechen"
+			let alert = NSAlert()
+			alert.messageText = question
+			alert.informativeText = info
+			alert.addButton(withTitle: confirmButton)
+			alert.addButton(withTitle: cancelButton)
 
-		self.exported = SyncStatus.pending.rawValue
-		self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date)
-		self.date_end = Calendar.current.date(bySetting: .second, value: 0, of: date)
+			let answer = alert.runModal()
+			if answer == .alertSecondButtonReturn {
+				return
+			} else {
+				managedObjectContext?.reset()
 
-		CoreDataHelper.save(in: managedObjectContext)
+				NotificationCenter.default.post(name: NSNotification.Name(rawValue: "counter:tick"), object: nil)
+			}
+		} else {
+			let date = dateEnd ?? Date()
 
-		if let _ = self.job {
-			self.export()
+			self.exported = SyncStatus.pending.rawValue
+			self.date_start = Calendar.current.date(bySetting: .second, value: 0, of: self.date_start ?? date)
+			self.date_end = Calendar.current.date(bySetting: .second, value: 0, of: date)
+
+			CoreDataHelper.save(in: managedObjectContext)
+
+			if let _ = self.job {
+				self.export()
+			}
 		}
 
 		GlobalTimer.shared.startNoTrackingTimer()
 		GlobalTimer.shared.stopTimer()
-		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()
+		((NSApp.delegate as? AppDelegate)?.window.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()
 	}
 
 	func delete() {
@@ -64,10 +85,10 @@ extension Tracking {
 	func export() {
 		guard let tracking = CoreDataHelper.tracking(with: objectID) else { return }
 
-		QuoJob.shared.exportTracking(tracking: self).done({ id in
+		QuoJob.shared.exportTracking(tracking: self).done({ (id, date) in
 			tracking.id = id
 			tracking.exported = SyncStatus.success.rawValue
-			tracking.sync = Calendar.current.date(bySetting: .nanosecond, value: 0, of: Date())
+			tracking.sync = date
 
 			CoreDataHelper.save()
 		}).catch { error in

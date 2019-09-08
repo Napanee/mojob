@@ -23,6 +23,7 @@ class CoreDataHelper {
 		let parent = CoreDataHelper.mainContext
 		let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
 
+		context.automaticallyMergesChangesFromParent = true
 		context.parent = parent
 
 		return context
@@ -32,6 +33,7 @@ class CoreDataHelper {
 		let parent = CoreDataHelper.mainContext
 		let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
 
+		context.automaticallyMergesChangesFromParent = true
 		context.parent = parent
 
 		return context
@@ -217,6 +219,10 @@ extension CoreDataHelper {
 	static func createTracking(in context: NSManagedObjectContext? = nil) -> Tracking? {
 		if let currentTracking = currentTracking, context == currentTrackingContext {
 			currentTracking.stop()
+
+			if let _ = self.currentTracking {
+				return nil
+			}
 		}
 
 		let context = (context ?? self.mainContext)

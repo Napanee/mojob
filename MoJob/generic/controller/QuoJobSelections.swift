@@ -13,21 +13,22 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var jobSelect: ComboBox!
 	@IBOutlet weak var taskSelect: ComboBox!
 	@IBOutlet weak var activitySelect: ComboBox!
-	@IBOutlet weak var fromDay: NumberField?
-	@IBOutlet weak var fromMonth: NumberField?
-	@IBOutlet weak var fromYear: NumberField?
+	@IBOutlet weak var fromDay: NumberField!
+	@IBOutlet weak var fromMonth: NumberField!
+	@IBOutlet weak var fromYear: NumberField!
 	@IBOutlet weak var fromHour: NumberField!
 	@IBOutlet weak var fromMinute: NumberField!
-	@IBOutlet weak var untilHour: NumberField?
-	@IBOutlet weak var untilMinute: NumberField?
+	@IBOutlet weak var untilHour: NumberField!
+	@IBOutlet weak var untilMinute: NumberField!
 	@IBOutlet weak var comment: NSTextField!
 
 	let userDefaults = UserDefaults()
-	var tracking: Tracking? = CoreDataHelper.currentTracking
+	var dateStart: Date?
+	var dateEnd: Date?
+	var tracking: Tracking?
 	var jobs: [Job] = []
 	var tasks: [Task] = []
 	var activities: [Activity] = []
-	var startDate = Date()
 	var nfc: Bool = true
 
 	var formIsValid: Bool {
@@ -122,7 +123,7 @@ class QuoJobSelections: NSViewController {
 	}
 
 	func initStartDate() {
-		guard let dateStart = tracking?.date_start else { return }
+		guard let dateStart: Date = tracking?.date_start ?? self.dateStart else { return }
 
 		let day = Calendar.current.component(.day, from: dateStart)
 		fromDay?.stringValue = String(format: "%02d", day)
@@ -138,11 +139,21 @@ class QuoJobSelections: NSViewController {
 	}
 
 	private func initEndDate() {
-		if let dateEnd = tracking?.date_end {
-			let hour = Calendar.current.component(.hour, from: dateEnd)
-			untilHour?.stringValue = String(format: "%02d", hour)
-			let minute = Calendar.current.component(.minute, from: dateEnd)
-			untilMinute?.stringValue = String(format: "%02d", minute)
+		guard let dateEnd: Date = tracking?.date_end ?? self.dateEnd else { return }
+
+		let hour = Calendar.current.component(.hour, from: dateEnd)
+		untilHour?.stringValue = String(format: "%02d", hour)
+		let minute = Calendar.current.component(.minute, from: dateEnd)
+		untilMinute?.stringValue = String(format: "%02d", minute)
+
+		if let dateStart = tracking?.date_start {
+			var comp = Calendar.current.dateComponents([.year, .month, .day], from: dateStart)
+			comp.hour = hour
+			comp.minute = minute
+
+			if let newEndDate = Calendar.current.date(from: comp) {
+				tracking?.date_end = newEndDate
+			}
 		}
 	}
 
@@ -286,7 +297,6 @@ extension QuoJobSelections: NSTextFieldDelegate {
 				}
 
 				tracking?.date_start = newStartDate
-				startDate = newStartDate
 				formIsValid = true
 			}
 		}

@@ -28,23 +28,17 @@ class NumberField: TextField {
 
 		switch (identifier?.rawValue) {
 		case "fromMonth", "untilMonth":
-			value = min(12, value)
+			value = max(min(12, value), 1)
 			break
 		case "fromHour", "untilHour":
-			value = min(23, value)
+			value = max(min(23, value), 0)
 			break
 		case "fromMinute", "untilMinute":
-			value = min(59, value)
+			value = max(min(59, value), 0)
 			break
 		case "fromDay":
-			guard
-				let delegate = dateDelegate,
-				let year = delegate.getFromYear(),
-				let month = delegate.getFromMonth() else
-			{
-				break
-			}
-			value = min(maxDays(month: month, year: year), value)
+			guard let delegate = dateDelegate, let year = delegate.getFromYear(), let month = delegate.getFromMonth() else { break }
+			value = max(min(maxDays(month: month, year: year), value), 1)
 			break
 		default:
 			break

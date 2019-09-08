@@ -16,8 +16,18 @@ protocol DateFieldDelegate {
 class EditorController: QuoJobSelections {
 
 	override var formIsValid: Bool {
-		get { return super.formIsValid }
-		set { saveButton.isEnabled = newValue && super.formIsValid }
+		get {
+			if (tracking != nil) {
+				return super.formIsValid
+			}
+
+			let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
+			return activity != nil && jobSelect.stringValue.count > 0
+		}
+		set {
+			let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
+			saveButton.isEnabled = newValue && (tracking != nil ? super.formIsValid : (activity != nil && jobSelect.stringValue.count > 0))
+		}
 	}
 
 	@IBOutlet weak var saveButton: NSButton!
@@ -26,21 +36,17 @@ class EditorController: QuoJobSelections {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		fromDay.dateDelegate = self
+		fromMonth.dateDelegate = self
+		fromYear.dateDelegate = self
+		fromHour.dateDelegate = self
+		fromMinute.dateDelegate = self
+		untilHour.dateDelegate = self
+		untilMinute.dateDelegate = self
+
 		saveButton.isEnabled = formIsValid
 		deleteButton.isHidden = tracking?.managedObjectContext == CoreDataHelper.backgroundContext
 	}
-
-//	private func validateData() -> Bool {
-//		guard let dateEnd = tracking.date_end, let dateStart = tracking.date_start else {
-//			return false
-//		}
-//
-//		if (dateStart.compare(dateEnd) == .orderedDescending) {
-//			return false
-//		}
-//
-//		return true
-//	}
 
 	@IBAction func deleteTracking(_ sender: NSButton) {
 		tracking?.delete()
@@ -49,10 +55,42 @@ class EditorController: QuoJobSelections {
 	}
 	
 	@IBAction func cancel(_ sender: NSButton) {
+		tracking?.managedObjectContext?.rollback()
+
 		removeFromParent()
 	}
 
 	@IBAction func save(_ sender: NSButton) {
+		if tracking == nil {
+			tracking = CoreDataHelper.createTracking()
+
+			if let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() }) {
+				tracking?.job = job
+			} else {
+				tracking?.custom_job = jobSelect.stringValue
+			}
+
+			if let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() }) {
+				tracking?.activity = activity
+			}
+
+			if let task = CoreDataHelper.tasks().first(where: { $0.title?.lowercased() == taskSelect.stringValue.lowercased() }) {
+				tracking?.task = task
+			}
+
+			tracking?.comment = comment.stringValue.count > 0 ? comment.stringValue : nil
+
+			let dateComponentsStart = DateComponents(year: Int(fromYear.stringValue), month: Int(fromMonth.stringValue), day: Int(fromDay.stringValue), hour: Int(fromHour.stringValue), minute: Int(fromMinute.stringValue))
+			if let dateStart = Calendar.current.date(from: dateComponentsStart) {
+				tracking?.date_start = dateStart
+			}
+
+			let dateComponentsUntil = DateComponents(year: Int(fromYear.stringValue), month: Int(fromMonth.stringValue), day: Int(fromDay.stringValue), hour: Int(untilHour.stringValue), minute: Int(untilMinute.stringValue))
+			if let dateUntil = Calendar.current.date(from: dateComponentsUntil) {
+				tracking?.date_end = dateUntil
+			}
+		}
+
 		guard let tracking = tracking else { return }
 
 		if (tracking.job != nil) {

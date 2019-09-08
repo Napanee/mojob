@@ -47,7 +47,9 @@ class FavoriteItem: NSCollectionViewItem {
 
 	override func viewDidDisappear() {
 		if let trackingArea = trackingArea {
-			view.removeTrackingArea(trackingArea)
+			DispatchQueue.main.async {
+				self.view.removeTrackingArea(trackingArea)
+			}
 		}
 	}
 
@@ -82,8 +84,8 @@ class FavoriteItem: NSCollectionViewItem {
 		view.layer?.backgroundColor = nil
 	}
 
-	override func mouseDown(with event: NSEvent) {
-		super.mouseDown(with: event)
+	override func mouseUp(with event: NSEvent) {
+		super.mouseUp(with: event)
 
 		startTracking()
 	}

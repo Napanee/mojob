@@ -57,8 +57,12 @@ class DayTrackingsController: NSViewController {
 
 			if let trackings = CoreDataHelper.trackings(from: date, byAdding: .day, and: self.filteredJob) {
 				self.graphView.trackings = trackings
-				self.trackingsStackView.currentDate = date
-				self.trackingsStackView.reloadData(with: trackings)
+				let calendar = Calendar.current
+				self.trackingsStackView.currentDate = calendar.isDateInToday(date) ? Date() : date
+
+				DispatchQueue.main.async {
+					self.trackingsStackView.reloadData(with: trackings)
+				}
 
 				let sum = CoreDataHelper.seconds(from: date.startOfDay!, byAdding: .day, and: self.filteredJob)
 				let formatter = DateComponentsFormatter()
@@ -83,19 +87,25 @@ class DayTrackingsController: NSViewController {
 
 		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
 			graphView.trackings = trackings
-			trackingsStackView.reloadData(with: trackings)
+			DispatchQueue.main.async {
+				self.trackingsStackView.reloadData(with: trackings)
+			}
 			changeDate(with: currentDate)
 		}
 
 		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
 			graphView.trackings = trackings
-			trackingsStackView.reloadData(with: trackings)
+			DispatchQueue.main.async {
+				self.trackingsStackView.reloadData(with: trackings)
+			}
 			changeDate(with: currentDate)
 		}
 
 		if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
 			graphView.trackings = trackings
-			trackingsStackView.reloadData(with: trackings)
+			DispatchQueue.main.async {
+				self.trackingsStackView.reloadData(with: trackings)
+			}
 			changeDate(with: currentDate)
 		}
 	}

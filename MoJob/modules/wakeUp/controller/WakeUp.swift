@@ -80,16 +80,21 @@ class WakeUp: NSViewController {
 			break
 		case 3: // stop timer and start new tracking
 			currentTracking.stop(dateEnd: sleepTime)
+
+			guard let newTracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) else { break }
+
+			var keyedValues = currentTracking.dictionaryWithValues(forKeys: ["custom_job", "comment", "job", "activity", "task"])
+			keyedValues["date_start"] = sleepTime
+
+			newTracking.setValuesForKeys(keyedValues)
+
+			((NSApp.delegate as? AppDelegate)?.window.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
 			break
 		case 4: // stop timer now
 			currentTracking.stop()
 			break
 		default:
 			break
-		}
-
-		if ([2, 4].contains(selectedChoice.tag)) {
-
 		}
 
 		dismiss(self)

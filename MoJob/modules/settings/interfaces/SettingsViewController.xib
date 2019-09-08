@@ -14,17 +14,18 @@
                 <outlet property="dayCompleteNotification" destination="90N-kN-2ot" id="6WV-Y4-zlz"/>
                 <outlet property="extendSettings" destination="sfr-H0-NPL" id="7UP-RN-lTG"/>
                 <outlet property="noTrackingNotification" destination="ld3-AC-m5E" id="B9c-Of-btD"/>
+                <outlet property="syncOnStartCheckbox" destination="mbt-94-YWL" id="13Y-tR-sDa"/>
                 <outlet property="view" destination="c22-O7-iKe" id="ecX-j3-JiA"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="668" height="662"/>
+            <rect key="frame" x="0.0" y="0.0" width="668" height="692"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YOK-4o-6wY">
-                    <rect key="frame" x="28" y="608" width="114" height="24"/>
+                    <rect key="frame" x="28" y="638" width="114" height="24"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Einstellungen" id="z8Z-Fm-Iw0">
                         <font key="font" metaFont="systemThin" size="20"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -32,10 +33,10 @@
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fYu-Rx-c6S">
-                    <rect key="frame" x="20" y="595" width="628" height="5"/>
+                    <rect key="frame" x="20" y="625" width="628" height="5"/>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F4v-ez-mFn">
-                    <rect key="frame" x="28" y="560" width="149" height="17"/>
+                    <rect key="frame" x="28" y="590" width="149" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Standard Leistungsart:" id="zXr-uy-lKd">
                         <font key="font" metaFont="systemSemibold" size="13"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -43,7 +44,7 @@
                     </textFieldCell>
                 </textField>
                 <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Aia-UP-W2J" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                    <rect key="frame" x="30" y="526" width="611" height="26"/>
+                    <rect key="frame" x="30" y="556" width="611" height="26"/>
                     <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="znC-m8-BxX">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -61,7 +62,7 @@
                     </connections>
                 </comboBox>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GdW-Th-2Ts">
-                    <rect key="frame" x="28" y="483" width="56" height="17"/>
+                    <rect key="frame" x="28" y="513" width="56" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Starten:" id="WCe-YY-6Gu">
                         <font key="font" metaFont="systemSemibold" size="13"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -69,13 +70,23 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avi-ie-qko">
-                    <rect key="frame" x="30" y="453" width="608" height="20"/>
+                    <rect key="frame" x="30" y="483" width="608" height="20"/>
                     <buttonCell key="cell" type="bevel" title="Automatisch bei Systemstart öffnen" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="EV6-9z-GXW">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="toggleAutoLaunch:" target="-2" id="dwn-EY-YbS"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mbt-94-YWL">
+                    <rect key="frame" x="30" y="453" width="360" height="20"/>
+                    <buttonCell key="cell" type="bevel" title="Daten nach Start der App automatisch synchronisieren" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="447-F9-q68">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggleSyncOnStart:" target="-2" id="Zdd-1t-bOF"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gpy-Y8-smW">
@@ -246,12 +257,13 @@
                 <constraint firstItem="F4v-ez-mFn" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="O8G-l8-1RU"/>
                 <constraint firstItem="l3b-VH-d2c" firstAttribute="top" secondItem="buM-BJ-JHJ" secondAttribute="bottom" constant="10" id="PJU-Xh-o7E"/>
                 <constraint firstItem="avi-ie-qko" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="Sig-MC-o93"/>
+                <constraint firstItem="mbt-94-YWL" firstAttribute="top" secondItem="avi-ie-qko" secondAttribute="bottom" constant="10" id="Tft-uL-vKX"/>
+                <constraint firstItem="gpy-Y8-smW" firstAttribute="top" secondItem="mbt-94-YWL" secondAttribute="bottom" constant="30" id="UXk-OB-ygp"/>
                 <constraint firstItem="avi-ie-qko" firstAttribute="width" secondItem="Aia-UP-W2J" secondAttribute="width" id="V3J-AB-TfZ"/>
                 <constraint firstAttribute="bottom" secondItem="sfr-H0-NPL" secondAttribute="bottom" constant="30" id="XJr-Q8-oih"/>
                 <constraint firstItem="hgA-X8-qTP" firstAttribute="firstBaseline" secondItem="90N-kN-2ot" secondAttribute="firstBaseline" id="Xbe-J7-z1Z"/>
                 <constraint firstItem="F4v-ez-mFn" firstAttribute="top" secondItem="fYu-Rx-c6S" secondAttribute="bottom" constant="20" id="Yvc-l5-hsD"/>
                 <constraint firstItem="7rz-r8-uRV" firstAttribute="firstBaseline" secondItem="ld3-AC-m5E" secondAttribute="firstBaseline" id="fC0-Cn-pgj"/>
-                <constraint firstItem="gpy-Y8-smW" firstAttribute="top" secondItem="avi-ie-qko" secondAttribute="bottom" constant="30" id="gx9-Ke-9bN"/>
                 <constraint firstItem="buM-BJ-JHJ" firstAttribute="top" secondItem="90N-kN-2ot" secondAttribute="bottom" constant="30" id="lbX-dm-vD4"/>
                 <constraint firstItem="WWP-Rb-FJj" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="llN-LP-0ZZ"/>
                 <constraint firstItem="Aia-UP-W2J" firstAttribute="top" secondItem="F4v-ez-mFn" secondAttribute="bottom" constant="10" id="mJY-pV-pmN"/>
@@ -262,6 +274,7 @@
                 <constraint firstItem="fYu-Rx-c6S" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="ooF-wL-Qq3"/>
                 <constraint firstItem="YOK-4o-6wY" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="p1L-4m-q5L"/>
                 <constraint firstItem="GdW-Th-2Ts" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="sK8-KH-Fgs"/>
+                <constraint firstItem="mbt-94-YWL" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="sby-TV-GDu"/>
                 <constraint firstAttribute="trailing" secondItem="sfr-H0-NPL" secondAttribute="trailing" constant="30" id="yTD-wv-wFq"/>
                 <constraint firstItem="gpy-Y8-smW" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="z7p-ae-P3G"/>
                 <constraint firstItem="Aia-UP-W2J" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="zeZ-tV-WEF"/>
@@ -270,7 +283,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="checked" width="23.5" height="20"/>
-        <image name="unchecked" width="23.5" height="20"/>
+        <image name="checked" width="24" height="20"/>
+        <image name="unchecked" width="24" height="20"/>
     </resources>
 </document>

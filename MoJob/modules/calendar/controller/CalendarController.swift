@@ -66,7 +66,9 @@ class CalendarController: NSViewController {
 		])
 
 		monitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) {
-			let location = NSPoint(x: self.view.window!.mouseLocationOutsideOfEventStream.x, y: self.view.window!.mouseLocationOutsideOfEventStream.y)
+			guard let window = self.view.window else { return $0 }
+
+			let location = NSPoint(x: window.mouseLocationOutsideOfEventStream.x, y: window.mouseLocationOutsideOfEventStream.y)
 			let frame = self.calendarGridView.gradientCircle.frame
 			var localPoint = self.calendarGridView.convert(location, from: nil)
 

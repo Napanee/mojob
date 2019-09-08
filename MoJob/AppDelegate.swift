@@ -37,6 +37,7 @@ class AppDelegate: NSObject {
 	var hasInternalConnection: Bool = false
 	var hasExternalConnection: Bool = false
 	var statusItem: NSStatusItem?
+	var userDefaults = UserDefaults()
 
 	private var timerSleep: Date?
 
@@ -59,9 +60,16 @@ class AppDelegate: NSObject {
 			}).catch({ _ in })
 		}
 
-		QuoJob.shared.syncData().catch { error in
-			GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Synchronisieren", andInformationtext: error.localizedDescription)
+		if (
+			(userDefaults.object(forKey: UserDefaults.Keys.crashOnSync) == nil || !userDefaults.bool(forKey: UserDefaults.Keys.crashOnSync)) &&
+			(userDefaults.object(forKey: UserDefaults.Keys.syncOnStart) == nil || userDefaults.bool(forKey: UserDefaults.Keys.syncOnStart)))
+		{
+			QuoJob.shared.syncData().catch { error in
+				GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Synchronisieren", andInformationtext: error.localizedDescription)
+			}
 		}
+
+		userDefaults.set(true, forKey: UserDefaults.Keys.crashOnSync)
 
 		PFMoveToApplicationsFolderIfNecessary()
 
@@ -220,14 +228,16 @@ class AppDelegate: NSObject {
 	}
 
 	@objc private func onScreenDidWake(notification: NSNotification) {
-		guard CoreDataHelper.currentTracking != nil else {
+		guard let currentTracking = CoreDataHelper.currentTracking else {
 			GlobalTimer.shared.startNoTrackingTimer()
 			return
 		}
 
-		let alertVC = WakeUp(nibName: .wakeUpController, bundle: nil)
-		alertVC.sleepTime = timerSleep
-		window.contentViewController?.presentAsModalWindow(alertVC)
+		if (currentTracking.duration > 60) {
+			let alertVC = WakeUp(nibName: .wakeUpController, bundle: nil)
+			alertVC.sleepTime = timerSleep
+			window.contentViewController?.presentAsModalWindow(alertVC)
+		}
 	}
 
 }
@@ -273,7 +283,7 @@ extension AppDelegate: NSApplicationDelegate {
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {
-		// Insert code here to tear down your application
+		userDefaults.set(false, forKey: UserDefaults.Keys.crashOnSync)
 	}
 
 	//	@IBAction func saveAction(_ sender: AnyObject?) {

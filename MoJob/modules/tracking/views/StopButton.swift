@@ -21,14 +21,14 @@ class StopButton: NSButton {
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 
-		if let _ = layer?.sublayers?.first(where: { $0.isEqual(timeSecondsShapeLayer) }) {
-			return
-		}
-
 		center = CGPoint(x: bounds.midX, y: bounds.midY)
 		radius = (bounds.size.width - strokeWidth) * 0.5
 
 		drawStopIcon()
+
+		if let _ = layer?.sublayers?.first(where: { $0.isEqual(timeSecondsShapeLayer) }) {
+			return
+		}
 
 		let path = NSBezierPath()
 		path.appendArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
