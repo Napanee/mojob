@@ -127,6 +127,18 @@ class TrackingViewController: QuoJobSelections {
 		isFavorite = sender.state == .on
 	}
 
+	override func jobSelect(_ sender: NSComboBox) {
+		super.jobSelect(sender)
+
+		if let job = tracking?.job {
+			favoriteTracking.isHidden = false
+			favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
+			favoriteTracking.state = job.isFavorite ? .on : .off
+		} else {
+			favoriteTracking.isHidden = true
+		}
+	}
+
 	// MARK: - Observer
 
 	@objc func managedObjectContextDidSave(notification: NSNotification) {
