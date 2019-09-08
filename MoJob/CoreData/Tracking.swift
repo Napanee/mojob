@@ -60,7 +60,7 @@ extension Tracking {
 
 		GlobalTimer.shared.startNoTrackingTimer()
 		GlobalTimer.shared.stopTimer()
-		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()
+		((NSApp.delegate as? AppDelegate)?.window.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()
 	}
 
 	func delete() {
