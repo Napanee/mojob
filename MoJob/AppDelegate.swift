@@ -134,25 +134,19 @@ class AppDelegate: NSObject {
 
 		let icon = NSImage(named: .statusBarImage)
 		icon?.isTemplate = true
+		icon?.size = NSSize(width: 12, height: 12)
 		statusItem?.menu = appMenu
+		statusItem?.length = 60
 		statusItem?.button?.image = icon
-		statusItem?.button?.imagePosition = .imageOnly
+		statusItem?.button?.imagePosition = .imageRight
+		statusItem?.button?.alignment = .left
 
-		let subview = NSView.init(frame: statusItem!.button!.frame)
-		subview.wantsLayer = true
-		statusItem?.button?.addSubview(subview)
-
-		let indicatorLayer: CALayer! = CALayer()
-		if let height = statusItem?.button?.frame.height, let width = statusItem?.button?.frame.width {
-			indicatorLayer.frame = CGRect(x: 0, y: 3, width: width, height: height - 6)
-		}
-		if #available(OSX 10.14, *) {
-			indicatorLayer.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.5).cgColor
-		} else {
-			// Fallback on earlier versions
-		}
-		indicatorLayer.cornerRadius = 3
-//		subview.layer?.addSublayer(indicatorLayer)
+		var attributes: [NSAttributedString.Key: Any] = [:]
+		attributes[NSAttributedString.Key.baselineOffset] = -1.5
+		attributes[NSAttributedString.Key.foregroundColor] = NSColor.black
+		attributes[NSAttributedString.Key.font] = NSFont.systemFont(ofSize: 11, weight: .medium)
+		let attributed = NSAttributedString(string: "0:00", attributes: attributes)
+		statusItem?.button?.attributedTitle = attributed
 	}
 
 	@objc private func startTracking(with sender: NSMenuItem) {

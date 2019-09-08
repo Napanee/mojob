@@ -36,11 +36,10 @@ class GlobalTimer: NSObject {
 		}
 
 		statusItem = (NSApp.delegate as? AppDelegate)?.statusItem
-		statusItem?.length = 60
-		statusItem?.button?.alignment = .left
 
 		attributes[NSAttributedString.Key.foregroundColor] = NSColor.black
-		attributes[NSAttributedString.Key.font] = NSFont.systemFont(ofSize: 12, weight: .medium)
+		attributes[NSAttributedString.Key.baselineOffset] = -1.5
+		attributes[NSAttributedString.Key.font] = NSFont.systemFont(ofSize: 11, weight: .medium)
 
 		currentTracking = CoreDataHelper.currentTracking
 
@@ -65,8 +64,9 @@ class GlobalTimer: NSObject {
 		timer.invalidate()
 		appBadge.badgeLabel = ""
 
-		if let statusItem = (NSApp.delegate as? AppDelegate)?.statusItem {
-			statusItem.button?.imagePosition = .imageOnly
+		if let statusItem = statusItem {
+			let attributed = NSAttributedString(string: "0:00", attributes: attributes)
+			statusItem.button?.attributedTitle = attributed
 		}
 	}
 
@@ -100,7 +100,6 @@ class GlobalTimer: NSObject {
 		if let statusItem = statusItem {
 			let attributed = NSAttributedString(string: formatter.string(from: diff) ?? "", attributes: attributes)
 			statusItem.button?.attributedTitle = attributed
-			statusItem.button?.imagePosition = .imageRight
 		}
 
 		if dayHours > 0, let completedTrackingSeconds = completedTrackingSecondsToday, completedTrackingSeconds + totalSeconds == dayHours * 3600 {
