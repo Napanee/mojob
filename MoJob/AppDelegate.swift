@@ -186,14 +186,16 @@ class AppDelegate: NSObject {
 	}
 
 	@objc private func onScreenDidWake(notification: NSNotification) {
-		guard CoreDataHelper.currentTracking != nil else {
+		guard let currentTracking = CoreDataHelper.currentTracking else {
 			GlobalTimer.shared.startNoTrackingTimer()
 			return
 		}
 
-		let alertVC = WakeUp(nibName: .wakeUpController, bundle: nil)
-		alertVC.sleepTime = timerSleep
-		window.contentViewController?.presentAsModalWindow(alertVC)
+		if (currentTracking.duration > 60) {
+			let alertVC = WakeUp(nibName: .wakeUpController, bundle: nil)
+			alertVC.sleepTime = timerSleep
+			window.contentViewController?.presentAsModalWindow(alertVC)
+		}
 	}
 
 }
