@@ -17,12 +17,12 @@ import PromiseKit
 @NSApplicationMain
 class AppDelegate: NSObject {
 
-	@IBOutlet weak var appMenu: NSMenu!
 	@IBOutlet weak var syncDataMenuItem: NSMenuItem!
 	@IBOutlet weak var syncTrackingsMenuItem: NSMenuItem!
 
 	private var _monitor: AnyObject?
 	@available(OSX 10.14, *)
+
 	var monitor: NWPathMonitor? {
 		get {
 			return _monitor as? NWPathMonitor
@@ -34,6 +34,7 @@ class AppDelegate: NSObject {
 
 	var window: NSWindow!
 	var mainWindowController: MainWindowController?
+	var appMenu = NSMenu()
 	var hasInternalConnection: Bool = false
 	var hasExternalConnection: Bool = false
 	var statusItem: NSStatusItem?
@@ -106,6 +107,31 @@ class AppDelegate: NSObject {
 		statusItem = NSStatusBar.system.statusItem(withLength: -1)
 		statusItem?.view?.wantsLayer = true
 
+		appMenu.removeAllItems()
+
+		let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Tracking")
+		request.propertiesToFetch = ["job.id", "job.number", "job.title"]
+		request.propertiesToGroupBy = ["job.id", "job.number", "job.title"]
+		request.fetchLimit = 5
+		request.resultType = .dictionaryResultType
+		request.sortDescriptors = [
+			NSSortDescriptor(key: "date_start", ascending: false)
+		]
+
+		appMenu.addItem(NSMenuItem(title: "MoJob öffnen", action: #selector(openApp(_:)), keyEquivalent: ""))
+		appMenu.addItem(NSMenuItem.separator())
+
+		if let trackings = try? CoreDataHelper.mainContext.fetch(request) as? [[String: String]] {
+			for tracking in trackings {
+				let item = NSMenuItem(title: "\(tracking["job.number"]!) - \(tracking["job.title"]!)", action: #selector(startTracking(with:)), keyEquivalent: "")
+				item.representedObject = tracking["job.id"]!
+				appMenu.addItem(item)
+			}
+		}
+
+		appMenu.addItem(NSMenuItem.separator())
+		appMenu.addItem(NSMenuItem(title: "MoJob schließen", action: #selector(quitApp(_:)), keyEquivalent: ""))
+
 		let icon = NSImage(named: .statusBarImage)
 		icon?.isTemplate = true
 		statusItem?.menu = appMenu
@@ -129,14 +155,25 @@ class AppDelegate: NSObject {
 //		subview.layer?.addSublayer(indicatorLayer)
 	}
 
-	@IBAction func openApp(_ sender: NSMenuItem) {
+	@objc private func startTracking(with sender: NSMenuItem) {
+		guard let jobId = sender.representedObject as? String else { return }
+
+		let jobs = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
+
+		if let job = jobs.first(where: { $0.id == jobId }), let newTracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) {
+			newTracking.job = job
+			(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
+		}
+	}
+
+	@objc private func openApp(_ sender: NSMenuItem) {
 		NSApp.setActivationPolicy(.regular)
 		window?.center()
 		window?.makeKeyAndOrderFront(nil)
 		NSApp.activate(ignoringOtherApps: true)
 	}
 
-	@IBAction func quitApp(_ sender: NSMenuItem) {
+	@objc private func quitApp(_ sender: NSMenuItem) {
 		NSApp.terminate(self)
 	}
 

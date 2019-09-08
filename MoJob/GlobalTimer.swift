@@ -36,7 +36,7 @@ class GlobalTimer: NSObject {
 		}
 
 		statusItem = (NSApp.delegate as? AppDelegate)?.statusItem
-//		statusItem?.length = 60
+		statusItem?.length = 60
 		statusItem?.button?.alignment = .left
 
 		attributes[NSAttributedString.Key.foregroundColor] = NSColor.black
