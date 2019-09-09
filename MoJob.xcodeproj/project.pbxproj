@@ -71,6 +71,7 @@
 		E8716BE8230490C600AF5BC0 /* MoJob-3.1.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */; };
 		E8716BEA2304ADC600AF5BC0 /* MoJob-3.1.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8716BE92304ADC600AF5BC0 /* MoJob-3.1.1.html */; };
 		E8731AE5225952B1006947B0 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8731AE4225952B1006947B0 /* constants.swift */; };
+		E876C9762326ED7F00C404FD /* MoJob-3.6.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E876C9752326ED7F00C404FD /* MoJob-3.6.2.html */; };
 		E877EC83224FCA8C002C3828 /* PopUpCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877EC82224FCA8C002C3828 /* PopUpCellText.swift */; };
 		E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */; };
 		E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */; };
@@ -223,6 +224,7 @@
 		E8716BE92304ADC600AF5BC0 /* MoJob-3.1.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.1.1.html"; sourceTree = "<group>"; };
 		E8726A1122FCC2C500066BEE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		E8731AE4225952B1006947B0 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
+		E876C9752326ED7F00C404FD /* MoJob-3.6.2.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.6.2.html"; sourceTree = "<group>"; };
 		E877EC82224FCA8C002C3828 /* PopUpCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCellText.swift; sourceTree = "<group>"; };
 		E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayTrackingsController.swift; path = MoJob/modules/dayTrackings/controller/DayTrackingsController.swift; sourceTree = SOURCE_ROOT; };
 		E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayTrackingsController.xib; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				E82A7035231F148800884390 /* MoJob-3.5.3.html */,
 				E82A7037231FBCE000884390 /* MoJob-3.6.0.html */,
 				E82A703923205D7400884390 /* MoJob-3.6.1.html */,
+				E876C9752326ED7F00C404FD /* MoJob-3.6.2.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1015,6 +1018,7 @@
 				E8D35A2222FF6BA20014AFE4 /* CalendarDay.xib in Resources */,
 				E8211798220E07B2003D7578 /* MainMenu.xib in Resources */,
 				E82A7038231FBCE000884390 /* MoJob-3.6.0.html in Resources */,
+				E876C9762326ED7F00C404FD /* MoJob-3.6.2.html in Resources */,
 				E863306522481BED00A8E946 /* Login.xib in Resources */,
 				E850996A22F6118B00068ED8 /* MoJob.clr in Resources */,
 				E81DEE6422F4A1CD004EF977 /* AddFavorite.xib in Resources */,
