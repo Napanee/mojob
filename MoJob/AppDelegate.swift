@@ -109,19 +109,27 @@ class AppDelegate: NSObject {
 
 		appMenu.removeAllItems()
 
+		let keypathExpression = NSExpression(forKeyPath: "date_end")
+		let maxExpression = NSExpression(forFunction: "max:", arguments: [keypathExpression])
+		let expressionDescription = NSExpressionDescription()
+		let key = "maxDateEnd"
+		expressionDescription.name = key
+		expressionDescription.expression = maxExpression
+		expressionDescription.expressionResultType = .dateAttributeType
+
 		let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Tracking")
-		request.propertiesToFetch = ["job.id", "job.number", "job.title"]
-		request.propertiesToGroupBy = ["job.id", "job.number", "job.title"]
+		request.propertiesToFetch = ["job.id", "job.number", "job.title", expressionDescription]
+		request.propertiesToGroupBy = ["job.id"]
 		request.fetchLimit = 5
 		request.resultType = .dictionaryResultType
 		request.sortDescriptors = [
-			NSSortDescriptor(key: "date_start", ascending: false)
+			NSSortDescriptor(key: "maxDateEnd", ascending: false)
 		]
 
 		appMenu.addItem(NSMenuItem(title: "MoJob öffnen", action: #selector(openApp(_:)), keyEquivalent: ""))
 		appMenu.addItem(NSMenuItem.separator())
 
-		if let trackings = try? CoreDataHelper.mainContext.fetch(request) as? [[String: String]] {
+		if let trackings = try? CoreDataHelper.mainContext.fetch(request) as? [[String: Any]] {
 			for tracking in trackings {
 				let item = NSMenuItem(title: "\(tracking["job.number"]!) - \(tracking["job.title"]!)", action: #selector(startTracking(with:)), keyEquivalent: "")
 				item.representedObject = tracking["job.id"]!
