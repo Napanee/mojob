@@ -37,7 +37,6 @@ class GlobalTimer: NSObject {
 
 		statusItem = (NSApp.delegate as? AppDelegate)?.statusItem
 
-		attributes[NSAttributedString.Key.foregroundColor] = NSColor.black
 		attributes[NSAttributedString.Key.baselineOffset] = -1.5
 		attributes[NSAttributedString.Key.font] = NSFont.systemFont(ofSize: 11, weight: .medium)
 

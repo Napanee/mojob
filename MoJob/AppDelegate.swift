@@ -151,7 +151,6 @@ class AppDelegate: NSObject {
 
 		var attributes: [NSAttributedString.Key: Any] = [:]
 		attributes[NSAttributedString.Key.baselineOffset] = -1.5
-		attributes[NSAttributedString.Key.foregroundColor] = NSColor.black
 		attributes[NSAttributedString.Key.font] = NSFont.systemFont(ofSize: 11, weight: .medium)
 		let attributed = NSAttributedString(string: "0:00", attributes: attributes)
 		statusItem?.button?.attributedTitle = attributed
