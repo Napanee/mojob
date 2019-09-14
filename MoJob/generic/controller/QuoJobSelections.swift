@@ -23,9 +23,21 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var comment: NSTextField!
 
 	let userDefaults = UserDefaults()
-	var dateStart: Date?
-	var dateEnd: Date?
-	var tracking: Tracking?
+	var dateStart: Date? {
+		didSet {
+			initStartDate()
+		}
+	}
+	var dateEnd: Date? {
+		didSet {
+			initEndDate()
+		}
+	}
+	var tracking: Tracking? {
+		didSet {
+			initEditor()
+		}
+	}
 	var jobs: [Job] = []
 	var tasks: [Task] = []
 	var activities: [Activity] = []
@@ -36,9 +48,7 @@ class QuoJobSelections: NSViewController {
 		set { _ = newValue }
 	}
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
+	func initEditor() {
 		initJobSelect()
 		initTaskSelect()
 		initActivitySelect()
@@ -61,6 +71,8 @@ class QuoJobSelections: NSViewController {
 			}
 		} else if let customJob = tracking?.custom_job {
 			jobSelect.stringValue = customJob
+		} else if (jobSelect.indexOfSelectedItem >= 0) {
+			jobSelect.deselectItem(at: jobSelect.indexOfSelectedItem)
 		}
 	}
 
@@ -112,13 +124,19 @@ class QuoJobSelections: NSViewController {
 				activitySelect.selectItem(at: index)
 				tracking?.activity = activity
 			}
+		} else if (activitySelect.indexOfSelectedItem >= 0) {
+			activitySelect.deselectItem(at: activitySelect.indexOfSelectedItem)
 		}
 	}
 
 	func initCommentText() {
 		comment.delegate = self
 
-		guard let commentText = tracking?.comment else { return }
+		guard let commentText = tracking?.comment else {
+			comment.stringValue = ""
+			return
+		}
+
 		comment.stringValue = commentText
 	}
 

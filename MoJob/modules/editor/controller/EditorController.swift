@@ -30,11 +30,22 @@ class EditorController: QuoJobSelections {
 		}
 	}
 
+	override var tracking: Tracking? {
+		didSet {
+			initEditor()
+
+			saveButton.isEnabled = formIsValid
+			deleteButton.isHidden = tracking?.managedObjectContext == CoreDataHelper.backgroundContext
+		}
+	}
+
 	@IBOutlet weak var saveButton: NSButton!
 	@IBOutlet weak var deleteButton: NSButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		initEditor()
 
 		fromDay.dateDelegate = self
 		fromMonth.dateDelegate = self
