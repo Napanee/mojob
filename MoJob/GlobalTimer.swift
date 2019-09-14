@@ -64,7 +64,7 @@ class GlobalTimer: NSObject {
 		appBadge.badgeLabel = ""
 
 		if let statusItem = statusItem {
-			let attributed = NSAttributedString(string: "0:00", attributes: attributes)
+			let attributed = NSAttributedString(string: "00:00", attributes: attributes)
 			statusItem.button?.attributedTitle = attributed
 		}
 	}
@@ -97,7 +97,8 @@ class GlobalTimer: NSObject {
 		}
 
 		if let statusItem = statusItem {
-			let attributed = NSAttributedString(string: formatter.string(from: diff) ?? "", attributes: attributes)
+			let timeString = formatter.string(from: diff) ?? "00:00"
+			let attributed = NSAttributedString(string: "\(timeString.count == 4 ? "0" : "")\(timeString)", attributes: attributes)
 			statusItem.button?.attributedTitle = attributed
 		}
 

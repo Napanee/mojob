@@ -37,7 +37,7 @@ class AppDelegate: NSObject {
 	var appMenu = NSMenu()
 	var hasInternalConnection: Bool = false
 	var hasExternalConnection: Bool = false
-	var statusItem: NSStatusItem?
+	var statusItem: NSStatusItem = NSStatusBar.system.statusItem(withLength: 60)
 	var userDefaults = UserDefaults()
 
 	private var timerSleep: Date?
@@ -104,8 +104,29 @@ class AppDelegate: NSObject {
 	}
 
 	private func initStatusBarApp() {
-		statusItem = NSStatusBar.system.statusItem(withLength: 60)
-		statusItem?.view?.wantsLayer = true
+		guard let statusBarButton = statusItem.button, let icon = NSImage(named: .statusBarImage) else { return }
+
+		icon.isTemplate = true
+		icon.size = NSSize(width: 12, height: 12)
+		statusBarButton.image = icon
+
+		statusBarButton.imagePosition = .imageRight
+		statusBarButton.alignment = .left
+
+		var attributes: [NSAttributedString.Key: Any] = [:]
+		attributes[NSAttributedString.Key.baselineOffset] = -0.9
+		attributes[NSAttributedString.Key.font] = NSFont.systemFont(ofSize: 11, weight: .medium)
+		let attributed = NSAttributedString(string: "00:00", attributes: attributes)
+		statusBarButton.attributedTitle = attributed
+
+		if #available(OSX 10.14, *) {
+			statusBarButton.wantsLayer = true
+			let layer = CALayer()
+			layer.frame = CGRect(x: 0, y: 3, width: statusBarButton.bounds.width, height: statusBarButton.bounds.height - 6)
+			layer.cornerRadius = 4.0
+			layer.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.4).cgColor
+			statusBarButton.layer?.addSublayer(layer)
+		}
 
 		appMenu.removeAllItems()
 
@@ -126,7 +147,7 @@ class AppDelegate: NSObject {
 			NSSortDescriptor(key: "date_end", ascending: false)
 		]
 
-		appMenu.addItem(NSMenuItem(title: "MoJob öffnen", action: #selector(openApp(_:)), keyEquivalent: ""))
+		appMenu.addItem(NSMenuItem(title: "MoJob anzeigen", action: #selector(openApp(_:)), keyEquivalent: ""))
 		appMenu.addItem(NSMenuItem.separator())
 
 		if let trackings = try? CoreDataHelper.mainContext.fetch(request) as? [[String: Any]] {
@@ -140,19 +161,7 @@ class AppDelegate: NSObject {
 		appMenu.addItem(NSMenuItem.separator())
 		appMenu.addItem(NSMenuItem(title: "MoJob schließen", action: #selector(quitApp(_:)), keyEquivalent: ""))
 
-		let icon = NSImage(named: .statusBarImage)
-		icon?.isTemplate = true
-		icon?.size = NSSize(width: 12, height: 12)
-		statusItem?.menu = appMenu
-		statusItem?.button?.image = icon
-		statusItem?.button?.imagePosition = .imageRight
-		statusItem?.button?.alignment = .left
-
-		var attributes: [NSAttributedString.Key: Any] = [:]
-		attributes[NSAttributedString.Key.baselineOffset] = -1.5
-		attributes[NSAttributedString.Key.font] = NSFont.systemFont(ofSize: 11, weight: .medium)
-		let attributed = NSAttributedString(string: "0:00", attributes: attributes)
-		statusItem?.button?.attributedTitle = attributed
+		statusItem.menu = appMenu
 	}
 
 	@objc private func startTracking(with sender: NSMenuItem) {
@@ -162,7 +171,7 @@ class AppDelegate: NSObject {
 
 		if let job = jobs.first(where: { $0.id == jobId }), let newTracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) {
 			newTracking.job = job
-			(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
+			((NSApp.delegate as? AppDelegate)?.window.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
 		}
 	}
 
