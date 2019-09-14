@@ -167,9 +167,9 @@ class AppDelegate: NSObject {
 	@objc private func startTracking(with sender: NSMenuItem) {
 		guard let jobId = sender.representedObject as? String else { return }
 
-		let jobs = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
-
-		if let job = jobs.first(where: { $0.id == jobId }), let newTracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) {
+		if let newTracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) {
+			let jobs = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
+			let job = jobs.first(where: { $0.id == jobId })
 			newTracking.job = job
 			((NSApp.delegate as? AppDelegate)?.window.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
 		}
