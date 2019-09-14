@@ -164,7 +164,7 @@ class QuoJobSelections: NSViewController {
 		let minute = Calendar.current.component(.minute, from: dateEnd)
 		untilMinute?.stringValue = String(format: "%02d", minute)
 
-		if let dateStart = tracking?.date_start {
+		if let dateStart = tracking?.date_start ?? self.dateStart {
 			var comp = Calendar.current.dateComponents([.year, .month, .day], from: dateStart)
 			comp.hour = hour
 			comp.minute = minute

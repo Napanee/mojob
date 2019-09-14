@@ -12,8 +12,8 @@ class AddButton: NSView {
 
 	@IBOutlet var contentView: NSView!
 	var constraint: NSLayoutConstraint?
-	var from: Date = Date()
-	var until: Date = Date()
+	var from: Date?
+	var until: Date?
 
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -58,7 +58,7 @@ class AddButton: NSView {
 		}
 
 		editor.dateStart = from
-		editor.dateEnd = until
+		editor.dateEnd = until ?? Date()
 		editor.tracking = nil
 	}
 
