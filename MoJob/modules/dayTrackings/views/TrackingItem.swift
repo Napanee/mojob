@@ -236,13 +236,20 @@ class TrackingItem: NSView {
 			tracking?.date_end != nil,
 			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController
 		{
-			let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
-			editor.tracking = tracking
-			let splitViewItem = NSSplitViewItem(viewController: editor)
-			splitViewItem.isCollapsed = true
+			var editor: EditorController
+			if let existingSplitViewItem = daySplitViewController.splitViewItems.first(where: { $0.viewController.isKind(of: EditorController.self) }), let existingEditor = existingSplitViewItem.viewController as? EditorController {
+				editor = existingEditor
+			} else {
+				editor = EditorController(nibName: .editorControllerNib, bundle: nil)
 
-			daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
-			daySplitViewController.collapsePanel(0)
+				let splitViewItem = NSSplitViewItem(viewController: editor)
+				splitViewItem.isCollapsed = true
+
+				daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
+				daySplitViewController.collapsePanel(0)
+			}
+
+			editor.tracking = tracking
 		}
 	}
 
@@ -278,13 +285,20 @@ class TrackingItem: NSView {
 			tracking?.date_end != nil,
 			let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController
 		{
-			let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
-			editor.tracking = tracking
-			let splitViewItem = NSSplitViewItem(viewController: editor)
-			splitViewItem.isCollapsed = true
+			var editor: EditorController
+			if let existingSplitViewItem = daySplitViewController.splitViewItems.first(where: { $0.viewController.isKind(of: EditorController.self) }), let existingEditor = existingSplitViewItem.viewController as? EditorController {
+				editor = existingEditor
+			} else {
+				editor = EditorController(nibName: .editorControllerNib, bundle: nil)
 
-			daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
-			daySplitViewController.collapsePanel(0)
+				let splitViewItem = NSSplitViewItem(viewController: editor)
+				splitViewItem.isCollapsed = true
+
+				daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
+				daySplitViewController.collapsePanel(0)
+			}
+
+			editor.tracking = tracking
 		}
 	}
 

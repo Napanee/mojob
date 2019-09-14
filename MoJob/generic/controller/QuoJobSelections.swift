@@ -23,9 +23,21 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var comment: NSTextField!
 
 	let userDefaults = UserDefaults()
-	var dateStart: Date?
-	var dateEnd: Date?
-	var tracking: Tracking?
+	var dateStart: Date? {
+		didSet {
+			initStartDate()
+		}
+	}
+	var dateEnd: Date? {
+		didSet {
+			initEndDate()
+		}
+	}
+	var tracking: Tracking? {
+		didSet {
+			initEditor()
+		}
+	}
 	var jobs: [Job] = []
 	var tasks: [Task] = []
 	var activities: [Activity] = []
@@ -36,9 +48,7 @@ class QuoJobSelections: NSViewController {
 		set { _ = newValue }
 	}
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
+	func initEditor() {
 		initJobSelect()
 		initTaskSelect()
 		initActivitySelect()
@@ -61,12 +71,15 @@ class QuoJobSelections: NSViewController {
 			}
 		} else if let customJob = tracking?.custom_job {
 			jobSelect.stringValue = customJob
+		} else if (jobSelect.indexOfSelectedItem >= 0) {
+			jobSelect.deselectItem(at: jobSelect.indexOfSelectedItem)
 		}
 	}
 
 	private func initTaskSelect() {
+		let index = jobSelect.indexOfSelectedItem
 		self.tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
-			.filter({ $0.job?.id == tracking?.job?.id })
+			.filter({ $0.job?.id == tracking?.job?.id || index >= 0 && $0.job?.id == jobs[index].id })
 			.sorted(by: { $0.title! < $1.title! })
 
 		taskSelect.reloadData()
@@ -112,13 +125,19 @@ class QuoJobSelections: NSViewController {
 				activitySelect.selectItem(at: index)
 				tracking?.activity = activity
 			}
+		} else if (activitySelect.indexOfSelectedItem >= 0) {
+			activitySelect.deselectItem(at: activitySelect.indexOfSelectedItem)
 		}
 	}
 
 	func initCommentText() {
 		comment.delegate = self
 
-		guard let commentText = tracking?.comment else { return }
+		guard let commentText = tracking?.comment else {
+			comment.stringValue = ""
+			return
+		}
+
 		comment.stringValue = commentText
 	}
 
@@ -146,7 +165,7 @@ class QuoJobSelections: NSViewController {
 		let minute = Calendar.current.component(.minute, from: dateEnd)
 		untilMinute?.stringValue = String(format: "%02d", minute)
 
-		if let dateStart = tracking?.date_start {
+		if let dateStart = tracking?.date_start ?? self.dateStart {
 			var comp = Calendar.current.dateComponents([.year, .month, .day], from: dateStart)
 			comp.hour = hour
 			comp.minute = minute
@@ -205,7 +224,7 @@ class QuoJobSelections: NSViewController {
 					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 				}
 
-				return $0.internal_service || (nfc ? $0.nfc : false)
+				return $0.internal_service || (nfc && $0.nfc)
 			})
 			.first(where: { $0.title?.lowercased() == value })
 		{

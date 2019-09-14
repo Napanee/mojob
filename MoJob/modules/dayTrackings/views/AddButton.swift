@@ -12,8 +12,8 @@ class AddButton: NSView {
 
 	@IBOutlet var contentView: NSView!
 	var constraint: NSLayoutConstraint?
-	var from: Date = Date()
-	var until: Date = Date()
+	var from: Date?
+	var until: Date?
 
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -44,15 +44,22 @@ class AddButton: NSView {
 	@IBAction func addTracking(_ sender: NSButton) {
 		guard let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController else { return }
 
-		let editor = EditorController(nibName: .editorControllerNib, bundle: nil)
+		var editor: EditorController
+		if let existingSplitViewItem = daySplitViewController.splitViewItems.first(where: { $0.viewController.isKind(of: EditorController.self) }), let existingEditor = existingSplitViewItem.viewController as? EditorController {
+			editor = existingEditor
+		} else {
+			editor = EditorController(nibName: .editorControllerNib, bundle: nil)
+
+			let splitViewItem = NSSplitViewItem(viewController: editor)
+			splitViewItem.isCollapsed = true
+
+			daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
+			daySplitViewController.collapsePanel(0)
+		}
+
 		editor.dateStart = from
-		editor.dateEnd = until
-
-		let splitViewItem = NSSplitViewItem(viewController: editor)
-		splitViewItem.isCollapsed = true
-
-		daySplitViewController.insertSplitViewItem(splitViewItem, at: 0)
-		daySplitViewController.collapsePanel(0)
+		editor.dateEnd = until ?? Date()
+		editor.tracking = nil
 	}
 
 }
