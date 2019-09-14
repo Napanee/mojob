@@ -104,7 +104,7 @@ class AppDelegate: NSObject {
 	}
 
 	private func initStatusBarApp() {
-		statusItem = NSStatusBar.system.statusItem(withLength: -1)
+		statusItem = NSStatusBar.system.statusItem(withLength: 60)
 		statusItem?.view?.wantsLayer = true
 
 		appMenu.removeAllItems()
@@ -144,7 +144,6 @@ class AppDelegate: NSObject {
 		icon?.isTemplate = true
 		icon?.size = NSSize(width: 12, height: 12)
 		statusItem?.menu = appMenu
-		statusItem?.length = 60
 		statusItem?.button?.image = icon
 		statusItem?.button?.imagePosition = .imageRight
 		statusItem?.button?.alignment = .left
