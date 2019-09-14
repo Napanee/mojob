@@ -13,6 +13,7 @@ class JobItem: NSCollectionViewItem {
 	let backgroundLayer = CALayer()
 	var job: Job!
 	var trackingArea: NSTrackingArea?
+	var delegate: JobItemDelegate!
 	let indicatorLayer = CALayer()
 	var isHighlighted: Bool! = false {
 		didSet {
@@ -97,6 +98,8 @@ class JobItem: NSCollectionViewItem {
 		tracking.job = jobTrackingContext.first(where: { $0.id == job.id })
 
 		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
+
+		delegate.onSelectJob()
 	}
 
 }

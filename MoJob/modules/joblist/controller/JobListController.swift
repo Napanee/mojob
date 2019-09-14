@@ -13,6 +13,10 @@ protocol FilterFieldDelegate {
 	func onTextChange(with string: String)
 }
 
+protocol JobItemDelegate {
+	func onSelectJob()
+}
+
 protocol FavoritesItemDelegate {
 	func onDeleteFavorite()
 }
@@ -402,6 +406,14 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 
 }
 
+extension JobListController: JobItemDelegate {
+
+	func onSelectJob() {
+		onTextChange(with: "")
+	}
+
+}
+
 extension JobListController: NSCollectionViewDataSource, FavoritesItemDelegate {
 
 	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -420,6 +432,7 @@ extension JobListController: NSCollectionViewDataSource, FavoritesItemDelegate {
 
 			let job = jobsFiltered[indexPath.item]
 			collectionViewItem.job = job
+			collectionViewItem.delegate = self
 			collectionViewItem.textField?.stringValue = "\(job.number!) - \(job.title!)"
 
 			return collectionViewItem
