@@ -177,19 +177,19 @@ class QuoJobSelections: NSViewController {
 	}
 
 	@IBAction func jobSelect(_ sender: NSComboBox) {
-		guard let cell = sender.cell else { return }
+		guard let cell = sender.cell, let tracking = tracking, let context = tracking.managedObjectContext else { return }
 
 		let value = cell.stringValue.lowercased()
 
 		if (value == "") {
-			tracking?.job = nil
-			tracking?.task = nil
-		} else if let job = CoreDataHelper.jobs(in: tracking?.managedObjectContext).first(where: { $0.fullTitle.lowercased() == value }) {
-			tracking?.job = job
-			tracking?.custom_job = nil
+			tracking.job = nil
+			tracking.task = nil
+		} else if let job = CoreDataHelper.jobs(in: context).first(where: { $0.fullTitle.lowercased() == value }) {
+			tracking.job = job
+			tracking.custom_job = nil
 		} else {
-			tracking?.job = nil
-			tracking?.custom_job = value
+			tracking.job = nil
+			tracking.custom_job = value
 		}
 
 		initTaskSelect()
@@ -199,28 +199,28 @@ class QuoJobSelections: NSViewController {
 	}
 
 	@IBAction func taskSelect(_ sender: NSComboBox) {
-		guard let cell = sender.cell else { return }
+		guard let cell = sender.cell, let tracking = tracking, let context = tracking.managedObjectContext else { return }
 
 		let value = cell.stringValue.lowercased()
 
 		if (value == "") {
-			tracking?.task = nil
-		} else if let task = CoreDataHelper.tasks(in: tracking?.managedObjectContext).first(where: { $0.title?.lowercased() == value }) {
-			tracking?.task = task
+			tracking.task = nil
+		} else if let task = CoreDataHelper.tasks(in: context).first(where: { $0.title?.lowercased() == value }) {
+			tracking.task = task
 		}
 	}
 
 	@IBAction func activitySelect(_ sender: NSComboBox) {
-		guard let cell = sender.cell else { return }
+		guard let cell = sender.cell, let tracking = tracking, let context = tracking.managedObjectContext else { return }
 
 		let value = cell.stringValue.lowercased()
 
 		if (value == "") {
 			jobSelect.isEnabled = true
-			tracking?.activity = nil
-		} else if let activity = CoreDataHelper.activities(in: tracking?.managedObjectContext)
+			tracking.activity = nil
+		} else if let activity = CoreDataHelper.activities(in: context)
 			.filter({
-				if let job = tracking?.job {
+				if let job = tracking.job {
 					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 				}
 
@@ -230,13 +230,13 @@ class QuoJobSelections: NSViewController {
 		{
 			if (nfc && activity.nfc) {
 				jobSelect.cell?.stringValue = ""
-				tracking?.job = nil
+				tracking.job = nil
 				jobSelect.isEnabled = false
 			} else {
 				jobSelect.isEnabled = true
 			}
 
-			tracking?.activity = activity
+			tracking.activity = activity
 		}
 
 		formIsValid = true
