@@ -224,7 +224,7 @@ class QuoJobSelections: NSViewController {
 					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 				}
 
-				return $0.internal_service || (nfc ? $0.nfc : false)
+				return $0.internal_service || (nfc && $0.nfc)
 			})
 			.first(where: { $0.title?.lowercased() == value })
 		{

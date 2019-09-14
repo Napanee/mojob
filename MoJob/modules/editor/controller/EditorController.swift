@@ -22,11 +22,11 @@ class EditorController: QuoJobSelections {
 			}
 
 			let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
-			return activity != nil && jobSelect.stringValue.count > 0
+			return activity != nil && jobSelect.stringValue.count > 0 || activity?.nfc ?? false
 		}
 		set {
 			let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
-			saveButton.isEnabled = newValue && (tracking != nil ? super.formIsValid : (activity != nil && jobSelect.stringValue.count > 0))
+			saveButton.isEnabled = newValue && (tracking != nil ? super.formIsValid : (activity != nil && jobSelect.stringValue.count > 0 || activity?.nfc ?? false))
 		}
 	}
 
@@ -73,11 +73,11 @@ class EditorController: QuoJobSelections {
 
 	@IBAction func save(_ sender: NSButton) {
 		if tracking == nil {
-			tracking = CoreDataHelper.createTracking()
+			let tracking = CoreDataHelper.createTracking()
 
 			if let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() }) {
 				tracking?.job = job
-			} else {
+			} else if (jobSelect.stringValue != "") {
 				tracking?.custom_job = jobSelect.stringValue
 			}
 
@@ -100,6 +100,8 @@ class EditorController: QuoJobSelections {
 			if let dateUntil = Calendar.current.date(from: dateComponentsUntil) {
 				tracking?.date_end = dateUntil
 			}
+
+			self.tracking = tracking
 		}
 
 		guard let tracking = tracking else { return }
@@ -110,7 +112,7 @@ class EditorController: QuoJobSelections {
 
 		CoreDataHelper.save(in: tracking.managedObjectContext)
 
-		if let _ = tracking.job {
+		if (tracking.job != nil || tracking.activity?.nfc ?? false) {
 			tracking.export()
 		} else if let _ = tracking.id {
 			tracking.deleteFromServer().done({ _ in
