@@ -79,6 +79,10 @@ class AppDelegate: NSObject {
 		NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onScreenDidSleep(notification:)), name: NSWorkspace.screensDidSleepNotification, object: nil) // lock screen
 		NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onScreenDidWake(notification:)), name: NSWorkspace.screensDidWakeNotification, object: nil) // return from locked screen
 
+		let context = CoreDataHelper.mainContext
+		let notificationCenter = NotificationCenter.default
+		notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: context)
+
 		NSUserNotificationCenter.default.delegate = self
 
 		if #available(OSX 10.14, *) {
@@ -128,8 +132,11 @@ class AppDelegate: NSObject {
 			statusBarButton.layer?.addSublayer(layer)
 		}
 
-		appMenu.removeAllItems()
+		renderStatusBarMenu()
+		statusItem.menu = appMenu
+	}
 
+	func renderStatusBarMenu() {
 		let keypathExpression = NSExpression(forKeyPath: "date_end")
 		let maxExpression = NSExpression(forFunction: "max:", arguments: [keypathExpression])
 		let expressionDescription = NSExpressionDescription()
@@ -147,6 +154,7 @@ class AppDelegate: NSObject {
 			NSSortDescriptor(key: "date_end", ascending: false)
 		]
 
+		appMenu.removeAllItems()
 		appMenu.addItem(NSMenuItem(title: "MoJob anzeigen", action: #selector(openApp(_:)), keyEquivalent: ""))
 		appMenu.addItem(NSMenuItem.separator())
 
@@ -160,8 +168,6 @@ class AppDelegate: NSObject {
 
 		appMenu.addItem(NSMenuItem.separator())
 		appMenu.addItem(NSMenuItem(title: "MoJob schließen", action: #selector(quitApp(_:)), keyEquivalent: ""))
-
-		statusItem.menu = appMenu
 	}
 
 	@objc private func startTracking(with sender: NSMenuItem) {
@@ -252,6 +258,24 @@ class AppDelegate: NSObject {
 		QuoJob.shared.syncData().catch { error in
 			sender.isEnabled = false
 			GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um die QuoJob-Daten zu synchronisieren.")
+		}
+	}
+
+	// MARK: - Observer
+
+	@objc func managedObjectContextDidSave(notification: NSNotification) {
+		guard let userInfo = notification.userInfo else { return }
+
+		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+			renderStatusBarMenu()
+		}
+
+		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+			renderStatusBarMenu()
+		}
+
+		if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
+			renderStatusBarMenu()
 		}
 	}
 
