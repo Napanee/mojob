@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -109,6 +109,8 @@
 		E8E9509D223482940070F57E /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509C223482940070F57E /* AddButton.swift */; };
 		E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509E223526DB0070F57E /* TrackingsStackView.swift */; };
 		E8E950A2223591910070F57E /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950A1223591910070F57E /* NumberField.swift */; };
+		E8F373C4232E488200E30D6A /* QuickSelectWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F373C3232E488200E30D6A /* QuickSelectWindowController.swift */; };
+		E8F373C6232E48B000E30D6A /* QuickSelectWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8F373C5232E48B000E30D6A /* QuickSelectWindowController.xib */; };
 		E8FF02E3231279DA00E7686A /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */; };
 		E8FF02E5231279EF00E7686A /* ContentSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */; };
 		E8FF02E723127A0000E7686A /* DaySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E623127A0000E7686A /* DaySplitViewController.swift */; };
@@ -266,6 +268,8 @@
 		E8E9509C223482940070F57E /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
 		E8E9509E223526DB0070F57E /* TrackingsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingsStackView.swift; sourceTree = "<group>"; };
 		E8E950A1223591910070F57E /* NumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberField.swift; sourceTree = "<group>"; };
+		E8F373C3232E488200E30D6A /* QuickSelectWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSelectWindowController.swift; sourceTree = "<group>"; };
+		E8F373C5232E48B000E30D6A /* QuickSelectWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuickSelectWindowController.xib; sourceTree = "<group>"; };
 		E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
 		E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSplitViewController.swift; sourceTree = "<group>"; };
 		E8FF02E623127A0000E7686A /* DaySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySplitViewController.swift; sourceTree = "<group>"; };
@@ -440,6 +444,7 @@
 			isa = PBXGroup;
 			children = (
 				E82117BE220E0B20003D7578 /* MainWindowController.swift */,
+				E8F373C3232E488200E30D6A /* QuickSelectWindowController.swift */,
 				E82117C4220E0FBD003D7578 /* SplitViewController.swift */,
 				E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */,
 				E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */,
@@ -453,6 +458,7 @@
 			children = (
 				E8211796220E07B2003D7578 /* MainMenu.xib */,
 				E82117C1220E0B71003D7578 /* MainWindowController.xib */,
+				E8F373C5232E48B000E30D6A /* QuickSelectWindowController.xib */,
 			);
 			path = interfaces;
 			sourceTree = "<group>";
@@ -1010,6 +1016,7 @@
 				E84FCE3E22FC3EA6002E41B4 /* WakeUp.xib in Resources */,
 				E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */,
 				E81E75EE230351A90071B90C /* MoJob-3.0.1.html in Resources */,
+				E8F373C6232E48B000E30D6A /* QuickSelectWindowController.xib in Resources */,
 				E8716BEA2304ADC600AF5BC0 /* MoJob-3.1.1.html in Resources */,
 				E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */,
 				E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */,
@@ -1181,6 +1188,7 @@
 				E8731AE5225952B1006947B0 /* constants.swift in Sources */,
 				E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */,
 				E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */,
+				E8F373C4232E488200E30D6A /* QuickSelectWindowController.swift in Sources */,
 				E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */,
 				E863305D2245863600A8E946 /* PopUpCell.swift in Sources */,
 				E8211800220F5364003D7578 /* JobItem.swift in Sources */,

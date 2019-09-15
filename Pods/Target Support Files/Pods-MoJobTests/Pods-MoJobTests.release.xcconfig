@@ -1,8 +1,8 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire" "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess" "${PODS_CONFIGURATION_BUILD_DIR}/LetsMove" "${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit" "${PODS_ROOT}/Crashlytics/OSX" "${PODS_ROOT}/Fabric/OSX" "${PODS_ROOT}/Sparkle"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire" "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess" "${PODS_CONFIGURATION_BUILD_DIR}/LetsMove" "${PODS_CONFIGURATION_BUILD_DIR}/Magnet" "${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit" "${PODS_ROOT}/Crashlytics/OSX" "${PODS_ROOT}/Fabric/OSX" "${PODS_ROOT}/Sparkle"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess/KeychainAccess.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/LetsMove/LetsMove.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit/PromiseKit.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess/KeychainAccess.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/LetsMove/LetsMove.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Magnet/Magnet.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit/PromiseKit.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @loader_path/../Frameworks
-OTHER_LDFLAGS = $(inherited) -l"c++" -l"z" -framework "Alamofire" -framework "Foundation" -framework "KeychainAccess" -framework "LetsMove" -framework "PromiseKit" -framework "Security" -framework "Sparkle" -framework "SystemConfiguration"
+OTHER_LDFLAGS = $(inherited) -l"c++" -l"z" -framework "Alamofire" -framework "Carbon" -framework "Cocoa" -framework "Foundation" -framework "KeychainAccess" -framework "LetsMove" -framework "Magnet" -framework "PromiseKit" -framework "Security" -framework "Sparkle" -framework "SystemConfiguration"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

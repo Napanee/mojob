@@ -11,6 +11,7 @@ import Fabric
 import Crashlytics
 import LetsMove
 import Network
+import Magnet
 import PromiseKit
 
 
@@ -34,6 +35,7 @@ class AppDelegate: NSObject {
 
 	var window: NSWindow!
 	var mainWindowController: MainWindowController?
+	var quickSelectWindowController: QuickSelectWindowController?
 	var appMenu = NSMenu()
 	var hasInternalConnection: Bool = false
 	var hasExternalConnection: Bool = false
@@ -48,6 +50,15 @@ class AppDelegate: NSObject {
 			"NSInitialToolTipDelay": 1,
 			"NSApplicationCrashOnExceptions": true
 		])
+
+		for b in Bundle.allBundles {
+			print(b.bundlePath)
+		}
+
+		if let keyCombo = KeyCombo(keyCode: 11, carbonModifiers: 4352) {
+			let hotKey = HotKey(identifier: "CommandControlB", keyCombo: keyCombo, target: self, action: #selector(delayedFunc))
+			hotKey.register() // or HotKeyCenter.shared.register(with: hotKey)
+		}
 
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
@@ -105,6 +116,15 @@ class AppDelegate: NSObject {
 		}
 
 		initStatusBarApp()
+	}
+
+	@objc func delayedFunc() {
+		if (quickSelectWindowController != nil) { return }
+
+		quickSelectWindowController = QuickSelectWindowController()
+		quickSelectWindowController!.showWindow(nil)
+		quickSelectWindowController?.window?.makeKeyAndOrderFront(self)
+		NSApp.activate(ignoringOtherApps: true)
 	}
 
 	private func initStatusBarApp() {
