@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import Crashlytics
+
 
 class AddButton: NSView {
 
@@ -43,6 +45,8 @@ class AddButton: NSView {
 
 	@IBAction func addTracking(_ sender: NSButton) {
 		guard let daySplitViewController = (NSApp.mainWindow?.windowController as? MainWindowController)?.daySplitViewController else { return }
+
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "addTracking"])
 
 		var editor: EditorController
 		if let existingSplitViewItem = daySplitViewController.splitViewItems.first(where: { $0.viewController.isKind(of: EditorController.self) }), let existingEditor = existingSplitViewItem.viewController as? EditorController {

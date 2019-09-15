@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Crashlytics
 
 
 class GlobalTimer: NSObject {
@@ -35,6 +36,8 @@ class GlobalTimer: NSObject {
 			return
 		}
 
+		Answers.logCustomEvent(withName: "Timer", customAttributes: ["Action": "start"])
+
 		statusItem = (NSApp.delegate as? AppDelegate)?.statusItem
 
 		attributes[NSAttributedString.Key.baselineOffset] = -1.5
@@ -62,6 +65,8 @@ class GlobalTimer: NSObject {
 	func stopTimer() {
 		timer.invalidate()
 		appBadge.badgeLabel = ""
+
+		Answers.logCustomEvent(withName: "Timer", customAttributes: ["Action": "stop"])
 
 		if let statusItem = statusItem {
 			let attributed = NSAttributedString(string: "00:00", attributes: attributes)

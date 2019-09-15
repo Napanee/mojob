@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Crashlytics
 
 
 class TrackingItem: NSView {
@@ -229,6 +230,8 @@ class TrackingItem: NSView {
 		clone.setValuesForKeys(keyedValues)
 
 		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
+
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "restart"])
 	}
 
 	@objc func onContextEdit() {
@@ -250,6 +253,8 @@ class TrackingItem: NSView {
 			}
 
 			editor.tracking = tracking
+
+			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "edit"])
 		}
 	}
 
@@ -257,10 +262,14 @@ class TrackingItem: NSView {
 		guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
 		job.isFavorite = !job.isFavorite
 
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "favorite", "Status": job.isFavorite])
+
 		CoreDataHelper.save()
 	}
 
 	@objc func onContextDelete() {
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "delete"])
+
 		tracking?.delete()
 	}
 
@@ -277,6 +286,8 @@ class TrackingItem: NSView {
 		job.color = nil
 
 		CoreDataHelper.save()
+
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "resetColor"])
 	}
 
 	override func mouseDown(with event: NSEvent) {
@@ -299,6 +310,8 @@ class TrackingItem: NSView {
 			}
 
 			editor.tracking = tracking
+
+			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "edit"])
 		}
 	}
 
@@ -306,6 +319,8 @@ class TrackingItem: NSView {
 		if let button = sender as? ColorButton {
 			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
 			job.color = button.key
+
+			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "setColor"])
 
 			CoreDataHelper.save()
 			rightClickMenu.cancelTracking()

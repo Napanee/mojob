@@ -8,6 +8,7 @@
 
 import Cocoa
 import CoreGraphics
+import Crashlytics
 
 
 class CalendarDay: NSView {
@@ -81,6 +82,7 @@ class CalendarDay: NSView {
 	}
 
 	@IBAction func button(_ sender: NSButton) {
+		Answers.logCustomEvent(withName: "Calendar", customAttributes: ["Action": "selectDay"])
 		delegate?.select(day!)
 	}
 

@@ -8,6 +8,8 @@
 
 import Cocoa
 import ServiceManagement
+import Crashlytics
+
 
 class SettingsViewController: NSViewController {
 
@@ -104,23 +106,30 @@ class SettingsViewController: NSViewController {
 		let value = cell.stringValue.lowercased()
 
 		if (value == "") {
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "removeActivity"])
 			userDefaults.removeObject(forKey: UserDefaults.Keys.activity)
 		} else if let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == value }) {
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "setActivity", "Activity": activity.title ?? "no Title"])
 			userDefaults.set(activity.id, forKey: UserDefaults.Keys.activity)
 		}
 	}
 
 	@IBAction func toggleAutoLaunch(_ sender: NSButton) {
 		let isAuto = sender.state == .on
+		Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "autoLaunch", "Status": isAuto])
 		SMLoginItemSetEnabled(helperBundleName as CFString, isAuto)
 	}
 
 	@IBAction func toggleBadgIconLabel(_ sender: NSButton) {
-		userDefaults.set(sender.state == .on, forKey: UserDefaults.Keys.badgeIconLabel)
+		let isActive = sender.state == .on
+		Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "BadgeIconLabel", "Status": isActive])
+		userDefaults.set(isActive, forKey: UserDefaults.Keys.badgeIconLabel)
 	}
 
 	@IBAction func toggleSyncOnStart(_ sender: NSButton) {
-		userDefaults.set(sender.state == .on, forKey: UserDefaults.Keys.syncOnStart)
+		let isActive = sender.state == .on
+		Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "SyncOnStart", "Status": isActive])
+		userDefaults.set(isActive, forKey: UserDefaults.Keys.syncOnStart)
 	}
 
 	@IBAction func resetData(_ sender: NSButton) {
