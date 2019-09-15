@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -109,6 +109,7 @@
 		E8E9509D223482940070F57E /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509C223482940070F57E /* AddButton.swift */; };
 		E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509E223526DB0070F57E /* TrackingsStackView.swift */; };
 		E8E950A2223591910070F57E /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950A1223591910070F57E /* NumberField.swift */; };
+		E8F373CB232ECA9500E30D6A /* MoJob-3.7.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */; };
 		E8FF02E3231279DA00E7686A /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */; };
 		E8FF02E5231279EF00E7686A /* ContentSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */; };
 		E8FF02E723127A0000E7686A /* DaySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E623127A0000E7686A /* DaySplitViewController.swift */; };
@@ -266,6 +267,7 @@
 		E8E9509C223482940070F57E /* AddButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddButton.swift; sourceTree = "<group>"; };
 		E8E9509E223526DB0070F57E /* TrackingsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingsStackView.swift; sourceTree = "<group>"; };
 		E8E950A1223591910070F57E /* NumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberField.swift; sourceTree = "<group>"; };
+		E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.7.0.html"; sourceTree = "<group>"; };
 		E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
 		E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSplitViewController.swift; sourceTree = "<group>"; };
 		E8FF02E623127A0000E7686A /* DaySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySplitViewController.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				E82A7037231FBCE000884390 /* MoJob-3.6.0.html */,
 				E82A703923205D7400884390 /* MoJob-3.6.1.html */,
 				E876C9752326ED7F00C404FD /* MoJob-3.6.2.html */,
+				E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -988,6 +991,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8F373CB232ECA9500E30D6A /* MoJob-3.7.0.html in Resources */,
 				E8211795220E07B2003D7578 /* Assets.xcassets in Resources */,
 				E85FFC25231DB646006CA1CB /* MoJob-3.5.2.html in Resources */,
 				E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */,
