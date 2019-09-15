@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		133BCF572372D2C3F5C07752 /* Pods_MoJobTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DEFE8453F89A35D9A6E3725 /* Pods_MoJobTests.framework */; };
 		A4EB7A298F04A937F35732F5 /* Pods_MoJobUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */; };
-		BBFA9EFCC88576C5F1D1AA8D /* Pods_MoJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D682E214AB8E8C07045252E /* Pods_MoJob.framework */; };
 		E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8322F9851700E82EBE /* QuoJobSelections.swift */; };
 		E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */; };
 		E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8722F9B9F400E82EBE /* Tracking.swift */; };
@@ -110,6 +109,7 @@
 		E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509E223526DB0070F57E /* TrackingsStackView.swift */; };
 		E8E950A2223591910070F57E /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950A1223591910070F57E /* NumberField.swift */; };
 		E8F373CB232ECA9500E30D6A /* MoJob-3.7.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */; };
+		E8F373CC232ED6D100E30D6A /* Pods_MoJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D682E214AB8E8C07045252E /* Pods_MoJob.framework */; };
 		E8FF02E3231279DA00E7686A /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */; };
 		E8FF02E5231279EF00E7686A /* ContentSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */; };
 		E8FF02E723127A0000E7686A /* DaySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E623127A0000E7686A /* DaySplitViewController.swift */; };
@@ -278,7 +278,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBFA9EFCC88576C5F1D1AA8D /* Pods_MoJob.framework in Frameworks */,
+				E8F373CC232ED6D100E30D6A /* Pods_MoJob.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,9 +865,9 @@
 				E8211788220E07B1003D7578 /* Sources */,
 				E8211789220E07B1003D7578 /* Frameworks */,
 				E821178A220E07B1003D7578 /* Resources */,
-				709109543FB4E546A9F47017 /* [CP] Embed Pods Frameworks */,
 				E8AA8CBB22F891660017698F /* CopyFiles */,
 				E800AE7D22F958E000E82EBE /* Fabric Keys */,
+				FF05C4A6C5743F881BFCBE97 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1059,23 +1059,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		709109543FB4E546A9F47017 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MoJob/Pods-MoJob-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MoJob/Pods-MoJob-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoJob/Pods-MoJob-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9B8E0F4855C67B29D0A6F3CE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1158,6 +1141,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF05C4A6C5743F881BFCBE97 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MoJob/Pods-MoJob-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MoJob/Pods-MoJob-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoJob/Pods-MoJob-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
