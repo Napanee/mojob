@@ -165,7 +165,7 @@ class QuoJob: NSObject {
 				var params = self.defaultParams
 				params["hourbooking"] = [
 					"id": id,
-					"date": self.dateFormatterFull.string(from: Date()),
+					"date": self.dateFormatterFull.string(from: tracking.date_end! as Date),
 					"time_from": self.dateFormatterTime.string(from: tracking.date_start! as Date),
 					"time_until": self.dateFormatterTime.string(from: tracking.date_end! as Date),
 					"job_id": tracking.job?.id,
