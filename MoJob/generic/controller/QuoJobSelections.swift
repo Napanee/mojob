@@ -60,7 +60,7 @@ class QuoJobSelections: NSViewController {
 	private func initJobSelect() {
 		jobSelect.placeholderString = "Job wählen oder eingeben"
 
-		self.jobs = CoreDataHelper.jobs(in: tracking?.managedObjectContext)
+		jobs = CoreDataHelper.jobs(in: tracking?.managedObjectContext)
 			.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
 
 		jobSelect.reloadData()
@@ -78,7 +78,8 @@ class QuoJobSelections: NSViewController {
 
 	private func initTaskSelect() {
 		let index = jobSelect.indexOfSelectedItem
-		self.tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
+
+		tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
 			.filter({ $0.job?.id == tracking?.job?.id || index >= 0 && $0.job?.id == jobs[index].id })
 			.sorted(by: { $0.title! < $1.title! })
 
@@ -102,7 +103,7 @@ class QuoJobSelections: NSViewController {
 	private func initActivitySelect() {
 		activitySelect.placeholderString = "Leistungsart wählen oder eingeben"
 
-		self.activities = CoreDataHelper.activities(in: tracking?.managedObjectContext)
+		activities = CoreDataHelper.activities(in: tracking?.managedObjectContext)
 			.filter({
 				if let job = tracking?.job {
 					return
@@ -177,21 +178,22 @@ class QuoJobSelections: NSViewController {
 	}
 
 	@IBAction func jobSelect(_ sender: NSComboBox) {
-		guard let cell = sender.cell, let tracking = tracking, let context = tracking.managedObjectContext else { return }
+		if let cell = sender.cell, let tracking = tracking, let context = tracking.managedObjectContext {
+			let value = cell.stringValue.lowercased()
 
-		let value = cell.stringValue.lowercased()
-
-		if (value == "") {
-			tracking.job = nil
-			tracking.task = nil
-		} else if let job = CoreDataHelper.jobs(in: context).first(where: { $0.fullTitle.lowercased() == value }) {
-			tracking.job = job
-			tracking.custom_job = nil
-		} else {
-			tracking.job = nil
-			tracking.custom_job = value
+			if (value == "") {
+				tracking.job = nil
+				tracking.task = nil
+			} else if let job = CoreDataHelper.jobs(in: context).first(where: { $0.fullTitle.lowercased() == value }) {
+				tracking.job = job
+				tracking.custom_job = nil
+			} else {
+				tracking.job = nil
+				tracking.custom_job = value
+			}
 		}
 
+		taskSelect.stringValue = ""
 		initTaskSelect()
 		initActivitySelect()
 
@@ -211,33 +213,49 @@ class QuoJobSelections: NSViewController {
 	}
 
 	@IBAction func activitySelect(_ sender: NSComboBox) {
-		guard let cell = sender.cell, let tracking = tracking, let context = tracking.managedObjectContext else { return }
+		guard let cell = sender.cell else { return }
 
 		let value = cell.stringValue.lowercased()
-
-		if (value == "") {
-			jobSelect.isEnabled = true
-			tracking.activity = nil
-		} else if let activity = CoreDataHelper.activities(in: context)
+		let activity = CoreDataHelper.activities(in: tracking?.managedObjectContext)
 			.filter({
-				if let job = tracking.job {
+				if let job = tracking?.job {
 					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 				}
 
 				return $0.internal_service || (nfc && $0.nfc)
 			})
 			.first(where: { $0.title?.lowercased() == value })
-		{
+
+		if let tracking = tracking, let _ = tracking.managedObjectContext {
+			if (value == "") {
+				tracking.activity = nil
+			} else if let activity = activity {
+				if (nfc && activity.nfc) {
+					tracking.job = nil
+				}
+
+				tracking.activity = activity
+			}
+		}
+
+		if (value == "") {
+			jobSelect.isEnabled = true
+			taskSelect.isEnabled = true
+		} else if let activity = activity {
 			if (nfc && activity.nfc) {
 				jobSelect.cell?.stringValue = ""
-				tracking.job = nil
+				jobSelect.deselectItem(at: jobSelect.indexOfSelectedItem)
 				jobSelect.isEnabled = false
+				taskSelect.cell?.stringValue = ""
+				taskSelect.deselectItem(at: taskSelect.indexOfSelectedItem)
+				taskSelect.isEnabled = false
 			} else {
 				jobSelect.isEnabled = true
+				taskSelect.isEnabled = true
 			}
-
-			tracking.activity = activity
 		}
+
+		initTaskSelect()
 
 		formIsValid = true
 	}
@@ -349,8 +367,10 @@ extension QuoJobSelections: NSTextFieldDelegate {
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		} else if (comboBox.isEqual(taskSelect)) {
+			let index = jobSelect.indexOfSelectedItem
+
 			tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
-				.filter({ $0.job?.id == tracking?.job?.id && (value == "" || ($0.title ?? "").lowercased().contains(value)) })
+				.filter({ ($0.job?.id == tracking?.job?.id || index >= 0 && $0.job?.id == jobs[index].id) && (value == "" || ($0.title ?? "").lowercased().contains(value)) })
 				.sorted(by: { $0.title! < $1.title! })
 
 			if (tasks.count > 0) {
