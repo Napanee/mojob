@@ -160,8 +160,12 @@ class AppDelegate: NSObject {
 
 		if let trackings = try? CoreDataHelper.mainContext.fetch(request) as? [[String: Any]] {
 			for tracking in trackings {
-				let item = NSMenuItem(title: "\(tracking["job.number"]!) - \(tracking["job.title"]!)", action: #selector(startTracking(with:)), keyEquivalent: "")
-				item.representedObject = tracking["job.id"]!
+				guard let jobId = tracking["job.id"] else { continue }
+
+				let jobNumber = tracking["job.number"] ?? "noNumber"
+				let jobTitle = tracking["job.title"] ?? "noTitle"
+				let item = NSMenuItem(title: "\(jobNumber) - \(jobTitle)", action: #selector(startTracking(with:)), keyEquivalent: "")
+				item.representedObject = jobId
 				appMenu.addItem(item)
 			}
 		}
