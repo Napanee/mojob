@@ -736,16 +736,16 @@ extension QuoJob {
 
 					var dateStart: Date!
 					var dateEnd: Date!
-					if (timeUntil == "" || timeFrom == "") {
-						dateStart = self.dateFormatterFull.date(from: date)
-						dateEnd = Calendar.current.date(byAdding: .minute, value: Int(round(quantity * 60)), to: dateStart!)
-					} else {
+					if let dateFrom = self.dateFormatterTime.date(from: timeFrom), let dateUntil = self.dateFormatterTime.date(from: timeUntil) {
 						let trackingDate = self.dateFormatterFull.date(from: date)
-						let timeFromDate = Calendar.current.dateComponents([.hour, .minute], from: self.dateFormatterTime.date(from: timeFrom)!)
-						let timeUntilDate = Calendar.current.dateComponents([.hour, .minute], from: self.dateFormatterTime.date(from: timeUntil)!)
+						let timeFromDate = Calendar.current.dateComponents([.hour, .minute], from: dateFrom)
+						let timeUntilDate = Calendar.current.dateComponents([.hour, .minute], from: dateUntil)
 
 						dateStart = Calendar.current.date(bySettingHour: timeFromDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
 						dateEnd = Calendar.current.date(bySettingHour: timeUntilDate.hour!, minute: timeUntilDate.minute!, second: 0, of: trackingDate!)
+					} else {
+						dateStart = self.dateFormatterFull.date(from: date)
+						dateEnd = Calendar.current.date(byAdding: .minute, value: Int(round(quantity * 60)), to: dateStart!)
 					}
 
 					var jobObject: Job? = nil
