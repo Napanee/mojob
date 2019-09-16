@@ -110,6 +110,7 @@
 		E8E950A2223591910070F57E /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950A1223591910070F57E /* NumberField.swift */; };
 		E8F373CB232ECA9500E30D6A /* MoJob-3.7.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */; };
 		E8F373CC232ED6D100E30D6A /* Pods_MoJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D682E214AB8E8C07045252E /* Pods_MoJob.framework */; };
+		E8F94902232F8D640084AAFE /* MoJob-3.7.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94901232F8D640084AAFE /* MoJob-3.7.1.html */; };
 		E8FF02E3231279DA00E7686A /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */; };
 		E8FF02E5231279EF00E7686A /* ContentSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */; };
 		E8FF02E723127A0000E7686A /* DaySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E623127A0000E7686A /* DaySplitViewController.swift */; };
@@ -268,6 +269,7 @@
 		E8E9509E223526DB0070F57E /* TrackingsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingsStackView.swift; sourceTree = "<group>"; };
 		E8E950A1223591910070F57E /* NumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberField.swift; sourceTree = "<group>"; };
 		E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.7.0.html"; sourceTree = "<group>"; };
+		E8F94901232F8D640084AAFE /* MoJob-3.7.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.7.1.html"; sourceTree = "<group>"; };
 		E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
 		E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSplitViewController.swift; sourceTree = "<group>"; };
 		E8FF02E623127A0000E7686A /* DaySplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySplitViewController.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 				E82A703923205D7400884390 /* MoJob-3.6.1.html */,
 				E876C9752326ED7F00C404FD /* MoJob-3.6.2.html */,
 				E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */,
+				E8F94901232F8D640084AAFE /* MoJob-3.7.1.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -997,6 +1000,7 @@
 				E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */,
 				E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */,
 				E82A7036231F148800884390 /* MoJob-3.5.3.html in Resources */,
+				E8F94902232F8D640084AAFE /* MoJob-3.7.1.html in Resources */,
 				E8E9508B2232C0AF0070F57E /* EditorController.xib in Resources */,
 				E8211802220F5384003D7578 /* JobItem.xib in Resources */,
 				E840F96E230402B600923A47 /* MoJob-3.0.3.html in Resources */,
