@@ -92,6 +92,7 @@
 		E8B58A3D232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A3C232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel */; };
 		E8B58A3F232FCFA600DBCE44 /* Model_MoJob_001_003.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A3E232FCFA600DBCE44 /* Model_MoJob_001_003.xcmappingmodel */; };
 		E8B58A41232FD4E200DBCE44 /* MoJob-3.7.4.html in Resources */ = {isa = PBXBuildFile; fileRef = E8B58A40232FD4E200DBCE44 /* MoJob-3.7.4.html */; };
+		E8B58A43232FE26400DBCE44 /* MoJob-3.7.5.html in Resources */ = {isa = PBXBuildFile; fileRef = E8B58A42232FE26400DBCE44 /* MoJob-3.7.5.html */; };
 		E8C07F72230CA74600299DC4 /* MoJob-3.4.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */; };
 		E8CACC782211DE6300675688 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
 		E8D35A1222FF54C50014AFE4 /* DeleteTrackingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */; };
@@ -256,6 +257,7 @@
 		E8B58A3C232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_002_003.xcmappingmodel; sourceTree = "<group>"; };
 		E8B58A3E232FCFA600DBCE44 /* Model_MoJob_001_003.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_001_003.xcmappingmodel; sourceTree = "<group>"; };
 		E8B58A40232FD4E200DBCE44 /* MoJob-3.7.4.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.7.4.html"; sourceTree = "<group>"; };
+		E8B58A42232FE26400DBCE44 /* MoJob-3.7.5.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.7.5.html"; sourceTree = "<group>"; };
 		E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.4.0.html"; sourceTree = "<group>"; };
 		E8CACC772211DE6300675688 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 		E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTrackingPolicy.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				E8F94903232F900D0084AAFE /* MoJob-3.7.2.html */,
 				E8F94905232F9C200084AAFE /* MoJob-3.7.3.html */,
 				E8B58A40232FD4E200DBCE44 /* MoJob-3.7.4.html */,
+				E8B58A42232FE26400DBCE44 /* MoJob-3.7.5.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1012,6 +1015,7 @@
 				E8B58A41232FD4E200DBCE44 /* MoJob-3.7.4.html in Resources */,
 				E85FFC25231DB646006CA1CB /* MoJob-3.5.2.html in Resources */,
 				E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */,
+				E8B58A43232FE26400DBCE44 /* MoJob-3.7.5.html in Resources */,
 				E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */,
 				E82A7036231F148800884390 /* MoJob-3.5.3.html in Resources */,
 				E8F94902232F8D640084AAFE /* MoJob-3.7.1.html in Resources */,
