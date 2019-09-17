@@ -114,6 +114,15 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
 		}
 	}
 
+	func showStats() {
+		let stats = StatsViewController(nibName: .statsControllerNib, bundle: nil)
+		if let contentViewController = contentViewController as? SplitViewController {
+			contentViewController.replaceView(at: 1, with: stats)
+		}
+
+		mainSplitViewController = nil
+	}
+
 	func showSettings() {
 		let settings = SettingsViewController(nibName: .settingsControllerNib, bundle: nil)
 		if let contentViewController = contentViewController as? SplitViewController {

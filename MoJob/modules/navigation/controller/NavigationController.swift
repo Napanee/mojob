@@ -13,6 +13,7 @@ class NavigationController: NSViewController {
 	var window: NSWindow!
 	@IBOutlet weak var timeTrackerButton: NSButton!
 	@IBOutlet weak var calendarButton: NSButton!
+	@IBOutlet weak var statsButton: NSButton!
 	@IBOutlet weak var settingsButton: NSButton!
 	
 	@IBAction func trackerView(_ sender: NSButton) {
@@ -22,6 +23,8 @@ class NavigationController: NSViewController {
 		sender.image = NSImage(named: .timerActiveImage)
 		calendarButton.isEnabled = true
 		calendarButton.image = NSImage(named: .calendarImage)
+		statsButton.isEnabled = true
+		statsButton.image = NSImage(named: .settingsImage)
 		settingsButton.isEnabled = true
 		settingsButton.image = NSImage(named: .settingsImage)
 	}
@@ -33,6 +36,21 @@ class NavigationController: NSViewController {
 		sender.image = NSImage(named: .calendarActiveImage)
 		timeTrackerButton.isEnabled = true
 		timeTrackerButton.image = NSImage(named: .timerImage)
+		statsButton.isEnabled = true
+		statsButton.image = NSImage(named: .settingsImage)
+		settingsButton.isEnabled = true
+		settingsButton.image = NSImage(named: .settingsImage)
+	}
+
+	@IBAction func statsView(_ sender: NSButton) {
+		(NSApp.mainWindow?.windowController as? MainWindowController)?.showStats()
+
+		sender.isEnabled = false
+		sender.image = NSImage(named: .settingsActiveImage)
+		timeTrackerButton.isEnabled = true
+		timeTrackerButton.image = NSImage(named: .timerImage)
+		calendarButton.isEnabled = true
+		calendarButton.image = NSImage(named: .calendarImage)
 		settingsButton.isEnabled = true
 		settingsButton.image = NSImage(named: .settingsImage)
 	}
@@ -46,6 +64,8 @@ class NavigationController: NSViewController {
 		timeTrackerButton.image = NSImage(named: .timerImage)
 		calendarButton.isEnabled = true
 		calendarButton.image = NSImage(named: .calendarImage)
+		statsButton.isEnabled = true
+		statsButton.image = NSImage(named: .settingsImage)
 	}
 	
 	override func viewDidLoad() {

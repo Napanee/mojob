@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="calendarButton" destination="l7H-at-hMQ" id="cIv-Ss-QGI"/>
                 <outlet property="settingsButton" destination="WNR-0v-YYS" id="pcQ-ll-QpO"/>
+                <outlet property="statsButton" destination="ARY-9p-xPQ" id="85l-zO-0Ro"/>
                 <outlet property="timeTrackerButton" destination="gPp-hV-rlT" id="8N5-bq-7ga"/>
                 <outlet property="view" destination="c22-O7-iKe" id="ueD-6M-Dpv"/>
             </connections>
@@ -46,6 +47,16 @@
                         <action selector="calendarView:" target="-2" id="EwC-a2-RGa"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ARY-9p-xPQ">
+                    <rect key="frame" x="20" y="194" width="30" height="35"/>
+                    <buttonCell key="cell" type="bevel" title="Stats" bezelStyle="rounded" image="settings" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="tdE-Nm-nhF">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="statsView:" target="-2" id="y0A-bq-0fm"/>
+                    </connections>
+                </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WNR-0v-YYS">
                     <rect key="frame" x="20" y="30" width="30" height="35"/>
                     <buttonCell key="cell" type="bevel" title="Settings" bezelStyle="rounded" image="settings" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="jsZ-Pm-3TB">
@@ -60,11 +71,14 @@
             <constraints>
                 <constraint firstItem="gPp-hV-rlT" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="35" id="2uD-qI-513"/>
                 <constraint firstAttribute="bottom" secondItem="WNR-0v-YYS" secondAttribute="bottom" constant="30" id="3QP-yr-SwZ"/>
+                <constraint firstItem="ARY-9p-xPQ" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="4dm-xY-oz4"/>
                 <constraint firstAttribute="trailing" secondItem="gPp-hV-rlT" secondAttribute="trailing" constant="20" id="56h-fF-qWw"/>
                 <constraint firstItem="l7H-at-hMQ" firstAttribute="top" secondItem="gPp-hV-rlT" secondAttribute="bottom" constant="10" id="5Zz-Kl-c73"/>
                 <constraint firstItem="l7H-at-hMQ" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="5nz-95-9hf"/>
                 <constraint firstItem="gPp-hV-rlT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="FiQ-oq-iMq"/>
+                <constraint firstItem="ARY-9p-xPQ" firstAttribute="top" secondItem="l7H-at-hMQ" secondAttribute="bottom" constant="10" id="Q5L-Vq-erB"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="XO1-YI-nwa"/>
+                <constraint firstItem="ARY-9p-xPQ" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="hER-9r-ced"/>
                 <constraint firstItem="l7H-at-hMQ" firstAttribute="width" secondItem="gPp-hV-rlT" secondAttribute="width" id="jqe-Yl-gru"/>
                 <constraint firstItem="WNR-0v-YYS" firstAttribute="centerX" secondItem="gPp-hV-rlT" secondAttribute="centerX" id="qj2-yl-y4O"/>
             </constraints>
