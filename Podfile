@@ -10,6 +10,7 @@ def shared_pods
 	pod 'Crashlytics'
 	pod 'Sparkle', '~> 1.21'
 	pod 'LetsMove', '~> 1.24'
+	pod 'Charts', '~> 3.3'
 end
 
 target 'MoJob' do
