@@ -409,6 +409,7 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 extension JobListController: JobItemDelegate {
 
 	func onSelectJob() {
+		filterField.stringValue = ""
 		onTextChange(with: "")
 	}
 
