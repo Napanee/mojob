@@ -9,6 +9,14 @@
 import Cocoa
 import Charts
 
+struct TrackingSet {
+	var id: String
+	var title: String
+	var date: Date
+	var color: String?
+	var duration: TimeInterval
+}
+
 
 class StatsViewController: NSViewController {
 
@@ -21,9 +29,10 @@ class StatsViewController: NSViewController {
 	@IBOutlet weak var sumMonthLabel: NSTextField!
 
 	var calendar = Calendar.current
+	var labelText: String = ""
 
 	var daysRange: CountableRange<Int> = Calendar.current.range(of: .day, in: .month, for: Date()) ?? 1..<30
-	var trackingSet: [(date: Date, color: String?, duration: TimeInterval)] = []
+	var trackingSet: [TrackingSet] = []
 	var sumMonth: Double {
 		get {
 			return 0
@@ -57,9 +66,10 @@ class StatsViewController: NSViewController {
 
 			daysRange = calendar.range(of: .day, in: .month, for: newValue) ?? 1..<30
 			if let trackings = CoreDataHelper.trackings(from: newValue.startOfMonth!, byAdding: .month) {
-				trackingSet = trackings.map({ (date: $0.date_start!, color: $0.job?.color, duration: $0.duration) })
+				trackingSet = trackings.map({ TrackingSet(id: $0.job?.id ?? "custom", title: $0.job?.fullTitle ?? "Custom", date: $0.date_start!, color: $0.job?.color, duration: $0.duration) })
 			}
 
+			pieChartUpdate()
 			barChartUpdate()
 		}
 	}
@@ -94,6 +104,108 @@ class StatsViewController: NSViewController {
 
 	@IBAction func todayButton(_ sender: NSButton) {
 		currentDate = Date()
+	}
+
+}
+
+// MARK: - PieChart Setup
+
+extension StatsViewController {
+
+	func pieChartPrepareData() -> [PieChartDataEntry] {
+		var trackingSetMerged: [TrackingSet] = []
+		trackingSet.forEach { item in
+			let sum = trackingSet
+				.filter({ $0.id == item.id })
+				.reduce(0.0, { $0 + $1.duration })
+			var updatedItem = item
+			updatedItem.duration = sum
+			let obj = updatedItem
+
+			if (!trackingSetMerged.contains(where: { $0.id == obj.id })) {
+				trackingSetMerged += [obj]
+			}
+		}
+
+		var dataEntries: [PieChartDataEntry] = []
+		for item in trackingSetMerged {
+			let dataEntry = PieChartDataEntry(value: item.duration, label: item.title, data: item)
+			dataEntries.append(dataEntry)
+		}
+
+		return dataEntries
+	}
+
+	func pieChartSetup() {
+		let legend = pieChart.legend
+		legend.horizontalAlignment = .right
+		legend.verticalAlignment = .center
+		legend.orientation = .vertical
+		legend.drawInside = false
+		legend.xEntrySpace = 0
+		legend.yEntrySpace = 0
+		legend.yOffset = 0
+//		pieChart.legend.enabled = false
+//		barChart.legend.enabled = false
+//		barChart.getAxis(.right).enabled = false
+//
+//		let xAxis = barChart.xAxis
+//		xAxis.drawGridLinesEnabled = false
+//		xAxis.valueFormatter = self
+//		xAxis.labelCount = daysRange.count
+//		xAxis.axisMaxLabels = .max
+//		xAxis.labelTextColor = NSColor.secondaryLabelColor
+//		xAxis.labelPosition = .bottom
+//		xAxis.labelFont = NSFont.systemFont(ofSize: 12.0, weight: .light)
+//		xAxis.axisMinimum = -0.5
+//		xAxis.axisMaximum = Double(daysRange.count) - 0.5
+//
+//		let left = barChart.getAxis(.left)
+//		left.gridColor = NSColor.tertiaryLabelColor
+//		left.valueFormatter = self
+//		left.drawAxisLineEnabled = false
+//		left.axisMinimum = 0
+//		left.labelTextColor = NSColor.secondaryLabelColor
+//		left.labelFont = NSFont.systemFont(ofSize: 10, weight: .light)
+//
+//		let ll = ChartLimitLine(limit: 8.0)
+//		ll.lineWidth = 1.5
+//		left.addLimitLine(ll)
+	}
+
+	func pieChartUpdate() {
+		let pieChartData = pieChartPrepareData()
+		var colors: [NSColor] = []
+		for _ in 0..<pieChartData.count {
+			let red = Double(arc4random_uniform(256))
+			let green = Double(arc4random_uniform(256))
+			let blue = Double(arc4random_uniform(256))
+
+			let color = NSColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+			colors.append(color)
+		}
+
+		let chartDataSet = PieChartDataSet(entries: pieChartData, label: nil)
+		chartDataSet.colors = colors
+		chartDataSet.valueFont = NSFont.systemFont(ofSize: 10, weight: .semibold)
+		chartDataSet.xValuePosition = .outsideSlice
+		chartDataSet.yValuePosition = .outsideSlice
+		chartDataSet.valueLinePart1OffsetPercentage = 0.9
+		chartDataSet.valueColors = colors
+		chartDataSet.valueLinePart1Length = 0.5
+		chartDataSet.valueFormatter = self
+		chartDataSet.sliceSpace = 2.0
+		chartDataSet.valueLineVariableLength = true
+		chartDataSet.drawValuesEnabled = false
+
+		pieChart.marker = self
+		pieChart.drawEntryLabelsEnabled = false
+//		pieChart.highlightPerTapEnabled = false
+
+		pieChartSetup()
+		pieChart.data = PieChartData(dataSet: chartDataSet)
+
+		pieChart.animate(yAxisDuration: 1.0, easingOption: .easeInOutQuad)
 	}
 
 }
@@ -179,6 +291,51 @@ extension StatsViewController {
 
 }
 
+extension StatsViewController: IMarker {
+
+	var offset: CGPoint {
+		return CGPoint(x: 0, y: 0)
+	}
+
+	func offsetForDrawing(atPoint: CGPoint) -> CGPoint {
+		return CGPoint(x: 0, y: 0)
+	}
+
+	func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
+		labelText = "foo"
+	}
+
+	func draw(context: CGContext, point: CGPoint) {
+		let paragraphStyle = NSMutableParagraphStyle()
+		paragraphStyle.alignment = .center
+		let attrs: [NSAttributedString.Key: AnyObject] = [.font: NSFont.systemFont(ofSize: 10.0, weight: .light), .paragraphStyle: paragraphStyle, .foregroundColor: NSColor.red, .baselineOffset: NSNumber(value: -4)]
+
+		// custom padding around text
+		let labelWidth = labelText.size(withAttributes: attrs).width + 10
+		// if you modify labelHeigh you will have to tweak baselineOffset in attrs
+		let labelHeight = labelText.size(withAttributes: attrs).height + 4
+
+		// place pill above the marker, centered along x
+		var rectangle = CGRect(x: point.x, y: point.y, width: labelWidth, height: labelHeight)
+		rectangle.origin.x -= rectangle.width / 2.0
+		let spacing: CGFloat = 20
+		rectangle.origin.y -= rectangle.height + spacing
+
+		// rounded rect
+//		let clipPath = UIBezierPath(roundedRect: rectangle, cornerRadius: 6.0).cgPath
+		let clipPath = NSBezierPath(roundedRect: rectangle, xRadius: 6.0, yRadius: 6.0).cgPath
+		context.addPath(clipPath)
+		context.setFillColor(NSColor.white.cgColor)
+		context.setStrokeColor(NSColor.black.cgColor)
+		context.closePath()
+		context.drawPath(using: .fillStroke)
+
+		// add the text
+		labelText.draw(with: rectangle, options: .usesLineFragmentOrigin, attributes: attrs, context: nil)
+	}
+
+}
+
 // MARK: - ChartDelegate, ValueFormatters
 
 extension StatsViewController: ChartViewDelegate, IAxisValueFormatter, IValueFormatter {
@@ -197,11 +354,22 @@ extension StatsViewController: ChartViewDelegate, IAxisValueFormatter, IValueFor
 
 	func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
 		let formatter = DateComponentsFormatter()
-		formatter.unitsStyle = .positional
-		formatter.zeroFormattingBehavior = .pad
-		formatter.allowedUnits = [.hour, .minute]
+		formatter.zeroFormattingBehavior = [.pad, .dropLeading, .dropTrailing]
 
-		return formatter.string(from: entry.data as? TimeInterval ?? 0) ?? String(value)
+		if (entry.isKind(of: PieChartDataEntry.self)) {
+			if let data = entry.data as? TrackingSet {
+				formatter.allowedUnits = [.day, .hour, .minute]
+				formatter.unitsStyle = .abbreviated
+				formatter.maximumUnitCount = 2
+				return formatter.string(from: data.duration) ?? String(value)
+			}
+		} else if (entry.isKind(of: BarChartDataEntry.self)) {
+			formatter.allowedUnits = [.hour, .minute]
+			formatter.unitsStyle = .positional
+			return formatter.string(from: entry.data as? TimeInterval ?? 0) ?? String(value)
+		}
+
+		return String(value)
 	}
 
 }
