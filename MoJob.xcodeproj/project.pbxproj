@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		133BCF572372D2C3F5C07752 /* Pods_MoJobTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DEFE8453F89A35D9A6E3725 /* Pods_MoJobTests.framework */; };
 		A4EB7A298F04A937F35732F5 /* Pods_MoJobUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */; };
+		DF119A389156DC7F6EA69743 /* Pods_MoJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FA1203C17A05D264D1D8C7D /* Pods_MoJob.framework */; };
 		E18AC82420A0451E8503C480 /* Pods_MoJob_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B360B3B424BBEDBB4F4C601F /* Pods_MoJob_Dev.framework */; };
 		E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8322F9851700E82EBE /* QuoJobSelections.swift */; };
 		E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */; };
@@ -221,7 +222,7 @@
 		E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509E223526DB0070F57E /* TrackingsStackView.swift */; };
 		E8E950A2223591910070F57E /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950A1223591910070F57E /* NumberField.swift */; };
 		E8F373CB232ECA9500E30D6A /* MoJob-3.7.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */; };
-		E8F373CC232ED6D100E30D6A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		E8F373CC232ED6D100E30D6A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		E8F94902232F8D640084AAFE /* MoJob-3.7.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94901232F8D640084AAFE /* MoJob-3.7.1.html */; };
 		E8F94904232F900D0084AAFE /* MoJob-3.7.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94903232F900D0084AAFE /* MoJob-3.7.2.html */; };
 		E8F94906232F9C200084AAFE /* MoJob-3.7.3.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94905232F9C200084AAFE /* MoJob-3.7.3.html */; };
@@ -274,6 +275,7 @@
 		094DA011DFDF8D35D98D439B /* Pods-MoJobTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobTests.release.xcconfig"; path = "Target Support Files/Pods-MoJobTests/Pods-MoJobTests.release.xcconfig"; sourceTree = "<group>"; };
 		160E1E44B826B5C303BE90F7 /* Pods-MoJob.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJob.release.xcconfig"; path = "Target Support Files/Pods-MoJob/Pods-MoJob.release.xcconfig"; sourceTree = "<group>"; };
 		2627229A5BFC850C21B31561 /* Pods-MoJobUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobUITests.debug.xcconfig"; path = "Target Support Files/Pods-MoJobUITests/Pods-MoJobUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		3FA1203C17A05D264D1D8C7D /* Pods_MoJob.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJob.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4005EFA326A0EA4C79840F4B /* Pods-MoJobUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobUITests.release.xcconfig"; path = "Target Support Files/Pods-MoJobUITests/Pods-MoJobUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4DEFE8453F89A35D9A6E3725 /* Pods_MoJobTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJobTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		769C502492876FC60854FE3F /* Pods-MoJobTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobTests.debug.xcconfig"; path = "Target Support Files/Pods-MoJobTests/Pods-MoJobTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -416,7 +418,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8F373CC232ED6D100E30D6A /* (null) in Frameworks */,
+				E8F373CC232ED6D100E30D6A /* BuildFile in Frameworks */,
+				DF119A389156DC7F6EA69743 /* Pods_MoJob.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +479,7 @@
 				4DEFE8453F89A35D9A6E3725 /* Pods_MoJobTests.framework */,
 				9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */,
 				B360B3B424BBEDBB4F4C601F /* Pods_MoJob_Dev.framework */,
+				3FA1203C17A05D264D1D8C7D /* Pods_MoJob.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
