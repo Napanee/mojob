@@ -58,6 +58,7 @@
 		E850997822F7078C00068ED8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997722F7078C00068ED8 /* SettingsViewController.swift */; };
 		E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E850997922F708E600068ED8 /* SettingsViewController.xib */; };
 		E850998222F7578200068ED8 /* ComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850998122F7578200068ED8 /* ComboBox.swift */; };
+		E853A5722333AC1000689F62 /* MoJob-3.7.6.html in Resources */ = {isa = PBXBuildFile; fileRef = E853A5712333AC1000689F62 /* MoJob-3.7.6.html */; };
 		E85FFC23231C7300006CA1CB /* MoJob-3.5.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */; };
 		E85FFC25231DB646006CA1CB /* MoJob-3.5.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC24231DB646006CA1CB /* MoJob-3.5.2.html */; };
 		E863305D2245863600A8E946 /* PopUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305C2245863600A8E946 /* PopUpCell.swift */; };
@@ -218,6 +219,7 @@
 		E850997722F7078C00068ED8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E850997922F708E600068ED8 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		E850998122F7578200068ED8 /* ComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboBox.swift; sourceTree = "<group>"; };
+		E853A5712333AC1000689F62 /* MoJob-3.7.6.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.7.6.html"; sourceTree = "<group>"; };
 		E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.5.0.html"; sourceTree = "<group>"; };
 		E85FFC24231DB646006CA1CB /* MoJob-3.5.2.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.5.2.html"; sourceTree = "<group>"; };
 		E863305C2245863600A8E946 /* PopUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCell.swift; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				E8F94905232F9C200084AAFE /* MoJob-3.7.3.html */,
 				E8B58A40232FD4E200DBCE44 /* MoJob-3.7.4.html */,
 				E8B58A42232FE26400DBCE44 /* MoJob-3.7.5.html */,
+				E853A5712333AC1000689F62 /* MoJob-3.7.6.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1045,6 +1048,7 @@
 				E8211798220E07B2003D7578 /* MainMenu.xib in Resources */,
 				E82A7038231FBCE000884390 /* MoJob-3.6.0.html in Resources */,
 				E876C9762326ED7F00C404FD /* MoJob-3.6.2.html in Resources */,
+				E853A5722333AC1000689F62 /* MoJob-3.7.6.html in Resources */,
 				E863306522481BED00A8E946 /* Login.xib in Resources */,
 				E850996A22F6118B00068ED8 /* MoJob.clr in Resources */,
 				E81DEE6422F4A1CD004EF977 /* AddFavorite.xib in Resources */,
