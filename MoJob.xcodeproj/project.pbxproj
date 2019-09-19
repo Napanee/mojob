@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		133BCF572372D2C3F5C07752 /* Pods_MoJobTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DEFE8453F89A35D9A6E3725 /* Pods_MoJobTests.framework */; };
 		A4EB7A298F04A937F35732F5 /* Pods_MoJobUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */; };
+		E18AC82420A0451E8503C480 /* Pods_MoJob_Dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B360B3B424BBEDBB4F4C601F /* Pods_MoJob_Dev.framework */; };
 		E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8322F9851700E82EBE /* QuoJobSelections.swift */; };
 		E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */; };
 		E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8722F9B9F400E82EBE /* Tracking.swift */; };
@@ -59,6 +60,111 @@
 		E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E850997922F708E600068ED8 /* SettingsViewController.xib */; };
 		E850998222F7578200068ED8 /* ComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850998122F7578200068ED8 /* ComboBox.swift */; };
 		E853A5722333AC1000689F62 /* MoJob-3.7.6.html in Resources */ = {isa = PBXBuildFile; fileRef = E853A5712333AC1000689F62 /* MoJob-3.7.6.html */; };
+		E853A5762333ACED00689F62 /* CalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1D22FF5B3B0014AFE4 /* CalendarController.swift */; };
+		E853A5772333ACED00689F62 /* WakeUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84FCE3F22FC3ED7002E41B4 /* WakeUp.swift */; };
+		E853A5782333ACED00689F62 /* Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8722F9B9F400E82EBE /* Tracking.swift */; };
+		E853A5792333ACED00689F62 /* TrackingsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509E223526DB0070F57E /* TrackingsStackView.swift */; };
+		E853A57A2333ACED00689F62 /* QuoJobSelections.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8322F9851700E82EBE /* QuoJobSelections.swift */; };
+		E853A57B2333ACED00689F62 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117D9220E1B7E003D7578 /* enums.swift */; };
+		E853A57C2333ACED00689F62 /* NSBezierPath-cgPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270452210DC740030B61C /* NSBezierPath-cgPath.swift */; };
+		E853A57D2333ACED00689F62 /* StopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A977F62315C5610028CD9D /* StopButton.swift */; };
+		E853A57E2333ACED00689F62 /* Model_MoJob_001_003.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A3E232FCFA600DBCE44 /* Model_MoJob_001_003.xcmappingmodel */; };
+		E853A57F2333ACED00689F62 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9508E2232D62A0070F57E /* TextField.swift */; };
+		E853A5802333ACED00689F62 /* Model_MoJob_002_003.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A3C232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel */; };
+		E853A5812333ACED00689F62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E821178F220E07B1003D7578 /* AppDelegate.swift */; };
+		E853A5822333ACED00689F62 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
+		E853A5832333ACED00689F62 /* GlobalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E849396C22FDFA0700D2A4C9 /* GlobalNotification.swift */; };
+		E853A5842333ACED00689F62 /* GlobalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8B22FA1A4100E82EBE /* GlobalTimer.swift */; };
+		E853A5852333ACED00689F62 /* SplitJobItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6B22F4DF96004EF977 /* SplitJobItem.swift */; };
+		E853A5862333ACED00689F62 /* MoJob.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E8A926CA2307709E004E0F04 /* MoJob.xcdatamodeld */; };
+		E853A5872333ACED00689F62 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8731AE4225952B1006947B0 /* constants.swift */; };
+		E853A5882333ACED00689F62 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A2703E2210BACF0030B61C /* TrackingViewController.swift */; };
+		E853A5892333ACED00689F62 /* AddFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6122F4A13A004EF977 /* AddFavorite.swift */; };
+		E853A58A2333ACED00689F62 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */; };
+		E853A58B2333ACED00689F62 /* PopUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305C2245863600A8E946 /* PopUpCell.swift */; };
+		E853A58C2333ACED00689F62 /* JobItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117FF220F5364003D7578 /* JobItem.swift */; };
+		E853A58D2333ACED00689F62 /* DaySplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E623127A0000E7686A /* DaySplitViewController.swift */; };
+		E853A58E2333ACED00689F62 /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E2231279DA00E7686A /* MainSplitViewController.swift */; };
+		E853A58F2333ACED00689F62 /* DayTrackingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */; };
+		E853A5902333ACED00689F62 /* DeleteTrackingPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */; };
+		E853A5912333ACED00689F62 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81E75E6230314610071B90C /* GraphView.swift */; };
+		E853A5922333ACED00689F62 /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850996B22F6145700068ED8 /* ColorButton.swift */; };
+		E853A5932333ACED00689F62 /* FilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* FilterField.swift */; };
+		E853A5942333ACED00689F62 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117C9220E1169003D7578 /* NavigationController.swift */; };
+		E853A5952333ACED00689F62 /* GradientCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */; };
+		E853A5962333ACED00689F62 /* structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2322525B99008DAA62 /* structs.swift */; };
+		E853A5972333ACED00689F62 /* SplitTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6722F4D78F004EF977 /* SplitTracking.swift */; };
+		E853A5982333ACED00689F62 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117BE220E0B20003D7578 /* MainWindowController.swift */; };
+		E853A5992333ACED00689F62 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863306622481E2C00A8E946 /* Login.swift */; };
+		E853A59A2333ACED00689F62 /* Model_MoJob_001_002.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A3A232FCB6900DBCE44 /* Model_MoJob_001_002.xcmappingmodel */; };
+		E853A59B2333ACED00689F62 /* ActiveIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A33230097A30014AFE4 /* ActiveIndicator.swift */; };
+		E853A59C2333ACED00689F62 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850997722F7078C00068ED8 /* SettingsViewController.swift */; };
+		E853A59D2333ACED00689F62 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2522525BBF008DAA62 /* extensions.swift */; };
+		E853A59E2333ACED00689F62 /* EditorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950882232C09F0070F57E /* EditorController.swift */; };
+		E853A59F2333ACED00689F62 /* FavoriteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117DD220E470C003D7578 /* FavoriteItem.swift */; };
+		E853A5A02333ACED00689F62 /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A977F8231AD9FF0028CD9D /* ToggleButton.swift */; };
+		E853A5A12333ACED00689F62 /* CalendarGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2D22FFCBFB0014AFE4 /* CalendarGridView.swift */; };
+		E853A5A22333ACED00689F62 /* CalendarWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A2B22FFA0130014AFE4 /* CalendarWeek.swift */; };
+		E853A5A32333ACED00689F62 /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950A1223591910070F57E /* NumberField.swift */; };
+		E853A5A42333ACED00689F62 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1F22FF6AC80014AFE4 /* CalendarDay.swift */; };
+		E853A5A52333ACED00689F62 /* QuoJob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305F2247AC1B00A8E946 /* QuoJob.swift */; };
+		E853A5A62333ACED00689F62 /* TrackingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8552222FCE000DAAA4E /* TrackingItem.swift */; };
+		E853A5A72333ACED00689F62 /* PopUpCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877EC82224FCA8C002C3828 /* PopUpCellText.swift */; };
+		E853A5A82333ACED00689F62 /* AddButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509C223482940070F57E /* AddButton.swift */; };
+		E853A5A92333ACED00689F62 /* ComboBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E850998122F7578200068ED8 /* ComboBox.swift */; };
+		E853A5AA2333ACED00689F62 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86330692248232F00A8E946 /* Password.swift */; };
+		E853A5AB2333ACED00689F62 /* ContentSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FF02E4231279EF00E7686A /* ContentSplitViewController.swift */; };
+		E853A5AC2333ACED00689F62 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8922F9C42900E82EBE /* Job.swift */; };
+		E853A5AD2333ACED00689F62 /* CollectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A270392210A7590030B61C /* CollectionItemView.swift */; };
+		E853A5AE2333ACED00689F62 /* JobListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117D4220E1AF6003D7578 /* JobListController.swift */; };
+		E853A5AF2333ACED00689F62 /* DeleteTaskPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80F6F4E23055EBD007A642E /* DeleteTaskPolicy.swift */; };
+		E853A5B02333ACED00689F62 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117C4220E0FBD003D7578 /* SplitViewController.swift */; };
+		E853A5B42333ACED00689F62 /* MoJob-3.7.3.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94905232F9C200084AAFE /* MoJob-3.7.3.html */; };
+		E853A5B52333ACED00689F62 /* MoJob-3.7.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */; };
+		E853A5B62333ACED00689F62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8211794220E07B2003D7578 /* Assets.xcassets */; };
+		E853A5B72333ACED00689F62 /* MoJob-3.7.4.html in Resources */ = {isa = PBXBuildFile; fileRef = E8B58A40232FD4E200DBCE44 /* MoJob-3.7.4.html */; };
+		E853A5B82333ACED00689F62 /* MoJob-3.5.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC24231DB646006CA1CB /* MoJob-3.5.2.html */; };
+		E853A5B92333ACED00689F62 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E850997922F708E600068ED8 /* SettingsViewController.xib */; };
+		E853A5BA2333ACED00689F62 /* MoJob-3.7.5.html in Resources */ = {isa = PBXBuildFile; fileRef = E8B58A42232FE26400DBCE44 /* MoJob-3.7.5.html */; };
+		E853A5BB2333ACED00689F62 /* TrackingItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D8532222E00600DAAA4E /* TrackingItem.xib */; };
+		E853A5BC2333ACED00689F62 /* MoJob-3.5.3.html in Resources */ = {isa = PBXBuildFile; fileRef = E82A7035231F148800884390 /* MoJob-3.5.3.html */; };
+		E853A5BD2333ACED00689F62 /* MoJob-3.7.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94901232F8D640084AAFE /* MoJob-3.7.1.html */; };
+		E853A5BE2333ACED00689F62 /* EditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E9508A2232C0AF0070F57E /* EditorController.xib */; };
+		E853A5BF2333ACED00689F62 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
+		E853A5C02333ACED00689F62 /* MoJob-3.0.3.html in Resources */ = {isa = PBXBuildFile; fileRef = E840F96D230402B600923A47 /* MoJob-3.0.3.html */; };
+		E853A5C12333ACED00689F62 /* JobListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117D6220E1B04003D7578 /* JobListController.xib */; };
+		E853A5C22333ACED00689F62 /* MoJob-3.2.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E86A741B2305E99500C77866 /* MoJob-3.2.1.html */; };
+		E853A5C32333ACED00689F62 /* MoJob-3.5.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */; };
+		E853A5C42333ACED00689F62 /* ExportOptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = E81E75E823033E900071B90C /* ExportOptions.plist */; };
+		E853A5C52333ACED00689F62 /* NavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117CC220E119D003D7578 /* NavigationController.xib */; };
+		E853A5C62333ACED00689F62 /* MoJob-3.4.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */; };
+		E853A5C72333ACED00689F62 /* MoJob-3.3.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8A926F4230A819A004E0F04 /* MoJob-3.3.0.html */; };
+		E853A5C82333ACED00689F62 /* SplitJobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E81DEE6922F4DF6D004EF977 /* SplitJobItem.xib */; };
+		E853A5C92333ACED00689F62 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117C1220E0B71003D7578 /* MainWindowController.xib */; };
+		E853A5CA2333ACED00689F62 /* SplitTracking.xib in Resources */ = {isa = PBXBuildFile; fileRef = E81DEE6522F4D780004EF977 /* SplitTracking.xib */; };
+		E853A5CB2333ACED00689F62 /* AddButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E83447732236735900621617 /* AddButton.xib */; };
+		E853A5CC2333ACED00689F62 /* WakeUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = E84FCE3D22FC3EA6002E41B4 /* WakeUp.xib */; };
+		E853A5CD2333ACED00689F62 /* DayTrackingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */; };
+		E853A5CE2333ACED00689F62 /* MoJob-3.0.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E81E75ED230351A90071B90C /* MoJob-3.0.1.html */; };
+		E853A5CF2333ACED00689F62 /* MoJob-3.1.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8716BE92304ADC600AF5BC0 /* MoJob-3.1.1.html */; };
+		E853A5D02333ACED00689F62 /* TrackingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8A270402210BAE80030B61C /* TrackingViewController.xib */; };
+		E853A5D12333ACED00689F62 /* FavoriteItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E82117DB220E4593003D7578 /* FavoriteItem.xib */; };
+		E853A5D22333ACED00689F62 /* MoJob-3.6.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E82A703923205D7400884390 /* MoJob-3.6.1.html */; };
+		E853A5D32333ACED00689F62 /* CalendarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A1B22FF5B0C0014AFE4 /* CalendarController.xib */; };
+		E853A5D42333ACED00689F62 /* CalendarDay.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A2122FF6BA20014AFE4 /* CalendarDay.xib */; };
+		E853A5D52333ACED00689F62 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211796220E07B2003D7578 /* MainMenu.xib */; };
+		E853A5D62333ACED00689F62 /* MoJob-3.6.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E82A7037231FBCE000884390 /* MoJob-3.6.0.html */; };
+		E853A5D72333ACED00689F62 /* MoJob-3.6.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E876C9752326ED7F00C404FD /* MoJob-3.6.2.html */; };
+		E853A5D82333ACED00689F62 /* MoJob-3.7.6.html in Resources */ = {isa = PBXBuildFile; fileRef = E853A5712333AC1000689F62 /* MoJob-3.7.6.html */; };
+		E853A5D92333ACED00689F62 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E863306422481BED00A8E946 /* Login.xib */; };
+		E853A5DA2333ACED00689F62 /* MoJob.clr in Resources */ = {isa = PBXBuildFile; fileRef = E850996922F6118B00068ED8 /* MoJob.clr */; };
+		E853A5DB2333ACED00689F62 /* AddFavorite.xib in Resources */ = {isa = PBXBuildFile; fileRef = E81DEE6322F4A1CD004EF977 /* AddFavorite.xib */; };
+		E853A5DC2333ACED00689F62 /* MoJob-3.1.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */; };
+		E853A5DD2333ACED00689F62 /* MoJob-3.7.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94903232F900D0084AAFE /* MoJob-3.7.2.html */; };
+		E853A5DE2333ACED00689F62 /* MoJob-3.2.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E86A74192305E75F00C77866 /* MoJob-3.2.0.html */; };
+		E853A5DF2333ACED00689F62 /* MoJob-3.0.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E81E75EB23034DF60071B90C /* MoJob-3.0.2.html */; };
+		E853A5E02333ACED00689F62 /* CalendarWeek.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A2522FF87480014AFE4 /* CalendarWeek.xib */; };
+		E853A5E22333ACED00689F62 /* AutoLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E85FFC23231C7300006CA1CB /* MoJob-3.5.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */; };
 		E85FFC25231DB646006CA1CB /* MoJob-3.5.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC24231DB646006CA1CB /* MoJob-3.5.2.html */; };
 		E863305D2245863600A8E946 /* PopUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305C2245863600A8E946 /* PopUpCell.swift */; };
@@ -113,7 +219,7 @@
 		E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9509E223526DB0070F57E /* TrackingsStackView.swift */; };
 		E8E950A2223591910070F57E /* NumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E950A1223591910070F57E /* NumberField.swift */; };
 		E8F373CB232ECA9500E30D6A /* MoJob-3.7.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F373CA232ECA9500E30D6A /* MoJob-3.7.0.html */; };
-		E8F373CC232ED6D100E30D6A /* Pods_MoJob.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D682E214AB8E8C07045252E /* Pods_MoJob.framework */; };
+		E8F373CC232ED6D100E30D6A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		E8F94902232F8D640084AAFE /* MoJob-3.7.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94901232F8D640084AAFE /* MoJob-3.7.1.html */; };
 		E8F94904232F900D0084AAFE /* MoJob-3.7.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94903232F900D0084AAFE /* MoJob-3.7.2.html */; };
 		E8F94906232F9C200084AAFE /* MoJob-3.7.3.html in Resources */ = {isa = PBXBuildFile; fileRef = E8F94905232F9C200084AAFE /* MoJob-3.7.3.html */; };
@@ -140,6 +246,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		E853A5E12333ACED00689F62 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				E853A5E22333ACED00689F62 /* AutoLaunchHelper.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E8AA8CBB22F891660017698F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,12 +272,14 @@
 		094DA011DFDF8D35D98D439B /* Pods-MoJobTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobTests.release.xcconfig"; path = "Target Support Files/Pods-MoJobTests/Pods-MoJobTests.release.xcconfig"; sourceTree = "<group>"; };
 		160E1E44B826B5C303BE90F7 /* Pods-MoJob.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJob.release.xcconfig"; path = "Target Support Files/Pods-MoJob/Pods-MoJob.release.xcconfig"; sourceTree = "<group>"; };
 		2627229A5BFC850C21B31561 /* Pods-MoJobUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobUITests.debug.xcconfig"; path = "Target Support Files/Pods-MoJobUITests/Pods-MoJobUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		2D682E214AB8E8C07045252E /* Pods_MoJob.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJob.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4005EFA326A0EA4C79840F4B /* Pods-MoJobUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobUITests.release.xcconfig"; path = "Target Support Files/Pods-MoJobUITests/Pods-MoJobUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4DEFE8453F89A35D9A6E3725 /* Pods_MoJobTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJobTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		769C502492876FC60854FE3F /* Pods-MoJobTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJobTests.debug.xcconfig"; path = "Target Support Files/Pods-MoJobTests/Pods-MoJobTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7847464B34327E7A7CA03419 /* Pods-MoJob.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJob.debug.xcconfig"; path = "Target Support Files/Pods-MoJob/Pods-MoJob.debug.xcconfig"; sourceTree = "<group>"; };
+		89FBE0F310EBEBC50C9E1579 /* Pods-MoJob Dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJob Dev.debug.xcconfig"; path = "Target Support Files/Pods-MoJob Dev/Pods-MoJob Dev.debug.xcconfig"; sourceTree = "<group>"; };
+		8DEE71AB16120D7D38EA3D3B /* Pods-MoJob Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJob Dev.release.xcconfig"; path = "Target Support Files/Pods-MoJob Dev/Pods-MoJob Dev.release.xcconfig"; sourceTree = "<group>"; };
 		9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJobUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B360B3B424BBEDBB4F4C601F /* Pods_MoJob_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJob_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E800AE8322F9851700E82EBE /* QuoJobSelections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJobSelections.swift; sourceTree = "<group>"; };
 		E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		E800AE8722F9B9F400E82EBE /* Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracking.swift; sourceTree = "<group>"; };
@@ -220,6 +338,8 @@
 		E850997922F708E600068ED8 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		E850998122F7578200068ED8 /* ComboBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComboBox.swift; sourceTree = "<group>"; };
 		E853A5712333AC1000689F62 /* MoJob-3.7.6.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.7.6.html"; sourceTree = "<group>"; };
+		E853A5E82333ACED00689F62 /* MoJob Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoJob Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E853A5E92333ACED00689F62 /* MoJob Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MoJob Dev-Info.plist"; path = "/Users/napanee/projects/moccu/mojob2/git/MoJob Dev-Info.plist"; sourceTree = "<absolute>"; };
 		E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.5.0.html"; sourceTree = "<group>"; };
 		E85FFC24231DB646006CA1CB /* MoJob-3.5.2.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.5.2.html"; sourceTree = "<group>"; };
 		E863305C2245863600A8E946 /* PopUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCell.swift; sourceTree = "<group>"; };
@@ -292,7 +412,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8F373CC232ED6D100E30D6A /* Pods_MoJob.framework in Frameworks */,
+				E8F373CC232ED6D100E30D6A /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +429,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4EB7A298F04A937F35732F5 /* Pods_MoJobUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E853A5B12333ACED00689F62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E18AC82420A0451E8503C480 /* Pods_MoJob_Dev.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +459,8 @@
 				094DA011DFDF8D35D98D439B /* Pods-MoJobTests.release.xcconfig */,
 				2627229A5BFC850C21B31561 /* Pods-MoJobUITests.debug.xcconfig */,
 				4005EFA326A0EA4C79840F4B /* Pods-MoJobUITests.release.xcconfig */,
+				89FBE0F310EBEBC50C9E1579 /* Pods-MoJob Dev.debug.xcconfig */,
+				8DEE71AB16120D7D38EA3D3B /* Pods-MoJob Dev.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -339,9 +469,9 @@
 			isa = PBXGroup;
 			children = (
 				E8726A1122FCC2C500066BEE /* Security.framework */,
-				2D682E214AB8E8C07045252E /* Pods_MoJob.framework */,
 				4DEFE8453F89A35D9A6E3725 /* Pods_MoJobTests.framework */,
 				9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */,
+				B360B3B424BBEDBB4F4C601F /* Pods_MoJob_Dev.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -404,6 +534,7 @@
 				E821179F220E07B2003D7578 /* MoJobTests.xctest */,
 				E82117AA220E07B3003D7578 /* MoJobUITests.xctest */,
 				E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */,
+				E853A5E82333ACED00689F62 /* MoJob Dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -425,6 +556,7 @@
 				E8211794220E07B2003D7578 /* Assets.xcassets */,
 				E850996922F6118B00068ED8 /* MoJob.clr */,
 				E8211799220E07B2003D7578 /* Info.plist */,
+				E853A5E92333ACED00689F62 /* MoJob Dev-Info.plist */,
 				E821179A220E07B2003D7578 /* MoJob.entitlements */,
 				E82B2E6D224C1AF6001CCAC8 /* Mojob-Bridging-Header.h */,
 				E81E75E823033E900071B90C /* ExportOptions.plist */,
@@ -937,6 +1069,27 @@
 			productReference = E82117AA220E07B3003D7578 /* MoJobUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		E853A5732333ACED00689F62 /* MoJob Dev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E853A5E52333ACED00689F62 /* Build configuration list for PBXNativeTarget "MoJob Dev" */;
+			buildPhases = (
+				E853A5742333ACED00689F62 /* [CP] Check Pods Manifest.lock */,
+				E853A5752333ACED00689F62 /* Sources */,
+				E853A5B12333ACED00689F62 /* Frameworks */,
+				E853A5B32333ACED00689F62 /* Resources */,
+				E853A5E12333ACED00689F62 /* CopyFiles */,
+				E853A5E32333ACED00689F62 /* Fabric Keys */,
+				E853A5E42333ACED00689F62 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MoJob Dev";
+			productName = MoJob;
+			productReference = E853A5E82333ACED00689F62 /* MoJob Dev.app */;
+			productType = "com.apple.product-type.application";
+		};
 		E8AA8CAA22F890520017698F /* AutoLaunchHelper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8AA8CBA22F890540017698F /* Build configuration list for PBXNativeTarget "AutoLaunchHelper" */;
@@ -1000,6 +1153,7 @@
 			projectRoot = "";
 			targets = (
 				E821178B220E07B1003D7578 /* MoJob */,
+				E853A5732333ACED00689F62 /* MoJob Dev */,
 				E821179E220E07B2003D7578 /* MoJobTests */,
 				E82117A9220E07B3003D7578 /* MoJobUITests */,
 				E8AA8CAA22F890520017698F /* AutoLaunchHelper */,
@@ -1071,6 +1225,58 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E853A5B32333ACED00689F62 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E853A5B42333ACED00689F62 /* MoJob-3.7.3.html in Resources */,
+				E853A5B52333ACED00689F62 /* MoJob-3.7.0.html in Resources */,
+				E853A5B62333ACED00689F62 /* Assets.xcassets in Resources */,
+				E853A5B72333ACED00689F62 /* MoJob-3.7.4.html in Resources */,
+				E853A5B82333ACED00689F62 /* MoJob-3.5.2.html in Resources */,
+				E853A5B92333ACED00689F62 /* SettingsViewController.xib in Resources */,
+				E853A5BA2333ACED00689F62 /* MoJob-3.7.5.html in Resources */,
+				E853A5BB2333ACED00689F62 /* TrackingItem.xib in Resources */,
+				E853A5BC2333ACED00689F62 /* MoJob-3.5.3.html in Resources */,
+				E853A5BD2333ACED00689F62 /* MoJob-3.7.1.html in Resources */,
+				E853A5BE2333ACED00689F62 /* EditorController.xib in Resources */,
+				E853A5BF2333ACED00689F62 /* JobItem.xib in Resources */,
+				E853A5C02333ACED00689F62 /* MoJob-3.0.3.html in Resources */,
+				E853A5C12333ACED00689F62 /* JobListController.xib in Resources */,
+				E853A5C22333ACED00689F62 /* MoJob-3.2.1.html in Resources */,
+				E853A5C32333ACED00689F62 /* MoJob-3.5.0.html in Resources */,
+				E853A5C42333ACED00689F62 /* ExportOptions.plist in Resources */,
+				E853A5C52333ACED00689F62 /* NavigationController.xib in Resources */,
+				E853A5C62333ACED00689F62 /* MoJob-3.4.0.html in Resources */,
+				E853A5C72333ACED00689F62 /* MoJob-3.3.0.html in Resources */,
+				E853A5C82333ACED00689F62 /* SplitJobItem.xib in Resources */,
+				E853A5C92333ACED00689F62 /* MainWindowController.xib in Resources */,
+				E853A5CA2333ACED00689F62 /* SplitTracking.xib in Resources */,
+				E853A5CB2333ACED00689F62 /* AddButton.xib in Resources */,
+				E853A5CC2333ACED00689F62 /* WakeUp.xib in Resources */,
+				E853A5CD2333ACED00689F62 /* DayTrackingsController.xib in Resources */,
+				E853A5CE2333ACED00689F62 /* MoJob-3.0.1.html in Resources */,
+				E853A5CF2333ACED00689F62 /* MoJob-3.1.1.html in Resources */,
+				E853A5D02333ACED00689F62 /* TrackingViewController.xib in Resources */,
+				E853A5D12333ACED00689F62 /* FavoriteItem.xib in Resources */,
+				E853A5D22333ACED00689F62 /* MoJob-3.6.1.html in Resources */,
+				E853A5D32333ACED00689F62 /* CalendarController.xib in Resources */,
+				E853A5D42333ACED00689F62 /* CalendarDay.xib in Resources */,
+				E853A5D52333ACED00689F62 /* MainMenu.xib in Resources */,
+				E853A5D62333ACED00689F62 /* MoJob-3.6.0.html in Resources */,
+				E853A5D72333ACED00689F62 /* MoJob-3.6.2.html in Resources */,
+				E853A5D82333ACED00689F62 /* MoJob-3.7.6.html in Resources */,
+				E853A5D92333ACED00689F62 /* Login.xib in Resources */,
+				E853A5DA2333ACED00689F62 /* MoJob.clr in Resources */,
+				E853A5DB2333ACED00689F62 /* AddFavorite.xib in Resources */,
+				E853A5DC2333ACED00689F62 /* MoJob-3.1.0.html in Resources */,
+				E853A5DD2333ACED00689F62 /* MoJob-3.7.2.html in Resources */,
+				E853A5DE2333ACED00689F62 /* MoJob-3.2.0.html in Resources */,
+				E853A5DF2333ACED00689F62 /* MoJob-3.0.2.html in Resources */,
+				E853A5E02333ACED00689F62 /* CalendarWeek.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1147,6 +1353,63 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 08042b2dbc27ed6620e1aed5fdc4f980e11af3f9 652f66bb6f28478ba6170e3f82bd0d717c3879632ee4b53513b8fff3fada2faf\n";
+		};
+		E853A5742333ACED00689F62 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MoJob Dev-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E853A5E32333ACED00689F62 /* Fabric Keys */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Fabric Keys";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 08042b2dbc27ed6620e1aed5fdc4f980e11af3f9 652f66bb6f28478ba6170e3f82bd0d717c3879632ee4b53513b8fff3fada2faf\n";
+		};
+		E853A5E42333ACED00689F62 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MoJob Dev/Pods-MoJob Dev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MoJob Dev/Pods-MoJob Dev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MoJob Dev/Pods-MoJob Dev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		F5958C8F316B926FBE6550F6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1269,6 +1532,72 @@
 			buildActionMask = 2147483647;
 			files = (
 				E82117AF220E07B3003D7578 /* MoJobUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E853A5752333ACED00689F62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E853A5762333ACED00689F62 /* CalendarController.swift in Sources */,
+				E853A5772333ACED00689F62 /* WakeUp.swift in Sources */,
+				E853A5782333ACED00689F62 /* Tracking.swift in Sources */,
+				E853A5792333ACED00689F62 /* TrackingsStackView.swift in Sources */,
+				E853A57A2333ACED00689F62 /* QuoJobSelections.swift in Sources */,
+				E853A57B2333ACED00689F62 /* enums.swift in Sources */,
+				E853A57C2333ACED00689F62 /* NSBezierPath-cgPath.swift in Sources */,
+				E853A57D2333ACED00689F62 /* StopButton.swift in Sources */,
+				E853A57E2333ACED00689F62 /* Model_MoJob_001_003.xcmappingmodel in Sources */,
+				E853A57F2333ACED00689F62 /* TextField.swift in Sources */,
+				E853A5802333ACED00689F62 /* Model_MoJob_002_003.xcmappingmodel in Sources */,
+				E853A5812333ACED00689F62 /* AppDelegate.swift in Sources */,
+				E853A5822333ACED00689F62 /* functions.swift in Sources */,
+				E853A5832333ACED00689F62 /* GlobalNotification.swift in Sources */,
+				E853A5842333ACED00689F62 /* GlobalTimer.swift in Sources */,
+				E853A5852333ACED00689F62 /* SplitJobItem.swift in Sources */,
+				E853A5862333ACED00689F62 /* MoJob.xcdatamodeld in Sources */,
+				E853A5872333ACED00689F62 /* constants.swift in Sources */,
+				E853A5882333ACED00689F62 /* TrackingViewController.swift in Sources */,
+				E853A5892333ACED00689F62 /* AddFavorite.swift in Sources */,
+				E853A58A2333ACED00689F62 /* CoreDataHelper.swift in Sources */,
+				E853A58B2333ACED00689F62 /* PopUpCell.swift in Sources */,
+				E853A58C2333ACED00689F62 /* JobItem.swift in Sources */,
+				E853A58D2333ACED00689F62 /* DaySplitViewController.swift in Sources */,
+				E853A58E2333ACED00689F62 /* MainSplitViewController.swift in Sources */,
+				E853A58F2333ACED00689F62 /* DayTrackingsController.swift in Sources */,
+				E853A5902333ACED00689F62 /* DeleteTrackingPolicy.swift in Sources */,
+				E853A5912333ACED00689F62 /* GraphView.swift in Sources */,
+				E853A5922333ACED00689F62 /* ColorButton.swift in Sources */,
+				E853A5932333ACED00689F62 /* FilterField.swift in Sources */,
+				E853A5942333ACED00689F62 /* NavigationController.swift in Sources */,
+				E853A5952333ACED00689F62 /* GradientCircle.swift in Sources */,
+				E853A5962333ACED00689F62 /* structs.swift in Sources */,
+				E853A5972333ACED00689F62 /* SplitTracking.swift in Sources */,
+				E853A5982333ACED00689F62 /* MainWindowController.swift in Sources */,
+				E853A5992333ACED00689F62 /* Login.swift in Sources */,
+				E853A59A2333ACED00689F62 /* Model_MoJob_001_002.xcmappingmodel in Sources */,
+				E853A59B2333ACED00689F62 /* ActiveIndicator.swift in Sources */,
+				E853A59C2333ACED00689F62 /* SettingsViewController.swift in Sources */,
+				E853A59D2333ACED00689F62 /* extensions.swift in Sources */,
+				E853A59E2333ACED00689F62 /* EditorController.swift in Sources */,
+				E853A59F2333ACED00689F62 /* FavoriteItem.swift in Sources */,
+				E853A5A02333ACED00689F62 /* ToggleButton.swift in Sources */,
+				E853A5A12333ACED00689F62 /* CalendarGridView.swift in Sources */,
+				E853A5A22333ACED00689F62 /* CalendarWeek.swift in Sources */,
+				E853A5A32333ACED00689F62 /* NumberField.swift in Sources */,
+				E853A5A42333ACED00689F62 /* CalendarDay.swift in Sources */,
+				E853A5A52333ACED00689F62 /* QuoJob.swift in Sources */,
+				E853A5A62333ACED00689F62 /* TrackingItem.swift in Sources */,
+				E853A5A72333ACED00689F62 /* PopUpCellText.swift in Sources */,
+				E853A5A82333ACED00689F62 /* AddButton.swift in Sources */,
+				E853A5A92333ACED00689F62 /* ComboBox.swift in Sources */,
+				E853A5AA2333ACED00689F62 /* Password.swift in Sources */,
+				E853A5AB2333ACED00689F62 /* ContentSplitViewController.swift in Sources */,
+				E853A5AC2333ACED00689F62 /* Job.swift in Sources */,
+				E853A5AD2333ACED00689F62 /* CollectionItemView.swift in Sources */,
+				E853A5AE2333ACED00689F62 /* JobListController.swift in Sources */,
+				E853A5AF2333ACED00689F62 /* DeleteTaskPolicy.swift in Sources */,
+				E853A5B02333ACED00689F62 /* SplitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1440,12 +1769,18 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CYSY859JZ8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"DEVELOPMENT=0",
+				);
 				INFOPLIST_FILE = MoJob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1463,12 +1798,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"DEVELOPMENT=0",
+				);
 				INFOPLIST_FILE = MoJob/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1563,6 +1904,63 @@
 			};
 			name = Release;
 		};
+		E853A5E62333ACED00689F62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89FBE0F310EBEBC50C9E1579 /* Pods-MoJob Dev.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = CYSY859JZ8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEVELOPMENT=1",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/MoJob Dev-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DDEVELOPMENT";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.martinschneider.MoJob-Dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "MoJob/MoJob-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E853A5E72333ACED00689F62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8DEE71AB16120D7D38EA3D3B /* Pods-MoJob Dev.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = CYSY859JZ8;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEVELOPMENT=1",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/MoJob Dev-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DDEVELOPMENT";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.martinschneider.MoJob-Dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "MoJob/MoJob-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		E8AA8CB822F890540017698F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1640,6 +2038,15 @@
 			buildConfigurations = (
 				E82117BA220E07B3003D7578 /* Debug */,
 				E82117BB220E07B3003D7578 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E853A5E52333ACED00689F62 /* Build configuration list for PBXNativeTarget "MoJob Dev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E853A5E62333ACED00689F62 /* Debug */,
+				E853A5E72333ACED00689F62 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
