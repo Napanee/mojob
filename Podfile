@@ -31,3 +31,9 @@ target 'MoJob' do
   end
 
 end
+
+target 'MoJob Dev' do
+	use_frameworks!
+
+	shared_pods
+end

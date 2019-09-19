@@ -724,7 +724,6 @@ extension QuoJob {
 					let quantity = item["quantity"] as! Double
 					var date = item["date"] as! String
 					let timeFrom = item["time_from"] as! String
-					let timeUntil = item["time_until"] as! String
 					let text = item["text"] as! String
 
 //					print("tracking \(id)")
@@ -734,19 +733,12 @@ extension QuoJob {
 						date = item["date_created"] as! String
 					}
 
-					var dateStart: Date!
-					var dateEnd: Date!
-					if let dateFrom = self.dateFormatterTime.date(from: timeFrom), let dateUntil = self.dateFormatterTime.date(from: timeUntil) {
-						let trackingDate = self.dateFormatterFull.date(from: date)
-						let timeFromDate = Calendar.current.dateComponents([.hour, .minute], from: dateFrom)
-						let timeUntilDate = Calendar.current.dateComponents([.hour, .minute], from: dateUntil)
-
-						dateStart = Calendar.current.date(bySettingHour: timeFromDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
-						dateEnd = Calendar.current.date(bySettingHour: timeUntilDate.hour!, minute: timeUntilDate.minute!, second: 0, of: trackingDate!)
-					} else {
-						dateStart = self.dateFormatterFull.date(from: date)
-						dateEnd = Calendar.current.date(byAdding: .minute, value: Int(round(quantity * 60)), to: dateStart!)
-					}
+					let indexTimeFrom = String.Index(utf16Offset: 4, in: "\(timeFrom)0000")
+					let newTimeFrom = String("\(timeFrom)0000"[..<indexTimeFrom])
+					let trackingDate = self.dateFormatterFull.date(from: date)
+					let timeFromDate = Calendar.current.dateComponents([.hour, .minute], from: self.dateFormatterTime.date(from: newTimeFrom)!)
+					let dateStart = Calendar.current.date(bySettingHour: timeFromDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
+					let dateEnd = Calendar.current.date(byAdding: .minute, value: Int(round(quantity * 60)), to: dateStart!)
 
 					var jobObject: Job? = nil
 					if let jobId = item["job_id"] as? String, let job = jobsBackground?.first(where: { $0.id == jobId }) {
