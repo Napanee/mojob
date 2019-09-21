@@ -22,32 +22,22 @@ class StatsViewController: NSViewController {
 
 	@IBOutlet weak var pieChart: PieChartView!
 	@IBOutlet weak var barChart: BarChartView!
+	@IBOutlet weak var pieChartLegendView: NSStackView!
 	@IBOutlet weak var nextMonthButton: NSButton!
 	@IBOutlet weak var nextYearButton: NSButton!
 	@IBOutlet weak var currentMonth: NSTextField!
 	@IBOutlet weak var todayButton: NSButton!
 	@IBOutlet weak var sumMonthLabel: NSTextField!
 
+	let animationDuration = 0.5
+	let formatter = DateComponentsFormatter()
 	var calendar = Calendar.current
 	var labelText: String = ""
 
 	var daysRange: CountableRange<Int> = Calendar.current.range(of: .day, in: .month, for: Date()) ?? 1..<30
+	var weekDaysCount: Int = 20
 	var trackingSet: [TrackingSet] = []
-	var sumMonth: Double {
-		get {
-			return 0
-		}
-		set {
-			calendar.locale = Locale(identifier: "de")
-			let formatter = DateComponentsFormatter()
-			formatter.calendar = calendar
-			formatter.unitsStyle = .full
-			formatter.zeroFormattingBehavior = .pad
-			formatter.allowedUnits = [.hour, .minute]
-
-			sumMonthLabel.stringValue = formatter.string(from: newValue) ?? "0h 0m"
-		}
-	}
+	var sumMonth: Double = 0
 
 	var _currentDate: Date = Date()
 	var currentDate: Date {
@@ -65,12 +55,30 @@ class StatsViewController: NSViewController {
 			nextYearButton.isEnabled = !isCurrentMonth
 
 			daysRange = calendar.range(of: .day, in: .month, for: newValue) ?? 1..<30
+			weekDaysCount = daysRange.filter({ day -> Bool in
+				var comp = calendar.dateComponents([.year, .month, .day], from: newValue)
+				comp.day = day
+
+				return !calendar.isDateInWeekend(calendar.date(from: comp)!)
+			}).count
 			if let trackings = CoreDataHelper.trackings(from: newValue.startOfMonth!, byAdding: .month) {
-				trackingSet = trackings.map({ TrackingSet(id: $0.job?.id ?? "custom", title: $0.job?.fullTitle ?? "Custom", date: $0.date_start!, color: $0.job?.color, duration: $0.duration) })
+				trackingSet = trackings.map({ tracking in
+					var title = "Custom"
+
+					if let job = tracking.job {
+						title = job.fullTitle
+					} else if let customJob = tracking.custom_job {
+						title = customJob
+					} else if let activity = tracking.activity, let activityTitle = activity.title {
+						title = activityTitle
+					}
+
+					return TrackingSet(id: tracking.job?.id ?? "custom", title: title, date: tracking.date_start!, color: tracking.job?.color, duration: tracking.duration)
+				})
 			}
 
-			pieChartUpdate()
 			barChartUpdate()
+			pieChartUpdate()
 		}
 	}
 
@@ -81,6 +89,11 @@ class StatsViewController: NSViewController {
 		todayButton.layer?.borderWidth = 1
 		todayButton.layer?.cornerRadius = 16
 		todayButton.layer?.borderColor = NSColor(red: 0.102, green: 0.102, blue: 0.102, alpha: 0.7).cgColor
+
+		calendar.locale = Locale(identifier: "de")
+		formatter.calendar = calendar
+		formatter.zeroFormattingBehavior = .pad
+		formatter.allowedUnits = [.hour, .minute]
 
 		currentDate = Date()
 	}
@@ -128,7 +141,7 @@ extension StatsViewController {
 		}
 
 		var dataEntries: [PieChartDataEntry] = []
-		for item in trackingSetMerged {
+		for item in trackingSetMerged.sorted(by: { $0.duration > $1.duration }) {
 			let dataEntry = PieChartDataEntry(value: item.duration, label: item.title, data: item)
 			dataEntries.append(dataEntry)
 		}
@@ -136,76 +149,107 @@ extension StatsViewController {
 		return dataEntries
 	}
 
-	func pieChartSetup() {
-		let legend = pieChart.legend
-		legend.horizontalAlignment = .right
-		legend.verticalAlignment = .center
-		legend.orientation = .vertical
-		legend.drawInside = false
-		legend.xEntrySpace = 0
-		legend.yEntrySpace = 0
-		legend.yOffset = 0
-//		pieChart.legend.enabled = false
-//		barChart.legend.enabled = false
-//		barChart.getAxis(.right).enabled = false
-//
-//		let xAxis = barChart.xAxis
-//		xAxis.drawGridLinesEnabled = false
-//		xAxis.valueFormatter = self
-//		xAxis.labelCount = daysRange.count
-//		xAxis.axisMaxLabels = .max
-//		xAxis.labelTextColor = NSColor.secondaryLabelColor
-//		xAxis.labelPosition = .bottom
-//		xAxis.labelFont = NSFont.systemFont(ofSize: 12.0, weight: .light)
-//		xAxis.axisMinimum = -0.5
-//		xAxis.axisMaximum = Double(daysRange.count) - 0.5
-//
-//		let left = barChart.getAxis(.left)
-//		left.gridColor = NSColor.tertiaryLabelColor
-//		left.valueFormatter = self
-//		left.drawAxisLineEnabled = false
-//		left.axisMinimum = 0
-//		left.labelTextColor = NSColor.secondaryLabelColor
-//		left.labelFont = NSFont.systemFont(ofSize: 10, weight: .light)
-//
-//		let ll = ChartLimitLine(limit: 8.0)
-//		ll.lineWidth = 1.5
-//		left.addLimitLine(ll)
-	}
-
 	func pieChartUpdate() {
 		let pieChartData = pieChartPrepareData()
 		var colors: [NSColor] = []
-		for _ in 0..<pieChartData.count {
-			let red = Double(arc4random_uniform(256))
-			let green = Double(arc4random_uniform(256))
-			let blue = Double(arc4random_uniform(256))
+		let path = Bundle.main.path(forResource: "MoJob", ofType: "clr")
+		let colorList = NSColorList(name: "MoJob", fromFile: path)
+		pieChartData.forEach({ dataEntry in
+			if let trackingSet = dataEntry.data as? TrackingSet,
+				let jobColor = trackingSet.color,
+				let color = colorList?.color(withKey: jobColor) {
 
-			let color = NSColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-			colors.append(color)
-		}
+				colors.append(color)
+			} else {
+				let red = Double(arc4random_uniform(256))
+				let green = Double(arc4random_uniform(256))
+				let blue = Double(arc4random_uniform(256))
+
+				let color = NSColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+				colors.append(color)
+			}
+		})
 
 		let chartDataSet = PieChartDataSet(entries: pieChartData, label: nil)
 		chartDataSet.colors = colors
-		chartDataSet.valueFont = NSFont.systemFont(ofSize: 10, weight: .semibold)
-		chartDataSet.xValuePosition = .outsideSlice
-		chartDataSet.yValuePosition = .outsideSlice
-		chartDataSet.valueLinePart1OffsetPercentage = 0.9
 		chartDataSet.valueColors = colors
-		chartDataSet.valueLinePart1Length = 0.5
 		chartDataSet.valueFormatter = self
 		chartDataSet.sliceSpace = 2.0
-		chartDataSet.valueLineVariableLength = true
 		chartDataSet.drawValuesEnabled = false
+		chartDataSet.selectionShift = 0.0
 
-		pieChart.marker = self
+		formatter.unitsStyle = .abbreviated
+		let actualHours = formatter.string(from: sumMonth) ?? "0h 0m"
+		formatter.zeroFormattingBehavior = [.dropAll]
+		let targetHours = formatter.string(from: Double(weekDaysCount * 8 * 3600)) ?? "0h 0m"
+		let paragraph = NSMutableParagraphStyle()
+		paragraph.alignment = .center
+		let centerText = NSMutableAttributedString()
+		let actualHoursText = NSMutableAttributedString(
+			string: actualHours,
+			attributes: [
+				NSAttributedString.Key.foregroundColor: NSColor.black,
+				NSAttributedString.Key.font: NSFont.systemFont(ofSize: 22, weight: .ultraLight),
+				NSAttributedString.Key.paragraphStyle: paragraph
+			])
+		let targetHoursText = NSMutableAttributedString(
+			string: "\n von \(targetHours)",
+			attributes: [
+				NSAttributedString.Key.foregroundColor: NSColor.black,
+				NSAttributedString.Key.font: NSFont.systemFont(ofSize: 16, weight: .light),
+				NSAttributedString.Key.paragraphStyle: paragraph
+			])
+		centerText.append(actualHoursText)
+		centerText.append(targetHoursText)
+		pieChart.centerAttributedText = centerText
+//		pieChart.marker = self
+		pieChart.legend.enabled = false
 		pieChart.drawEntryLabelsEnabled = false
-//		pieChart.highlightPerTapEnabled = false
+		pieChart.holeRadiusPercent = 0.7
 
-		pieChartSetup()
 		pieChart.data = PieChartData(dataSet: chartDataSet)
 
-		pieChart.animate(yAxisDuration: 1.0, easingOption: .easeInOutQuad)
+		renderLegend(with: pieChart.legend.entries)
+
+		pieChart.animate(yAxisDuration: animationDuration, easingOption: .easeInOutQuad)
+	}
+
+	func renderLegend(with entries: [LegendEntry]) {
+		let entryAnimationDuration = animationDuration / Double(entries.count)
+
+		pieChartLegendView.subviews.removeAll()
+
+		entries.enumerated().forEach { (i, entry) in
+			let label = LegendLabel(labelWithString: entry.label!)
+			label.usesSingleLineMode = false
+			label.cell?.wraps = true
+			label.cell?.isScrollable = false
+			label.cell?.usesSingleLineMode = false
+			label.lineBreakMode = .byWordWrapping
+			label.font = NSFont.systemFont(ofSize: 11, weight: .light)
+			label.color = entry.formColor
+			label.alphaValue = 0
+
+			pieChartLegendView.addView(label, in: .bottom)
+			pieChartLegendView.addConstraint(
+				NSLayoutConstraint(
+					item: label,
+					attribute: .width,
+					relatedBy: .equal,
+					toItem: label.superview,
+					attribute: .width,
+					multiplier: 1,
+					constant: 0
+				)
+			)
+
+			DispatchQueue.main.asyncAfter(deadline: .now() + (entryAnimationDuration * Double(i))) {
+				NSAnimationContext.runAnimationGroup({ context in
+					context.duration = 0.5
+					label.animator().alphaValue = 1
+				}, completionHandler: nil)
+			}
+		}
 	}
 
 }
@@ -241,6 +285,9 @@ extension StatsViewController {
 		}
 
 		sumMonth = totalSum
+
+		formatter.unitsStyle = .full
+		sumMonthLabel.stringValue = formatter.string(from: sumMonth) ?? "0h 0m"
 
 		return dataEntries
 	}
@@ -286,7 +333,7 @@ extension StatsViewController {
 		barChart.data = BarChartData(dataSet: chartDataSet)
 		barChartSetup()
 
-		barChart.animate(yAxisDuration: 1.0, easingOption: .easeInOutQuad)
+		barChart.animate(yAxisDuration: animationDuration, easingOption: .easeInOutQuad)
 	}
 
 }

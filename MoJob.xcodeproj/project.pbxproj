@@ -168,6 +168,8 @@
 		E853A5E22333ACED00689F62 /* AutoLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E853A5EE2333D24C00689F62 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A4723300FE900DBCE44 /* StatsViewController.swift */; };
 		E853A5EF2333D25700689F62 /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8B58A492330101700DBCE44 /* StatsViewController.xib */; };
+		E853A5F42335296F00689F62 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E853A5F32335296F00689F62 /* LegendLabel.swift */; };
+		E853A5F52335296F00689F62 /* LegendLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E853A5F32335296F00689F62 /* LegendLabel.swift */; };
 		E85FFC23231C7300006CA1CB /* MoJob-3.5.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */; };
 		E85FFC25231DB646006CA1CB /* MoJob-3.5.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E85FFC24231DB646006CA1CB /* MoJob-3.5.2.html */; };
 		E863305D2245863600A8E946 /* PopUpCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863305C2245863600A8E946 /* PopUpCell.swift */; };
@@ -346,6 +348,7 @@
 		E853A5712333AC1000689F62 /* MoJob-3.7.6.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.7.6.html"; sourceTree = "<group>"; };
 		E853A5E82333ACED00689F62 /* MoJob Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MoJob Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E853A5E92333ACED00689F62 /* MoJob Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MoJob Dev-Info.plist"; path = "/Users/napanee/projects/moccu/mojob2/git/MoJob Dev-Info.plist"; sourceTree = "<absolute>"; };
+		E853A5F32335296F00689F62 /* LegendLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegendLabel.swift; sourceTree = "<group>"; };
 		E85FFC22231C7300006CA1CB /* MoJob-3.5.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.5.0.html"; sourceTree = "<group>"; };
 		E85FFC24231DB646006CA1CB /* MoJob-3.5.2.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.5.2.html"; sourceTree = "<group>"; };
 		E863305C2245863600A8E946 /* PopUpCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCell.swift; sourceTree = "<group>"; };
@@ -759,6 +762,14 @@
 			path = interfaces;
 			sourceTree = "<group>";
 		};
+		E853A5F22335294B00689F62 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				E853A5F32335296F00689F62 /* LegendLabel.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		E863305E2247AB3B00A8E946 /* api */ = {
 			isa = PBXGroup;
 			children = (
@@ -907,6 +918,7 @@
 			children = (
 				E8B58A4523300FBE00DBCE44 /* controller */,
 				E8B58A4623300FC400DBCE44 /* interfaces */,
+				E853A5F22335294B00689F62 /* views */,
 			);
 			path = stats;
 			sourceTree = "<group>";
@@ -1529,6 +1541,7 @@
 				E8D35A302300487E0014AFE4 /* GradientCircle.swift in Sources */,
 				E8138A2422525B99008DAA62 /* structs.swift in Sources */,
 				E81DEE6822F4D78F004EF977 /* SplitTracking.swift in Sources */,
+				E853A5F42335296F00689F62 /* LegendLabel.swift in Sources */,
 				E82117BF220E0B20003D7578 /* MainWindowController.swift in Sources */,
 				E863306722481E2C00A8E946 /* Login.swift in Sources */,
 				E8B58A3B232FCB6900DBCE44 /* Model_MoJob_001_002.xcmappingmodel in Sources */,
@@ -1612,6 +1625,7 @@
 				E853A5952333ACED00689F62 /* GradientCircle.swift in Sources */,
 				E853A5962333ACED00689F62 /* structs.swift in Sources */,
 				E853A5972333ACED00689F62 /* SplitTracking.swift in Sources */,
+				E853A5F52335296F00689F62 /* LegendLabel.swift in Sources */,
 				E853A5982333ACED00689F62 /* MainWindowController.swift in Sources */,
 				E853A5992333ACED00689F62 /* Login.swift in Sources */,
 				E853A59A2333ACED00689F62 /* Model_MoJob_001_002.xcmappingmodel in Sources */,

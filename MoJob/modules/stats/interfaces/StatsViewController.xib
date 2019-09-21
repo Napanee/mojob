@@ -13,6 +13,7 @@
                 <outlet property="nextMonthButton" destination="u79-ps-KOj" id="dBK-pb-Nns"/>
                 <outlet property="nextYearButton" destination="qWX-rb-rbH" id="fWA-IM-gcP"/>
                 <outlet property="pieChart" destination="UUK-2Q-GoT" id="vHz-7l-AXT"/>
+                <outlet property="pieChartLegendView" destination="Ig7-Qr-79W" id="9v9-or-FX3"/>
                 <outlet property="sumMonthLabel" destination="o9e-fC-lJz" id="UZ5-6R-tqj"/>
                 <outlet property="todayButton" destination="BsK-b4-Lgi" id="yTD-tj-5Eg"/>
                 <outlet property="view" destination="c22-O7-iKe" id="3kf-MQ-kZx"/>
@@ -25,14 +26,56 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="UUK-2Q-GoT" customClass="PieChartView" customModule="Charts">
-                    <rect key="frame" x="30" y="409" width="400" height="300"/>
+                    <rect key="frame" x="30" y="459" width="250" height="250"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="300" id="kgO-TL-Wfv"/>
-                        <constraint firstAttribute="width" constant="400" id="m7I-Yf-xNf"/>
+                        <constraint firstAttribute="height" constant="250" id="kgO-TL-Wfv"/>
+                        <constraint firstAttribute="width" constant="250" id="m7I-Yf-xNf"/>
                     </constraints>
                 </customView>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUa-pV-Ho1">
+                    <rect key="frame" x="295" y="459" width="300" height="250"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="XaZ-Ad-Ych">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view translatesAutoresizingMaskIntoConstraints="NO" id="vRI-fC-rr8">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
+                                <subviews>
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ig7-Qr-79W">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Ig7-Qr-79W" firstAttribute="top" secondItem="vRI-fC-rr8" secondAttribute="top" id="7OU-Lg-aQl"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ig7-Qr-79W" secondAttribute="trailing" id="8Ee-nI-BaZ"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ig7-Qr-79W" secondAttribute="bottom" priority="510" id="8HX-qg-A5o"/>
+                                    <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="Ig7-Qr-79W" secondAttribute="bottom" priority="490" id="9UB-sr-4RE"/>
+                                    <constraint firstItem="Ig7-Qr-79W" firstAttribute="leading" secondItem="vRI-fC-rr8" secondAttribute="leading" id="he1-iH-mG7"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="vRI-fC-rr8" secondAttribute="trailing" id="7Y0-nW-Dop"/>
+                            <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="vRI-fC-rr8" secondAttribute="bottom" priority="510" id="TWb-yO-h9M"/>
+                            <constraint firstItem="vRI-fC-rr8" firstAttribute="top" secondItem="XaZ-Ad-Ych" secondAttribute="top" id="dp3-eE-6Ep"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="vRI-fC-rr8" secondAttribute="bottom" priority="490" id="fag-e4-ig0"/>
+                            <constraint firstItem="vRI-fC-rr8" firstAttribute="leading" secondItem="XaZ-Ad-Ych" secondAttribute="leading" id="rlV-u1-yx2"/>
+                        </constraints>
+                    </clipView>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="R5j-8k-x5A"/>
+                    </constraints>
+                    <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="VEP-8e-d58">
+                        <rect key="frame" x="0.0" y="234" width="300" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="ITL-vv-pWa">
+                        <rect key="frame" x="284" y="0.0" width="16" height="250"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Nqk-AM-eb6" customClass="BarChartView" customModule="Charts">
-                    <rect key="frame" x="30" y="30" width="800" height="332"/>
+                    <rect key="frame" x="30" y="30" width="800" height="382"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="800" id="RbA-va-sZi"/>
                     </constraints>
@@ -110,7 +153,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CTP-9v-QFh">
-                    <rect key="frame" x="28" y="367" width="152" height="27"/>
+                    <rect key="frame" x="28" y="417" width="152" height="27"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Stunden pro Tag" id="wak-of-JNo">
                         <font key="font" metaFont="systemUltraLight" size="22"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -118,7 +161,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o9e-fC-lJz">
-                    <rect key="frame" x="742" y="367" width="90" height="27"/>
+                    <rect key="frame" x="742" y="417" width="90" height="27"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="00h 00m" id="jrh-Az-qMM">
                         <font key="font" metaFont="systemUltraLight" size="22"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -128,12 +171,15 @@
             </subviews>
             <constraints>
                 <constraint firstItem="u79-ps-KOj" firstAttribute="height" secondItem="035-p8-kLY" secondAttribute="height" id="3iU-Zq-rgZ"/>
+                <constraint firstItem="zUa-pV-Ho1" firstAttribute="bottom" secondItem="UUK-2Q-GoT" secondAttribute="bottom" id="781-uX-GXH"/>
                 <constraint firstItem="Jrk-FA-q4O" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="30" id="9Zz-Hs-LOg"/>
+                <constraint firstItem="zUa-pV-Ho1" firstAttribute="leading" secondItem="UUK-2Q-GoT" secondAttribute="trailing" constant="15" id="AoY-ay-Vkr"/>
                 <constraint firstItem="Nqk-AM-eb6" firstAttribute="leading" secondItem="Jrk-FA-q4O" secondAttribute="leading" id="Apl-NH-smh"/>
                 <constraint firstItem="BsK-b4-Lgi" firstAttribute="leading" secondItem="035-p8-kLY" secondAttribute="trailing" constant="5" id="DmK-oi-HZY"/>
                 <constraint firstItem="qWX-rb-rbH" firstAttribute="centerY" secondItem="u79-ps-KOj" secondAttribute="centerY" id="F1N-kw-SQN"/>
                 <constraint firstItem="Jrk-FA-q4O" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="30" id="MG4-4O-lhE"/>
                 <constraint firstItem="035-p8-kLY" firstAttribute="centerY" secondItem="Jrk-FA-q4O" secondAttribute="centerY" id="MGS-Bs-77l"/>
+                <constraint firstItem="zUa-pV-Ho1" firstAttribute="top" secondItem="UUK-2Q-GoT" secondAttribute="top" id="N9L-IR-TBf"/>
                 <constraint firstItem="CTP-9v-QFh" firstAttribute="leading" secondItem="Jrk-FA-q4O" secondAttribute="leading" id="P65-yb-8w8"/>
                 <constraint firstItem="CTP-9v-QFh" firstAttribute="top" secondItem="UUK-2Q-GoT" secondAttribute="bottom" constant="15" id="Q7L-1D-z2Q"/>
                 <constraint firstItem="UUK-2Q-GoT" firstAttribute="leading" secondItem="Jrk-FA-q4O" secondAttribute="leading" id="RdL-Ig-axv"/>
