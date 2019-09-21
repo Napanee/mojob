@@ -75,6 +75,12 @@ extension NSColorList {
 
 extension UserDefaults {
 	public typealias Keys = String
+	public typealias Values = String
+
+	public enum workWeek {
+		static let standard = "standard"
+		static let special = "special"
+	}
 
 	func contains(key: String) -> Bool {
 		return UserDefaults.standard.object(forKey: key) != nil
@@ -88,6 +94,11 @@ extension UserDefaults.Keys {
 	static let badgeIconLabel = "badgeIconLabel"
 	static let syncOnStart = "syncOnStart"
 	static let crashOnSync = "crashOnSync"
+	static let workWeek = "workWeek"
+	static let evenWeekDays = "evenWeekDays"
+	static let oddWeekDays = "oddWeekDays"
+	static let evenWeekHours = "evenWeekHours"
+	static let oddWeekHours = "oddWeekHours"
 }
 
 extension NSImage {

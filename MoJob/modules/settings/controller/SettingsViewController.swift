@@ -19,10 +19,31 @@ class SettingsViewController: NSViewController {
 	@IBOutlet weak var syncOnStartCheckbox: NSButton!
 	@IBOutlet weak var noTrackingNotification: TextField!
 	@IBOutlet weak var dayCompleteNotification: TextField!
-	@IBOutlet weak var extendSettings: NSView!
+	@IBOutlet weak var radioNormalWeek: NSButton!
+	@IBOutlet weak var radioSpecialWeek: NSButton!
+	@IBOutlet weak var specialWeekDetails: NSStackView!
+	@IBOutlet weak var oddWeekHours: TextField!
+	@IBOutlet weak var oddWeekDaysStackView: NSStackView!
+	@IBOutlet weak var oddWeekMonday: NSButton!
+	@IBOutlet weak var oddWeekTuesday: NSButton!
+	@IBOutlet weak var oddWeekWednesday: NSButton!
+	@IBOutlet weak var oddWeekThursday: NSButton!
+	@IBOutlet weak var oddWeekFriday: NSButton!
+	@IBOutlet weak var evenWeekHours: TextField!
+	@IBOutlet weak var evenWeekDaysStackView: NSStackView!
+	@IBOutlet weak var evenWeekMonday: NSButton!
+	@IBOutlet weak var evenWeekTuesday: NSButton!
+	@IBOutlet weak var evenWeekWednesday: NSButton!
+	@IBOutlet weak var evenWeekThursday: NSButton!
+	@IBOutlet weak var evenWeekFriday: NSButton!
+	@IBOutlet weak var specialWeekDetailsTopConstraint: NSLayoutConstraint!
 
+	var _specialWeekDetailsTopConstraint = NSLayoutConstraint()
+	var radioButtonsWeek: [NSButton] = []
 	var keyDownEventMonitor: Any?
 	var userDefaults = UserDefaults()
+	var oddWeekDays: [String] = []
+	var evenWeekDays: [String] = []
 	var activities: [Activity] = []
 	let helperBundleName = "de.martinschneider.AutoLaunchHelper"
 
@@ -36,10 +57,9 @@ class SettingsViewController: NSViewController {
 			return $0
 		}
 
-		extendSettings.wantsLayer = true
-		extendSettings.layer?.borderColor = NSColor.red.cgColor
-		extendSettings.layer?.borderWidth = 2.0
-		extendSettings.layer?.backgroundColor = NSColor.red.withAlphaComponent(0.5).cgColor
+		_specialWeekDetailsTopConstraint = specialWeekDetailsTopConstraint
+		specialWeekDetailsTopConstraint.isActive = false
+		radioButtonsWeek = [radioNormalWeek, radioSpecialWeek]
 
 		let foundHelper = NSWorkspace.shared.runningApplications.contains {
 			$0.bundleIdentifier == helperBundleName
@@ -75,6 +95,47 @@ class SettingsViewController: NSViewController {
 		dayCompleteNotification.stringValue = userDefaults.contains(key: UserDefaults.Keys.notificationDaycomplete) ? String(dayCompleteValue) : String(userDefaultValues.notificationDaycomplete)
 	}
 
+	override func viewDidAppear() {
+		super.viewDidAppear()
+
+		let pstyle = NSMutableParagraphStyle()
+		pstyle.firstLineHeadIndent = 5.0
+		for button in radioButtonsWeek {
+			button.attributedTitle = NSAttributedString(
+				string: button.title,
+				attributes: [
+					NSAttributedString.Key.paragraphStyle: pstyle
+				]
+			)
+		}
+
+		oddWeekHours.stringValue = String(userDefaults.integer(forKey: UserDefaults.Keys.oddWeekHours))
+		evenWeekHours.stringValue = String(userDefaults.integer(forKey: UserDefaults.Keys.evenWeekHours))
+
+		let workWeek = userDefaults.string(forKey: UserDefaults.Keys.workWeek)
+		if (workWeek == UserDefaults.workWeek.special) {
+			radioSpecialWeek.state = .on
+			toggleSpecialWeekDetails(show: true)
+		} else {
+			radioNormalWeek.state = .on
+			toggleSpecialWeekDetails(show: false)
+		}
+
+		let weekDays = Calendar.current.weekdaySymbols
+
+		oddWeekDays = userDefaults.array(forKey: UserDefaults.Keys.oddWeekDays) as? [String] ?? []
+		oddWeekDaysStackView.subviews.filter({ $0.isKind(of: NSButton.self) }).forEach({
+			let dayName = weekDays[$0.tag]
+			($0 as! NSButton).state = oddWeekDays.contains(dayName) ? .on : .off
+		})
+
+		evenWeekDays = userDefaults.array(forKey: UserDefaults.Keys.evenWeekDays) as? [String] ?? []
+		evenWeekDaysStackView.subviews.filter({ $0.isKind(of: NSButton.self) }).forEach({
+			let dayName = weekDays[$0.tag]
+			($0 as! NSButton).state = evenWeekDays.contains(dayName) ? .on : .off
+		})
+	}
+
 	private func initActivitySelect() {
 		activitySelect.placeholderString = "Leistungsart wählen oder eingeben"
 
@@ -91,12 +152,23 @@ class SettingsViewController: NSViewController {
 		}
 	}
 
-	override func keyDown(with event: NSEvent) {
-		switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
-		case [.command] where event.characters == "d":
-			extendSettings.isHidden = false
-		default:
-			break
+	private func toggleSpecialWeekDetails(show: Bool) {
+		specialWeekDetails.isHidden = !show
+		specialWeekDetailsTopConstraint = _specialWeekDetailsTopConstraint
+		specialWeekDetailsTopConstraint.isActive = show
+
+		if (show) {
+			let weekOddHours = Int(oddWeekHours.stringValue) ?? 30
+			let weekEvenHours = Int(evenWeekHours.stringValue) ?? 30
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekOdd:Hours:set", "Value": weekOddHours])
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekEven:Hours:set", "Value": weekEvenHours])
+			userDefaults.set(weekOddHours, forKey: UserDefaults.Keys.oddWeekHours)
+			userDefaults.set(weekEvenHours, forKey: UserDefaults.Keys.evenWeekHours)
+		} else {
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekOdd:Hours:remove"])
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekEven:Hours:remove"])
+			userDefaults.removeObject(forKey: UserDefaults.Keys.oddWeekHours)
+			userDefaults.removeObject(forKey: UserDefaults.Keys.evenWeekHours)
 		}
 	}
 
@@ -134,6 +206,48 @@ class SettingsViewController: NSViewController {
 
 	@IBAction func resetData(_ sender: NSButton) {
 		CoreDataHelper.resetData()
+	}
+
+	@IBAction func radioNormalWeek(_ sender: NSButton) {
+		radioSpecialWeek.state = .off
+
+		toggleSpecialWeekDetails(show: false)
+
+		Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "Week", "Status": UserDefaults.workWeek.standard])
+		userDefaults.set(UserDefaults.workWeek.standard, forKey: UserDefaults.Keys.workWeek)
+	}
+
+	@IBAction func radioSpecialWeek(_ sender: NSButton) {
+		radioNormalWeek.state = .off
+
+		toggleSpecialWeekDetails(show: true)
+
+		Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "Week", "Status": UserDefaults.workWeek.special])
+		userDefaults.set(UserDefaults.workWeek.special, forKey: UserDefaults.Keys.workWeek)
+	}
+
+	@IBAction func oddWeekDay(_ sender: NSButton) {
+		let weekDays = Calendar.current.weekdaySymbols
+
+		if (sender.state == .on) {
+			oddWeekDays.append(weekDays[sender.tag])
+		} else {
+			oddWeekDays = oddWeekDays.filter({ $0 != weekDays[sender.tag] })
+		}
+
+		userDefaults.set(oddWeekDays, forKey: UserDefaults.Keys.oddWeekDays)
+	}
+
+	@IBAction func evenWeekDay(_ sender: NSButton) {
+		let weekDays = Calendar.current.weekdaySymbols
+
+		if (sender.state == .on) {
+			evenWeekDays.append(weekDays[sender.tag])
+		} else {
+			evenWeekDays = evenWeekDays.filter({ $0 != weekDays[sender.tag] })
+		}
+
+		userDefaults.set(evenWeekDays, forKey: UserDefaults.Keys.evenWeekDays)
 	}
 
 }
@@ -178,6 +292,18 @@ extension SettingsViewController: NSTextFieldDelegate {
 			} else {
 				userDefaults.removeObject(forKey: UserDefaults.Keys.notificationDaycomplete)
 			}
+		}
+
+		if (textField == oddWeekHours) {
+			let weekOddHours = Int(oddWeekHours.stringValue) ?? 30
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekOdd:Hours:set", "Value": weekOddHours])
+			userDefaults.set(weekOddHours, forKey: UserDefaults.Keys.oddWeekHours)
+		}
+
+		if (textField == evenWeekHours) {
+			let weekEvenHours = Int(evenWeekHours.stringValue) ?? 30
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekEven:Hours:set", "Value": weekEvenHours])
+			userDefaults.set(weekEvenHours, forKey: UserDefaults.Keys.evenWeekHours)
 		}
 	}
 

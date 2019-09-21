@@ -46,7 +46,8 @@ class AppDelegate: NSObject {
 		Fabric.with([Crashlytics.self, Answers.self])
 		UserDefaults.standard.register(defaults: [
 			"NSInitialToolTipDelay": 1,
-			"NSApplicationCrashOnExceptions": true
+			"NSApplicationCrashOnExceptions": true,
+			UserDefaults.Keys.workWeek: "standard"
 		])
 
 		mainWindowController = MainWindowController()
