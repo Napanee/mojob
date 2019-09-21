@@ -42,8 +42,8 @@ class SettingsViewController: NSViewController {
 	var radioButtonsWeek: [NSButton] = []
 	var keyDownEventMonitor: Any?
 	var userDefaults = UserDefaults()
-	var oddWeekDays: [String] = []
-	var evenWeekDays: [String] = []
+	var oddWeekDays: [Int] = []
+	var evenWeekDays: [Int] = []
 	var activities: [Activity] = []
 	let helperBundleName = "de.martinschneider.AutoLaunchHelper"
 
@@ -121,18 +121,14 @@ class SettingsViewController: NSViewController {
 			toggleSpecialWeekDetails(show: false)
 		}
 
-		let weekDays = Calendar.current.weekdaySymbols
-
-		oddWeekDays = userDefaults.array(forKey: UserDefaults.Keys.oddWeekDays) as? [String] ?? []
+		oddWeekDays = userDefaults.array(forKey: UserDefaults.Keys.oddWeekDays) as? [Int] ?? []
 		oddWeekDaysStackView.subviews.filter({ $0.isKind(of: NSButton.self) }).forEach({
-			let dayName = weekDays[$0.tag]
-			($0 as! NSButton).state = oddWeekDays.contains(dayName) ? .on : .off
+			($0 as! NSButton).state = oddWeekDays.contains($0.tag) ? .on : .off
 		})
 
-		evenWeekDays = userDefaults.array(forKey: UserDefaults.Keys.evenWeekDays) as? [String] ?? []
+		evenWeekDays = userDefaults.array(forKey: UserDefaults.Keys.evenWeekDays) as? [Int] ?? []
 		evenWeekDaysStackView.subviews.filter({ $0.isKind(of: NSButton.self) }).forEach({
-			let dayName = weekDays[$0.tag]
-			($0 as! NSButton).state = evenWeekDays.contains(dayName) ? .on : .off
+			($0 as! NSButton).state = evenWeekDays.contains($0.tag) ? .on : .off
 		})
 	}
 
@@ -227,24 +223,20 @@ class SettingsViewController: NSViewController {
 	}
 
 	@IBAction func oddWeekDay(_ sender: NSButton) {
-		let weekDays = Calendar.current.weekdaySymbols
-
 		if (sender.state == .on) {
-			oddWeekDays.append(weekDays[sender.tag])
+			oddWeekDays.append(sender.tag)
 		} else {
-			oddWeekDays = oddWeekDays.filter({ $0 != weekDays[sender.tag] })
+			oddWeekDays = oddWeekDays.filter({ $0 != sender.tag })
 		}
 
 		userDefaults.set(oddWeekDays, forKey: UserDefaults.Keys.oddWeekDays)
 	}
 
 	@IBAction func evenWeekDay(_ sender: NSButton) {
-		let weekDays = Calendar.current.weekdaySymbols
-
 		if (sender.state == .on) {
-			evenWeekDays.append(weekDays[sender.tag])
+			evenWeekDays.append(sender.tag)
 		} else {
-			evenWeekDays = evenWeekDays.filter({ $0 != weekDays[sender.tag] })
+			evenWeekDays = evenWeekDays.filter({ $0 != sender.tag })
 		}
 
 		userDefaults.set(evenWeekDays, forKey: UserDefaults.Keys.evenWeekDays)

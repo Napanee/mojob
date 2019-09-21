@@ -20,6 +20,7 @@ extension CalendarDayDelegeate {
 
 class CalendarGridView: NSGridView {
 
+	private let userDefaults = UserDefaults()
 	private let calendar = NSCalendar.current
 	private let empty = NSGridCell.emptyContentView
 	private let bgShapeLayer = CAShapeLayer()
@@ -136,7 +137,13 @@ class CalendarGridView: NSGridView {
 		var dayCount = lastDayOfCalendar?.timeIntervalSince(firstDayOfCalender!)
 		dayCount = round(dayCount! / 60 / 60 / 24) - 1
 		var day = firstDayOfCalender
+		var weekNumber = calendar.component(.weekOfYear, from: day!)
 		var weekSum: Double = 0
+
+		var evenWeekDays = userDefaults.array(forKey: UserDefaults.Keys.evenWeekDays) as? [Int] ?? []
+		evenWeekDays = evenWeekDays + [0, 6] // add saturday and sunday
+		var oddWeekDays = userDefaults.array(forKey: UserDefaults.Keys.oddWeekDays) as? [Int] ?? []
+		oddWeekDays = oddWeekDays + [0, 6] // add saturday and sunday
 
 		var gridRow: [NSView] = []
 		for i in 0...Int(dayCount!) {
@@ -150,10 +157,12 @@ class CalendarGridView: NSGridView {
 
 			weekSum += sum ?? 0
 
+			let weekDayNumber = calendar.component(.weekday, from: day!) - 1
 			let content = CalendarDay()
 			content.delegate = self
 			content.day = day
 			content.isCurrentMonth = calendar.date(day!, matchesComponents: month)
+			content.isFreeDay = (weekNumber % 2) == 0 && evenWeekDays.contains(weekDayNumber) || (weekNumber % 2) == 1 && oddWeekDays.contains(weekDayNumber)
 			content.timeLabel.stringValue = formatter.string(from: sum ?? 0)!
 
 			if calendar.dateComponents([.day, .month, .year], from: currentSelection) == calendar.dateComponents([.day, .month, .year], from: day!) {
@@ -163,8 +172,9 @@ class CalendarGridView: NSGridView {
 
 			gridRow.append(content)
 
+			day = calendar.date(byAdding: .day, value: 1, to: day!)
+
 			if (columnNumber == 6) {
-				let weekNumber = calendar.component(.weekOfYear, from: day!)
 				let content = CalendarWeek()
 				content.weekLabel.stringValue = String(weekNumber)
 				content.timeLabel.stringValue = formatter.string(from: weekSum)!
@@ -173,9 +183,9 @@ class CalendarGridView: NSGridView {
 				addRow(with: gridRow)
 				gridRow = []
 				weekSum = 0
-			}
 
-			day = calendar.date(byAdding: .day, value: 1, to: day!)
+				weekNumber = calendar.component(.weekOfYear, from: day!)
+			}
 		}
 
 		subviews.append(activeIndicator)

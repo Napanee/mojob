@@ -30,6 +30,15 @@ class CalendarDay: NSView {
 		}
 	}
 
+	var isFreeDay: Bool? {
+		didSet {
+			if let isFreeDay = isFreeDay, isFreeDay {
+				dayLabel.textColor = NSColor.tertiaryLabelColor
+				timeLabel.textColor = NSColor.tertiaryLabelColor
+			}
+		}
+	}
+
 	var day: Date? {
 		didSet {
 			let currentDay = calendar.component(.day, from: day!)
