@@ -42,14 +42,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="3" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ig7-Qr-79W">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
+                                        <rect key="frame" x="0.0" y="250" width="300" height="0.0"/>
                                     </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Ig7-Qr-79W" firstAttribute="top" secondItem="vRI-fC-rr8" secondAttribute="top" id="7OU-Lg-aQl"/>
                                     <constraint firstAttribute="trailing" secondItem="Ig7-Qr-79W" secondAttribute="trailing" id="8Ee-nI-BaZ"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ig7-Qr-79W" secondAttribute="bottom" priority="510" id="8HX-qg-A5o"/>
-                                    <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="Ig7-Qr-79W" secondAttribute="bottom" priority="490" id="9UB-sr-4RE"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ig7-Qr-79W" secondAttribute="bottom" id="8HX-qg-A5o"/>
                                     <constraint firstItem="Ig7-Qr-79W" firstAttribute="leading" secondItem="vRI-fC-rr8" secondAttribute="leading" id="he1-iH-mG7"/>
                                 </constraints>
                             </view>
