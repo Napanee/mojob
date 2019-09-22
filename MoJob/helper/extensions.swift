@@ -50,6 +50,8 @@ extension NSImage.Name {
 	static let settingsImage = "settings"
 	static let calendarActiveImage = "calendar-active"
 	static let calendarImage = "calendar"
+	static let statisticsActiveImage = "statistics-active"
+	static let statisticsImage = "statistics"
 	static let starEmptyImage = "star-empty"
 	static let starFilledImage = "star-filled"
 	static let stopImage = "stop"

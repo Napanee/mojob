@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gPp-hV-rlT">
-                    <rect key="frame" x="20" y="296" width="30" height="35"/>
+                    <rect key="frame" x="20" y="295" width="30" height="36"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="vuE-s5-YeM"/>
                     </constraints>
@@ -35,7 +35,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l7H-at-hMQ">
-                    <rect key="frame" x="20" y="239" width="30" height="47"/>
+                    <rect key="frame" x="20" y="238" width="30" height="47"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="47" id="B7I-cu-AAY"/>
                     </constraints>
@@ -48,8 +48,8 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ARY-9p-xPQ">
-                    <rect key="frame" x="20" y="194" width="30" height="35"/>
-                    <buttonCell key="cell" type="bevel" title="Stats" bezelStyle="rounded" image="settings" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="tdE-Nm-nhF">
+                    <rect key="frame" x="20" y="192" width="30" height="36"/>
+                    <buttonCell key="cell" type="bevel" title="Stats" bezelStyle="rounded" image="statistics" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="tdE-Nm-nhF">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -58,7 +58,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WNR-0v-YYS">
-                    <rect key="frame" x="20" y="30" width="30" height="35"/>
+                    <rect key="frame" x="20" y="30" width="30" height="36"/>
                     <buttonCell key="cell" type="bevel" title="Settings" bezelStyle="rounded" image="settings" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="jsZ-Pm-3TB">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -86,8 +86,9 @@
         </customView>
     </objects>
     <resources>
-        <image name="calendar" width="84" height="94"/>
-        <image name="settings" width="35" height="35"/>
-        <image name="timer-active" width="35" height="35"/>
+        <image name="calendar" width="36" height="36"/>
+        <image name="settings" width="36" height="36"/>
+        <image name="statistics" width="36" height="36"/>
+        <image name="timer-active" width="36" height="36"/>
     </resources>
 </document>

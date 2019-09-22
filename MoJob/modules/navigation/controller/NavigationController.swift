@@ -24,7 +24,7 @@ class NavigationController: NSViewController {
 		calendarButton.isEnabled = true
 		calendarButton.image = NSImage(named: .calendarImage)
 		statsButton.isEnabled = true
-		statsButton.image = NSImage(named: .settingsImage)
+		statsButton.image = NSImage(named: .statisticsImage)
 		settingsButton.isEnabled = true
 		settingsButton.image = NSImage(named: .settingsImage)
 	}
@@ -37,7 +37,7 @@ class NavigationController: NSViewController {
 		timeTrackerButton.isEnabled = true
 		timeTrackerButton.image = NSImage(named: .timerImage)
 		statsButton.isEnabled = true
-		statsButton.image = NSImage(named: .settingsImage)
+		statsButton.image = NSImage(named: .statisticsImage)
 		settingsButton.isEnabled = true
 		settingsButton.image = NSImage(named: .settingsImage)
 	}
@@ -46,7 +46,7 @@ class NavigationController: NSViewController {
 		(NSApp.mainWindow?.windowController as? MainWindowController)?.showStats()
 
 		sender.isEnabled = false
-		sender.image = NSImage(named: .settingsActiveImage)
+		sender.image = NSImage(named: .statisticsActiveImage)
 		timeTrackerButton.isEnabled = true
 		timeTrackerButton.image = NSImage(named: .timerImage)
 		calendarButton.isEnabled = true
@@ -65,7 +65,7 @@ class NavigationController: NSViewController {
 		calendarButton.isEnabled = true
 		calendarButton.image = NSImage(named: .calendarImage)
 		statsButton.isEnabled = true
-		statsButton.image = NSImage(named: .settingsImage)
+		statsButton.image = NSImage(named: .statisticsImage)
 	}
 	
 	override func viewDidLoad() {
@@ -79,6 +79,7 @@ class NavigationController: NSViewController {
 		(timeTrackerButton.cell as? NSButtonCell)?.imageDimsWhenDisabled = false
 		(calendarButton.cell as? NSButtonCell)?.imageDimsWhenDisabled = false
 		(settingsButton.cell as? NSButtonCell)?.imageDimsWhenDisabled = false
+		(statsButton.cell as? NSButtonCell)?.imageDimsWhenDisabled = false
 	}
 
 	func replaceContent(with content: NSViewController) {
