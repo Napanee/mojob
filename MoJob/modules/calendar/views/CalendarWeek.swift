@@ -33,7 +33,7 @@ class CalendarWeek: NSView {
 		contentView.frame = self.bounds
 		contentView.autoresizingMask = [.width, .height]
 		contentView.wantsLayer = true
-		contentView.layer?.backgroundColor = NSColor.white.cgColor
+		contentView.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 
 		addConstraints([
 			NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 65),

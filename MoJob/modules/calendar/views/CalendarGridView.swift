@@ -144,26 +144,32 @@ class CalendarGridView: NSGridView {
 		evenWeekDays = evenWeekDays + [0, 6] // add saturday and sunday
 		var oddWeekDays = userDefaults.array(forKey: UserDefaults.Keys.oddWeekDays) as? [Int] ?? []
 		oddWeekDays = oddWeekDays + [0, 6] // add saturday and sunday
+		let evenWeekHours = userDefaults.integer(forKey: UserDefaults.Keys.evenWeekHours)
+		let evenWorkHours = Double(evenWeekHours) / Double(7 - evenWeekDays.count) * 3600
+		let oddWeekHours = userDefaults.integer(forKey: UserDefaults.Keys.oddWeekHours)
+		let oddWorkHours = Double(oddWeekHours) / Double(7 - oddWeekDays.count) * 3600
 
 		var gridRow: [NSView] = []
 		for i in 0...Int(dayCount!) {
 			let columnNumber = i.remainderReportingOverflow(dividingBy: 7).partialValue
-
-			let sum = CoreDataHelper.seconds(from: (day?.startOfDay)!, byAdding: .day, and: job)
+			let sum = CoreDataHelper.seconds(from: (day?.startOfDay)!, byAdding: .day, and: job) ?? 0
 			let formatter = DateComponentsFormatter()
 			formatter.unitsStyle = .positional
 			formatter.zeroFormattingBehavior = .pad
 			formatter.allowedUnits = [.hour, .minute]
 
-			weekSum += sum ?? 0
+			weekSum += sum
 
+			let isEvenWeek = (weekNumber % 2) == 0
 			let weekDayNumber = calendar.component(.weekday, from: day!) - 1
+			let isFreeDay = isEvenWeek && evenWeekDays.contains(weekDayNumber) || !isEvenWeek && oddWeekDays.contains(weekDayNumber)
 			let content = CalendarDay()
 			content.delegate = self
 			content.day = day
 			content.isCurrentMonth = calendar.date(day!, matchesComponents: month)
-			content.isFreeDay = (weekNumber % 2) == 0 && evenWeekDays.contains(weekDayNumber) || (weekNumber % 2) == 1 && oddWeekDays.contains(weekDayNumber)
-			content.timeLabel.stringValue = formatter.string(from: sum ?? 0)!
+			content.isFreeDay = isFreeDay
+			content.missingHours = day?.compare(Date()) == ComparisonResult.orderedAscending && !isFreeDay && ((isEvenWeek && sum - evenWorkHours < 0) || (!isEvenWeek && sum - oddWorkHours < 0))
+			content.timeLabel.stringValue = formatter.string(from: sum)!
 
 			if calendar.dateComponents([.day, .month, .year], from: currentSelection) == calendar.dateComponents([.day, .month, .year], from: day!) {
 				activeIndicator.isHidden = false
@@ -197,7 +203,7 @@ class CalendarGridView: NSGridView {
 		label.isBordered = false
 		label.drawsBackground = false
 		label.wantsLayer = true
-		label.layer?.backgroundColor = NSColor.white.cgColor
+		label.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 		label.font = NSFont.systemFont(ofSize: 15, weight: .ultraLight)
 
 		let pstyle = NSMutableParagraphStyle()

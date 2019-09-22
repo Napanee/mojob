@@ -30,6 +30,12 @@ class CalendarDay: NSView {
 		}
 	}
 
+	var missingHours: Bool? {
+		didSet {
+			needsLayout = missingHours!
+		}
+	}
+
 	var isFreeDay: Bool? {
 		didSet {
 			if let isFreeDay = isFreeDay, isFreeDay {
@@ -98,8 +104,16 @@ class CalendarDay: NSView {
 	override func draw(_ dirtyRect: NSRect) {
 		guard let context = NSGraphicsContext.current?.cgContext else { return }
 		context.addRect(CGRect(x: 1, y: 1, width: bounds.width - 2, height: bounds.height - 2))
-		context.setFillColor(NSColor.white.cgColor)
-		context.fillPath()
+		context.setFillColor(NSColor.controlBackgroundColor.cgColor)
+		context.drawPath(using: .fill)
+
+		guard let missingHours = missingHours, missingHours else { return }
+
+		let rect = CGRect(x: bounds.maxX - 8, y: bounds.maxY - 8, width: 5, height: 5)
+		let clipPath = NSBezierPath(roundedRect: rect, xRadius: 2.0, yRadius: 2.0).cgPath
+		context.addPath(clipPath)
+		context.setFillColor(NSColor(calibratedRed: 0.796, green: 0.212, blue: 0.114, alpha: 1).cgColor)
+		context.drawPath(using: .fill)
 	}
 
 }
