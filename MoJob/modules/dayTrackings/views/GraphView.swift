@@ -128,10 +128,7 @@ class GraphView: NSView {
 
 		let sum = trackings.map({ $0.duration }).reduce(0, +)
 
-		var dayHours = userDefaultValues.notificationDaycomplete
-		if (userDefaults.contains(key: UserDefaults.Keys.notificationDaycomplete)) {
-			dayHours = userDefaults.double(forKey: UserDefaults.Keys.notificationDaycomplete)
-		}
+		let dayHours = userDefaults.double(forKey: UserDefaults.Keys.notificationDaycomplete)
 		let maxTime = max(sum, dayHours * 60 * 60)
 		let moJobColors = NSColorList.moJobColorList
 

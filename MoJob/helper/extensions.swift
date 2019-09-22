@@ -83,10 +83,6 @@ extension UserDefaults {
 		static let standard = "standard"
 		static let special = "special"
 	}
-
-	func contains(key: String) -> Bool {
-		return UserDefaults.standard.object(forKey: key) != nil
-	}
 }
 
 extension UserDefaults.Keys {

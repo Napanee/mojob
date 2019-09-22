@@ -75,24 +75,14 @@ class SettingsViewController: NSViewController {
 		)
 
 		autoLaunchCheckbox.state = foundHelper ? .on : .off
-
-		if (userDefaults.object(forKey: UserDefaults.Keys.badgeIconLabel) == nil || userDefaults.bool(forKey: UserDefaults.Keys.badgeIconLabel)) {
-			badgeIconLabel.state = .on
-		} else {
-			badgeIconLabel.state = .off
-		}
-
-		if (userDefaults.object(forKey: UserDefaults.Keys.syncOnStart) == nil || userDefaults.bool(forKey: UserDefaults.Keys.syncOnStart)) {
-			syncOnStartCheckbox.state = .on
-		} else {
-			syncOnStartCheckbox.state = .off
-		}
+		badgeIconLabel.state = userDefaults.bool(forKey: UserDefaults.Keys.badgeIconLabel) ? .on : .off
+		syncOnStartCheckbox.state = userDefaults.bool(forKey: UserDefaults.Keys.syncOnStart) ? .on : .off
 
 		let noTrackingValue = userDefaults.integer(forKey: UserDefaults.Keys.notificationNotracking)
-		noTrackingNotification.stringValue = userDefaults.contains(key: UserDefaults.Keys.notificationNotracking) ? String(noTrackingValue) : String(userDefaultValues.notificationNotracking)
+		noTrackingNotification.stringValue = String(noTrackingValue)
 
 		let dayCompleteValue = userDefaults.double(forKey: UserDefaults.Keys.notificationDaycomplete)
-		dayCompleteNotification.stringValue = userDefaults.contains(key: UserDefaults.Keys.notificationDaycomplete) ? String(dayCompleteValue) : String(userDefaultValues.notificationDaycomplete)
+		dayCompleteNotification.stringValue = String(dayCompleteValue)
 	}
 
 	override func viewDidAppear() {

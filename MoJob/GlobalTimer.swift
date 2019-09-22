@@ -80,7 +80,7 @@ class GlobalTimer: NSObject {
 
 	@objc func updateTime() {
 		let defaultDayHours = userDefaults.double(forKey: UserDefaults.Keys.notificationDaycomplete)
-		let dayHours = userDefaults.contains(key: UserDefaults.Keys.notificationDaycomplete) ? defaultDayHours : userDefaultValues.notificationDaycomplete
+		let dayHours = defaultDayHours
 		let currentDate = Date()
 		let diff = currentDate.timeIntervalSince(currentTracking.date_start ?? Date())
 		let totalSeconds = round(diff)
@@ -95,7 +95,7 @@ class GlobalTimer: NSObject {
 			formatter.allowedUnits = [.hour, .minute]
 		}
 
-		if (userDefaults.object(forKey: UserDefaults.Keys.badgeIconLabel) == nil || userDefaults.bool(forKey: UserDefaults.Keys.badgeIconLabel)) {
+		if (userDefaults.bool(forKey: UserDefaults.Keys.badgeIconLabel)) {
 			appBadge.badgeLabel = formatter.string(from: diff)
 		} else {
 			appBadge.badgeLabel = ""

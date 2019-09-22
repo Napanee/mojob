@@ -53,7 +53,12 @@ class AppDelegate: NSObject {
 			UserDefaults.Keys.oddWeekHours: 40,
 			UserDefaults.Keys.oddWeekDays: [],
 			UserDefaults.Keys.evenWeekDays: [],
-			UserDefaults.Keys.autoLaunch: true
+			UserDefaults.Keys.autoLaunch: true,
+			UserDefaults.Keys.badgeIconLabel: true,
+			UserDefaults.Keys.syncOnStart: true,
+			UserDefaults.Keys.crashOnSync: false,
+			UserDefaults.Keys.notificationNotracking: 10,
+			UserDefaults.Keys.notificationDaycomplete: 8.0
 		])
 
 		mainWindowController = MainWindowController()
@@ -74,10 +79,7 @@ class AppDelegate: NSObject {
 			}).catch({ _ in })
 		}
 
-		if (
-			(userDefaults.object(forKey: UserDefaults.Keys.crashOnSync) == nil || !userDefaults.bool(forKey: UserDefaults.Keys.crashOnSync)) &&
-			(userDefaults.object(forKey: UserDefaults.Keys.syncOnStart) == nil || userDefaults.bool(forKey: UserDefaults.Keys.syncOnStart)))
-		{
+		if (!userDefaults.bool(forKey: UserDefaults.Keys.crashOnSync) && userDefaults.bool(forKey: UserDefaults.Keys.syncOnStart)) {
 			QuoJob.shared.syncData().catch { error in
 				GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Synchronisieren", andInformationtext: error.localizedDescription)
 			}
