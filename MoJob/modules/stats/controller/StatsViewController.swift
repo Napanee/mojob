@@ -29,6 +29,7 @@ class StatsViewController: NSViewController {
 	@IBOutlet weak var todayButton: NSButton!
 	@IBOutlet weak var sumMonthLabel: NSTextField!
 
+	let userDefaults = UserDefaults()
 	let animationDuration = 0.5
 	let formatter = DateComponentsFormatter()
 	var calendar = Calendar.current
@@ -38,6 +39,32 @@ class StatsViewController: NSViewController {
 	var weekDaysCount: Int = 20
 	var trackingSet: [TrackingSet] = []
 	var sumMonth: Double = 0
+
+	var workHoursInMonth: Double {
+		let oddWeekHours = userDefaults.integer(forKey: UserDefaults.Keys.oddWeekHours)
+		let oddWeekDayHours = oddWeekHours > 0 ? Double(oddWeekHours) / 5 : 8
+		let evenWeekHours = userDefaults.integer(forKey: UserDefaults.Keys.evenWeekHours)
+		let evenWeekDayHours = evenWeekHours > 0 ? Double(evenWeekHours) / 5 : 8
+		var currentMonth = calendar.dateComponents([.month, .year], from: currentDate)
+		var count: Double = 0
+
+		for i in daysRange {
+			currentMonth.day = i
+			let day = calendar.date(from: currentMonth)
+			let weekAndDay = calendar.dateComponents([.weekOfYear, .weekday], from: day!)
+			let isEvenWeek = weekAndDay.weekOfYear! % 2 == 0
+
+			if ([1, 7].contains(weekAndDay.weekday)) { continue }
+
+			if (isEvenWeek) {
+				count += evenWeekDayHours
+			} else {
+				count += oddWeekDayHours
+			}
+		}
+
+		return count
+	}
 
 	var _currentDate: Date = Date()
 	var currentDate: Date {
@@ -181,7 +208,7 @@ extension StatsViewController {
 		formatter.unitsStyle = .abbreviated
 		let actualHours = formatter.string(from: sumMonth) ?? "0h 0m"
 		formatter.zeroFormattingBehavior = [.dropAll]
-		let targetHours = formatter.string(from: Double(weekDaysCount * 8 * 3600)) ?? "0h 0m"
+		let targetHours = formatter.string(from: workHoursInMonth * 3600) ?? "0h 0m"
 		let paragraph = NSMutableParagraphStyle()
 		paragraph.alignment = .center
 		let centerText = NSMutableAttributedString()
@@ -315,9 +342,12 @@ extension StatsViewController {
 		left.labelTextColor = NSColor.secondaryLabelColor
 		left.labelFont = NSFont.systemFont(ofSize: 10, weight: .light)
 
-		let ll = ChartLimitLine(limit: 8.0)
-		ll.lineWidth = 1.5
-		left.addLimitLine(ll)
+		let workWeek = userDefaults.string(forKey: UserDefaults.Keys.workWeek)
+		if (workWeek == UserDefaults.workWeek.standard) {
+			let ll = ChartLimitLine(limit: 8.0)
+			ll.lineWidth = 1.5
+			left.addLimitLine(ll)
+		}
 	}
 
 	func barChartUpdate() {
