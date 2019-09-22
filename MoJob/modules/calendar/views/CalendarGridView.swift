@@ -24,6 +24,7 @@ class CalendarGridView: NSGridView {
 	private let calendar = NSCalendar.current
 	private let empty = NSGridCell.emptyContentView
 	private let bgShapeLayer = CAShapeLayer()
+	private let formatter = DateComponentsFormatter()
 	var gradientCircle = GradientCircle()
 	private var activeIndicator = ActiveIndicator()
 	private var currentSelection = Date().startOfDay!
@@ -53,6 +54,10 @@ class CalendarGridView: NSGridView {
 		for _ in 0..<numberOfRows {
 			removeRow(at: 0)
 		}
+
+		formatter.unitsStyle = .positional
+		formatter.zeroFormattingBehavior = .pad
+		formatter.allowedUnits = [.hour, .minute]
 
 		subviews.removeAll()
 
@@ -131,67 +136,54 @@ class CalendarGridView: NSGridView {
 			activeIndicator.isHidden = true
 		}
 
-		// row for days
-		let firstDayOfCalender = calendar.date(from: month)?.startOfWeek
-		let lastDayOfCalendar = Calendar.current.date(byAdding: .second, value: -1, to: (calendar.date(from: month)?.endOfMonth?.endOfWeek)!)
-		var dayCount = lastDayOfCalendar?.timeIntervalSince(firstDayOfCalender!)
-		dayCount = round(dayCount! / 60 / 60 / 24) - 1
-		var day = firstDayOfCalender
-		var weekNumber = calendar.component(.weekOfYear, from: day!)
-		var weekSum: Double = 0
-
+		var gridRow: [NSView] = []
+		var day = calendar.date(from: month)
 		var evenWeekDays = userDefaults.array(forKey: UserDefaults.Keys.evenWeekDays) as? [Int] ?? []
-		evenWeekDays = evenWeekDays + [0, 6] // add saturday and sunday
+		evenWeekDays = evenWeekDays + [6, 7] // add saturday and sunday
 		var oddWeekDays = userDefaults.array(forKey: UserDefaults.Keys.oddWeekDays) as? [Int] ?? []
-		oddWeekDays = oddWeekDays + [0, 6] // add saturday and sunday
+		oddWeekDays = oddWeekDays + [6, 7] // add saturday and sunday
 		let evenWeekHours = userDefaults.integer(forKey: UserDefaults.Keys.evenWeekHours)
 		let evenWorkHours = Double(evenWeekHours) / Double(7 - evenWeekDays.count) * 3600
 		let oddWeekHours = userDefaults.integer(forKey: UserDefaults.Keys.oddWeekHours)
 		let oddWorkHours = Double(oddWeekHours) / Double(7 - oddWeekDays.count) * 3600
 
-		var gridRow: [NSView] = []
-		for i in 0...Int(dayCount!) {
-			let columnNumber = i.remainderReportingOverflow(dividingBy: 7).partialValue
-			let sum = CoreDataHelper.seconds(from: (day?.startOfDay)!, byAdding: .day, and: job) ?? 0
-			let formatter = DateComponentsFormatter()
-			formatter.unitsStyle = .positional
-			formatter.zeroFormattingBehavior = .pad
-			formatter.allowedUnits = [.hour, .minute]
+		let weeksInMonth = calendar.range(of: .weekOfYear, in: .month, for: calendar.date(from: month)!)
+		for w in weeksInMonth! {
+			var week = month
+			week.weekOfYear = w
+			week.weekday = 2
 
-			weekSum += sum
-
+			day = calendar.date(from: week)
+			let hoursForWeek = CoreDataHelper.seconds(from: (day?.startOfWeek)!, byAdding: .weekOfMonth, and: job) ?? 0
+			let weekNumber = calendar.component(.weekOfYear, from: day!)
 			let isEvenWeek = (weekNumber % 2) == 0
-			let weekDayNumber = calendar.component(.weekday, from: day!) - 1
-			let isFreeDay = isEvenWeek && evenWeekDays.contains(weekDayNumber) || !isEvenWeek && oddWeekDays.contains(weekDayNumber)
-			let content = CalendarDay()
-			content.delegate = self
-			content.day = day
-			content.isCurrentMonth = calendar.date(day!, matchesComponents: month)
-			content.isFreeDay = isFreeDay
-			content.missingHours = day?.compare(Date()) == ComparisonResult.orderedAscending && !isFreeDay && ((isEvenWeek && sum - evenWorkHours < 0) || (!isEvenWeek && sum - oddWorkHours < 0))
-			content.timeLabel.stringValue = formatter.string(from: sum)!
+			let missingHoursInWeek = (isEvenWeek && hoursForWeek - Double(evenWeekHours) * 3600 < 0) || (!isEvenWeek && hoursForWeek - Double(oddWeekHours) * 3600 < 0)
 
-			if calendar.dateComponents([.day, .month, .year], from: currentSelection) == calendar.dateComponents([.day, .month, .year], from: day!) {
-				activeIndicator.isHidden = false
-				content.isSelected = true
+			let content = CalendarWeek()
+			content.weekLabel.stringValue = String(weekNumber)
+			content.timeLabel.stringValue = formatter.string(from: hoursForWeek)!
+
+			gridRow = [content]
+
+			for d in 2...8 { // little hack, to start with monday, instead of sunday
+				week.weekday = d < 8 ? d : 1
+				day = calendar.date(from: week)
+
+				let isFreeDay = isEvenWeek && evenWeekDays.contains(d - 1) || !isEvenWeek && oddWeekDays.contains(d - 1)
+				let hoursForDay = CoreDataHelper.seconds(from: (day?.startOfDay)!, byAdding: .day, and: job) ?? 0
+
+				let content = CalendarDay()
+				content.delegate = self
+				content.day = day
+				content.isCurrentMonth = calendar.date(day!, matchesComponents: month)
+				content.isFreeDay = isFreeDay
+				content.missingHours = day?.compare(Date()) == ComparisonResult.orderedAscending && missingHoursInWeek && !isFreeDay && ((isEvenWeek && hoursForDay - evenWorkHours < 0) || (!isEvenWeek && hoursForDay - oddWorkHours < 0))
+				content.timeLabel.stringValue = formatter.string(from: hoursForDay)!
+
+				gridRow.append(content)
 			}
 
-			gridRow.append(content)
-
-			day = calendar.date(byAdding: .day, value: 1, to: day!)
-
-			if (columnNumber == 6) {
-				let content = CalendarWeek()
-				content.weekLabel.stringValue = String(weekNumber)
-				content.timeLabel.stringValue = formatter.string(from: weekSum)!
-				gridRow.insert(content, at: 0)
-
-				addRow(with: gridRow)
-				gridRow = []
-				weekSum = 0
-
-				weekNumber = calendar.component(.weekOfYear, from: day!)
-			}
+			addRow(with: gridRow)
 		}
 
 		subviews.append(activeIndicator)
