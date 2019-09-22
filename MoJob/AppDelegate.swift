@@ -47,7 +47,11 @@ class AppDelegate: NSObject {
 		UserDefaults.standard.register(defaults: [
 			"NSInitialToolTipDelay": 1,
 			"NSApplicationCrashOnExceptions": true,
-			UserDefaults.Keys.workWeek: "standard"
+			UserDefaults.Keys.workWeek: "standard",
+			UserDefaults.Keys.evenWeekHours: 40,
+			UserDefaults.Keys.oddWeekHours: 40,
+			UserDefaults.Keys.oddWeekDays: [],
+			UserDefaults.Keys.evenWeekDays: []
 		])
 
 		mainWindowController = MainWindowController()

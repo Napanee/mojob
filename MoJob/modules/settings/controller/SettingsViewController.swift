@@ -154,17 +154,17 @@ class SettingsViewController: NSViewController {
 		specialWeekDetailsTopConstraint.isActive = show
 
 		if (show) {
-			let weekOddHours = Int(oddWeekHours.stringValue) ?? 30
-			let weekEvenHours = Int(evenWeekHours.stringValue) ?? 30
+			let weekOddHours = Int(oddWeekHours.stringValue) ?? userDefaults.integer(forKey: UserDefaults.Keys.oddWeekHours)
+			let weekEvenHours = Int(evenWeekHours.stringValue) ?? userDefaults.integer(forKey: UserDefaults.Keys.evenWeekHours)
 			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekOdd:Hours:set", "Value": weekOddHours])
 			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekEven:Hours:set", "Value": weekEvenHours])
-			userDefaults.set(weekOddHours, forKey: UserDefaults.Keys.oddWeekHours)
-			userDefaults.set(weekEvenHours, forKey: UserDefaults.Keys.evenWeekHours)
 		} else {
 			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekOdd:Hours:remove"])
 			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekEven:Hours:remove"])
 			userDefaults.removeObject(forKey: UserDefaults.Keys.oddWeekHours)
 			userDefaults.removeObject(forKey: UserDefaults.Keys.evenWeekHours)
+			userDefaults.removeObject(forKey: UserDefaults.Keys.oddWeekDays)
+			userDefaults.removeObject(forKey: UserDefaults.Keys.evenWeekDays)
 		}
 	}
 
