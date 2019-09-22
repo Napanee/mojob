@@ -177,7 +177,7 @@ class CalendarGridView: NSGridView {
 				content.day = day
 				content.isCurrentMonth = calendar.date(day!, matchesComponents: month)
 				content.isFreeDay = isFreeDay
-				content.missingHours = day?.compare(Date()) == ComparisonResult.orderedAscending && missingHoursInWeek && !isFreeDay && ((isEvenWeek && hoursForDay - evenWorkHours < 0) || (!isEvenWeek && hoursForDay - oddWorkHours < 0))
+				content.missingHours = job == nil && day?.compare(Date()) == ComparisonResult.orderedAscending && missingHoursInWeek && !isFreeDay && ((isEvenWeek && hoursForDay - evenWorkHours < 0) || (!isEvenWeek && hoursForDay - oddWorkHours < 0))
 				content.timeLabel.stringValue = formatter.string(from: hoursForDay)!
 
 				gridRow.append(content)
