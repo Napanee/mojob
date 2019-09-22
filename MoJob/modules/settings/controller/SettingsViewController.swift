@@ -186,6 +186,7 @@ class SettingsViewController: NSViewController {
 		let isAuto = sender.state == .on
 		Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "autoLaunch", "Status": isAuto])
 		SMLoginItemSetEnabled(helperBundleName as CFString, isAuto)
+		userDefaults.set(isAuto, forKey: UserDefaults.Keys.autoLaunch)
 	}
 
 	@IBAction func toggleBadgIconLabel(_ sender: NSButton) {

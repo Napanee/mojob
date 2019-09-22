@@ -12,6 +12,7 @@ import Crashlytics
 import LetsMove
 import Network
 import PromiseKit
+import ServiceManagement
 
 
 @NSApplicationMain
@@ -51,11 +52,18 @@ class AppDelegate: NSObject {
 			UserDefaults.Keys.evenWeekHours: 40,
 			UserDefaults.Keys.oddWeekHours: 40,
 			UserDefaults.Keys.oddWeekDays: [],
-			UserDefaults.Keys.evenWeekDays: []
+			UserDefaults.Keys.evenWeekDays: [],
+			UserDefaults.Keys.autoLaunch: true
 		])
 
 		mainWindowController = MainWindowController()
 		mainWindowController!.showWindow(nil)
+
+		let helperBundleName = "de.martinschneider.AutoLaunchHelper"
+		let foundHelper = NSWorkspace.shared.runningApplications.contains(where: { $0.bundleIdentifier == helperBundleName })
+		if (!foundHelper && userDefaults.bool(forKey: UserDefaults.Keys.autoLaunch)) {
+			SMLoginItemSetEnabled(helperBundleName as CFString, true)
+		}
 
 		if (CoreDataHelper.jobs().count == 0) {
 			QuoJob.shared.login().done({ _ in

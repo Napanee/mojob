@@ -90,6 +90,7 @@ extension UserDefaults {
 }
 
 extension UserDefaults.Keys {
+	static let autoLaunch = "autoLaunch"
 	static let notificationNotracking = "notification:notracking"
 	static let notificationDaycomplete = "notification:daycomplete"
 	static let activity = "activity"
