@@ -352,10 +352,30 @@ extension QuoJob {
 		}
 	}
 
+	func lastSyncDate(for entityName: String) -> Date? {
+		let keypathExpression = NSExpression(forKeyPath: "sync")
+		let maxExpression = NSExpression(forFunction: "max:", arguments: [keypathExpression])
+		let expressionDescription = NSExpressionDescription()
+		let key = "maxSync"
+		expressionDescription.name = key
+		expressionDescription.expression = maxExpression
+		expressionDescription.expressionResultType = .dateAttributeType
+
+		let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+		request.propertiesToFetch = [expressionDescription]
+		request.resultType = .dictionaryResultType
+
+		if let lastSync = try? CoreDataHelper.mainContext.fetch(request) as? [[String: Any]] {
+			return lastSync[0]["maxSync"] as? Date
+		}
+
+		return nil
+	}
+
 	func fetchJobTypes() -> Promise<[String: Any]> {
 		var params = defaultParams
 
-		if let type = CoreDataHelper.types().first, let lastSync = type.sync {
+		if let lastSync = lastSyncDate(for: "Type") {
 			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
@@ -368,7 +388,7 @@ extension QuoJob {
 	func fetchJobs() -> Promise<[String: Any]> {
 		var params = defaultParams
 
-		if let job = CoreDataHelper.jobs().first, let lastSync = job.sync {
+		if let lastSync = lastSyncDate(for: "Job") {
 			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
@@ -381,7 +401,7 @@ extension QuoJob {
 	func fetchActivities() -> Promise<[String: Any]> {
 		var params = defaultParams
 
-		if let activity = CoreDataHelper.activities().first, let lastSync = activity.sync {
+		if let lastSync = lastSyncDate(for: "Activity") {
 			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
@@ -394,7 +414,7 @@ extension QuoJob {
 	func fetchTasks() -> Promise<[String: Any]> {
 		var params = defaultParams
 
-		if let task = CoreDataHelper.tasks().first, let lastSync = task.sync {
+		if let lastSync = lastSyncDate(for: "Task") {
 			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
@@ -410,13 +430,7 @@ extension QuoJob {
 			"user_id": userId
 		]
 
-		let trackings = CoreDataHelper.trackings().sorted(by: { (firstTracking, secondTracking) in
-			guard let firstSync = firstTracking.sync, let secondSync = secondTracking.sync else { return true }
-
-			return firstSync.compare(secondSync) == ComparisonResult.orderedDescending
-		})
-
-		if let lastSync = trackings.first?.sync {
+		if let lastSync = lastSyncDate(for: "Tracking") {
 			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
