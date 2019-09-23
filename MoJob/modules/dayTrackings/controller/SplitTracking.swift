@@ -59,41 +59,37 @@ class SplitTracking: NSViewController {
 	}
 
 	@IBAction func saveButton(_ sender: NSButton) {
-//		let items = (jobsCollectionView.visibleItems() as! [SplitJobItem]).filter({ $0.jobSelect.indexOfSelectedItem > 0 })
-//
-//		guard let totalSeconds = sourceTracking.date_end?.timeIntervalSince(sourceTracking.date_start!) else { return }
-//		let secondsPerItem = round(totalSeconds / Double(items.count) / 60) * 60
-//		var date_start = sourceTracking.date_start!
-//
-//		for item in items {
-//			if let job = jobs.first(where: { (job) -> Bool in
-//				guard let title = job.title, let number = job.number else { return false }
-//
-//				return "\(number) - \(title)" == item.jobSelect.titleOfSelectedItem
-//			}) {
-//				let date_end = date_start.addingTimeInterval(TimeInterval(secondsPerItem))
-//				let values = [
-//					"job": job,
-//					"activity": sourceTracking.activity as Any,
-//					"comment": sourceTracking.comment as Any,
-//					"date_start": date_start,
-//					"date_end": date_end,
-//					"exported": SyncStatus.pending.rawValue
-//				]
-//
-//				Tracking.insert(with: values).done({ tracking in
-//					if let tracking = tracking, let _ = tracking.job {
-//						tracking.export()
-//					}
-//				}).catch { error in }
-//
-//				date_start = date_end
-//			}
-//		}
-//
-//		sourceTracking.delete()
-//
-//		dismiss(self)
+		let items = (jobsCollectionView.visibleItems() as! [SplitJobItem]).filter({ $0.jobSelect.indexOfSelectedItem > 0 })
+
+		guard let totalSeconds = sourceTracking.date_end?.timeIntervalSince(sourceTracking.date_start!) else { return }
+		let secondsPerItem = round(totalSeconds / Double(items.count) / 60) * 60
+		let activity = sourceTracking.activity
+		let comment = sourceTracking.comment
+		var date_start = sourceTracking.date_start!
+
+		sourceTracking.delete()
+
+		for item in items {
+			if let job = jobs.first(where: { $0.fullTitle == item.jobSelect.titleOfSelectedItem }), let tracking = CoreDataHelper.createTracking() {
+				let date_end = date_start.addingTimeInterval(TimeInterval(secondsPerItem))
+				let values = [
+					"job": job,
+					"activity": activity as Any,
+					"comment": comment as Any,
+					"date_start": date_start,
+					"date_end": date_end,
+					"exported": SyncStatus.pending.rawValue
+				]
+
+				tracking.setValuesForKeys(values)
+				CoreDataHelper.save()
+				tracking.export()
+
+				date_start = date_end
+			}
+		}
+
+		dismiss(self)
 	}
 
 }
