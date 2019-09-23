@@ -178,6 +178,7 @@
 		E863306522481BED00A8E946 /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = E863306422481BED00A8E946 /* Login.xib */; };
 		E863306722481E2C00A8E946 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863306622481E2C00A8E946 /* Login.swift */; };
 		E863306A2248232F00A8E946 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86330692248232F00A8E946 /* Password.swift */; };
+		E866C9C12338E150001BEAFD /* MoJob-3.8.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E866C9C02338E14F001BEAFD /* MoJob-3.8.1.html */; };
 		E86A741A2305E75F00C77866 /* MoJob-3.2.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E86A74192305E75F00C77866 /* MoJob-3.2.0.html */; };
 		E86A741C2305E99500C77866 /* MoJob-3.2.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E86A741B2305E99500C77866 /* MoJob-3.2.1.html */; };
 		E8716BE8230490C600AF5BC0 /* MoJob-3.1.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */; };
@@ -358,6 +359,7 @@
 		E863306422481BED00A8E946 /* Login.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
 		E863306622481E2C00A8E946 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		E86330692248232F00A8E946 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
+		E866C9C02338E14F001BEAFD /* MoJob-3.8.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.8.1.html"; sourceTree = "<group>"; };
 		E86A74192305E75F00C77866 /* MoJob-3.2.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.2.0.html"; sourceTree = "<group>"; };
 		E86A741B2305E99500C77866 /* MoJob-3.2.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.2.1.html"; sourceTree = "<group>"; };
 		E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.1.0.html"; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 				E8B58A42232FE26400DBCE44 /* MoJob-3.7.5.html */,
 				E853A5712333AC1000689F62 /* MoJob-3.7.6.html */,
 				E853A5F92337EC6200689F62 /* MoJob-3.8.0.html */,
+				E866C9C02338E14F001BEAFD /* MoJob-3.8.1.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1264,6 +1267,7 @@
 				E86A741A2305E75F00C77866 /* MoJob-3.2.0.html in Resources */,
 				E81E75EC23034DF60071B90C /* MoJob-3.0.2.html in Resources */,
 				E8D35A2622FF87480014AFE4 /* CalendarWeek.xib in Resources */,
+				E866C9C12338E150001BEAFD /* MoJob-3.8.1.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1825,6 +1829,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 51;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1838,6 +1843,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 3.8.1;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1855,6 +1861,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 51;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1867,6 +1874,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 3.8.1;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
