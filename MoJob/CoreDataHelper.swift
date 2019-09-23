@@ -239,6 +239,10 @@ extension CoreDataHelper {
 			tracking.setValue(activity, forKey: UserDefaults.Keys.activity)
 		}
 
+		if (context == currentTrackingContext) {
+			GlobalTimer.shared.startTimer()
+		}
+
 		return tracking as? Tracking
 	}
 

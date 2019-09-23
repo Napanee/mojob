@@ -98,8 +98,6 @@ class TrackingViewController: QuoJobSelections {
 		})
 
 		formIsValid = true
-
-		GlobalTimer.shared.startTimer()
 	}
 
 	override func viewDidDisappear() {
