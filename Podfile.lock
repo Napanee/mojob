@@ -3,7 +3,7 @@ PODS:
   - Charts (3.3.0):
     - Charts/Core (= 3.3.0)
   - Charts/Core (3.3.0)
-  - Crashlytics (3.13.4):
+  - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
   - KeychainAccess (3.2.0)
@@ -38,7 +38,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
-  Crashlytics: 2dfd686bcb918dc10ee0e76f7f853fe42c7bd552
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   LetsMove: fefe56bc7bc7fb7d37049e28a14f297961229fc5
