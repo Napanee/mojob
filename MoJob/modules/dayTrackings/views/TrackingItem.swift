@@ -154,7 +154,7 @@ class TrackingItem: NSView {
 		rightClickMenu.addItem(NSMenuItem.separator())
 
 		let splitItem = NSMenuItem(title: "Aufteilen", action: #selector(onContextSplit), keyEquivalent: "")
-		if (tracking?.job != nil || tracking?.date_end == nil) {
+		if (tracking?.date_end == nil) {
 			splitItem.action = nil
 		}
 		rightClickMenu.addItem(splitItem)

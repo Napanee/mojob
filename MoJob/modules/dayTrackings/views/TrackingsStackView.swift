@@ -18,6 +18,8 @@ class TrackingsStackView: NSStackView {
 		var endTime: Date = currentDate.startOfDay!
 
 		for tracking in trackings {
+			guard tracking.date_start != nil else { continue }
+
 			if tracking.date_start!.timeIntervalSince(endTime) > 60 {
 				insertAddButton(from: endTime, until: tracking.date_start!)
 			}
