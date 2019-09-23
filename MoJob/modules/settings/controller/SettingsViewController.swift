@@ -40,7 +40,6 @@ class SettingsViewController: NSViewController {
 
 	var _specialWeekDetailsTopConstraint = NSLayoutConstraint()
 	var radioButtonsWeek: [NSButton] = []
-	var keyDownEventMonitor: Any?
 	var userDefaults = UserDefaults()
 	var oddWeekDays: [Int] = []
 	var evenWeekDays: [Int] = []
@@ -51,11 +50,6 @@ class SettingsViewController: NSViewController {
 		super.viewDidLoad()
 
 		initActivitySelect()
-
-		NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
-			self.keyDown(with: $0)
-			return $0
-		}
 
 		_specialWeekDetailsTopConstraint = specialWeekDetailsTopConstraint
 		specialWeekDetailsTopConstraint.isActive = false
