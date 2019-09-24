@@ -186,6 +186,7 @@
 		E8731AE5225952B1006947B0 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8731AE4225952B1006947B0 /* constants.swift */; };
 		E876C9762326ED7F00C404FD /* MoJob-3.6.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E876C9752326ED7F00C404FD /* MoJob-3.6.2.html */; };
 		E877EC83224FCA8C002C3828 /* PopUpCellText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E877EC82224FCA8C002C3828 /* PopUpCellText.swift */; };
+		E87C0B66233A017D00CA4693 /* MoJob-3.9.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E87C0B65233A017D00CA4693 /* MoJob-3.9.0.html */; };
 		E895D8492221BEEB00DAAA4E /* DayTrackingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */; };
 		E895D84B2221BF4600DAAA4E /* DayTrackingsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */; };
 		E895D8542222E00600DAAA4E /* TrackingItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E895D8532222E00600DAAA4E /* TrackingItem.xib */; };
@@ -368,6 +369,7 @@
 		E8731AE4225952B1006947B0 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		E876C9752326ED7F00C404FD /* MoJob-3.6.2.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.6.2.html"; sourceTree = "<group>"; };
 		E877EC82224FCA8C002C3828 /* PopUpCellText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpCellText.swift; sourceTree = "<group>"; };
+		E87C0B65233A017D00CA4693 /* MoJob-3.9.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.9.0.html"; sourceTree = "<group>"; };
 		E895D8482221BEEB00DAAA4E /* DayTrackingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DayTrackingsController.swift; path = MoJob/modules/dayTrackings/controller/DayTrackingsController.swift; sourceTree = SOURCE_ROOT; };
 		E895D84A2221BF4600DAAA4E /* DayTrackingsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayTrackingsController.xib; sourceTree = "<group>"; };
 		E895D8532222E00600DAAA4E /* TrackingItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrackingItem.xib; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 				E853A5712333AC1000689F62 /* MoJob-3.7.6.html */,
 				E853A5F92337EC6200689F62 /* MoJob-3.8.0.html */,
 				E866C9C02338E14F001BEAFD /* MoJob-3.8.1.html */,
+				E87C0B65233A017D00CA4693 /* MoJob-3.9.0.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1250,6 +1253,7 @@
 				E81E75EE230351A90071B90C /* MoJob-3.0.1.html in Resources */,
 				E8716BEA2304ADC600AF5BC0 /* MoJob-3.1.1.html in Resources */,
 				E8A270412210BAE80030B61C /* TrackingViewController.xib in Resources */,
+				E87C0B66233A017D00CA4693 /* MoJob-3.9.0.html in Resources */,
 				E82117DC220E4593003D7578 /* FavoriteItem.xib in Resources */,
 				E82A703A23205D7400884390 /* MoJob-3.6.1.html in Resources */,
 				E8D35A1C22FF5B0C0014AFE4 /* CalendarController.xib in Resources */,
@@ -1829,7 +1833,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1843,7 +1847,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.8.1;
+				MARKETING_VERSION = 3.9.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1861,7 +1865,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -1874,7 +1878,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.8.1;
+				MARKETING_VERSION = 3.9.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
