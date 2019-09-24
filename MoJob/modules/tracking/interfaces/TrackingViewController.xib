@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -45,7 +45,7 @@
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CIB-aK-fgA">
-                            <rect key="frame" x="68" y="13" width="64" height="24"/>
+                            <rect key="frame" x="68" y="14" width="64" height="23"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="60" id="OFC-WT-I9B"/>
                             </constraints>
@@ -56,9 +56,9 @@
                             </textFieldCell>
                         </textField>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JuF-jE-fLD" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="140" y="13" width="330" height="23"/>
+                            <rect key="frame" x="140" y="13" width="325" height="23"/>
                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="thO-E2-i7w">
-                                <font key="font" metaFont="system" size="11"/>
+                                <font key="font" metaFont="smallSystem"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <objectValues>
@@ -73,16 +73,24 @@
                                 <outlet property="delegate" destination="-2" id="3Uv-KD-eWz"/>
                             </connections>
                         </comboBox>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I2q-9u-hth">
-                            <rect key="frame" x="477" y="15" width="20" height="20"/>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I2q-9u-hth" customClass="StarButton" customModule="MoJob" customModuleProvider="target">
+                            <rect key="frame" x="472" y="13" width="25" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="20" id="1ud-Jx-GNf"/>
-                                <constraint firstAttribute="height" constant="20" id="n7b-dJ-6nO"/>
+                                <constraint firstAttribute="width" constant="25" id="1ud-Jx-GNf"/>
+                                <constraint firstAttribute="height" constant="25" id="n7b-dJ-6nO"/>
                             </constraints>
-                            <buttonCell key="cell" type="bevel" title="Button" bezelStyle="regularSquare" image="star-empty" imagePosition="only" alignment="center" alternateImage="star-filled" imageScaling="proportionallyUpOrDown" inset="2" id="2nA-Zv-Swx">
+                            <buttonCell key="cell" type="bevel" title="Button" bezelStyle="regularSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="2nA-Zv-Swx">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="colorFill">
+                                    <color key="value" name="systemYellowColor" catalog="System" colorSpace="catalog"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="colorStroke">
+                                    <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="favoriteTracking:" target="-2" id="R7G-RP-bxQ"/>
                             </connections>
@@ -122,7 +130,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="567" height="188"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lVZ-4j-Vcr">
-                            <rect key="frame" x="28" y="161" width="63" height="17"/>
+                            <rect key="frame" x="28" y="159" width="63" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Startzeit:" id="Jqw-ew-Lpc">
                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -130,10 +138,10 @@
                             </textFieldCell>
                         </textField>
                         <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FuK-8I-mxU">
-                            <rect key="frame" x="30" y="127" width="74" height="29"/>
+                            <rect key="frame" x="30" y="126" width="74" height="28"/>
                             <subviews>
                                 <textField identifier="fromHour" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Crw-7d-Egb" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="33" height="29"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="33" height="28"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="33" id="h43-E5-6Fj"/>
                                     </constraints>
@@ -148,7 +156,7 @@
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xpq-MI-1aP">
-                                    <rect key="frame" x="33" y="6" width="8" height="17"/>
+                                    <rect key="frame" x="33" y="6" width="8" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title=":" id="Q6T-R0-xsp">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -156,7 +164,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField identifier="fromMinute" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g10-Q3-yW9" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="41" y="0.0" width="33" height="29"/>
+                                    <rect key="frame" x="41" y="0.0" width="33" height="28"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="00" drawsBackground="YES" id="JQT-kq-dQt">
                                         <font key="font" metaFont="systemThin" size="20"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -189,10 +197,10 @@
                             </customSpacing>
                         </stackView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="d3I-Gi-eNU">
-                            <rect key="frame" x="124" y="90" width="413" height="88"/>
+                            <rect key="frame" x="124" y="90" width="413" height="85"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fJ5-C6-PRn">
-                                    <rect key="frame" x="-2" y="71" width="62" height="17"/>
+                                    <rect key="frame" x="-2" y="69" width="62" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Aufgabe:" id="KcA-uS-uJP">
                                         <font key="font" metaFont="systemSemibold" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -200,7 +208,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lds-i2-z5u" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="38" width="200" height="26"/>
+                                    <rect key="frame" x="0.0" y="37" width="200" height="25"/>
                                     <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="1A6-He-L8k">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -218,7 +226,7 @@
                                     </connections>
                                 </comboBox>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nFV-aO-e0w">
-                                    <rect key="frame" x="215" y="71" width="63" height="17"/>
+                                    <rect key="frame" x="215" y="69" width="63" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Tätigkeit:" id="6MS-0Z-0Fx">
                                         <font key="font" metaFont="systemSemibold" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -226,7 +234,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eiv-iP-EWs" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="217" y="38" width="199" height="26"/>
+                                    <rect key="frame" x="217" y="37" width="199" height="25"/>
                                     <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="oab-Bp-Avk">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -258,7 +266,7 @@
                             </constraints>
                         </customView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SdS-WH-WLV">
-                            <rect key="frame" x="28" y="95" width="81" height="17"/>
+                            <rect key="frame" x="28" y="95" width="81" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Bemerkung:" id="zSY-YZ-e7g">
                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -307,8 +315,4 @@
             <point key="canvasLocation" x="-1429.5" y="29"/>
         </customView>
     </objects>
-    <resources>
-        <image name="star-empty" width="30" height="29"/>
-        <image name="star-filled" width="30" height="29"/>
-    </resources>
 </document>

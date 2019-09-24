@@ -10,48 +10,41 @@ import Cocoa
 
 class ToggleButton: NSButton {
 
-	let strokeWidth: CGFloat = 1.0
+	let strokeWidth: CGFloat = 2.0
+	let strokeColor: NSColor = NSColor.white
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 
-		let context = NSGraphicsContext.current?.cgContext
-		context?.setLineWidth(strokeWidth)
-		context?.setStrokeColor(CGColor.white)
-
-		context?.addPath(createRoundedTriangle(width: 14, height: 8, radius: 2))
-		context?.drawPath(using: .stroke)
-
-		context?.addPath(createCircle())
-		context?.drawPath(using: .stroke)
+		createRoundedTriangle(width: 14, height: 7, radius: 2)
+		createCircle()
 	}
 
-	func createRoundedTriangle(width: CGFloat, height: CGFloat, radius: CGFloat) -> CGPath {
+	func createRoundedTriangle(width: CGFloat, height: CGFloat, radius: CGFloat) {
 		let offsetX: CGFloat = (bounds.width - width) / 2
 		let offsetY: CGFloat = (bounds.height - height) / 2
-		let top: CGFloat = state.rawValue == 0 ? offsetY + height : offsetY
-		let bottom: CGFloat = state.rawValue == 0 ? offsetY : offsetY + height
-		let point1 = CGPoint(x: offsetX + width / 2, y: bottom)
-		let point2 = CGPoint(x: offsetX + width, y: top)
+		let top: CGFloat = state == .off ? offsetY + height : offsetY
+		let bottom: CGFloat = state == .off ? offsetY : offsetY + height
+		let pointStart = CGPoint(x: offsetX, y: top)
+		let pointCenter = CGPoint(x: offsetX + width / 2, y: bottom)
+		let pointEnd = CGPoint(x: offsetX + width, y: top)
 
-		let path = CGMutablePath()
-		path.move(to: CGPoint(x: offsetX, y: top))
-		path.addArc(tangent1End: point1, tangent2End: point2, radius: radius)
-		path.addLine(to: point2)
-
-		return path
+		let arrow = NSBezierPath()
+		arrow.move(to: pointStart)
+		arrow.line(to: pointCenter)
+		arrow.line(to: pointEnd)
+		arrow.lineWidth = strokeWidth
+		arrow.lineJoinStyle = .round
+		arrow.lineCapStyle = .round
+		strokeColor.setStroke()
+		arrow.stroke()
 	}
 
-	func createCircle() -> CGPath {
-		let center = CGPoint(x: bounds.midX, y: bounds.midY)
-		let radius = (bounds.size.width - strokeWidth) * 0.5
-		let startAngle: CGFloat = -90
-		let endAngle: CGFloat = 270
-
-		let path = CGMutablePath()
-		path.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
-
-		return path
+	func createCircle() {
+		let circle = NSBezierPath(ovalIn: NSRect(x: 1, y: 1, width: bounds.width - 2, height: bounds.height - 2))
+		circle.lineWidth = strokeWidth
+		strokeColor.setStroke()
+		circle.stroke()
 	}
 
 }

@@ -13,7 +13,7 @@ class StopButton: NSButton {
 	let timeSecondsShapeLayer = CAShapeLayer()
 	let startAngle: CGFloat = -90
 	let endAngle: CGFloat = 270
-	let strokeWidth: CGFloat = 1.0
+	let strokeWidth: CGFloat = 2.0
 
 	var center: CGPoint!
 	var radius: CGFloat!
@@ -21,15 +21,24 @@ class StopButton: NSButton {
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 
-		center = CGPoint(x: bounds.midX, y: bounds.midY)
-		radius = (bounds.size.width - strokeWidth) * 0.5
+		let circle = NSBezierPath(ovalIn: NSRect(x: 1, y: 1, width: bounds.width - 2, height: bounds.height - 2))
+		circle.lineWidth = 2.0
+		NSColor.white.withAlphaComponent(0.25).setStroke()
+		circle.stroke()
 
-		drawStopIcon()
+		let stop = NSBezierPath(roundedRect: NSRect(x: 10, y: 10, width: 10, height: 10), xRadius: 1.0, yRadius: 1.0)
+		stop.lineWidth = 1.5
+		NSColor.red.setFill()
+		stop.fill()
+		NSColor.white.setStroke()
+		stop.stroke()
 
 		if let _ = layer?.sublayers?.first(where: { $0.isEqual(timeSecondsShapeLayer) }) {
 			return
 		}
 
+		center = CGPoint(x: bounds.midX, y: bounds.midY)
+		radius = (bounds.size.width - strokeWidth) * 0.5
 		let path = NSBezierPath()
 		path.appendArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
 
@@ -41,23 +50,6 @@ class StopButton: NSButton {
 		addAnimation()
 
 		layer?.addSublayer(timeSecondsShapeLayer)
-	}
-
-	func drawStopIcon() {
-		let context = NSGraphicsContext.current?.cgContext
-		context?.setLineWidth(strokeWidth)
-
-		let stopPath = CGMutablePath()
-		stopPath.addRoundedRect(in: CGRect(x: 10, y: 10, width: 10, height: 10), cornerWidth: 2.0, cornerHeight: 2.0)
-		context?.setStrokeColor(CGColor.white)
-		context?.addPath(stopPath)
-		context?.drawPath(using: .stroke)
-
-		let stopCircle = CGMutablePath()
-		stopCircle.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
-		context?.setStrokeColor(NSColor.white.withAlphaComponent(0.25).cgColor)
-		context?.addPath(stopCircle)
-		context?.drawPath(using: .stroke)
 	}
 
 	func addAnimation() {

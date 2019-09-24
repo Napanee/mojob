@@ -10,8 +10,6 @@ import Cocoa
 
 class TrackingViewController: QuoJobSelections {
 
-	let starFilled = NSImage(named: .starFilledImage)?.tint(color: NSColor.systemYellow)
-	let starEmpty = NSImage(named: .starEmptyImage)
 	private var observer: NSObjectProtocol?
 
 	var isFavorite: Bool {
@@ -27,7 +25,7 @@ class TrackingViewController: QuoJobSelections {
 			job.isFavorite = newValue
 			CoreDataHelper.save()
 
-			favoriteTracking.image = newValue ? self.starFilled : self.starEmpty
+			favoriteTracking.state = newValue ? .on : .off
 		}
 	}
 
@@ -63,7 +61,6 @@ class TrackingViewController: QuoJobSelections {
 		}
 
 		if let job = tracking?.job {
-			favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
 			favoriteTracking.state = job.isFavorite ? .on : .off
 		} else {
 			favoriteTracking.isHidden = true
@@ -130,7 +127,6 @@ class TrackingViewController: QuoJobSelections {
 
 		if let job = tracking?.job {
 			favoriteTracking.isHidden = false
-			favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
 			favoriteTracking.state = job.isFavorite ? .on : .off
 		} else {
 			favoriteTracking.isHidden = true
@@ -144,7 +140,6 @@ class TrackingViewController: QuoJobSelections {
 
 		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
 			if let job = updates.first as? Job, job.id == tracking?.job?.id {
-				favoriteTracking.image = job.isFavorite ? starFilled : starEmpty
 				favoriteTracking.state = job.isFavorite ? .on : .off
 			}
 		}

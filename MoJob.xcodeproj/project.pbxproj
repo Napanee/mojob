@@ -179,6 +179,8 @@
 		E863306722481E2C00A8E946 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E863306622481E2C00A8E946 /* Login.swift */; };
 		E863306A2248232F00A8E946 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86330692248232F00A8E946 /* Password.swift */; };
 		E866C9C12338E150001BEAFD /* MoJob-3.8.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E866C9C02338E14F001BEAFD /* MoJob-3.8.1.html */; };
+		E867E0F6233A62D5007F7A3B /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E867E0F5233A62D5007F7A3B /* StarView.swift */; };
+		E867E0F7233A62D5007F7A3B /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E867E0F5233A62D5007F7A3B /* StarView.swift */; };
 		E86A741A2305E75F00C77866 /* MoJob-3.2.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E86A74192305E75F00C77866 /* MoJob-3.2.0.html */; };
 		E86A741C2305E99500C77866 /* MoJob-3.2.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E86A741B2305E99500C77866 /* MoJob-3.2.1.html */; };
 		E8716BE8230490C600AF5BC0 /* MoJob-3.1.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */; };
@@ -361,6 +363,7 @@
 		E863306622481E2C00A8E946 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		E86330692248232F00A8E946 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
 		E866C9C02338E14F001BEAFD /* MoJob-3.8.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.8.1.html"; sourceTree = "<group>"; };
+		E867E0F5233A62D5007F7A3B /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
 		E86A74192305E75F00C77866 /* MoJob-3.2.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.2.0.html"; sourceTree = "<group>"; };
 		E86A741B2305E99500C77866 /* MoJob-3.2.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.2.1.html"; sourceTree = "<group>"; };
 		E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.1.0.html"; sourceTree = "<group>"; };
@@ -906,6 +909,7 @@
 				E877EC82224FCA8C002C3828 /* PopUpCellText.swift */,
 				E8A977F62315C5610028CD9D /* StopButton.swift */,
 				E8A977F8231AD9FF0028CD9D /* ToggleButton.swift */,
+				E867E0F5233A62D5007F7A3B /* StarView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1565,6 +1569,7 @@
 				E8A977F9231AD9FF0028CD9D /* ToggleButton.swift in Sources */,
 				E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */,
 				E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */,
+				E867E0F6233A62D5007F7A3B /* StarView.swift in Sources */,
 				E8E950A2223591910070F57E /* NumberField.swift in Sources */,
 				E8D35A2022FF6AC80014AFE4 /* CalendarDay.swift in Sources */,
 				E86330602247AC1B00A8E946 /* QuoJob.swift in Sources */,
@@ -1649,6 +1654,7 @@
 				E853A5A02333ACED00689F62 /* ToggleButton.swift in Sources */,
 				E853A5A12333ACED00689F62 /* CalendarGridView.swift in Sources */,
 				E853A5A22333ACED00689F62 /* CalendarWeek.swift in Sources */,
+				E867E0F7233A62D5007F7A3B /* StarView.swift in Sources */,
 				E853A5A32333ACED00689F62 /* NumberField.swift in Sources */,
 				E853A5A42333ACED00689F62 /* CalendarDay.swift in Sources */,
 				E853A5A52333ACED00689F62 /* QuoJob.swift in Sources */,
