@@ -375,6 +375,10 @@ extension AppDelegate: NSApplicationDelegate {
 		userDefaults.set(false, forKey: UserDefaults.Keys.crashOnSync)
 	}
 
+	func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+		return true
+	}
+
 	//	@IBAction func saveAction(_ sender: AnyObject?) {
 	//		// Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
 	//		let context = persistentContainer.viewContext
