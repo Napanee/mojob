@@ -42,9 +42,7 @@ extension NSNib.Name {
 
 extension NSImage.Name {
 	static let checkedImage = "checked"
-	static let deleteImage = "delete"
 	static let loginImage = "login"
-	static let playImage = "play"
 	static let reloadImage = "reload"
 	static let settingsActiveImage = "settings-active"
 	static let settingsImage = "settings"
@@ -52,7 +50,6 @@ extension NSImage.Name {
 	static let calendarImage = "calendar"
 	static let statisticsActiveImage = "statistics-active"
 	static let statisticsImage = "statistics"
-	static let stopImage = "stop"
 	static let syncErrorImage = "sync-error"
 	static let syncPendingImage = "sync-pending"
 	static let syncSuccessImage = "sync-success"

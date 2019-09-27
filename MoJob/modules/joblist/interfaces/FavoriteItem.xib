@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,12 +29,13 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-LA-Kym">
+                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-LA-Kym" customClass="DeleteButton" customModule="MoJob" customModuleProvider="target">
                     <rect key="frame" x="334" y="3" width="20" height="20"/>
                     <constraints>
+                        <constraint firstAttribute="height" constant="20" id="BPn-LU-gKP"/>
                         <constraint firstAttribute="width" constant="20" id="WAv-ZJ-10A"/>
                     </constraints>
-                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" image="delete" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KOa-SP-aTw">
+                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KOa-SP-aTw">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -41,12 +43,13 @@
                         <action selector="deleteButton:" target="-2" id="k5c-2P-a5L"/>
                     </connections>
                 </button>
-                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cs7-FA-gmg">
+                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cs7-FA-gmg" customClass="PlayButton" customModule="MoJob" customModuleProvider="target">
                     <rect key="frame" x="359" y="3" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="plO-4W-y6a"/>
+                        <constraint firstAttribute="height" constant="20" id="va4-fb-yT1"/>
                     </constraints>
-                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" image="play" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="TU1-ae-Tq1">
+                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="TU1-ae-Tq1">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -67,8 +70,4 @@
             <point key="canvasLocation" x="262.5" y="269.5"/>
         </customView>
     </objects>
-    <resources>
-        <image name="delete" width="20" height="20"/>
-        <image name="play" width="20" height="20"/>
-    </resources>
 </document>
