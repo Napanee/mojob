@@ -10,12 +10,19 @@ import Cocoa
 
 class PlayButton: NSButton {
 
+	let colorForegroundDefault = NSColor.controlTextColor
+
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
 
-		let circlePath = NSBezierPath(ovalIn: NSRect(x: 0.25, y: 0.25, width: 19.5, height: 19.5))
-		NSColor.black.setStroke()
+		colorForegroundDefault.setStroke()
+
+		var circlePath = NSBezierPath(ovalIn: NSRect(x: 0.25, y: 0.25, width: 19.5, height: 19.5))
 		circlePath.lineWidth = 0.5
+		if (isHighlighted) {
+			circlePath = NSBezierPath(ovalIn: NSRect(x: 0.5, y: 0.5, width: 19, height: 19))
+			circlePath.lineWidth = 1.0
+		}
 		circlePath.stroke()
 
 		let playPath = NSBezierPath()
@@ -23,8 +30,10 @@ class PlayButton: NSButton {
 		playPath.line(to: NSPoint(x: 7.25, y: 6))
 		playPath.line(to: NSPoint(x: 7.25, y: 14))
 		playPath.close()
-		NSColor.black.setStroke()
 		playPath.lineWidth = 0.5
+		if (isHighlighted) {
+			playPath.lineWidth = 1.0
+		}
 		playPath.lineJoinStyle = .round
 		playPath.stroke()
 	}

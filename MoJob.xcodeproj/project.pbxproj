@@ -193,6 +193,16 @@
 		E867E107233B8BDD007F7A3B /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E867E105233B8BDD007F7A3B /* BaseButton.swift */; };
 		E86A741A2305E75F00C77866 /* MoJob-3.2.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E86A74192305E75F00C77866 /* MoJob-3.2.0.html */; };
 		E86A741C2305E99500C77866 /* MoJob-3.2.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E86A741B2305E99500C77866 /* MoJob-3.2.1.html */; };
+		E86C65222342932800459634 /* SingleRightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C65212342932800459634 /* SingleRightButton.swift */; };
+		E86C65232342932800459634 /* SingleRightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C65212342932800459634 /* SingleRightButton.swift */; };
+		E86C65252342934800459634 /* SingleLeftButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C65242342934800459634 /* SingleLeftButton.swift */; };
+		E86C65262342934800459634 /* SingleLeftButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C65242342934800459634 /* SingleLeftButton.swift */; };
+		E86C65282342937000459634 /* DoubleRightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C65272342937000459634 /* DoubleRightButton.swift */; };
+		E86C65292342937000459634 /* DoubleRightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C65272342937000459634 /* DoubleRightButton.swift */; };
+		E86C652B234293E100459634 /* DoubleLeftButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C652A234293E100459634 /* DoubleLeftButton.swift */; };
+		E86C652C234293E100459634 /* DoubleLeftButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C652A234293E100459634 /* DoubleLeftButton.swift */; };
+		E86C652E23429E7200459634 /* TodayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C652D23429E7200459634 /* TodayButton.swift */; };
+		E86C652F23429E7200459634 /* TodayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86C652D23429E7200459634 /* TodayButton.swift */; };
 		E8716BE8230490C600AF5BC0 /* MoJob-3.1.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */; };
 		E8716BEA2304ADC600AF5BC0 /* MoJob-3.1.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8716BE92304ADC600AF5BC0 /* MoJob-3.1.1.html */; };
 		E8731AE5225952B1006947B0 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8731AE4225952B1006947B0 /* constants.swift */; };
@@ -385,6 +395,11 @@
 		E867E105233B8BDD007F7A3B /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		E86A74192305E75F00C77866 /* MoJob-3.2.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.2.0.html"; sourceTree = "<group>"; };
 		E86A741B2305E99500C77866 /* MoJob-3.2.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.2.1.html"; sourceTree = "<group>"; };
+		E86C65212342932800459634 /* SingleRightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleRightButton.swift; sourceTree = "<group>"; };
+		E86C65242342934800459634 /* SingleLeftButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLeftButton.swift; sourceTree = "<group>"; };
+		E86C65272342937000459634 /* DoubleRightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleRightButton.swift; sourceTree = "<group>"; };
+		E86C652A234293E100459634 /* DoubleLeftButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleLeftButton.swift; sourceTree = "<group>"; };
+		E86C652D23429E7200459634 /* TodayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayButton.swift; sourceTree = "<group>"; };
 		E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.1.0.html"; sourceTree = "<group>"; };
 		E8716BE92304ADC600AF5BC0 /* MoJob-3.1.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.1.1.html"; sourceTree = "<group>"; };
 		E8726A1122FCC2C500066BEE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -858,6 +873,18 @@
 			path = views;
 			sourceTree = "<group>";
 		};
+		E86C651D23424F5300459634 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				E86C65212342932800459634 /* SingleRightButton.swift */,
+				E86C65242342934800459634 /* SingleLeftButton.swift */,
+				E86C65272342937000459634 /* DoubleRightButton.swift */,
+				E86C652A234293E100459634 /* DoubleLeftButton.swift */,
+				E86C652D23429E7200459634 /* TodayButton.swift */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
 		E895D8452221BB3D00DAAA4E /* dayTrackings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1088,6 +1115,7 @@
 		E8E9508D2232D5C30070F57E /* views */ = {
 			isa = PBXGroup;
 			children = (
+				E86C651D23424F5300459634 /* icons */,
 				E8E9508E2232D62A0070F57E /* TextField.swift */,
 				E850998122F7578200068ED8 /* ComboBox.swift */,
 				E8D35A2F2300487E0014AFE4 /* GradientCircle.swift */,
@@ -1560,11 +1588,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8D35A1E22FF5B3B0014AFE4 /* CalendarController.swift in Sources */,
+				E86C652E23429E7200459634 /* TodayButton.swift in Sources */,
 				E84FCE4022FC3ED7002E41B4 /* WakeUp.swift in Sources */,
 				E867E100233B5B5B007F7A3B /* StatsButton.swift in Sources */,
 				E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */,
 				E8E9509F223526DB0070F57E /* TrackingsStackView.swift in Sources */,
 				E800AE8422F9851700E82EBE /* QuoJobSelections.swift in Sources */,
+				E86C65222342932800459634 /* SingleRightButton.swift in Sources */,
+				E86C652B234293E100459634 /* DoubleLeftButton.swift in Sources */,
 				E867E0FD233AA48E007F7A3B /* CalendarButton.swift in Sources */,
 				E82117DA220E1B7E003D7578 /* enums.swift in Sources */,
 				E8A270462210DC740030B61C /* NSBezierPath-cgPath.swift in Sources */,
@@ -1607,6 +1638,7 @@
 				E867E103233B7AE9007F7A3B /* GearButton.swift in Sources */,
 				E8E950892232C09F0070F57E /* EditorController.swift in Sources */,
 				E82117DE220E470C003D7578 /* FavoriteItem.swift in Sources */,
+				E86C65252342934800459634 /* SingleLeftButton.swift in Sources */,
 				E8A977F9231AD9FF0028CD9D /* ToggleButton.swift in Sources */,
 				E8D35A2E22FFCBFB0014AFE4 /* CalendarGridView.swift in Sources */,
 				E8D35A2C22FFA0130014AFE4 /* CalendarWeek.swift in Sources */,
@@ -1622,6 +1654,7 @@
 				E850998222F7578200068ED8 /* ComboBox.swift in Sources */,
 				E863306A2248232F00A8E946 /* Password.swift in Sources */,
 				E8FF02E5231279EF00E7686A /* ContentSplitViewController.swift in Sources */,
+				E86C65282342937000459634 /* DoubleRightButton.swift in Sources */,
 				E800AE8A22F9C42900E82EBE /* Job.swift in Sources */,
 				E8A2703A2210A7590030B61C /* CollectionItemView.swift in Sources */,
 				E82117D5220E1AF6003D7578 /* JobListController.swift in Sources */,
@@ -1652,11 +1685,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E853A5762333ACED00689F62 /* CalendarController.swift in Sources */,
+				E86C652F23429E7200459634 /* TodayButton.swift in Sources */,
 				E853A5772333ACED00689F62 /* WakeUp.swift in Sources */,
 				E867E101233B5B5B007F7A3B /* StatsButton.swift in Sources */,
 				E853A5782333ACED00689F62 /* Tracking.swift in Sources */,
 				E853A5792333ACED00689F62 /* TrackingsStackView.swift in Sources */,
 				E853A57A2333ACED00689F62 /* QuoJobSelections.swift in Sources */,
+				E86C65232342932800459634 /* SingleRightButton.swift in Sources */,
+				E86C652C234293E100459634 /* DoubleLeftButton.swift in Sources */,
 				E867E0FE233AA48E007F7A3B /* CalendarButton.swift in Sources */,
 				E853A57B2333ACED00689F62 /* enums.swift in Sources */,
 				E853A57C2333ACED00689F62 /* NSBezierPath-cgPath.swift in Sources */,
@@ -1699,6 +1735,7 @@
 				E867E104233B7AE9007F7A3B /* GearButton.swift in Sources */,
 				E853A59E2333ACED00689F62 /* EditorController.swift in Sources */,
 				E853A59F2333ACED00689F62 /* FavoriteItem.swift in Sources */,
+				E86C65262342934800459634 /* SingleLeftButton.swift in Sources */,
 				E853A5A02333ACED00689F62 /* ToggleButton.swift in Sources */,
 				E853A5A12333ACED00689F62 /* CalendarGridView.swift in Sources */,
 				E853A5A22333ACED00689F62 /* CalendarWeek.swift in Sources */,
@@ -1714,6 +1751,7 @@
 				E853A5A92333ACED00689F62 /* ComboBox.swift in Sources */,
 				E853A5AA2333ACED00689F62 /* Password.swift in Sources */,
 				E853A5AB2333ACED00689F62 /* ContentSplitViewController.swift in Sources */,
+				E86C65292342937000459634 /* DoubleRightButton.swift in Sources */,
 				E853A5AC2333ACED00689F62 /* Job.swift in Sources */,
 				E853A5AD2333ACED00689F62 /* CollectionItemView.swift in Sources */,
 				E853A5AE2333ACED00689F62 /* JobListController.swift in Sources */,

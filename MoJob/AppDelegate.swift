@@ -44,7 +44,10 @@ class AppDelegate: NSObject {
 	private var timerSleep: Date?
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
-		Fabric.with([Crashlytics.self, Answers.self])
+		#if PRODUCTION
+			Fabric.with([Crashlytics.self, Answers.self])
+		#endif
+
 		UserDefaults.standard.register(defaults: [
 			"NSInitialToolTipDelay": 1,
 			"NSApplicationCrashOnExceptions": true,

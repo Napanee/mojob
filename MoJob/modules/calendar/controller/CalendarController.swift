@@ -14,7 +14,7 @@ class CalendarController: NSViewController {
 	@IBOutlet weak var nextMonthButton: NSButton!
 	@IBOutlet weak var nextYearButton: NSButton!
 	@IBOutlet weak var currentMonth: NSTextField!
-	@IBOutlet weak var todayButton: NSButton!
+	@IBOutlet weak var todayButton: TodayButton!
 	@IBOutlet weak var jobSelect: NSComboBox!
 
 	let calendar = Calendar.current
@@ -46,11 +46,6 @@ class CalendarController: NSViewController {
 		initJobSelect()
 
 		calendarGridView.reloadData(for: calendar.dateComponents([.month, .year], from: currentDate))
-
-		todayButton.wantsLayer = true
-		todayButton.layer?.borderWidth = 1
-		todayButton.layer?.cornerRadius = 16
-		todayButton.layer?.borderColor = NSColor(red: 0.102, green: 0.102, blue: 0.102, alpha: 0.7).cgColor
 
 		let context = CoreDataHelper.mainContext
 		let notificationCenter = NotificationCenter.default
