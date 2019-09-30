@@ -17,6 +17,10 @@ class SingleRightButton: NSButton {
 
 		colorForegroundDefault.setStroke()
 
+		if (!isEnabled) {
+			colorForegroundDefault.withAlphaComponent(0.3).setStroke()
+		}
+
 		var circlePath = NSBezierPath(ovalIn: NSRect(x: 0.25, y: 0.25, width: 31.5, height: 31.5))
 		circlePath.lineWidth = 0.5
 
