@@ -131,6 +131,22 @@ class CoreDataHelper {
 		return result
 	}
 
+	static func favorites(in context: NSManagedObjectContext? = nil) -> [Favorite] {
+		var result: [Favorite] = []
+		let fetchRequest: NSFetchRequest<Favorite> = Favorite.fetchRequest()
+		fetchRequest.sortDescriptors = [
+			NSSortDescriptor(key: "order", ascending: true)
+		]
+
+		do {
+			result = try (context ?? self.mainContext).fetch(fetchRequest)
+		} catch let error {
+			print(error)
+		}
+
+		return result
+	}
+
 	static func tasks(in context: NSManagedObjectContext? = nil) -> [Task] {
 		var result: [Task] = []
 		let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
@@ -193,6 +209,47 @@ class CoreDataHelper {
 				let nserror = error as NSError
 				fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 			}
+		}
+	}
+
+}
+
+// MARK: - Favorites
+extension CoreDataHelper {
+
+	static func favorite(job: Job?, task: Task?, activity: Activity?) -> Favorite? {
+		let job = CoreDataHelper.jobs().first(where: { $0.id == job?.id })
+		let task = CoreDataHelper.tasks().first(where: { $0.id == task?.id })
+		let activity = CoreDataHelper.activities().first(where: { $0.id == activity?.id })
+		return self.favorites().first(where: { $0.job == job && $0.task == task && $0.activity == activity })
+	}
+
+	static func createFavorite(job: Job?, task: Task?, activity: Activity?) {
+		let favoritesCount = favorites().count
+		let entity = NSEntityDescription.entity(forEntityName: "Favorite", in: mainContext)
+		let favorite = NSManagedObject(entity: entity!, insertInto: mainContext)
+
+		favorite.setValue(favoritesCount, forKey: "order")
+
+		if let job = jobs().first(where: { $0.id == job?.id }) {
+			favorite.setValue(job, forKey: "job")
+		}
+
+		if let activity = activities().first(where: { $0.id == activity?.id }) {
+			favorite.setValue(activity, forKey: "activity")
+		}
+
+		if let task = CoreDataHelper.tasks().first(where: { $0.id == task?.id }) {
+			favorite.setValue(task, forKey: "task")
+		}
+
+		CoreDataHelper.save()
+	}
+
+	static func deleteFavorite(job: Job?, task: Task?, activity: Activity?) {
+		if let favorite = favorite(job: job, task: task, activity: activity) {
+			mainContext.delete(favorite)
+			save()
 		}
 	}
 
