@@ -14,18 +14,25 @@ class TrackingViewController: QuoJobSelections {
 
 	var isFavorite: Bool {
 		get {
-			guard let job = tracking?.job else { return false }
-			return job.isFavorite
+			return CoreDataHelper.favorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity) != nil
 		}
 
 		set {
-			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
+			if (!newValue && isFavorite) {
+				CoreDataHelper.deleteFavorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity)
 
-			currentJob.isFavorite = newValue
-			job.isFavorite = newValue
-			CoreDataHelper.save()
+				favoriteTracking.state = .off
+			}
 
-			favoriteTracking.state = newValue ? .on : .off
+			if (newValue && !isFavorite) {
+				let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() })
+				let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
+				let task = CoreDataHelper.tasks().first(where: { $0.title?.lowercased() == taskSelect.stringValue.lowercased() })
+
+				CoreDataHelper.createFavorite(job: job, task: task, activity: activity)
+
+				favoriteTracking.state = .on
+			}
 		}
 	}
 
@@ -60,11 +67,8 @@ class TrackingViewController: QuoJobSelections {
 			required.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
 		}
 
-		if let job = tracking?.job {
-			favoriteTracking.state = job.isFavorite ? .on : .off
-		} else {
-			favoriteTracking.isHidden = true
-		}
+		favoriteTracking.state = isFavorite ? .on : .off
+		favoriteTracking.isHidden = tracking?.job == nil
 
 		nfc = false
 
@@ -125,12 +129,8 @@ class TrackingViewController: QuoJobSelections {
 	override func jobSelect(_ sender: NSComboBox) {
 		super.jobSelect(sender)
 
-		if let job = tracking?.job {
-			favoriteTracking.isHidden = false
-			favoriteTracking.state = job.isFavorite ? .on : .off
-		} else {
-			favoriteTracking.isHidden = true
-		}
+		favoriteTracking.state = isFavorite ? .on : .off
+		favoriteTracking.isHidden = tracking?.job == nil
 	}
 
 	// MARK: - Observer
@@ -138,9 +138,17 @@ class TrackingViewController: QuoJobSelections {
 	@objc func managedObjectContextDidSave(notification: NSNotification) {
 		guard let userInfo = notification.userInfo else { return }
 
-		if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
-			if let job = updates.first as? Job, job.id == tracking?.job?.id {
-				favoriteTracking.state = job.isFavorite ? .on : .off
+		if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+			if let _ = inserts.first as? Favorite {
+				favoriteTracking.state = isFavorite ? .on : .off
+				favoriteTracking.isHidden = tracking?.job == nil
+			}
+		}
+
+		if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
+			if let _ = deletes.first as? Favorite {
+				favoriteTracking.state = isFavorite ? .on : .off
+				favoriteTracking.isHidden = tracking?.job == nil
 			}
 		}
 	}
