@@ -49,6 +49,7 @@ class ComboBox: NSComboBox {
 	}
 
 	private func commonInit() {
+		drawsBackground = false
 		isBordered = false
 		isButtonBordered = false
 		focusRingType = .none
