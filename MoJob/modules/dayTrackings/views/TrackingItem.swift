@@ -163,7 +163,7 @@ class TrackingItem: NSView {
 		if (tracking?.job == nil) {
 			toggleFavoriteItem.action = nil
 		}
-		if let job = tracking?.job, job.isFavorite {
+		if let _ = CoreDataHelper.favorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity) {
 			toggleFavoriteItem.title = "von Favoriten entfernen"
 		}
 		rightClickMenu.addItem(toggleFavoriteItem)
@@ -259,10 +259,15 @@ class TrackingItem: NSView {
 	}
 
 	@objc func onContextToggleFavorite() {
-		guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
-		job.isFavorite = !job.isFavorite
+		let favorite = CoreDataHelper.favorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity)
 
-		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "favorite", "Status": job.isFavorite])
+		if (favorite == nil) {
+			CoreDataHelper.createFavorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity)
+		} else {
+			CoreDataHelper.deleteFavorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity)
+		}
+
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "favorite", "Status": !(favorite == nil)])
 
 		CoreDataHelper.save()
 	}
