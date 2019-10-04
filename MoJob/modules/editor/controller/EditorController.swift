@@ -25,8 +25,7 @@ class EditorController: QuoJobSelections {
 			return activity != nil && jobSelect.stringValue.count > 0 || activity?.nfc ?? false
 		}
 		set {
-			let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
-			saveButton.isEnabled = newValue && (tracking != nil ? super.formIsValid : (activity != nil && jobSelect.stringValue.count > 0 || activity?.nfc ?? false))
+			saveButton.isEnabled = newValue && (tracking != nil ? super.formIsValid : formIsValid)
 		}
 	}
 
