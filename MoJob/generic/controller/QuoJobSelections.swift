@@ -132,14 +132,13 @@ class QuoJobSelections: NSViewController {
 	}
 
 	func initCommentText() {
-		comment.delegate = self
-
 		guard let commentText = tracking?.comment else {
-			comment.stringValue = ""
+			comment?.stringValue = ""
 			return
 		}
 
-		comment.stringValue = commentText
+		comment?.delegate = self
+		comment?.stringValue = commentText
 	}
 
 	func initStartDate() {
