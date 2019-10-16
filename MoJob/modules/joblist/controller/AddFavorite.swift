@@ -9,51 +9,49 @@
 import Cocoa
 
 
-class AddFavorite: NSViewController {
+class AddFavorite: QuoJobSelections {
 
-	@IBOutlet weak var jobSelect: NSPopUpButton!
+	override var formIsValid: Bool {
+		get {
+			let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() })
+			let task = CoreDataHelper.tasks().first(where: { $0.title?.lowercased() == taskSelect.stringValue.lowercased() })
+			let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
+			let isFavorite = CoreDataHelper.favorite(job: job, task: task, activity: activity) != nil
+
+			if (job == nil) {
+				errorLabel.stringValue = "Du musst mindestens einen Job auswählen."
+				errorLabel.isHidden = false
+			} else if (isFavorite) {
+				errorLabel.stringValue = "Es gibt schon einen Favoriten mit deiner Auswahl."
+				errorLabel.isHidden = false
+			} else {
+				errorLabel.isHidden = true
+			}
+
+			return errorLabel.isHidden
+		}
+		set {
+			saveButton.isEnabled = newValue && formIsValid
+		}
+	}
+
+	@IBOutlet weak var errorLabel: NSTextField!
 	@IBOutlet weak var saveButton: NSButton!
-
-	var delegate: AddFavoriteDelegate!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		jobSelect.removeAllItems()
-
-		let jobTitles = CoreDataHelper.jobs()
-			.filter({ $0.number != nil && $0.title != nil })
-			.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
-			.map({ "\($0.number!) - \($0.title!)" })
-
-		if (jobTitles.count > 0) {
-			jobSelect.addItem(withTitle: "Job wählen")
-			jobSelect.addItems(withTitles: jobTitles)
-		}
-	}
-
-	@IBAction func jobSelect(_ sender: NSPopUpButton) {
-		let title = sender.titleOfSelectedItem
-
-		guard let _ = CoreDataHelper.jobs().first(where: { "\($0.number!) - \($0.title!)" == title }) else {
-			saveButton.isEnabled = false
-			return
-		}
-
-		saveButton.isEnabled = true
+		initEditor()
 	}
 
 	@IBAction func save(_ sender: NSButton) {
-		let title = jobSelect.titleOfSelectedItem
+		let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() })
+		let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
+		let task = CoreDataHelper.tasks().first(where: { $0.title?.lowercased() == taskSelect.stringValue.lowercased() })
 
-		if let job = CoreDataHelper.jobs().first(where: { "\($0.number!) - \($0.title!)" == title }) {
-			job.isFavorite = true
-			CoreDataHelper.save()
+		CoreDataHelper.createFavorite(job: job, task: task, activity: activity)
 
-			delegate.onDismiss()
-
-			dismiss(self)
-		}
+		dismiss(self)
 	}
 
 }
