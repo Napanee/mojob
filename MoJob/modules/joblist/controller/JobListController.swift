@@ -17,10 +17,6 @@ protocol JobItemDelegate {
 	func onSelectJob()
 }
 
-protocol FavoritesItemDelegate {
-	func onDeleteFavorite()
-}
-
 protocol AddFavoriteDelegate {
 	func onDismiss()
 }
@@ -42,7 +38,11 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 			return CoreDataHelper.jobs()
 		}
 	}
-	var favorites: [Job] = []
+	var favorites: [Favorite] {
+		get {
+			return CoreDataHelper.favorites()
+		}
+	}
 	var jobsFiltered: [Job] = []
 	var jobListSelectedIndex: Int?
 	var currentItem: JobItem? = nil
@@ -66,7 +66,6 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		jobsCollectionView.isHidden = true
 		filterField.customDelegate = self
 
-		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
 		if (jobs.count == 0) {
 			favoritesView.isHidden = true
 		}
@@ -158,8 +157,6 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func onDismiss() {
-		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
-
 		DispatchQueue.main.async {
 			self.favoritesCollectionView.reloadData()
 
@@ -170,8 +167,6 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	func reloadFavorites() {
-		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
-
 		favoritesCollectionView.reloadData()
 
 		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
@@ -199,14 +194,13 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		let padding = NSEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
 		let flowLayout = NSCollectionViewFlowLayout()
 		flowLayout.sectionInset = padding
-		flowLayout.minimumLineSpacing = 0
+		flowLayout.minimumLineSpacing = 3
 
 		collectionView.collectionViewLayout = flowLayout
 	}
 
 	@IBAction func addFavorit(_ sender: NSButton) {
 		let addFavoriteVC = AddFavorite(nibName: .addFavoriteNib, bundle: nil)
-		addFavoriteVC.delegate = self
 
 		let appDelegate = (NSApp.delegate as! AppDelegate)
 		appDelegate.window.contentViewController?.presentAsSheet(addFavoriteVC)
@@ -315,7 +309,7 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 			return NSSize(width: collectionView.frame.size.width, height: 30)
 		}
 
-		return NSSize(width: collectionView.frame.size.width, height: 30)
+		return NSSize(width: collectionView.frame.size.width, height: 45)
 	}
 
 	func collectionView(_ collectionView: NSCollectionView, canDragItemsAt indexPaths: Set<IndexPath>, with event: NSEvent) -> Bool {
@@ -378,14 +372,14 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 
 		draggingItem = nil
 
-		let itemCount = collectionView.numberOfItems(inSection: 0)
-		for i in 0..<itemCount {
-			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
-				item.job.favoriteOrder = Int16(i)
-			}
-		}
-
-		CoreDataHelper.save()
+//		let itemCount = collectionView.numberOfItems(inSection: 0)
+//		for i in 0..<itemCount {
+//			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
+//				item.job.favoriteOrder = Int16(i)
+//			}
+//		}
+//
+//		CoreDataHelper.save()
 
 		return true
 	}
@@ -415,7 +409,7 @@ extension JobListController: JobItemDelegate {
 
 }
 
-extension JobListController: NSCollectionViewDataSource, FavoritesItemDelegate {
+extension JobListController: NSCollectionViewDataSource {
 
 	func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
 		if (collectionView == jobsCollectionView) {
@@ -443,24 +437,10 @@ extension JobListController: NSCollectionViewDataSource, FavoritesItemDelegate {
 
 		guard let collectionViewItem = item as? FavoriteItem else {return item}
 
-		let job = favorites[indexPath.item]
-		collectionViewItem.job = job
-		collectionViewItem.delegate = self
-		collectionViewItem.textField?.stringValue = "\(job.number!) - \(job.title!)"
+		let favorite = favorites[indexPath.item]
+		collectionViewItem.favorite = favorite
 
 		return collectionViewItem
-	}
-
-	func onDeleteFavorite() {
-		favorites = jobs.filter({ $0.isFavorite }).sorted(by: { $0.favoriteOrder < $1.favoriteOrder })
-
-		DispatchQueue.main.async {
-			self.favoritesCollectionView.reloadData()
-
-			if let heightFavoritesCollection = self.favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
-				self.favoritesCollectionHeight.constant = heightFavoritesCollection
-			}
-		}
 	}
 
 }

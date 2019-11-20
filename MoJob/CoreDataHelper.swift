@@ -248,9 +248,13 @@ extension CoreDataHelper {
 
 	static func deleteFavorite(job: Job?, task: Task?, activity: Activity?) {
 		if let favorite = favorite(job: job, task: task, activity: activity) {
-			mainContext.delete(favorite)
-			save()
+			deleteFavorite(favorite: favorite)
 		}
+	}
+
+	static func deleteFavorite(favorite: Favorite) {
+		mainContext.delete(favorite)
+		save()
 	}
 
 }

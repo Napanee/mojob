@@ -47,6 +47,8 @@
 		E8211800220F5364003D7578 /* JobItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82117FF220F5364003D7578 /* JobItem.swift */; };
 		E8211802220F5384003D7578 /* JobItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8211801220F5384003D7578 /* JobItem.xib */; };
 		E8211804220F5991003D7578 /* FilterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8211803220F5991003D7578 /* FilterField.swift */; };
+		E829D633235706E300917159 /* FavoriteHeadlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E829D632235706E300917159 /* FavoriteHeadlineView.swift */; };
+		E829D634235706E300917159 /* FavoriteHeadlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E829D632235706E300917159 /* FavoriteHeadlineView.swift */; };
 		E82A7036231F148800884390 /* MoJob-3.5.3.html in Resources */ = {isa = PBXBuildFile; fileRef = E82A7035231F148800884390 /* MoJob-3.5.3.html */; };
 		E82A7038231FBCE000884390 /* MoJob-3.6.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E82A7037231FBCE000884390 /* MoJob-3.6.0.html */; };
 		E82A703A23205D7400884390 /* MoJob-3.6.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E82A703923205D7400884390 /* MoJob-3.6.1.html */; };
@@ -360,6 +362,7 @@
 		E82117FF220F5364003D7578 /* JobItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobItem.swift; sourceTree = "<group>"; };
 		E8211801220F5384003D7578 /* JobItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JobItem.xib; sourceTree = "<group>"; };
 		E8211803220F5991003D7578 /* FilterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterField.swift; sourceTree = "<group>"; };
+		E829D632235706E300917159 /* FavoriteHeadlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHeadlineView.swift; sourceTree = "<group>"; };
 		E82A7035231F148800884390 /* MoJob-3.5.3.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.5.3.html"; sourceTree = "<group>"; };
 		E82A7037231FBCE000884390 /* MoJob-3.6.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.6.0.html"; sourceTree = "<group>"; };
 		E82A703923205D7400884390 /* MoJob-3.6.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.6.1.html"; sourceTree = "<group>"; };
@@ -400,6 +403,7 @@
 		E86C65272342937000459634 /* DoubleRightButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleRightButton.swift; sourceTree = "<group>"; };
 		E86C652A234293E100459634 /* DoubleLeftButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleLeftButton.swift; sourceTree = "<group>"; };
 		E86C652D23429E7200459634 /* TodayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayButton.swift; sourceTree = "<group>"; };
+		E86C65302342A99E00459634 /* MoJob_004.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MoJob_004.xcdatamodel; sourceTree = "<group>"; };
 		E8716BE7230490C600AF5BC0 /* MoJob-3.1.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.1.0.html"; sourceTree = "<group>"; };
 		E8716BE92304ADC600AF5BC0 /* MoJob-3.1.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.1.1.html"; sourceTree = "<group>"; };
 		E8726A1122FCC2C500066BEE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -936,6 +940,7 @@
 				E8A270392210A7590030B61C /* CollectionItemView.swift */,
 				E897591D233E08E2000572A6 /* PlayButton.swift */,
 				E8975920233E0C7F000572A6 /* DeleteButton.swift */,
+				E829D632235706E300917159 /* FavoriteHeadlineView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1019,8 +1024,8 @@
 			isa = PBXGroup;
 			children = (
 				E8B58A3A232FCB6900DBCE44 /* Model_MoJob_001_002.xcmappingmodel */,
-				E8B58A3C232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel */,
 				E8B58A3E232FCFA600DBCE44 /* Model_MoJob_001_003.xcmappingmodel */,
+				E8B58A3C232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel */,
 				E80F6F4E23055EBD007A642E /* DeleteTaskPolicy.swift */,
 				E8D35A1122FF54C50014AFE4 /* DeleteTrackingPolicy.swift */,
 			);
@@ -1612,6 +1617,7 @@
 				E8A926CE2307709E004E0F04 /* MoJob.xcdatamodeld in Sources */,
 				E8731AE5225952B1006947B0 /* constants.swift in Sources */,
 				E867E106233B8BDD007F7A3B /* BaseButton.swift in Sources */,
+				E829D633235706E300917159 /* FavoriteHeadlineView.swift in Sources */,
 				E8A2703F2210BACF0030B61C /* TrackingViewController.swift in Sources */,
 				E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */,
 				E800AE8622F9B68200E82EBE /* CoreDataHelper.swift in Sources */,
@@ -1709,6 +1715,7 @@
 				E853A5862333ACED00689F62 /* MoJob.xcdatamodeld in Sources */,
 				E853A5872333ACED00689F62 /* constants.swift in Sources */,
 				E867E107233B8BDD007F7A3B /* BaseButton.swift in Sources */,
+				E829D634235706E300917159 /* FavoriteHeadlineView.swift in Sources */,
 				E853A5882333ACED00689F62 /* TrackingViewController.swift in Sources */,
 				E853A5892333ACED00689F62 /* AddFavorite.swift in Sources */,
 				E853A58A2333ACED00689F62 /* CoreDataHelper.swift in Sources */,
@@ -2230,11 +2237,12 @@
 		E8A926CA2307709E004E0F04 /* MoJob.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E86C65302342A99E00459634 /* MoJob_004.xcdatamodel */,
 				E8A926CB2307709E004E0F04 /* MoJob.xcdatamodel */,
 				E8A926CC2307709E004E0F04 /* MoJob_002.xcdatamodel */,
 				E8A926CD2307709E004E0F04 /* MoJob_003.xcdatamodel */,
 			);
-			currentVersion = E8A926CD2307709E004E0F04 /* MoJob_003.xcdatamodel */;
+			currentVersion = E86C65302342A99E00459634 /* MoJob_004.xcdatamodel */;
 			path = MoJob.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

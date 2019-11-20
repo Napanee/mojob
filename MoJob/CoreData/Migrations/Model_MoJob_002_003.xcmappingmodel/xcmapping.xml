@@ -118,14 +118,14 @@
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z128"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z118">
-        <attribute name="migrationpolicyclassname" type="string">MoJob.DeleteTaskPolicy</attribute>
+        <attribute name="migrationpolicyclassname" type="string"></attribute>
         <attribute name="sourcename" type="string">Type</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">1</attribute>
         <attribute name="destinationname" type="string">Type</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z124"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z149 z150 z148 z116 z143 z142"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z116 z142 z148 z149 z143 z150"></relationship>
         <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z129"></relationship>
     </object>
     <object type="XDDEVATTRIBUTEMAPPING" id="z119">
@@ -173,14 +173,15 @@ cBIAAYagrxEE8gAHAAgAFwAzADQANQBFAEYARwBIAEkASgBlAGYAZwBtAG4AegCQAJEAkgCTAJQAlQCW
         <relationship name="entitymapping" type="1/1" destination="XDDEVENTITYMAPPING" idrefs="z146"></relationship>
     </object>
     <object type="XDDEVENTITYMAPPING" id="z128">
+        <attribute name="migrationpolicyclassname" type="string">MoJob.DeleteTaskPolicy</attribute>
         <attribute name="sourcename" type="string">Task</attribute>
         <attribute name="mappingtypename" type="string">Undefined</attribute>
         <attribute name="mappingnumber" type="int16">3</attribute>
         <attribute name="destinationname" type="string">Task</attribute>
         <attribute name="autogenerateexpression" type="bool">1</attribute>
         <relationship name="mappingmodel" type="1/1" destination="XDDEVMAPPINGMODEL" idrefs="z124"></relationship>
-        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z115 z134 z123 z126 z107 z103"></relationship>
-        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z147 z135 z117"></relationship>
+        <relationship name="attributemappings" type="0/0" destination="XDDEVATTRIBUTEMAPPING" idrefs="z123 z103 z107 z126 z134 z115"></relationship>
+        <relationship name="relationshipmappings" type="0/0" destination="XDDEVRELATIONSHIPMAPPING" idrefs="z117 z147 z135"></relationship>
     </object>
     <object type="XDDEVRELATIONSHIPMAPPING" id="z129">
         <attribute name="autogenerateexpression" type="bool">1</attribute>

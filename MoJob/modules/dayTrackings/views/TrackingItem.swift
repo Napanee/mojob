@@ -231,7 +231,7 @@ class TrackingItem: NSView {
 
 		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
 
-		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "restart"])
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "tracking", "Action": "restart"])
 	}
 
 	@objc func onContextEdit() {
@@ -254,26 +254,24 @@ class TrackingItem: NSView {
 
 			editor.tracking = tracking
 
-			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "edit"])
+			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "tracking", "Action": "edit on context"])
 		}
 	}
 
 	@objc func onContextToggleFavorite() {
-		let favorite = CoreDataHelper.favorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity)
-
-		if (favorite == nil) {
-			CoreDataHelper.createFavorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity)
+		if let favorite = CoreDataHelper.favorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity) {
+			CoreDataHelper.deleteFavorite(favorite: favorite)
+			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "favorite", "Action": "delete"])
 		} else {
-			CoreDataHelper.deleteFavorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity)
+			CoreDataHelper.createFavorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity)
+			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "favorite", "Action": "create"])
 		}
-
-		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "favorite", "Status": !(favorite == nil)])
 
 		CoreDataHelper.save()
 	}
 
 	@objc func onContextDelete() {
-		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "delete"])
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "tracking", "Action": "delete"])
 
 		tracking?.delete()
 	}
@@ -292,7 +290,7 @@ class TrackingItem: NSView {
 
 		CoreDataHelper.save()
 
-		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "resetColor"])
+		Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "color", "Action": "reset"])
 	}
 
 	override func mouseDown(with event: NSEvent) {
@@ -316,7 +314,7 @@ class TrackingItem: NSView {
 
 			editor.tracking = tracking
 
-			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "edit"])
+			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "tracking", "Action": "edit with double click"])
 		}
 	}
 
@@ -325,7 +323,7 @@ class TrackingItem: NSView {
 			guard let currentJob = tracking?.job, let job = CoreDataHelper.mainContext.object(with: currentJob.objectID) as? Job else { return }
 			job.color = button.key
 
-			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Action": "setColor"])
+			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "color", "Action": "change"])
 
 			CoreDataHelper.save()
 			rightClickMenu.cancelTracking()

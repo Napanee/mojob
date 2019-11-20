@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FavoriteItem" customModule="MoJob" customModuleProvider="target">
             <connections>
                 <outlet property="deleteButton" destination="6pU-LA-Kym" id="g4w-8j-rda"/>
+                <outlet property="headlineLabel" destination="tn4-s9-zuX" id="cNW-7K-0jo"/>
+                <outlet property="headlineView" destination="JeE-d4-kEW" id="8Pl-Lr-gxD"/>
                 <outlet property="startButton" destination="cs7-FA-gmg" id="aDR-HB-PHl"/>
+                <outlet property="sublineLabel" destination="tRM-YS-rY5" id="xhD-S1-PRm"/>
                 <outlet property="textField" destination="tn4-s9-zuX" id="da4-QO-jd8"/>
                 <outlet property="view" destination="mHd-3v-Od6" id="z5v-Dt-SRg"/>
             </connections>
@@ -18,56 +21,100 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <collectionViewItem id="SRZ-ps-BTj" customClass="FavoriteItem" customModule="MoJob" customModuleProvider="target"/>
         <customView id="mHd-3v-Od6">
-            <rect key="frame" x="0.0" y="0.0" width="409" height="25"/>
+            <rect key="frame" x="0.0" y="0.0" width="424" height="45"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-s9-zuX">
-                    <rect key="frame" x="28" y="3" width="298" height="19"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="qvk-z9-Bqi">
-                        <font key="font" metaFont="systemThin" size="16"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-LA-Kym" customClass="DeleteButton" customModule="MoJob" customModuleProvider="target">
-                    <rect key="frame" x="334" y="3" width="20" height="20"/>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3QV-SD-XkF">
+                    <rect key="frame" x="0.0" y="5" width="394" height="35"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="JeE-d4-kEW" customClass="FavoriteHeadlineView" customModule="MoJob" customModuleProvider="target">
+                            <rect key="frame" x="12" y="15" width="382" height="20"/>
+                            <subviews>
+                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-s9-zuX">
+                                    <rect key="frame" x="16" y="1" width="313" height="19"/>
+                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="qvk-z9-Bqi">
+                                        <font key="font" metaFont="systemThin" size="16"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-LA-Kym" customClass="DeleteButton" customModule="MoJob" customModuleProvider="target">
+                                    <rect key="frame" x="337" y="0.0" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="BPn-LU-gKP"/>
+                                        <constraint firstAttribute="width" constant="20" id="WAv-ZJ-10A"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KOa-SP-aTw">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="deleteButton:" target="-2" id="k5c-2P-a5L"/>
+                                    </connections>
+                                </button>
+                                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cs7-FA-gmg" customClass="PlayButton" customModule="MoJob" customModuleProvider="target">
+                                    <rect key="frame" x="362" y="0.0" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="20" id="plO-4W-y6a"/>
+                                        <constraint firstAttribute="height" constant="20" id="va4-fb-yT1"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="TU1-ae-Tq1">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="startButton:" target="-2" id="f0u-Ne-2X5"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="6pU-LA-Kym" firstAttribute="leading" secondItem="tn4-s9-zuX" secondAttribute="trailing" constant="10" id="2ng-jH-Ncj"/>
+                                <constraint firstItem="tn4-s9-zuX" firstAttribute="centerY" secondItem="JeE-d4-kEW" secondAttribute="centerY" id="GAf-oK-oT8"/>
+                                <constraint firstItem="cs7-FA-gmg" firstAttribute="leading" secondItem="6pU-LA-Kym" secondAttribute="trailing" constant="5" id="OSW-Mz-dLc"/>
+                                <constraint firstAttribute="trailing" secondItem="cs7-FA-gmg" secondAttribute="trailing" id="QO5-hT-j2x"/>
+                                <constraint firstItem="6pU-LA-Kym" firstAttribute="centerY" secondItem="tn4-s9-zuX" secondAttribute="centerY" id="XbV-hq-Czm"/>
+                                <constraint firstAttribute="bottom" secondItem="cs7-FA-gmg" secondAttribute="bottom" id="bo3-gh-DCK"/>
+                                <constraint firstItem="cs7-FA-gmg" firstAttribute="centerY" secondItem="tn4-s9-zuX" secondAttribute="centerY" id="cTD-X7-W5R"/>
+                                <constraint firstItem="tn4-s9-zuX" firstAttribute="leading" secondItem="JeE-d4-kEW" secondAttribute="leading" constant="18" id="vjq-Qj-gef"/>
+                                <constraint firstItem="cs7-FA-gmg" firstAttribute="top" secondItem="JeE-d4-kEW" secondAttribute="top" id="wdU-Y2-baG"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                    <color key="value" red="1" green="0.91764706370000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </customView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tRM-YS-rY5">
+                            <rect key="frame" x="28" y="0.0" width="35" height="15"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="qbE-TB-bB3">
+                                <font key="font" metaFont="systemThin" size="12"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="20" id="BPn-LU-gKP"/>
-                        <constraint firstAttribute="width" constant="20" id="WAv-ZJ-10A"/>
+                        <constraint firstAttribute="trailing" secondItem="JeE-d4-kEW" secondAttribute="trailing" id="Jok-Dt-MnZ"/>
+                        <constraint firstItem="tRM-YS-rY5" firstAttribute="leading" secondItem="3QV-SD-XkF" secondAttribute="leading" constant="30" id="QYB-Ro-G2m"/>
+                        <constraint firstItem="JeE-d4-kEW" firstAttribute="leading" secondItem="3QV-SD-XkF" secondAttribute="leading" constant="12" id="dhh-UX-1iC"/>
                     </constraints>
-                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="KOa-SP-aTw">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="deleteButton:" target="-2" id="k5c-2P-a5L"/>
-                    </connections>
-                </button>
-                <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cs7-FA-gmg" customClass="PlayButton" customModule="MoJob" customModuleProvider="target">
-                    <rect key="frame" x="359" y="3" width="20" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="20" id="plO-4W-y6a"/>
-                        <constraint firstAttribute="height" constant="20" id="va4-fb-yT1"/>
-                    </constraints>
-                    <buttonCell key="cell" type="bevel" title="Button" bezelStyle="rounded" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="TU1-ae-Tq1">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="startButton:" target="-2" id="f0u-Ne-2X5"/>
-                    </connections>
-                </button>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="cs7-FA-gmg" firstAttribute="leading" secondItem="6pU-LA-Kym" secondAttribute="trailing" constant="5" id="Hhl-KX-ixM"/>
-                <constraint firstItem="tn4-s9-zuX" firstAttribute="leading" secondItem="mHd-3v-Od6" secondAttribute="leading" constant="30" id="Hv6-Ie-Jxt"/>
-                <constraint firstItem="6pU-LA-Kym" firstAttribute="centerY" secondItem="tn4-s9-zuX" secondAttribute="centerY" id="bU0-fW-fLd"/>
-                <constraint firstAttribute="trailing" secondItem="cs7-FA-gmg" secondAttribute="trailing" constant="30" id="czJ-Z1-z9B"/>
-                <constraint firstItem="6pU-LA-Kym" firstAttribute="leading" secondItem="tn4-s9-zuX" secondAttribute="trailing" constant="10" id="e16-Kv-xAu"/>
-                <constraint firstItem="tn4-s9-zuX" firstAttribute="centerY" secondItem="mHd-3v-Od6" secondAttribute="centerY" id="hp5-pq-jzj"/>
-                <constraint firstItem="cs7-FA-gmg" firstAttribute="centerY" secondItem="tn4-s9-zuX" secondAttribute="centerY" id="yVr-a0-H9L"/>
+                <constraint firstItem="3QV-SD-XkF" firstAttribute="leading" secondItem="mHd-3v-Od6" secondAttribute="leading" id="1cr-rn-980"/>
+                <constraint firstAttribute="trailing" secondItem="3QV-SD-XkF" secondAttribute="trailing" constant="30" id="NQ3-Uf-c4J"/>
+                <constraint firstAttribute="bottom" secondItem="3QV-SD-XkF" secondAttribute="bottom" constant="5" id="QEr-j7-Nya"/>
+                <constraint firstItem="3QV-SD-XkF" firstAttribute="top" secondItem="mHd-3v-Od6" secondAttribute="top" constant="5" id="xir-8F-N8L"/>
             </constraints>
-            <point key="canvasLocation" x="262.5" y="269.5"/>
+            <point key="canvasLocation" x="-11" y="108"/>
         </customView>
     </objects>
 </document>

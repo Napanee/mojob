@@ -10,31 +10,47 @@ import Cocoa
 
 class FavoriteItem: NSCollectionViewItem {
 
-	var job: Job!
+	var favorite: Favorite! {
+		didSet {
+			headlineLabel?.stringValue = "\(favorite.job?.fullTitle ?? "Kein Job")"
+
+			var sublineTexts: [String] = []
+
+			if let activityTitle = favorite.activity?.title {
+				sublineTexts.append(activityTitle)
+			}
+
+			if let taskTitle = favorite.task?.title {
+				sublineTexts.append(taskTitle)
+			}
+
+			if (sublineTexts.count > 0) {
+				sublineLabel?.stringValue = "\(sublineTexts.joined(separator: ", "))"
+			} else {
+				sublineLabel.removeFromSuperview()
+			}
+
+			headlineView.color = nil
+			if
+				let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
+				let colors = NSColorList(name: "MoJob", fromFile: path),
+				let jobColor = favorite.job?.color,
+				let color = colors.color(withKey: jobColor)
+			{
+				headlineView.color = color
+			}
+		}
+	}
 	var trackingArea: NSTrackingArea?
-	var delegate: FavoritesItemDelegate!
 	let indicatorLayer = CALayer()
 
+	@IBOutlet weak var headlineView: FavoriteHeadlineView!
+	@IBOutlet weak var headlineLabel: NSTextField!
+	@IBOutlet weak var sublineLabel: NSTextField!
 	@IBOutlet weak var deleteButton: NSButton!
 	@IBOutlet weak var startButton: NSButton!
 
 	override func viewDidLayout() {
-		view.wantsLayer = true
-		view.layer?.sublayers?.removeAll(where: { $0.isEqual(to: indicatorLayer) })
-
-		if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
-			let colors = NSColorList(name: "MoJob", fromFile: path), let jobColor = job.color,
-			let color = colors.color(withKey: jobColor) {
-
-			indicatorLayer.frame = CGRect(x: 15, y: view.frame.height / 2 - 6, width: 12, height: 12)
-			indicatorLayer.cornerRadius = 6
-			indicatorLayer.borderColor = NSColor.darkGray.cgColor
-			indicatorLayer.borderWidth = 1
-			indicatorLayer.backgroundColor = color.cgColor
-
-			view.layer?.addSublayer(indicatorLayer)
-		}
-
 		trackingArea = NSTrackingArea(
 			rect: view.bounds,
 			options: [NSTrackingArea.Options.activeAlways, NSTrackingArea.Options.mouseEnteredAndExited],
@@ -54,14 +70,7 @@ class FavoriteItem: NSCollectionViewItem {
 	}
 
 	@IBAction func deleteButton(_ sender: NSButton) {
-		if let currentTracking = CoreDataHelper.currentTracking {
-			currentTracking.job?.isFavorite = false
-		}
-
-		job.isFavorite = false
-		CoreDataHelper.save()
-
-		delegate.onDeleteFavorite()
+		CoreDataHelper.deleteFavorite(favorite: favorite)
 	}
 
 	@IBAction func startButton(_ sender: NSButton) {
@@ -93,8 +102,17 @@ class FavoriteItem: NSCollectionViewItem {
 	private func startTracking() {
 		guard let tracking = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) else { return }
 
-		let jobTrackingContext = CoreDataHelper.jobs(in: CoreDataHelper.currentTrackingContext)
-		tracking.job = jobTrackingContext.first(where: { $0.id == job.id })
+		tracking.job = CoreDataHelper
+			.jobs(in: CoreDataHelper.currentTrackingContext)
+			.first(where: { $0.id == favorite.job?.id })
+
+		if let activity = CoreDataHelper.activities(in: CoreDataHelper.currentTrackingContext).first(where: { $0.id == favorite.activity?.id }) {
+			tracking.activity = activity
+		}
+
+		if let task = CoreDataHelper.tasks(in: CoreDataHelper.currentTrackingContext).first(where: { $0.id == favorite.task?.id }) {
+			tracking.task = task
+		}
 
 		(NSApp.mainWindow?.windowController as? MainWindowController)?.mainSplitViewController?.showTracking()
 	}
