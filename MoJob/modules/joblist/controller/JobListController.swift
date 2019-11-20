@@ -372,14 +372,14 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 
 		draggingItem = nil
 
-//		let itemCount = collectionView.numberOfItems(inSection: 0)
-//		for i in 0..<itemCount {
-//			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
-//				item.job.favoriteOrder = Int16(i)
-//			}
-//		}
-//
-//		CoreDataHelper.save()
+		let itemCount = collectionView.numberOfItems(inSection: 0)
+		for i in 0..<itemCount {
+			if let item = collectionView.item(at: IndexPath(item: i, section: 0)) as? FavoriteItem {
+				item.favorite.order = Int16(i)
+			}
+		}
+
+		CoreDataHelper.save()
 
 		return true
 	}
