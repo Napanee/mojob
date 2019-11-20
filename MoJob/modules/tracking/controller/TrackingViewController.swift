@@ -44,6 +44,7 @@ class TrackingViewController: QuoJobSelections {
 	@IBOutlet weak var timeLabel: NSTextField!
 	@IBOutlet weak var stopTracking: StopButton!
 	@IBOutlet weak var favoriteTracking: NSButton!
+	@IBOutlet weak var toggleButton: ToggleButton!
 	@IBOutlet weak var required: NSView!
 	
 	var viewHeightConstraint: NSLayoutConstraint!
@@ -99,6 +100,11 @@ class TrackingViewController: QuoJobSelections {
 		})
 
 		formIsValid = true
+
+		if let duration = tracking?.duration, duration < 1.0 {
+			toggleButton.state = .on
+			toggle()
+		}
 	}
 
 	override func viewDidDisappear() {
@@ -109,11 +115,15 @@ class TrackingViewController: QuoJobSelections {
 		}
 	}
 
-	@IBAction func toggle(_ sender: NSButton) {
+	private func toggle() {
 		viewHeightConstraint.constant = viewHeightConstraint.constant == 50 ? 238 : 50
 		if let mainSplitViewController = parent as? MainSplitViewController {
 			mainSplitViewController.toggleTracking()
 		}
+	}
+
+	@IBAction func toggle(_ sender: NSButton) {
+		toggle()
 	}
 
 	@IBAction func stopTracking(_ sender: NSButton) {

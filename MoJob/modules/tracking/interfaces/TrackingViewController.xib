@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,6 +18,7 @@
                 <outlet property="stopTracking" destination="ORa-H0-Ge8" id="wdU-ne-Nhf"/>
                 <outlet property="taskSelect" destination="lds-i2-z5u" id="8y8-tV-ouN"/>
                 <outlet property="timeLabel" destination="CIB-aK-fgA" id="zWe-YJ-icb"/>
+                <outlet property="toggleButton" destination="Zjx-FH-mMv" id="1wZ-ye-5A2"/>
                 <outlet property="view" destination="Sfn-Nd-W91" id="L20-88-vak"/>
             </connections>
         </customObject>
