@@ -80,7 +80,7 @@ class QuoJobSelections: NSViewController {
 		let index = jobSelect.indexOfSelectedItem
 
 		tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
-			.filter({ $0.job?.id == tracking?.job?.id || index >= 0 && $0.job?.id == jobs[index].id })
+			.filter({ $0.job?.id != nil && ($0.job?.id == tracking?.job?.id || index >= 0 && $0.job?.id == jobs[index].id) })
 			.sorted(by: { $0.title! < $1.title! })
 
 		taskSelect.reloadData()
