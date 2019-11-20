@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,17 +21,17 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <collectionViewItem id="SRZ-ps-BTj" customClass="FavoriteItem" customModule="MoJob" customModuleProvider="target"/>
         <customView id="mHd-3v-Od6">
-            <rect key="frame" x="0.0" y="0.0" width="424" height="45"/>
+            <rect key="frame" x="0.0" y="0.0" width="424" height="75"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3QV-SD-XkF">
-                    <rect key="frame" x="0.0" y="5" width="394" height="35"/>
+                    <rect key="frame" x="0.0" y="5" width="394" height="65"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="JeE-d4-kEW" customClass="FavoriteHeadlineView" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="12" y="15" width="382" height="20"/>
+                            <rect key="frame" x="12" y="15" width="382" height="50"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tn4-s9-zuX">
-                                    <rect key="frame" x="16" y="1" width="313" height="19"/>
+                                    <rect key="frame" x="16" y="16" width="313" height="19"/>
                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="qvk-z9-Bqi">
                                         <font key="font" metaFont="systemThin" size="16"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -39,7 +39,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6pU-LA-Kym" customClass="DeleteButton" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="337" y="0.0" width="20" height="20"/>
+                                    <rect key="frame" x="337" y="15" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="BPn-LU-gKP"/>
                                         <constraint firstAttribute="width" constant="20" id="WAv-ZJ-10A"/>
@@ -53,7 +53,7 @@
                                     </connections>
                                 </button>
                                 <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cs7-FA-gmg" customClass="PlayButton" customModule="MoJob" customModuleProvider="target">
-                                    <rect key="frame" x="362" y="0.0" width="20" height="20"/>
+                                    <rect key="frame" x="362" y="15" width="20" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="20" id="plO-4W-y6a"/>
                                         <constraint firstAttribute="height" constant="20" id="va4-fb-yT1"/>
@@ -69,14 +69,13 @@
                             </subviews>
                             <constraints>
                                 <constraint firstItem="6pU-LA-Kym" firstAttribute="leading" secondItem="tn4-s9-zuX" secondAttribute="trailing" constant="10" id="2ng-jH-Ncj"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="BJC-Ki-wcp"/>
                                 <constraint firstItem="tn4-s9-zuX" firstAttribute="centerY" secondItem="JeE-d4-kEW" secondAttribute="centerY" id="GAf-oK-oT8"/>
                                 <constraint firstItem="cs7-FA-gmg" firstAttribute="leading" secondItem="6pU-LA-Kym" secondAttribute="trailing" constant="5" id="OSW-Mz-dLc"/>
                                 <constraint firstAttribute="trailing" secondItem="cs7-FA-gmg" secondAttribute="trailing" id="QO5-hT-j2x"/>
                                 <constraint firstItem="6pU-LA-Kym" firstAttribute="centerY" secondItem="tn4-s9-zuX" secondAttribute="centerY" id="XbV-hq-Czm"/>
-                                <constraint firstAttribute="bottom" secondItem="cs7-FA-gmg" secondAttribute="bottom" id="bo3-gh-DCK"/>
                                 <constraint firstItem="cs7-FA-gmg" firstAttribute="centerY" secondItem="tn4-s9-zuX" secondAttribute="centerY" id="cTD-X7-W5R"/>
                                 <constraint firstItem="tn4-s9-zuX" firstAttribute="leading" secondItem="JeE-d4-kEW" secondAttribute="leading" constant="18" id="vjq-Qj-gef"/>
-                                <constraint firstItem="cs7-FA-gmg" firstAttribute="top" secondItem="JeE-d4-kEW" secondAttribute="top" id="wdU-Y2-baG"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="color" keyPath="color">
