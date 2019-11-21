@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -51,7 +51,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="666" height="954"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YOK-4o-6wY">
-                                        <rect key="frame" x="28" y="910" width="114" height="24"/>
+                                        <rect key="frame" x="28" y="911" width="114" height="23"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Einstellungen" id="z8Z-Fm-Iw0">
                                             <font key="font" metaFont="systemThin" size="20"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -59,10 +59,10 @@
                                         </textFieldCell>
                                     </textField>
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fYu-Rx-c6S">
-                                        <rect key="frame" x="20" y="897" width="626" height="5"/>
+                                        <rect key="frame" x="20" y="898" width="626" height="5"/>
                                     </box>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F4v-ez-mFn">
-                                        <rect key="frame" x="28" y="862" width="149" height="17"/>
+                                        <rect key="frame" x="28" y="864" width="149" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Standard Leistungsart:" id="zXr-uy-lKd">
                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -70,7 +70,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Aia-UP-W2J" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                                        <rect key="frame" x="30" y="828" width="609" height="26"/>
+                                        <rect key="frame" x="30" y="831" width="609" height="25"/>
                                         <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="znC-m8-BxX">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -88,16 +88,16 @@
                                         </connections>
                                     </comboBox>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GdW-Th-2Ts">
-                                        <rect key="frame" x="28" y="785" width="56" height="17"/>
+                                        <rect key="frame" x="28" y="789" width="56" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Starten:" id="WCe-YY-6Gu">
                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avi-ie-qko">
-                                        <rect key="frame" x="30" y="755" width="606" height="20"/>
-                                        <buttonCell key="cell" type="bevel" title="Automatisch bei Systemstart öffnen" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="EV6-9z-GXW">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avi-ie-qko" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="763" width="219" height="16"/>
+                                        <buttonCell key="cell" type="bevel" title="Automatisch bei Systemstart öffnen" bezelStyle="regularSquare" imagePosition="left" inset="2" id="EV6-9z-GXW">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="systemLight" size="13"/>
                                         </buttonCell>
@@ -105,9 +105,9 @@
                                             <action selector="toggleAutoLaunch:" target="-2" id="dwn-EY-YbS"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mbt-94-YWL">
-                                        <rect key="frame" x="30" y="725" width="356" height="20"/>
-                                        <buttonCell key="cell" type="bevel" title="Daten nach Start der App automatisch synchronisieren" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="447-F9-q68">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mbt-94-YWL" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="737" width="332" height="16"/>
+                                        <buttonCell key="cell" type="bevel" title="Daten nach Start der App automatisch synchronisieren" bezelStyle="regularSquare" imagePosition="left" inset="2" id="447-F9-q68">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="systemLight" size="13"/>
                                         </buttonCell>
@@ -116,7 +116,7 @@
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gpy-Y8-smW">
-                                        <rect key="frame" x="28" y="678" width="89" height="17"/>
+                                        <rect key="frame" x="28" y="691" width="89" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Notifications:" id="p87-RU-Pip">
                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -124,7 +124,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7rz-r8-uRV">
-                                        <rect key="frame" x="28" y="649" width="34" height="17"/>
+                                        <rect key="frame" x="28" y="662" width="34" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="nach" id="HJ6-s4-tCn">
                                             <font key="font" metaFont="systemLight" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -132,7 +132,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ld3-AC-m5E" customClass="TextField" customModule="MoJob" customModuleProvider="target">
-                                        <rect key="frame" x="65" y="647" width="40" height="26"/>
+                                        <rect key="frame" x="65" y="660" width="40" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="XwG-6J-VKd"/>
                                             <constraint firstAttribute="height" constant="26" id="lP6-UK-B1b"/>
@@ -147,7 +147,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Myb-pC-Rc0">
-                                        <rect key="frame" x="108" y="649" width="502" height="17"/>
+                                        <rect key="frame" x="108" y="662" width="502" height="16"/>
                                         <textFieldCell key="cell" selectable="YES" title="Minuten Inaktivität erinnern, dass kein Tracking läuft (0 eingeben zum Deaktivieren)" id="jsa-f0-J0r">
                                             <font key="font" metaFont="systemLight" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -155,7 +155,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WWP-Rb-FJj">
-                                        <rect key="frame" x="28" y="613" width="34" height="17"/>
+                                        <rect key="frame" x="28" y="626" width="34" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="nach" id="AhZ-XW-5ha">
                                             <font key="font" metaFont="systemLight" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -163,7 +163,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="90N-kN-2ot" customClass="TextField" customModule="MoJob" customModuleProvider="target">
-                                        <rect key="frame" x="65" y="611" width="40" height="26"/>
+                                        <rect key="frame" x="65" y="624" width="40" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="26" id="Xlv-9c-C9i"/>
                                             <constraint firstAttribute="width" constant="40" id="jmN-r9-xkN"/>
@@ -178,7 +178,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hgA-X8-qTP">
-                                        <rect key="frame" x="108" y="613" width="508" height="17"/>
+                                        <rect key="frame" x="108" y="626" width="508" height="16"/>
                                         <textFieldCell key="cell" selectable="YES" title="Stunden daran erinnern, dass das Tagessoll erfüllt ist (0 eingeben zum Deaktivieren)" id="4ks-Up-jRA">
                                             <font key="font" metaFont="systemLight" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -186,16 +186,16 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="buM-BJ-JHJ">
-                                        <rect key="frame" x="28" y="564" width="60" height="17"/>
+                                        <rect key="frame" x="28" y="578" width="60" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Anzeige:" id="eTd-od-iEJ">
                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l3b-VH-d2c">
-                                        <rect key="frame" x="30" y="534" width="233" height="20"/>
-                                        <buttonCell key="cell" type="bevel" title="Trackingzeit am Appicon anzeigen" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="XGy-Cd-9tb">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l3b-VH-d2c" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="552" width="209" height="16"/>
+                                        <buttonCell key="cell" type="bevel" title="Trackingzeit am Appicon anzeigen" bezelStyle="regularSquare" imagePosition="left" inset="2" id="XGy-Cd-9tb">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="systemLight" size="13"/>
                                         </buttonCell>
@@ -204,16 +204,16 @@
                                         </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eOR-1B-uxd">
-                                        <rect key="frame" x="28" y="487" width="78" height="17"/>
+                                        <rect key="frame" x="28" y="506" width="78" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Arbeitszeit:" id="bBB-FG-Qz8">
                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="GP3-a2-ByD">
-                                        <rect key="frame" x="30" y="455" width="232" height="22"/>
-                                        <buttonCell key="cell" type="bevel" title="Ich habe eine normale 40h-Woche" bezelStyle="regularSquare" image="radio-unchecked" imagePosition="left" alignment="left" alternateImage="radio-checked" inset="2" id="ify-OH-uBD">
+                                    <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="GP3-a2-ByD" customClass="Radio" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="480" width="211" height="16"/>
+                                        <buttonCell key="cell" type="bevel" title="Ich habe eine normale 40h-Woche" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ify-OH-uBD">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="systemLight" size="13"/>
                                         </buttonCell>
@@ -221,9 +221,9 @@
                                             <action selector="radioNormalWeek:" target="-2" id="pSa-hy-AaD"/>
                                         </connections>
                                     </button>
-                                    <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="fTb-Tu-2Gk">
-                                        <rect key="frame" x="30" y="423" width="201" height="22"/>
-                                        <buttonCell key="cell" type="bevel" title="Ich habe individuelle Stunden" bezelStyle="regularSquare" image="radio-unchecked" imagePosition="left" alignment="left" alternateImage="radio-checked" inset="2" id="cj9-xQ-qbb">
+                                    <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="fTb-Tu-2Gk" customClass="Radio" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="454" width="180" height="16"/>
+                                        <buttonCell key="cell" type="bevel" title="Ich habe individuelle Stunden" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="cj9-xQ-qbb">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="systemLight" size="13"/>
                                         </buttonCell>
@@ -232,13 +232,13 @@
                                         </connections>
                                     </button>
                                     <stackView hidden="YES" distribution="fill" orientation="vertical" alignment="leading" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D4t-2m-XFg">
-                                        <rect key="frame" x="55" y="252" width="520" height="161"/>
+                                        <rect key="frame" x="55" y="293" width="400" height="151"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="leh-Y1-TSo">
-                                                <rect key="frame" x="0.0" y="88" width="520" height="73"/>
+                                                <rect key="frame" x="0.0" y="83" width="400" height="68"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="glo-7k-TCA">
-                                                        <rect key="frame" x="-2" y="56" width="106" height="17"/>
+                                                        <rect key="frame" x="-2" y="52" width="106" height="16"/>
                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="gerade Wochen:" id="JOm-Fi-kXK">
                                                             <font key="font" metaFont="systemMedium" size="13"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -246,7 +246,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6DQ-Iw-haG">
-                                                        <rect key="frame" x="0.0" y="25" width="181" height="26"/>
+                                                        <rect key="frame" x="0.0" y="21" width="181" height="26"/>
                                                         <subviews>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="InV-j0-2ax" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="26"/>
@@ -264,7 +264,7 @@
                                                                 </connections>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="cj6-YJ-QXD">
-                                                                <rect key="frame" x="46" y="5" width="137" height="17"/>
+                                                                <rect key="frame" x="46" y="5" width="137" height="16"/>
                                                                 <textFieldCell key="cell" selectable="YES" title="Stunden in der Woche" id="eYW-lP-2Vp">
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -282,19 +282,19 @@
                                                         </customSpacing>
                                                     </stackView>
                                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O6A-Mn-BXa">
-                                                        <rect key="frame" x="0.0" y="0.0" width="520" height="20"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="400" height="16"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qv0-ur-IOF">
-                                                                <rect key="frame" x="-2" y="3" width="67" height="17"/>
+                                                                <rect key="frame" x="-2" y="0.0" width="67" height="16"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="freie Tage:" id="Vcx-JH-HZO">
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="WPo-wV-ID1">
-                                                                <rect key="frame" x="73" y="0.0" width="74" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Montag" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="OK2-dD-5ao">
+                                                            <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="WPo-wV-ID1" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="73" y="0.0" width="50" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Montag" bezelStyle="regularSquare" imagePosition="left" inset="2" id="OK2-dD-5ao">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -302,9 +302,9 @@
                                                                     <action selector="evenWeekDay:" target="-2" id="r3r-eg-CT7"/>
                                                                 </connections>
                                                             </button>
-                                                            <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="KCB-yA-sPd">
-                                                                <rect key="frame" x="157" y="0.0" width="81" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Dienstag" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="yYR-aJ-nW2">
+                                                            <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="KCB-yA-sPd" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="133" y="0.0" width="57" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Dienstag" bezelStyle="regularSquare" imagePosition="left" inset="2" id="yYR-aJ-nW2">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -312,9 +312,9 @@
                                                                     <action selector="evenWeekDay:" target="-2" id="DIn-PK-pQ9"/>
                                                                 </connections>
                                                             </button>
-                                                            <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="DtQ-sf-WDl">
-                                                                <rect key="frame" x="248" y="0.0" width="84" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Mittwoch" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="kZp-VY-I3U">
+                                                            <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="DtQ-sf-WDl" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="200" y="0.0" width="60" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Mittwoch" bezelStyle="regularSquare" imagePosition="left" inset="2" id="kZp-VY-I3U">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -322,9 +322,9 @@
                                                                     <action selector="evenWeekDay:" target="-2" id="ect-MR-m26"/>
                                                                 </connections>
                                                             </button>
-                                                            <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="i4R-GD-eCw">
-                                                                <rect key="frame" x="342" y="0.0" width="98" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Donnerstag" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="gm3-Mj-Vwn">
+                                                            <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="i4R-GD-eCw" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="270" y="0.0" width="74" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Donnerstag" bezelStyle="regularSquare" imagePosition="left" inset="2" id="gm3-Mj-Vwn">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -332,9 +332,9 @@
                                                                     <action selector="evenWeekDay:" target="-2" id="gyi-o0-1UA"/>
                                                                 </connections>
                                                             </button>
-                                                            <button verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="s77-gb-x1G">
-                                                                <rect key="frame" x="450" y="0.0" width="70" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Freitag" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="Pq5-8e-qU4">
+                                                            <button verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="s77-gb-x1G" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="354" y="0.0" width="46" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Freitag" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Pq5-8e-qU4">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -373,10 +373,10 @@
                                                 </customSpacing>
                                             </stackView>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PBV-P3-JOw">
-                                                <rect key="frame" x="0.0" y="0.0" width="520" height="73"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="400" height="68"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xzZ-QA-eDc">
-                                                        <rect key="frame" x="-2" y="56" width="123" height="17"/>
+                                                        <rect key="frame" x="-2" y="52" width="123" height="16"/>
                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="ungerade Wochen:" id="ZCW-Oi-ovw">
                                                             <font key="font" metaFont="systemSemibold" size="13"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -384,7 +384,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WWJ-2y-kDg">
-                                                        <rect key="frame" x="0.0" y="25" width="182" height="26"/>
+                                                        <rect key="frame" x="0.0" y="21" width="182" height="26"/>
                                                         <subviews>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mpg-hc-6iw" customClass="TextField" customModule="MoJob" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="26"/>
@@ -402,7 +402,7 @@
                                                                 </connections>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="aBH-hA-86w">
-                                                                <rect key="frame" x="46" y="5" width="138" height="17"/>
+                                                                <rect key="frame" x="46" y="5" width="138" height="16"/>
                                                                 <textFieldCell key="cell" selectable="YES" title="Stunden in der Woche" id="OEd-oj-FeT">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -420,19 +420,19 @@
                                                         </customSpacing>
                                                     </stackView>
                                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jkL-H1-vfk">
-                                                        <rect key="frame" x="0.0" y="0.0" width="520" height="20"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="400" height="16"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yd2-5i-G21">
-                                                                <rect key="frame" x="-2" y="3" width="67" height="17"/>
+                                                                <rect key="frame" x="-2" y="0.0" width="67" height="16"/>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" title="freie Tage:" id="lyM-xs-qf3">
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="LNT-uB-yVq">
-                                                                <rect key="frame" x="73" y="0.0" width="74" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Montag" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="Xgq-T6-yOb">
+                                                            <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="LNT-uB-yVq" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="73" y="0.0" width="50" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Montag" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Xgq-T6-yOb">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -440,9 +440,9 @@
                                                                     <action selector="oddWeekDay:" target="-2" id="5b9-JF-vD7"/>
                                                                 </connections>
                                                             </button>
-                                                            <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="35L-Ya-m2N">
-                                                                <rect key="frame" x="157" y="0.0" width="81" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Dienstag" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="kvI-dc-QH9">
+                                                            <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="35L-Ya-m2N" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="133" y="0.0" width="57" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Dienstag" bezelStyle="regularSquare" imagePosition="left" inset="2" id="kvI-dc-QH9">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -450,9 +450,9 @@
                                                                     <action selector="oddWeekDay:" target="-2" id="1cG-sY-86d"/>
                                                                 </connections>
                                                             </button>
-                                                            <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="STB-KD-303">
-                                                                <rect key="frame" x="248" y="0.0" width="84" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Mittwoch" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="nmC-aT-eNs">
+                                                            <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="STB-KD-303" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="200" y="0.0" width="60" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Mittwoch" bezelStyle="regularSquare" imagePosition="left" inset="2" id="nmC-aT-eNs">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -460,9 +460,9 @@
                                                                     <action selector="oddWeekDay:" target="-2" id="nDi-2i-7B4"/>
                                                                 </connections>
                                                             </button>
-                                                            <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="hKP-V4-gx6">
-                                                                <rect key="frame" x="342" y="0.0" width="98" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Donnerstag" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="BWi-5h-LvZ">
+                                                            <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="hKP-V4-gx6" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="270" y="0.0" width="74" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Donnerstag" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BWi-5h-LvZ">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -470,9 +470,9 @@
                                                                     <action selector="oddWeekDay:" target="-2" id="CW5-uU-wUp"/>
                                                                 </connections>
                                                             </button>
-                                                            <button verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="jMd-nK-W0q">
-                                                                <rect key="frame" x="450" y="0.0" width="70" height="20"/>
-                                                                <buttonCell key="cell" type="bevel" title="Freitag" bezelStyle="regularSquare" image="unchecked" imagePosition="left" alternateImage="checked" inset="2" id="C7z-h9-46w">
+                                                            <button verticalHuggingPriority="750" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="jMd-nK-W0q" customClass="Checkbox" customModule="MoJob" customModuleProvider="target">
+                                                                <rect key="frame" x="354" y="0.0" width="46" height="16"/>
+                                                                <buttonCell key="cell" type="bevel" title="Freitag" bezelStyle="regularSquare" imagePosition="left" inset="2" id="C7z-h9-46w">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="systemLight" size="13"/>
                                                                 </buttonCell>
@@ -560,7 +560,6 @@
                                     <constraint firstItem="F4v-ez-mFn" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="mBO-xL-fjg"/>
                                     <constraint firstItem="l3b-VH-d2c" firstAttribute="top" secondItem="buM-BJ-JHJ" secondAttribute="bottom" constant="10" id="mqp-IS-KKb"/>
                                     <constraint firstItem="buM-BJ-JHJ" firstAttribute="top" secondItem="90N-kN-2ot" secondAttribute="bottom" constant="30" id="nPC-zt-lbD"/>
-                                    <constraint firstItem="avi-ie-qko" firstAttribute="width" secondItem="Aia-UP-W2J" secondAttribute="width" id="olk-Mb-Obz"/>
                                     <constraint firstItem="GP3-a2-ByD" firstAttribute="top" secondItem="eOR-1B-uxd" secondAttribute="bottom" constant="10" id="ooV-4v-b8D"/>
                                     <constraint firstItem="D4t-2m-XFg" firstAttribute="top" secondItem="fTb-Tu-2Gk" secondAttribute="bottom" constant="10" id="t94-An-LL3"/>
                                     <constraint firstItem="YOK-4o-6wY" firstAttribute="top" secondItem="yEd-lW-MD9" secondAttribute="top" constant="20" id="tBY-X0-vyA"/>
@@ -598,10 +597,4 @@
             <point key="canvasLocation" x="233" y="392"/>
         </customView>
     </objects>
-    <resources>
-        <image name="checked" width="23.5" height="20"/>
-        <image name="radio-checked" width="21" height="22"/>
-        <image name="radio-unchecked" width="21" height="22"/>
-        <image name="unchecked" width="23.5" height="20"/>
-    </resources>
 </document>

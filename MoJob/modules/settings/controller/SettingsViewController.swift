@@ -53,20 +53,10 @@ class SettingsViewController: NSViewController {
 
 		_specialWeekDetailsTopConstraint = specialWeekDetailsTopConstraint
 		specialWeekDetailsTopConstraint.isActive = false
-		radioButtonsWeek = [radioNormalWeek, radioSpecialWeek]
 
 		let foundHelper = NSWorkspace.shared.runningApplications.contains {
 			$0.bundleIdentifier == helperBundleName
 		}
-
-		let pstyle = NSMutableParagraphStyle()
-		pstyle.firstLineHeadIndent = 5.0
-		autoLaunchCheckbox.attributedTitle = NSAttributedString(
-			string: autoLaunchCheckbox.title,
-			attributes: [
-				NSAttributedString.Key.paragraphStyle: pstyle
-			]
-		)
 
 		autoLaunchCheckbox.state = foundHelper ? .on : .off
 		badgeIconLabel.state = userDefaults.bool(forKey: UserDefaults.Keys.badgeIconLabel) ? .on : .off
@@ -81,17 +71,6 @@ class SettingsViewController: NSViewController {
 
 	override func viewDidAppear() {
 		super.viewDidAppear()
-
-		let pstyle = NSMutableParagraphStyle()
-		pstyle.firstLineHeadIndent = 5.0
-		for button in radioButtonsWeek {
-			button.attributedTitle = NSAttributedString(
-				string: button.title,
-				attributes: [
-					NSAttributedString.Key.paragraphStyle: pstyle
-				]
-			)
-		}
 
 		oddWeekHours.stringValue = String(userDefaults.integer(forKey: UserDefaults.Keys.oddWeekHours))
 		evenWeekHours.stringValue = String(userDefaults.integer(forKey: UserDefaults.Keys.evenWeekHours))
