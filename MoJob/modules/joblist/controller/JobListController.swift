@@ -171,6 +171,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 
 	func reloadFavorites() {
 		favoritesCollectionView.reloadData()
+		favoritesCollectionView.collectionViewLayout?.invalidateLayout()
 
 		if let heightFavoritesCollection = favoritesCollectionView.collectionViewLayout?.collectionViewContentSize.height {
 			favoritesCollectionHeight.constant = heightFavoritesCollection
@@ -312,9 +313,12 @@ extension JobListController: NSCollectionViewDelegateFlowLayout {
 			return NSSize(width: collectionView.frame.size.width, height: 30)
 		}
 
-		let favorite = (collectionView.item(at: indexPath) as? FavoriteItem)?.favorite
-		if (favorite?.task == nil && favorite?.activity == nil) {
-			return NSSize(width: collectionView.frame.size.width, height: 30)
+		if (favorites.indices.contains(indexPath.item)) {
+			let favorite = favorites[indexPath.item]
+
+			if (favorite.task == nil && favorite.activity == nil) {
+				return NSSize(width: collectionView.frame.size.width, height: 30)
+			}
 		}
 
 		return NSSize(width: collectionView.frame.size.width, height: 45)
