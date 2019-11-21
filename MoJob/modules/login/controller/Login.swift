@@ -24,15 +24,6 @@ class Login: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let pstyle = NSMutableParagraphStyle()
-		pstyle.firstLineHeadIndent = 5.0
-		storeInKeyChain.attributedTitle = NSAttributedString(
-			string: storeInKeyChain.title,
-			attributes: [
-				NSAttributedString.Key.paragraphStyle: pstyle
-			]
-		)
-
 		view.wantsLayer = true
 		view.layer?.backgroundColor = NSColor.white.cgColor
 
