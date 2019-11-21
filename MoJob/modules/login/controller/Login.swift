@@ -25,7 +25,7 @@ class Login: NSViewController {
 		super.viewDidLoad()
 
 		view.wantsLayer = true
-		view.layer?.backgroundColor = NSColor.white.cgColor
+		view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
 
 		generalErrorLabel.isHidden = true
 		usernameErrorLabel.isHidden = true

@@ -29,7 +29,7 @@ class WakeUp: NSViewController {
 		radioButtons = [radioDoNothing, radioStopNow, radioTimerStop, radioTimerStopAndStartNew]
 
 		view.wantsLayer = true
-		view.layer?.backgroundColor = NSColor.white.cgColor
+		view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
 	}
 
 	override func viewDidAppear() {
