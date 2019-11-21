@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,7 +37,7 @@
                             <rect key="frame" x="80" y="0.0" width="417" height="217"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LaX-vY-7ut">
-                                    <rect key="frame" x="-2" y="187" width="160" height="30"/>
+                                    <rect key="frame" x="-2" y="161" width="160" height="56"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Tracking läuft noch" id="ZTb-SD-EtY">
                                         <font key="font" metaFont="systemThin" size="20"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -44,7 +45,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="b60-nl-eJI">
-                                    <rect key="frame" x="-2" y="148" width="421" height="34"/>
+                                    <rect key="frame" x="-2" y="124" width="421" height="32"/>
                                     <textFieldCell key="cell" selectable="YES" title="Dein Mac ist um %time% Uhr eingeschlafen und es läuft noch ein Tracking. Wie möchtest du weitermachen?" id="HkK-QV-ZIi">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -52,14 +53,14 @@
                                     </textFieldCell>
                                 </textField>
                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="xZf-gC-4F6">
-                                    <rect key="frame" x="0.0" y="130" width="417" height="5"/>
+                                    <rect key="frame" x="0.0" y="106" width="417" height="5"/>
                                 </box>
                                 <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JJO-mU-R7N">
-                                    <rect key="frame" x="0.0" y="0.0" width="417" height="112"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="417" height="88"/>
                                     <subviews>
-                                        <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="XU3-Dv-RLN">
-                                            <rect key="frame" x="0.0" y="90" width="268" height="22"/>
-                                            <buttonCell key="cell" type="bevel" title="Nichts unternehmen (Timer läuft weiter)" bezelStyle="regularSquare" image="radio-unchecked" imagePosition="left" alignment="left" alternateImage="radio-checked" state="on" inset="2" id="aHQ-E4-WWP">
+                                        <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="XU3-Dv-RLN" customClass="Radio" customModule="MoJob" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="72" width="247" height="16"/>
+                                            <buttonCell key="cell" type="bevel" title="Nichts unternehmen (Timer läuft weiter)" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aHQ-E4-WWP">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -67,9 +68,9 @@
                                                 <action selector="radioHandleTracking:" target="-2" id="28J-UZ-6DX"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="ujO-k8-cWd">
-                                            <rect key="frame" x="0.0" y="60" width="213" height="22"/>
-                                            <buttonCell key="cell" type="bevel" title="Timer um %time% Uhr stoppen" bezelStyle="regularSquare" image="radio-unchecked" imagePosition="left" alignment="left" alternateImage="radio-checked" inset="2" id="RxU-YB-Omx">
+                                        <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="ujO-k8-cWd" customClass="Radio" customModule="MoJob" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="48" width="192" height="16"/>
+                                            <buttonCell key="cell" type="bevel" title="Timer um %time% Uhr stoppen" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="RxU-YB-Omx">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -77,9 +78,9 @@
                                                 <action selector="radioHandleTracking:" target="-2" id="X97-ss-Gr6"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="xaJ-YH-n52">
-                                            <rect key="frame" x="0.0" y="30" width="367" height="22"/>
-                                            <buttonCell key="cell" type="bevel" title="Timer um %time% Uhr stoppen und Tracking neu starten" bezelStyle="regularSquare" image="radio-unchecked" imagePosition="left" alignment="left" alternateImage="radio-checked" inset="2" id="kHb-4k-6TG">
+                                        <button verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="xaJ-YH-n52" customClass="Radio" customModule="MoJob" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="24" width="346" height="16"/>
+                                            <buttonCell key="cell" type="bevel" title="Timer um %time% Uhr stoppen und Tracking neu starten" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="kHb-4k-6TG">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -87,9 +88,9 @@
                                                 <action selector="radioHandleTracking:" target="-2" id="R5m-D2-3vm"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="0LT-5l-laN">
-                                            <rect key="frame" x="0.0" y="0.0" width="143" height="22"/>
-                                            <buttonCell key="cell" type="bevel" title="Timer jetzt stoppen" bezelStyle="regularSquare" image="radio-unchecked" imagePosition="left" alignment="left" alternateImage="radio-checked" inset="2" id="2hK-NJ-Izt">
+                                        <button verticalHuggingPriority="750" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="0LT-5l-laN" customClass="Radio" customModule="MoJob" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="122" height="16"/>
+                                            <buttonCell key="cell" type="bevel" title="Timer jetzt stoppen" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2hK-NJ-Izt">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -133,7 +134,7 @@
                         <constraint firstItem="YGx-lz-v8n" firstAttribute="top" secondItem="PfL-0a-mt5" secondAttribute="top" id="tRb-bB-Aq0"/>
                     </constraints>
                     <visibilityPriorities>
-                        <real value="1000"/>
+                        <integer value="1000"/>
                         <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
@@ -142,7 +143,7 @@
                     </customSpacing>
                 </stackView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x7w-Vy-Dhg">
-                    <rect key="frame" x="458" y="30" width="69" height="18"/>
+                    <rect key="frame" x="458" y="31" width="69" height="17"/>
                     <buttonCell key="cell" type="bevel" title="Speichern" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="T6C-wi-wLl">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemThin" size="14"/>
@@ -163,8 +164,4 @@
             <point key="canvasLocation" x="139" y="168"/>
         </customView>
     </objects>
-    <resources>
-        <image name="radio-checked" width="21" height="22"/>
-        <image name="radio-unchecked" width="21" height="22"/>
-    </resources>
 </document>

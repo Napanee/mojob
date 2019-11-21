@@ -13,6 +13,27 @@ class Radio: NSButton {
 	let colorForegroundDefault = NSColor.secondaryLabelColor
 	let lineWidth: CGFloat = 1.0
 
+	override var title: String {
+		didSet {
+			let pstyle = NSMutableParagraphStyle()
+			pstyle.firstLineHeadIndent = 20.0
+			let attributes = [
+				NSAttributedString.Key.foregroundColor: NSColor.secondaryLabelColor,
+				NSAttributedString.Key.paragraphStyle: pstyle
+			]
+
+			attributedTitle = NSAttributedString(
+				string: title,
+				attributes: attributes
+			)
+
+			attributedAlternateTitle = NSAttributedString(
+				string: title,
+				attributes: attributes
+			)
+		}
+	}
+
 	override func alignmentRect(forFrame frame: NSRect) -> NSRect {
 		return NSRect(x: frame.minX, y: frame.minY, width: frame.width + 20, height: frame.height)
 	}

@@ -16,10 +16,10 @@ class WakeUp: NSViewController {
 
 	@IBOutlet weak var descriptionText: NSTextField!
 	@IBOutlet weak var appIcon: NSImageView!
-	@IBOutlet weak var radioDoNothing: NSButton!
-	@IBOutlet weak var radioStopNow: NSButton!
-	@IBOutlet weak var radioTimerStop: NSButton!
-	@IBOutlet weak var radioTimerStopAndStartNew: NSButton!
+	@IBOutlet weak var radioDoNothing: Radio!
+	@IBOutlet weak var radioStopNow: Radio!
+	@IBOutlet weak var radioTimerStop: Radio!
+	@IBOutlet weak var radioTimerStopAndStartNew: Radio!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -42,17 +42,6 @@ class WakeUp: NSViewController {
 		descriptionText.stringValue = descriptionText.stringValue.replacingOccurrences(of: "%time%", with: dateString)
 		radioTimerStop.title = radioTimerStop.title.replacingOccurrences(of: "%time%", with: dateString)
 		radioTimerStopAndStartNew.title = radioTimerStopAndStartNew.title.replacingOccurrences(of: "%time%", with: dateString)
-
-		let pstyle = NSMutableParagraphStyle()
-		pstyle.firstLineHeadIndent = 5.0
-		for button in radioButtons {
-			button.attributedTitle = NSAttributedString(
-				string: button.title,
-				attributes: [
-					NSAttributedString.Key.paragraphStyle: pstyle
-				]
-			)
-		}
 
 		if let window = view.window {
 			window.styleMask = NSWindow.StyleMask.fullSizeContentView
