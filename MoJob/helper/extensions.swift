@@ -47,9 +47,6 @@ extension NSImage.Name {
 	static let syncErrorImage = "sync-error"
 	static let syncPendingImage = "sync-pending"
 	static let syncSuccessImage = "sync-success"
-	static let uncheckedImage = "unchecked"
-	static let radioUncheckedImage = "radio-unchecked"
-	static let radioCheckedImage = "radio-checked"
 	static let statusBarImage = "statusIcon"
 }
 
