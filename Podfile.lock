@@ -1,18 +1,18 @@
 PODS:
-  - Alamofire (4.8.2)
-  - Charts (3.3.0):
-    - Charts/Core (= 3.3.0)
-  - Charts/Core (3.3.0)
+  - Alamofire (4.9.1)
+  - Charts (3.4.0):
+    - Charts/Core (= 3.4.0)
+  - Charts/Core (3.4.0)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
   - Fabric (1.10.2)
-  - KeychainAccess (3.2.0)
+  - KeychainAccess (3.2.1)
   - LetsMove (1.24)
-  - PromiseKit/Alamofire (6.10.0):
+  - PromiseKit/Alamofire (6.12.0):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (6.10.0)
-  - Sparkle (1.21.3)
+  - PromiseKit/CorePromise (6.12.0)
+  - Sparkle (1.22.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.8)
@@ -36,14 +36,14 @@ SPEC REPOS:
     - Sparkle
 
 SPEC CHECKSUMS:
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
-  KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
+  KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   LetsMove: fefe56bc7bc7fb7d37049e28a14f297961229fc5
-  PromiseKit: 1fdaeb6c0a94a5114fcb814ff3d772b86886ad4e
-  Sparkle: 3f75576db8b0265adef36c43249d747f22d0b708
+  PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
+  Sparkle: 593ac2e677c07bcb6c3b22d621240e7cbedaab57
 
 PODFILE CHECKSUM: 1336dfd21c75b0f8551b63e16d4fa40f3551456b
 
