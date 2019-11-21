@@ -122,7 +122,7 @@ class GraphView: NSView {
 	func drawBarGraphInContext(context: CGContext?) {
 		let barChartRect = CGRect(origin: NSPoint(x: 1, y: 1), size: NSSize(width: bounds.size.width - 2, height: bounds.size.height / 2 - 2))
 		var clipRect = barChartRect
-		drawRect(rect: barChartRect, inContext: context, borderColor: NSColor.tertiaryLabelColor.cgColor, fillColor: NSColor.white.cgColor)
+		drawRect(rect: barChartRect, inContext: context, borderColor: NSColor.windowBackgroundColor.cgColor, fillColor: NSColor.controlBackgroundColor.cgColor)
 
 		guard let trackings = trackings else { return }
 
@@ -143,7 +143,7 @@ class GraphView: NSView {
 			context?.saveGState()
 			context?.clip(to: clipRect)
 
-			var colors = (strokeColor: NSColor.tertiaryLabelColor, fillColor: NSColor(red: 0.878, green: 0.878, blue: 0.878, alpha: 1))
+			var colors = (strokeColor: NSColor.tertiaryLabelColor, fillColor: NSColor.windowBackgroundColor)
 			if let jobColor = tracking.color, let color = moJobColors.color(withKey: jobColor) {
 				colors = (strokeColor: NSColor.tertiaryLabelColor, fillColor: color)
 			}

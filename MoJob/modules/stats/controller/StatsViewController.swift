@@ -215,14 +215,14 @@ extension StatsViewController {
 		let actualHoursText = NSMutableAttributedString(
 			string: actualHours,
 			attributes: [
-				NSAttributedString.Key.foregroundColor: NSColor.black,
+				NSAttributedString.Key.foregroundColor: NSColor.textColor,
 				NSAttributedString.Key.font: NSFont.systemFont(ofSize: 22, weight: .ultraLight),
 				NSAttributedString.Key.paragraphStyle: paragraph
 			])
 		let targetHoursText = NSMutableAttributedString(
 			string: "\n von \(targetHours)",
 			attributes: [
-				NSAttributedString.Key.foregroundColor: NSColor.black,
+				NSAttributedString.Key.foregroundColor: NSColor.textColor,
 				NSAttributedString.Key.font: NSFont.systemFont(ofSize: 16, weight: .light),
 				NSAttributedString.Key.paragraphStyle: paragraph
 			])
@@ -233,6 +233,7 @@ extension StatsViewController {
 		pieChart.legend.enabled = false
 		pieChart.drawEntryLabelsEnabled = false
 		pieChart.holeRadiusPercent = 0.7
+		pieChart.holeColor = NSColor.controlBackgroundColor
 
 		pieChart.data = PieChartData(dataSet: chartDataSet)
 
@@ -359,6 +360,7 @@ extension StatsViewController {
 		}
 		chartDataSet.valueFont = NSFont.systemFont(ofSize: 10, weight: .semibold)
 		chartDataSet.valueFormatter = self
+		chartDataSet.valueColors = [NSColor.textColor]
 
 		barChart.data = BarChartData(dataSet: chartDataSet)
 		barChartSetup()

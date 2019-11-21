@@ -93,6 +93,11 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 	}
 
 	override func viewWillLayout() {
+		if let scrollView = view as? NSScrollView {
+			scrollView.backgroundColor = NSColor.clear
+			scrollView.contentView.backgroundColor = NSColor.clear
+		}
+
 		favoritesCollectionView.collectionViewLayout?.invalidateLayout()
 		jobsCollectionView.collectionViewLayout?.invalidateLayout()
 	}

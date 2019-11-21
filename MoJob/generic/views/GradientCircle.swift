@@ -13,7 +13,7 @@ class GradientCircle: NSView {
 	override func draw(_ dirtyRect: NSRect) {
 		let ellipseRect = NSRect(x: 0, y: 0, width: dirtyRect.width, height: dirtyRect.height)
 		let ellipseCenterRect = NSInsetRect(ellipseRect, 0, 0)
-		NSColor.white.withAlphaComponent(0).set()
+		NSColor.clear.withAlphaComponent(0).set()
 
 		let ellipseCenter = NSBezierPath(ovalIn: ellipseCenterRect)
 		ellipseCenter.fill()

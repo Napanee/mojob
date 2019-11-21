@@ -90,7 +90,7 @@ class FavoriteItem: NSCollectionViewItem {
 	override func mouseExited(with event: NSEvent) {
 		super.mouseExited(with: event)
 
-		view.layer?.backgroundColor = nil
+		view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 	}
 
 	override func mouseUp(with event: NSEvent) {
