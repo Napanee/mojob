@@ -1274,10 +1274,12 @@
 					};
 					E821179E220E07B2003D7578 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1120;
 						TestTargetID = E821178B220E07B1003D7578;
 					};
 					E82117A9220E07B3003D7578 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1120;
 						TestTargetID = E821178B220E07B1003D7578;
 					};
 					E8AA8CAA22F890520017698F = {
@@ -2028,7 +2030,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJobTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoJob.app/Contents/MacOS/MoJob";
 			};
 			name = Debug;
@@ -2050,7 +2052,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJobTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MoJob.app/Contents/MacOS/MoJob";
 			};
 			name = Release;
@@ -2071,7 +2073,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJobUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = MoJob;
 			};
 			name = Debug;
@@ -2092,7 +2094,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJobUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = MoJob;
 			};
 			name = Release;
