@@ -41,9 +41,6 @@ extension NSNib.Name {
 }
 
 extension NSImage.Name {
-	static let checkedImage = "checked"
-	static let loginImage = "login"
-	static let reloadImage = "reload"
 	static let syncErrorImage = "sync-error"
 	static let syncPendingImage = "sync-pending"
 	static let syncSuccessImage = "sync-success"
