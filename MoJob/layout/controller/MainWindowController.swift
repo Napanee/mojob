@@ -39,12 +39,6 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
 		window?.makeFirstResponder(nil)
 	}
 
-	func windowShouldClose(_ sender: NSWindow) -> Bool {
-		NSApp.setActivationPolicy(.prohibited)
-
-		return true
-	}
-
 	func initContentSplitViewController(with primaryChild: String, and secondaryChild: SplitViewController) -> ContentSplitViewController {
 		if let contentSplitViewController = contentSplitViewController {
 			if (primaryChild == "calendar") {
