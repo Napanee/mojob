@@ -69,7 +69,6 @@
                                 </objectValues>
                             </comboBoxCell>
                             <connections>
-                                <action selector="jobSelect:" target="-2" id="j8N-9a-yxw"/>
                                 <outlet property="dataSource" destination="-2" id="egh-oY-BhS"/>
                                 <outlet property="delegate" destination="-2" id="3Uv-KD-eWz"/>
                             </connections>
@@ -221,7 +220,6 @@
                                         </objectValues>
                                     </comboBoxCell>
                                     <connections>
-                                        <action selector="taskSelect:" target="-2" id="wmF-VA-jAG"/>
                                         <outlet property="dataSource" destination="-2" id="raK-mF-dtg"/>
                                         <outlet property="delegate" destination="-2" id="Z6v-gK-RfY"/>
                                     </connections>
@@ -247,7 +245,6 @@
                                         </objectValues>
                                     </comboBoxCell>
                                     <connections>
-                                        <action selector="activitySelect:" target="-2" id="41h-97-NJU"/>
                                         <outlet property="dataSource" destination="-2" id="cOn-Cl-O4e"/>
                                         <outlet property="delegate" destination="-2" id="4PU-Ra-104"/>
                                     </connections>

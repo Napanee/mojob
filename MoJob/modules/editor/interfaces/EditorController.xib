@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,17 +26,17 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="546" height="321"/>
+            <rect key="frame" x="0.0" y="0.0" width="546" height="317"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c7j-df-kS2">
-                    <rect key="frame" x="0.0" y="0.0" width="546" height="321"/>
+                    <rect key="frame" x="0.0" y="0.0" width="546" height="317"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="81b-du-VQj">
-                            <rect key="frame" x="0.0" y="257" width="546" height="64"/>
+                            <rect key="frame" x="0.0" y="254" width="546" height="63"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Am-V5-hJa">
-                                    <rect key="frame" x="30" y="20" width="131" height="24"/>
+                                    <rect key="frame" x="30" y="20" width="131" height="23"/>
                                     <buttonCell key="cell" type="bevel" title="Eintrag löschen" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="ugs-Ir-fCj">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="systemThin" size="20"/>
@@ -47,7 +47,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uEk-6f-4PP">
-                                    <rect key="frame" x="301" y="20" width="96" height="24"/>
+                                    <rect key="frame" x="301" y="20" width="96" height="23"/>
                                     <buttonCell key="cell" type="bevel" title="Abbrechen" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="MPv-Mg-Her">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="systemThin" size="20"/>
@@ -57,7 +57,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SJk-dW-6EJ">
-                                    <rect key="frame" x="427" y="20" width="89" height="24"/>
+                                    <rect key="frame" x="427" y="20" width="89" height="23"/>
                                     <buttonCell key="cell" type="bevel" title="Speichern" bezelStyle="rounded" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="jlw-gx-q4U">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="systemThin" size="20"/>
@@ -80,7 +80,7 @@
                             </constraints>
                         </customView>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z78-hW-Vo6" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="30" y="218" width="489" height="26"/>
+                            <rect key="frame" x="30" y="216" width="489" height="25"/>
                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="0kg-9s-O1o">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -92,14 +92,13 @@
                                 </objectValues>
                             </comboBoxCell>
                             <connections>
-                                <action selector="jobSelect:" target="-2" id="NEG-j0-hTH"/>
                                 <outlet property="dataSource" destination="-2" id="R1D-h4-cvj"/>
                                 <outlet property="delegate" destination="-2" id="kl1-Fk-3Xt"/>
                                 <outlet property="nextKeyView" destination="PCu-pY-pc0" id="xzH-FV-bOJ"/>
                             </connections>
                         </comboBox>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PCu-pY-pc0" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="30" y="183" width="489" height="26"/>
+                            <rect key="frame" x="30" y="182" width="489" height="25"/>
                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="ff1-Gj-erC">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -111,14 +110,13 @@
                                 </objectValues>
                             </comboBoxCell>
                             <connections>
-                                <action selector="taskSelect:" target="-2" id="85g-r3-Al6"/>
                                 <outlet property="dataSource" destination="-2" id="tzH-uE-hrY"/>
                                 <outlet property="delegate" destination="-2" id="XFh-CL-YfA"/>
                                 <outlet property="nextKeyView" destination="l9U-lW-Fq8" id="A5O-LU-aKt"/>
                             </connections>
                         </comboBox>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l9U-lW-Fq8" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="30" y="148" width="489" height="26"/>
+                            <rect key="frame" x="30" y="148" width="489" height="25"/>
                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="RC6-TY-Mwp">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -130,7 +128,6 @@
                                 </objectValues>
                             </comboBoxCell>
                             <connections>
-                                <action selector="activitySelect:" target="-2" id="08I-io-XB4"/>
                                 <outlet property="dataSource" destination="-2" id="r4G-TP-AVl"/>
                                 <outlet property="delegate" destination="-2" id="kKU-P6-FAm"/>
                                 <outlet property="nextKeyView" destination="XcE-nf-wbv" id="ntD-52-5jk"/>
@@ -173,7 +170,7 @@
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UfZ-if-Zug">
-                                            <rect key="frame" x="33" y="0.0" width="8" height="17"/>
+                                            <rect key="frame" x="33" y="0.0" width="8" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="." id="pWc-IK-txH">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -193,7 +190,7 @@
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z7f-N7-xBA">
-                                            <rect key="frame" x="74" y="0.0" width="8" height="17"/>
+                                            <rect key="frame" x="74" y="0.0" width="8" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="." id="bEc-Zp-myd">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -273,7 +270,7 @@
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mcI-Cs-w2k">
-                                            <rect key="frame" x="33" y="5" width="8" height="17"/>
+                                            <rect key="frame" x="33" y="5" width="8" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title=":" id="elP-fg-jlE">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -333,7 +330,7 @@
                                             </connections>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sFy-gW-XZ9">
-                                            <rect key="frame" x="33" y="5" width="8" height="17"/>
+                                            <rect key="frame" x="33" y="5" width="8" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title=":" id="xsL-3Z-9eC">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>

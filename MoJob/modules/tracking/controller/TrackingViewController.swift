@@ -136,11 +136,15 @@ class TrackingViewController: QuoJobSelections {
 		isFavorite = sender.state == .on
 	}
 
-	override func jobSelect(_ sender: NSComboBox) {
-		super.jobSelect(sender)
+	override func comboBoxSelectionDidChange(_ notification: Notification) {
+		super.comboBoxSelectionDidChange(notification)
 
-		favoriteTracking.state = isFavorite ? .on : .off
-		favoriteTracking.isHidden = tracking?.job == nil
+		guard let comboBox = notification.object as? NSComboBox else { return }
+
+		if (comboBox.isEqual(jobSelect)) {
+			favoriteTracking.state = isFavorite ? .on : .off
+			favoriteTracking.isHidden = tracking?.job == nil
+		}
 	}
 
 	// MARK: - Observer

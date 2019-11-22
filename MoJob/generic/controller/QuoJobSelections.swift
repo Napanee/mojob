@@ -176,8 +176,71 @@ class QuoJobSelections: NSViewController {
 		}
 	}
 
-	@IBAction func jobSelect(_ sender: NSComboBox) {
-		if let cell = sender.cell, let tracking = tracking, let context = tracking.managedObjectContext {
+}
+
+extension QuoJobSelections: NSComboBoxDataSource {
+
+	func numberOfItems(in comboBox: NSComboBox) -> Int {
+		if (comboBox.isEqual(jobSelect)) {
+			return jobs.count
+		} else if (comboBox.isEqual(taskSelect)) {
+			return tasks.count
+		} else if (comboBox.isEqual(activitySelect)) {
+			return activities.count
+		}
+
+		return 0
+	}
+
+	func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+		if (comboBox.isEqual(jobSelect)) {
+			let job = jobs[index]
+			return job.fullTitle
+		} else if (comboBox.isEqual(taskSelect)) {
+			return tasks[index].title
+		} else if (comboBox.isEqual(activitySelect)) {
+			return activities[index].title
+		}
+
+		return ""
+	}
+
+}
+
+extension QuoJobSelections: NSComboBoxDelegate {
+
+	func comboBoxSelectionDidChange(_ notification: Notification) {
+		guard let comboBox = notification.object as? NSComboBox else { return }
+
+		if (comboBox.isEqual(jobSelect)) {
+			handleJobChange(comboBox: comboBox)
+		} else if (comboBox.isEqual(taskSelect)) {
+			handleTaskChange(comboBox: comboBox)
+		} else if (comboBox.isEqual(activitySelect)) {
+			handleActivityChange(comboBox: comboBox)
+		}
+	}
+
+	func comboBoxWillDismiss(_ notification: Notification) {
+		guard let comboBox = notification.object as? NSComboBox else { return }
+
+		if (comboBox.indexOfSelectedItem >= 0 && comboBox.stringValue != jobs[comboBox.indexOfSelectedItem].fullTitle) {
+			comboBox.selectItem(at: -1)
+		}
+
+		if (comboBox.isEqual(jobSelect)) {
+			handleJobChange(comboBox: comboBox)
+			formIsValid = true
+		} else if (comboBox.isEqual(taskSelect)) {
+			handleTaskChange(comboBox: comboBox)
+		} else if (comboBox.isEqual(activitySelect)) {
+			handleActivityChange(comboBox: comboBox)
+			formIsValid = true
+		}
+	}
+
+	private func handleJobChange(comboBox: NSComboBox) {
+		if let cell = comboBox.cell, let tracking = tracking, let context = tracking.managedObjectContext {
 			let value = cell.stringValue.lowercased()
 
 			if (value == "") {
@@ -195,12 +258,10 @@ class QuoJobSelections: NSViewController {
 		taskSelect.stringValue = ""
 		initTaskSelect()
 		initActivitySelect()
-
-		formIsValid = true
 	}
 
-	@IBAction func taskSelect(_ sender: NSComboBox) {
-		guard let cell = sender.cell, let tracking = tracking, let context = tracking.managedObjectContext else { return }
+	private func handleTaskChange(comboBox: NSComboBox) {
+		guard let cell = comboBox.cell, let tracking = tracking, let context = tracking.managedObjectContext else { return }
 
 		let value = cell.stringValue.lowercased()
 
@@ -211,8 +272,8 @@ class QuoJobSelections: NSViewController {
 		}
 	}
 
-	@IBAction func activitySelect(_ sender: NSComboBox) {
-		guard let cell = sender.cell else { return }
+	private func handleActivityChange(comboBox: NSComboBox) {
+		guard let cell = comboBox.cell else { return }
 
 		let value = cell.stringValue.lowercased()
 		let activity = CoreDataHelper.activities(in: tracking?.managedObjectContext)
@@ -255,37 +316,6 @@ class QuoJobSelections: NSViewController {
 		}
 
 		initTaskSelect()
-
-		formIsValid = true
-	}
-
-}
-
-extension QuoJobSelections: NSComboBoxDataSource {
-
-	func numberOfItems(in comboBox: NSComboBox) -> Int {
-		if (comboBox.isEqual(jobSelect)) {
-			return jobs.count
-		} else if (comboBox.isEqual(taskSelect)) {
-			return tasks.count
-		} else if (comboBox.isEqual(activitySelect)) {
-			return activities.count
-		}
-
-		return 0
-	}
-
-	func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
-		if (comboBox.isEqual(jobSelect)) {
-			let job = jobs[index]
-			return job.fullTitle
-		} else if (comboBox.isEqual(taskSelect)) {
-			return tasks[index].title
-		} else if (comboBox.isEqual(activitySelect)) {
-			return activities[index].title
-		}
-
-		return ""
 	}
 
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -43,7 +43,6 @@
                         </objectValues>
                     </comboBoxCell>
                     <connections>
-                        <action selector="jobSelect:" target="-2" id="F2X-7V-q4I"/>
                         <outlet property="dataSource" destination="-2" id="29U-CA-5vt"/>
                         <outlet property="delegate" destination="-2" id="Dep-QF-2Ks"/>
                     </connections>
@@ -61,7 +60,6 @@
                         </objectValues>
                     </comboBoxCell>
                     <connections>
-                        <action selector="taskSelect:" target="-2" id="uGC-nM-OCU"/>
                         <outlet property="dataSource" destination="-2" id="xmU-dD-b1s"/>
                         <outlet property="delegate" destination="-2" id="sg7-Mc-lAJ"/>
                         <outlet property="nextKeyView" destination="v8J-lr-IgX" id="7rd-a8-5x4"/>
@@ -80,7 +78,6 @@
                         </objectValues>
                     </comboBoxCell>
                     <connections>
-                        <action selector="activitySelect:" target="-2" id="db7-LS-tqF"/>
                         <outlet property="dataSource" destination="-2" id="WAz-Z7-6xg"/>
                         <outlet property="delegate" destination="-2" id="eDG-QT-LTm"/>
                         <outlet property="nextKeyView" destination="62X-Sz-zBK" id="26O-xk-k7m"/>
