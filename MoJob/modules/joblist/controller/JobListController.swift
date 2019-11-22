@@ -203,7 +203,7 @@ class JobListController: NSViewController, AddFavoriteDelegate {
 		let padding = NSEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
 		let flowLayout = NSCollectionViewFlowLayout()
 		flowLayout.sectionInset = padding
-		flowLayout.minimumLineSpacing = 3
+		flowLayout.minimumLineSpacing = 0
 
 		collectionView.collectionViewLayout = flowLayout
 	}

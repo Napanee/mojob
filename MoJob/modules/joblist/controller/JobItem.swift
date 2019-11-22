@@ -28,6 +28,7 @@ class JobItem: NSCollectionViewItem {
 
 	override func viewDidLayout() {
 		view.wantsLayer = true
+		view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 		view.layer?.sublayers?.removeAll(where: { $0.isEqual(to: indicatorLayer) })
 
 		if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
@@ -82,7 +83,7 @@ class JobItem: NSCollectionViewItem {
 	override func mouseExited(with event: NSEvent) {
 		super.mouseExited(with: event)
 
-		view.layer?.backgroundColor = nil
+		view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 	}
 
 	override func mouseDown(with event: NSEvent) {
