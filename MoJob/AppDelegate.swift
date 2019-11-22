@@ -309,19 +309,19 @@ class AppDelegate: NSObject {
 			return
 		}
 
-		if
-			let presentedViewControllers = self.window.contentViewController?.presentedViewControllers,
-			let presentedViewController = presentedViewControllers.first(where: { $0.isKind(of: WakeUp.self) })
-		{
-			presentedViewController.dismiss(self)
-		}
-
 		timerSleep = Date()
 	}
 
 	@objc private func onScreenDidWake(notification: NSNotification) {
 		guard let currentTracking = CoreDataHelper.currentTracking else {
 			GlobalTimer.shared.startNoTrackingTimer()
+			return
+		}
+
+		if
+			let presentedViewControllers = self.window.contentViewController?.presentedViewControllers,
+			presentedViewControllers.contains(where: { $0.isKind(of: WakeUp.self) })
+		{
 			return
 		}
 
