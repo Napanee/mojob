@@ -75,11 +75,6 @@ class CalendarController: NSViewController {
 		}
 	}
 
-	override func viewWillLayout() {
-		view.wantsLayer = true
-		view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
-	}
-
 	override func viewDidDisappear() {
 		NSEvent.removeMonitor(monitor as Any)
 	}

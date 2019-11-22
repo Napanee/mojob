@@ -40,6 +40,12 @@ class SplitViewController: NSSplitViewController {
 //		return NSRect(x: drawnRect.minX - 2, y: 0, width: drawnRect.width + 4, height: drawnRect.height)
 //	}
 
+	override func viewWillLayout() {
+		super.viewWillLayout()
+		view.wantsLayer = true
+		view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
+	}
+
 	func collapsePanel(_ number: Int = 0) {
 		guard number < splitViewItems.count else {
 			return

@@ -59,6 +59,7 @@ class FavoriteItem: NSCollectionViewItem {
 		)
 
 		view.addTrackingArea(trackingArea!)
+		view.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
 	}
 
 	override func viewDidDisappear() {
