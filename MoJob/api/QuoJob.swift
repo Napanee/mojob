@@ -407,10 +407,12 @@ extension QuoJob {
 		return fetch(as: .common_getActivities, with: params)
 	}
 
-	func fetchTasks() -> Promise<[String: Any]> {
+	func fetchTasks(with ids: [String]? = nil) -> Promise<[String: Any]> {
 		var params = defaultParams
 
-		if let lastSync = lastSyncDate(for: "Task") {
+		if let ids = ids {
+			params["jobtask_ids"] = ids
+		} else if let lastSync = lastSyncDate(for: "Task") {
 			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
