@@ -78,32 +78,36 @@ class EditorController: QuoJobSelections {
 
 	@IBAction func save(_ sender: NSButton) {
 		if tracking == nil {
-			let tracking = CoreDataHelper.createTracking()
+			guard let tracking = CoreDataHelper.createTracking() else { return }
 
-			if let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() }) {
-				tracking?.job = job
-			} else if (jobSelect.stringValue != "") {
-				tracking?.custom_job = jobSelect.stringValue
+			let indexJob = jobSelect.indexOfSelectedItem
+			let indexTask = taskSelect.indexOfSelectedItem
+			let indexActivity = activitySelect.indexOfSelectedItem
+
+			if (indexJob >= 0 && jobs.count > indexJob) {
+				tracking.job = jobs[indexJob]
+			} else {
+				tracking.custom_job = jobSelect.stringValue
 			}
 
-			if let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() }) {
-				tracking?.activity = activity
+			if (indexTask >= 0 && tasks.count > indexTask) {
+				tracking.task = tasks[indexTask]
 			}
 
-			if let task = CoreDataHelper.tasks().first(where: { $0.title?.lowercased() == taskSelect.stringValue.lowercased() }) {
-				tracking?.task = task
+			if (indexActivity >= 0 && activities.count > indexActivity) {
+				tracking.activity = activities[indexActivity]
 			}
 
-			tracking?.comment = comment.stringValue.count > 0 ? comment.stringValue : nil
+			tracking.comment = comment.stringValue.count > 0 ? comment.stringValue : nil
 
 			let dateComponentsStart = DateComponents(year: Int(fromYear.stringValue), month: Int(fromMonth.stringValue), day: Int(fromDay.stringValue), hour: Int(fromHour.stringValue), minute: Int(fromMinute.stringValue))
 			if let dateStart = Calendar.current.date(from: dateComponentsStart) {
-				tracking?.date_start = dateStart
+				tracking.date_start = dateStart
 			}
 
 			let dateComponentsUntil = DateComponents(year: Int(fromYear.stringValue), month: Int(fromMonth.stringValue), day: Int(fromDay.stringValue), hour: Int(untilHour.stringValue), minute: Int(untilMinute.stringValue))
 			if let dateUntil = Calendar.current.date(from: dateComponentsUntil) {
-				tracking?.date_end = dateUntil
+				tracking.date_end = dateUntil
 			}
 
 			self.tracking = tracking

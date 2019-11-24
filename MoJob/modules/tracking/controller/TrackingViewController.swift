@@ -25,9 +25,25 @@ class TrackingViewController: QuoJobSelections {
 			}
 
 			if (newValue && !isFavorite) {
-				let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() })
-				let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
-				let task = CoreDataHelper.tasks().first(where: { $0.title?.lowercased() == taskSelect.stringValue.lowercased() })
+				let indexJob = jobSelect.indexOfSelectedItem
+				let indexTask = taskSelect.indexOfSelectedItem
+				let indexActivity = activitySelect.indexOfSelectedItem
+
+				var job: Job?
+				var task: Task?
+				var activity: Activity?
+
+				if (indexJob >= 0 && jobs.count > indexJob) {
+					job = jobs[indexJob]
+				}
+
+				if (indexTask >= 0 && tasks.count > indexTask) {
+					task = tasks[indexTask]
+				}
+
+				if (indexActivity >= 0 && activities.count > indexActivity) {
+					activity = activities[indexActivity]
+				}
 
 				CoreDataHelper.createFavorite(job: job, task: task, activity: activity)
 
