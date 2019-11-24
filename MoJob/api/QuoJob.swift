@@ -624,7 +624,7 @@ extension QuoJob {
 		}
 	}
 
-	private func handleTasks(with result: [String: Any]) -> Promise<Void> {
+	func handleTasks(with result: [String: Any]) -> Promise<Void> {
 		return Promise { seal in
 			guard let taskItems = result["jobtasks"] as? [[String: Any]], let timestamp = result["timestamp"] as? String, taskItems.count > 0 else {
 				seal.fulfill_()
