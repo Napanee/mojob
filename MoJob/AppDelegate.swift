@@ -141,14 +141,17 @@ class AppDelegate: NSObject {
 		let attributed = NSAttributedString(string: "00:00", attributes: attributes)
 		statusBarButton.attributedTitle = attributed
 
+		var backgroundColor = CGColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 0.4)
 		if #available(OSX 10.14, *) {
-			statusBarButton.wantsLayer = true
-			let layer = CALayer()
-			layer.frame = CGRect(x: 0, y: 3, width: statusBarButton.bounds.width, height: statusBarButton.bounds.height - 6)
-			layer.cornerRadius = 4.0
-			layer.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.4).cgColor
-			statusBarButton.layer?.addSublayer(layer)
+			backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.4).cgColor
 		}
+
+		statusBarButton.wantsLayer = true
+		let layer = CALayer()
+		layer.frame = CGRect(x: 0, y: 3, width: statusBarButton.bounds.width, height: statusBarButton.bounds.height - 6)
+		layer.cornerRadius = 4.0
+		layer.backgroundColor = backgroundColor
+		statusBarButton.layer?.addSublayer(layer)
 
 		renderStatusBarMenu()
 		statusItem.menu = appMenu

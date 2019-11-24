@@ -60,6 +60,8 @@ class ComboBox: NSComboBox {
 
 		if #available(OSX 10.14, *) {
 			underlineColorActive = NSColor.controlAccentColor.cgColor
+		} else {
+			underlineColorActive = CGColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0)
 		}
 	}
 

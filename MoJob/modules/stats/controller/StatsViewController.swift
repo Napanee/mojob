@@ -356,7 +356,7 @@ extension StatsViewController {
 		if #available(OSX 10.14, *) {
 			chartDataSet.colors = [NSColor.controlAccentColor]
 		} else {
-			chartDataSet.colors = [NSColor(calibratedRed: 0.063, green: 0.475, blue: 0.988, alpha: 1.0)]
+			chartDataSet.colors = [NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0)]
 		}
 		chartDataSet.valueFont = NSFont.systemFont(ofSize: 10, weight: .semibold)
 		chartDataSet.valueFormatter = self

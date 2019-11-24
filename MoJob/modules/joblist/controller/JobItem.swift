@@ -76,7 +76,7 @@ class JobItem: NSCollectionViewItem {
 		if #available(OSX 10.14, *) {
 			view.layer?.backgroundColor = NSColor.controlAccentColor.withAlphaComponent(0.2).cgColor
 		} else {
-			view.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
+			view.layer?.backgroundColor = CGColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 0.2)
 		}
 	}
 

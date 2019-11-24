@@ -65,7 +65,7 @@ class TrackingViewController: QuoJobSelections {
 		if #available(OSX 10.14, *) {
 			required.layer?.backgroundColor = NSColor.controlAccentColor.cgColor
 		} else {
-			required.layer?.backgroundColor = NSColor.controlHighlightColor.cgColor
+			required.layer?.backgroundColor = CGColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0)
 		}
 
 		favoriteTracking.state = isFavorite ? .on : .off

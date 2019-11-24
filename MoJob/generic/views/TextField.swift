@@ -74,7 +74,7 @@ class TextField: NSTextField {
 	}
 
 	private func underscoreLayer(end: NSPoint) -> CALayer {
-		var lineColor = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0).cgColor
+		var lineColor = CGColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0)
 		if #available(OSX 10.14, *) {
 			lineColor = NSColor.controlAccentColor.cgColor
 		}

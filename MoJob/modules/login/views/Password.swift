@@ -74,7 +74,7 @@ class Password: NSSecureTextField {
 		let lineWidth: CGFloat = 1
 		let posTop = bounds.maxY - (lineWidth / 2)
 
-		var lineColor = NSColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0).cgColor
+		var lineColor = CGColor(red: 0.000, green: 0.478, blue: 1.000, alpha: 1.0)
 		if #available(OSX 10.14, *) {
 			lineColor = NSColor.controlAccentColor.cgColor
 		}
