@@ -237,6 +237,7 @@
 		E8AA8CBC22F891790017698F /* AutoLaunchHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = E8AA8CAB22F890520017698F /* AutoLaunchHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E8AECA66238ADCC400B48E34 /* DeleteFavoritePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AECA65238ADCC400B48E34 /* DeleteFavoritePolicy.swift */; };
 		E8AECA69238ADD1B00B48E34 /* Model_MoJob_001_004.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8AECA68238ADD1B00B48E34 /* Model_MoJob_001_004.xcmappingmodel */; };
+		E8AECA6D238AEC4100B48E34 /* MoJob-3.10.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8AECA6C238AEC4100B48E34 /* MoJob-3.10.0.html */; };
 		E8B58A3B232FCB6900DBCE44 /* Model_MoJob_001_002.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A3A232FCB6900DBCE44 /* Model_MoJob_001_002.xcmappingmodel */; };
 		E8B58A3D232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A3C232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel */; };
 		E8B58A3F232FCFA600DBCE44 /* Model_MoJob_001_003.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A3E232FCFA600DBCE44 /* Model_MoJob_001_003.xcmappingmodel */; };
@@ -443,6 +444,7 @@
 		E8AA8CB722F890540017698F /* AutoLaunchHelper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutoLaunchHelper.entitlements; sourceTree = "<group>"; };
 		E8AECA65238ADCC400B48E34 /* DeleteFavoritePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteFavoritePolicy.swift; sourceTree = "<group>"; };
 		E8AECA68238ADD1B00B48E34 /* Model_MoJob_001_004.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_001_004.xcmappingmodel; sourceTree = "<group>"; };
+		E8AECA6C238AEC4100B48E34 /* MoJob-3.10.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.10.0.html"; sourceTree = "<group>"; };
 		E8B58A3A232FCB6900DBCE44 /* Model_MoJob_001_002.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_001_002.xcmappingmodel; sourceTree = "<group>"; };
 		E8B58A3C232FCD5400DBCE44 /* Model_MoJob_002_003.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_002_003.xcmappingmodel; sourceTree = "<group>"; };
 		E8B58A3E232FCFA600DBCE44 /* Model_MoJob_001_003.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model_MoJob_001_003.xcmappingmodel; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				E853A5F92337EC6200689F62 /* MoJob-3.8.0.html */,
 				E866C9C02338E14F001BEAFD /* MoJob-3.8.1.html */,
 				E87C0B65233A017D00CA4693 /* MoJob-3.9.0.html */,
+				E8AECA6C238AEC4100B48E34 /* MoJob-3.10.0.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1366,6 +1369,7 @@
 				E8716BE8230490C600AF5BC0 /* MoJob-3.1.0.html in Resources */,
 				E8F94904232F900D0084AAFE /* MoJob-3.7.2.html in Resources */,
 				E86A741A2305E75F00C77866 /* MoJob-3.2.0.html in Resources */,
+				E8AECA6D238AEC4100B48E34 /* MoJob-3.10.0.html in Resources */,
 				E81E75EC23034DF60071B90C /* MoJob-3.0.2.html in Resources */,
 				E8D35A2622FF87480014AFE4 /* CalendarWeek.xib in Resources */,
 				E866C9C12338E150001BEAFD /* MoJob-3.8.1.html in Resources */,
@@ -1964,7 +1968,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1979,7 +1983,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.9.0;
+				MARKETING_VERSION = 3.10.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1997,7 +2001,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2011,7 +2015,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.9.0;
+				MARKETING_VERSION = 3.10.0;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
