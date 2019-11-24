@@ -66,9 +66,12 @@ class TrackingViewController: QuoJobSelections {
 	var viewHeightConstraint: NSLayoutConstraint!
 
 	override func viewDidLoad() {
-		tracking = CoreDataHelper.currentTracking
-
 		super.viewDidLoad()
+
+		nfc = false
+		delegate = self
+
+		tracking = CoreDataHelper.currentTracking
 
 		viewHeightConstraint = NSLayoutConstraint(item: view, attribute: .height, relatedBy: .equal, toItem: .none, attribute: .notAnAttribute, multiplier: 1, constant: 50)
 		view.addConstraint(viewHeightConstraint)
@@ -86,8 +89,6 @@ class TrackingViewController: QuoJobSelections {
 
 		favoriteTracking.state = isFavorite ? .on : .off
 		favoriteTracking.isHidden = tracking?.job == nil
-
-		nfc = false
 
 		GlobalTimer.shared.stopNoTrackingTimer()
 
@@ -152,8 +153,8 @@ class TrackingViewController: QuoJobSelections {
 		isFavorite = sender.state == .on
 	}
 
-	override func comboBoxSelectionDidChange(_ notification: Notification) {
-		super.comboBoxSelectionDidChange(notification)
+	override func comboBoxWillDismiss(_ notification: Notification) {
+		super.comboBoxWillDismiss(notification)
 
 		guard let comboBox = notification.object as? NSComboBox else { return }
 
