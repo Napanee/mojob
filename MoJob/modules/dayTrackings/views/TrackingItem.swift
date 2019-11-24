@@ -136,80 +136,6 @@ class TrackingItem: NSView {
 		}
 	}
 
-	override func rightMouseDown(with event: NSEvent) {
-		if (rightClickMenu.items.count > 0) {
-			NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
-			return
-		}
-
-		let restartItem = NSMenuItem(title: "Erneut starten", action: #selector(onContextRestart), keyEquivalent: "")
-		rightClickMenu.addItem(restartItem)
-
-		let editItem = NSMenuItem(title: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
-		if (tracking?.date_end == nil) {
-			editItem.action = nil
-		}
-		rightClickMenu.addItem(editItem)
-
-		rightClickMenu.addItem(NSMenuItem.separator())
-
-		let splitItem = NSMenuItem(title: "Aufteilen", action: #selector(onContextSplit), keyEquivalent: "")
-		if (tracking?.date_end == nil) {
-			splitItem.action = nil
-		}
-		rightClickMenu.addItem(splitItem)
-
-		let toggleFavoriteItem = NSMenuItem(title: "zu Favoriten hinzufügen", action: #selector(onContextToggleFavorite), keyEquivalent: "")
-		if (tracking?.job == nil) {
-			toggleFavoriteItem.action = nil
-		}
-		if let _ = CoreDataHelper.favorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity) {
-			toggleFavoriteItem.title = "von Favoriten entfernen"
-		}
-		rightClickMenu.addItem(toggleFavoriteItem)
-
-		rightClickMenu.addItem(NSMenuItem.separator())
-		let deleteItem = NSMenuItem(title: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
-		if (tracking?.date_end == nil) {
-			deleteItem.action = nil
-		}
-		rightClickMenu.addItem(deleteItem)
-
-		rightClickMenu.addItem(NSMenuItem.separator())
-		rightClickMenu.addItem(withTitle: "Color:", action: nil, keyEquivalent: "")
-		if let job = tracking?.job, let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
-			let colors = NSColorList(name: "MoJob", fromFile: path) {
-			let buttons = colors.allKeys.map({ (key) -> NSButton in
-				let color = colors.color(withKey: key)
-				let button = ColorButton(frame: NSRect(x: 0, y: 0, width: 15, height: 15))
-				button.target = self
-				button.action = #selector(onSelectColor(_:))
-				button.color = color
-				button.key = key
-
-				if (job.color == key) {
-					button.isEnabled = false
-				}
-
-				return button
-			})
-
-			let stack = NSStackView(views: buttons)
-			stack.edgeInsets = NSEdgeInsets(top: 5, left: 22, bottom: 5, right: 22)
-			stack.spacing = 5
-			stack.setFrameSize(NSSize(width: (buttons.count * 15 + (buttons.count - 1) * 5) + 44, height: 25))
-
-			let menuItem = NSMenuItem()
-			menuItem.view = stack
-			rightClickMenu.addItem(menuItem)
-		} else {
-			rightClickMenu.addItem(withTitle: "nicht verfügbar für custom Jobs", action: nil, keyEquivalent: "")
-		}
-		rightClickMenu.addItem(withTitle: "Farbe zurücksetzen", action: #selector(onContextResetColor), keyEquivalent: "")
-
-		NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
-	}
-
 	@objc func onContextRestart() {
 		guard let source = tracking, let clone = CoreDataHelper.createTracking(in: CoreDataHelper.currentTrackingContext) else { return }
 
@@ -294,6 +220,12 @@ class TrackingItem: NSView {
 	}
 
 	override func mouseDown(with event: NSEvent) {
+		let modifierFlags = event.modifierFlags
+
+		if (event.clickCount == 1 && modifierFlags.contains(.control)) {
+			showContextMenu(with: event)
+		}
+
 		if
 			event.clickCount == 2,
 			tracking?.date_end != nil,
@@ -316,6 +248,84 @@ class TrackingItem: NSView {
 
 			Answers.logCustomEvent(withName: "Tracking", customAttributes: ["Category": "tracking", "Action": "edit with double click"])
 		}
+	}
+
+	override func rightMouseDown(with event: NSEvent) {
+		showContextMenu(with: event)
+	}
+
+	private func showContextMenu(with event: NSEvent) {
+		if (rightClickMenu.items.count > 0) {
+			NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
+			return
+		}
+
+		let restartItem = NSMenuItem(title: "Erneut starten", action: #selector(onContextRestart), keyEquivalent: "")
+		rightClickMenu.addItem(restartItem)
+
+		let editItem = NSMenuItem(title: "Bearbeiten", action: #selector(onContextEdit), keyEquivalent: "")
+		if (tracking?.date_end == nil) {
+			editItem.action = nil
+		}
+		rightClickMenu.addItem(editItem)
+
+		rightClickMenu.addItem(NSMenuItem.separator())
+
+		let splitItem = NSMenuItem(title: "Aufteilen", action: #selector(onContextSplit), keyEquivalent: "")
+		if (tracking?.date_end == nil) {
+			splitItem.action = nil
+		}
+		rightClickMenu.addItem(splitItem)
+
+		let toggleFavoriteItem = NSMenuItem(title: "zu Favoriten hinzufügen", action: #selector(onContextToggleFavorite), keyEquivalent: "")
+		if (tracking?.job == nil) {
+			toggleFavoriteItem.action = nil
+		}
+		if let _ = CoreDataHelper.favorite(job: tracking?.job, task: tracking?.task, activity: tracking?.activity) {
+			toggleFavoriteItem.title = "von Favoriten entfernen"
+		}
+		rightClickMenu.addItem(toggleFavoriteItem)
+
+		rightClickMenu.addItem(NSMenuItem.separator())
+		let deleteItem = NSMenuItem(title: "Löschen", action: #selector(onContextDelete), keyEquivalent: "")
+		if (tracking?.date_end == nil) {
+			deleteItem.action = nil
+		}
+		rightClickMenu.addItem(deleteItem)
+
+		rightClickMenu.addItem(NSMenuItem.separator())
+		rightClickMenu.addItem(withTitle: "Color:", action: nil, keyEquivalent: "")
+		if let job = tracking?.job, let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
+			let colors = NSColorList(name: "MoJob", fromFile: path) {
+			let buttons = colors.allKeys.map({ (key) -> NSButton in
+				let color = colors.color(withKey: key)
+				let button = ColorButton(frame: NSRect(x: 0, y: 0, width: 15, height: 15))
+				button.target = self
+				button.action = #selector(onSelectColor(_:))
+				button.color = color
+				button.key = key
+
+				if (job.color == key) {
+					button.isEnabled = false
+				}
+
+				return button
+			})
+
+			let stack = NSStackView(views: buttons)
+			stack.edgeInsets = NSEdgeInsets(top: 5, left: 22, bottom: 5, right: 22)
+			stack.spacing = 5
+			stack.setFrameSize(NSSize(width: (buttons.count * 15 + (buttons.count - 1) * 5) + 44, height: 25))
+
+			let menuItem = NSMenuItem()
+			menuItem.view = stack
+			rightClickMenu.addItem(menuItem)
+		} else {
+			rightClickMenu.addItem(withTitle: "nicht verfügbar für custom Jobs", action: nil, keyEquivalent: "")
+		}
+		rightClickMenu.addItem(withTitle: "Farbe zurücksetzen", action: #selector(onContextResetColor), keyEquivalent: "")
+
+		NSMenu.popUpContextMenu(rightClickMenu, with: event, for: self)
 	}
 
 	@objc func onSelectColor(_ sender: NSButton) {
