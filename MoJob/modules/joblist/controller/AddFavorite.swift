@@ -13,22 +13,27 @@ class AddFavorite: QuoJobSelections {
 
 	override var formIsValid: Bool {
 		get {
-			let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() })
-			let task = CoreDataHelper.tasks().first(where: { $0.title?.lowercased() == taskSelect.stringValue.lowercased() })
-			let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
-			let isFavorite = CoreDataHelper.favorite(job: job, task: task, activity: activity) != nil
+			let indexJob = jobSelect.indexOfSelectedItem
+			let indexTask = taskSelect.indexOfSelectedItem
+			let indexActivity = activitySelect.indexOfSelectedItem
 
-			if (job == nil) {
+			if (indexJob < 0) {
 				errorLabel.stringValue = "Du musst mindestens einen Job auswählen."
 				errorLabel.isHidden = false
-			} else if (isFavorite) {
-				errorLabel.stringValue = "Es gibt schon einen Favoriten mit deiner Auswahl."
-				errorLabel.isHidden = false
-			} else {
-				errorLabel.isHidden = true
+
+				return false
 			}
 
-			return errorLabel.isHidden
+			if (indexJob >= 0 && jobs.count > indexJob && indexTask >= 0 && tasks.count > indexTask && indexActivity >= 0 && activities.count > indexActivity && CoreDataHelper.favorite(job: jobs[indexJob], task: tasks[indexTask], activity: activities[indexActivity]) != nil) {
+				errorLabel.stringValue = "Es gibt schon einen Favoriten mit deiner Auswahl."
+				errorLabel.isHidden = false
+
+				return false
+			}
+
+			errorLabel.isHidden = true
+
+			return true
 		}
 		set {
 			saveButton.isEnabled = newValue && formIsValid
@@ -41,13 +46,31 @@ class AddFavorite: QuoJobSelections {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		nfc = false
+
 		initEditor()
 	}
 
 	@IBAction func save(_ sender: NSButton) {
-		let job = CoreDataHelper.jobs().first(where: { $0.fullTitle.lowercased() == jobSelect.stringValue.lowercased() })
-		let activity = CoreDataHelper.activities().first(where: { $0.title?.lowercased() == activitySelect.stringValue.lowercased() })
-		let task = CoreDataHelper.tasks().first(where: { $0.title?.lowercased() == taskSelect.stringValue.lowercased() })
+		let indexJob = jobSelect.indexOfSelectedItem
+		let indexTask = taskSelect.indexOfSelectedItem
+		let indexActivity = activitySelect.indexOfSelectedItem
+
+		var job: Job?
+		var task: Task?
+		var activity: Activity?
+
+		if (indexJob >= 0 && jobs.count > indexJob) {
+			job = jobs[indexJob]
+		}
+
+		if (indexTask >= 0 && tasks.count > indexTask) {
+			task = tasks[indexTask]
+		}
+
+		if (indexActivity >= 0 && activities.count > indexActivity) {
+			activity = activities[indexActivity]
+		}
 
 		CoreDataHelper.createFavorite(job: job, task: task, activity: activity)
 
