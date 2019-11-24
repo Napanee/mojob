@@ -160,34 +160,30 @@ class QuoJob: NSObject {
 
 		dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 
-		return Promise { seal in
-			login().done({ _ in
-				var params = self.defaultParams
-				params["hourbooking"] = [
-					"id": id,
-					"date": self.dateFormatterFull.string(from: tracking.date_end! as Date),
-					"time_from": self.dateFormatterTime.string(from: tracking.date_start! as Date),
-					"time_until": self.dateFormatterTime.string(from: tracking.date_end! as Date),
-					"job_id": tracking.job?.id,
-					"activity_id": activityId,
-					"jobtask_id": taskId,
-					"text": tracking.comment,
-					"booking_type": bookingTypeString
-				]
+		return firstly(execute: {
+			return login()
+		}).then({ _ -> Promise<[String: Any]> in
+			var params = self.defaultParams
+			params["hourbooking"] = [
+				"id": id,
+				"date": self.dateFormatterFull.string(from: tracking.date_end! as Date),
+				"time_from": self.dateFormatterTime.string(from: tracking.date_start! as Date),
+				"time_until": self.dateFormatterTime.string(from: tracking.date_end! as Date),
+				"job_id": tracking.job?.id,
+				"activity_id": activityId,
+				"jobtask_id": taskId,
+				"text": tracking.comment,
+				"booking_type": bookingTypeString
+			]
 
-				self.fetch(as: .myTime_putHourbooking, with: params).done { result in
-					if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String, let timestamp = hourbooking["date_created"] as? String, let date = self.dateFormatterFull.date(from: timestamp) {
-						seal.fulfill((id: id, timestamp: date))
-					}
-				}.catch({ error in
-					GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Exportieren.", andInformationtext: error.localizedDescription)
-					seal.reject(error)
-				})
-			}).catch({ error in
-				GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Exportieren.", andInformationtext: error.localizedDescription)
-				seal.reject(error)
-			})
-		}
+			return self.fetch(as: .myTime_putHourbooking, with: params)
+		}).then({ result -> Promise<(id: String, timestamp: Date)> in
+			return Promise { seal in
+				if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String, let timestamp = hourbooking["date_created"] as? String, let date = self.dateFormatterFull.date(from: timestamp) {
+					seal.fulfill((id: id, timestamp: date))
+				}
+			}
+		})
 	}
 
 	func deleteTracking(tracking: Tracking) -> Promise<Void> {
