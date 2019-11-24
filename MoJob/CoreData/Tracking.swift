@@ -85,16 +85,26 @@ extension Tracking {
 	func export() {
 		guard let tracking = CoreDataHelper.tracking(with: objectID) else { return }
 
-		QuoJob.shared.exportTracking(tracking: self).done({ (id, date) in
+		firstly(execute: {
+			QuoJob.shared.exportTracking(tracking: self)
+		}).then({ (id, date) -> Promise<[String: Any]> in
 			tracking.id = id
 			tracking.exported = SyncStatus.success.rawValue
 			tracking.sync = date
 
+			guard let id = tracking.task?.id else { throw PMKError.cancelled }
+
 			CoreDataHelper.save()
-		}).catch { error in
+
+			return QuoJob.shared.fetchTasks(with: [id])
+		}).then({ resultTasks in
+			return QuoJob.shared.handleTasks(with: resultTasks)
+		}).catch({ error in
+			GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Exportieren.", andInformationtext: error.localizedDescription)
 			tracking.exported = SyncStatus.error.rawValue
+		}).finally({
 			CoreDataHelper.save()
-		}
+		})
 	}
 
 }

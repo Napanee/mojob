@@ -7,6 +7,20 @@
 //
 
 import Cocoa
+import PromiseKit
+
+protocol QuoJobSelectionsDelegate {
+	func hoursForTaskDidFetched(task: Task)
+	func jobDidChanged()
+	func taskDidChanged()
+	func activityDidChanged()
+}
+
+extension QuoJobSelectionsDelegate {
+	func jobDidChanged() {}
+	func taskDidChanged() {}
+	func activityDidChanged() {}
+}
 
 class QuoJobSelections: NSViewController {
 
@@ -23,6 +37,7 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var comment: NSTextField!
 
 	let userDefaults = UserDefaults()
+	var delegate: QuoJobSelectionsDelegate?
 	var dateStart: Date? {
 		didSet {
 			initStartDate()
@@ -209,30 +224,15 @@ extension QuoJobSelections: NSComboBoxDataSource {
 
 extension QuoJobSelections: NSComboBoxDelegate {
 
-	func comboBoxSelectionDidChange(_ notification: Notification) {
-		guard let comboBox = notification.object as? NSComboBox else { return }
-
-		if (comboBox.isEqual(jobSelect)) {
-			handleJobChange(comboBox: comboBox)
-		} else if (comboBox.isEqual(taskSelect)) {
-			handleTaskChange(comboBox: comboBox)
-		} else if (comboBox.isEqual(activitySelect)) {
-			handleActivityChange(comboBox: comboBox)
-		}
-	}
-
 	func comboBoxWillDismiss(_ notification: Notification) {
 		guard let comboBox = notification.object as? NSComboBox else { return }
-
-		if (comboBox.indexOfSelectedItem >= 0 && comboBox.stringValue != jobs[comboBox.indexOfSelectedItem].fullTitle) {
-			comboBox.selectItem(at: -1)
-		}
 
 		if (comboBox.isEqual(jobSelect)) {
 			handleJobChange(comboBox: comboBox)
 			formIsValid = true
 		} else if (comboBox.isEqual(taskSelect)) {
 			handleTaskChange(comboBox: comboBox)
+			formIsValid = true
 		} else if (comboBox.isEqual(activitySelect)) {
 			handleActivityChange(comboBox: comboBox)
 			formIsValid = true
@@ -240,14 +240,19 @@ extension QuoJobSelections: NSComboBoxDelegate {
 	}
 
 	private func handleJobChange(comboBox: NSComboBox) {
-		if let cell = comboBox.cell, let tracking = tracking, let context = tracking.managedObjectContext {
-			let value = cell.stringValue.lowercased()
+		delegate?.jobDidChanged()
 
-			if (value == "") {
+		if let tracking = tracking {
+			let index = comboBox.indexOfSelectedItem
+			let value = comboBox.stringValue.lowercased()
+
+			tracking.task = nil
+
+			if (index >= 0) {
+				tracking.job = jobs[index]
+				tracking.custom_job = nil
+			} else if (value == "") {
 				tracking.job = nil
-				tracking.task = nil
-			} else if let job = CoreDataHelper.jobs(in: context).first(where: { $0.fullTitle.lowercased() == value }) {
-				tracking.job = job
 				tracking.custom_job = nil
 			} else {
 				tracking.job = nil
@@ -255,67 +260,81 @@ extension QuoJobSelections: NSComboBoxDelegate {
 			}
 		}
 
+		delegate?.taskDidChanged()
+		taskSelect.deselectItem(at: taskSelect.indexOfSelectedItem)
 		taskSelect.stringValue = ""
 		initTaskSelect()
 		initActivitySelect()
 	}
 
 	private func handleTaskChange(comboBox: NSComboBox) {
-		guard let cell = comboBox.cell, let tracking = tracking, let context = tracking.managedObjectContext else { return }
+		delegate?.taskDidChanged()
 
-		let value = cell.stringValue.lowercased()
+		let index = comboBox.indexOfSelectedItem
 
-		if (value == "") {
-			tracking.task = nil
-		} else if let task = CoreDataHelper.tasks(in: context).first(where: { $0.title?.lowercased() == value }) {
+		if (index < 0) {
+			tracking?.task = nil
+			return
+		}
+
+		let task = tasks[index]
+
+		if let delegate = delegate {
+			if let id = task.id, Date().timeIntervalSince(task.sync!) > 0 {
+				firstly(execute: {
+					return QuoJob.shared.login()
+				}).then({ success in
+					return QuoJob.shared.fetchTasks(with: [id])
+				}).then({ resultTasks in
+					return QuoJob.shared.handleTasks(with: resultTasks)
+				}).done({ _ in
+					CoreDataHelper.save()
+				}).catch({ _ in
+				}).finally({
+					delegate.hoursForTaskDidFetched(task: task)
+				})
+			} else {
+				delegate.hoursForTaskDidFetched(task: task)
+			}
+		}
+
+		if let tracking = tracking {
 			tracking.task = task
 		}
 	}
 
 	private func handleActivityChange(comboBox: NSComboBox) {
-		guard let cell = comboBox.cell else { return }
+		delegate?.activityDidChanged()
 
-		let value = cell.stringValue.lowercased()
-		let activity = CoreDataHelper.activities(in: tracking?.managedObjectContext)
-			.filter({
-				if let job = tracking?.job {
-					return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
-				}
+		let index = comboBox.indexOfSelectedItem
 
-				return $0.internal_service || (nfc && $0.nfc)
-			})
-			.first(where: { $0.title?.lowercased() == value })
-
-		if let tracking = tracking, let _ = tracking.managedObjectContext {
-			if (value == "") {
-				tracking.activity = nil
-			} else if let activity = activity {
-				if (nfc && activity.nfc) {
-					tracking.job = nil
-				}
-
-				tracking.activity = activity
-			}
-		}
-
-		if (value == "") {
+		if (index < 0) {
+			tracking?.activity = nil
 			jobSelect.isEnabled = true
-			taskSelect.isEnabled = true
-		} else if let activity = activity {
-			if (nfc && activity.nfc) {
-				jobSelect.cell?.stringValue = ""
-				jobSelect.deselectItem(at: jobSelect.indexOfSelectedItem)
-				jobSelect.isEnabled = false
-				taskSelect.cell?.stringValue = ""
-				taskSelect.deselectItem(at: taskSelect.indexOfSelectedItem)
-				taskSelect.isEnabled = false
-			} else {
-				jobSelect.isEnabled = true
-				taskSelect.isEnabled = true
-			}
+
+			return
 		}
 
-		initTaskSelect()
+		let activity = activities[index]
+
+		tracking?.activity = activity
+
+		if (nfc && activity.nfc) {
+			tracking?.job = nil
+			jobSelect.stringValue = ""
+			jobSelect.deselectItem(at: jobSelect.indexOfSelectedItem)
+			jobSelect.isEnabled = false
+			delegate?.jobDidChanged()
+
+			tracking?.task = nil
+			taskSelect.stringValue = ""
+			taskSelect.deselectItem(at: taskSelect.indexOfSelectedItem)
+			taskSelect.isEnabled = false
+			delegate?.taskDidChanged()
+			initTaskSelect()
+		} else {
+			jobSelect.isEnabled = true
+		}
 	}
 
 }
@@ -388,24 +407,43 @@ extension QuoJobSelections: NSTextFieldDelegate {
 		let value = comboBoxCell.stringValue.lowercased()
 
 		if (comboBox.isEqual(jobSelect)) {
+			delegate?.jobDidChanged()
+
 			jobs = CoreDataHelper.jobs(in: tracking?.managedObjectContext)
 				.filter({ value == "" || $0.fullTitle.lowercased().contains(value) })
 				.sorted(by: { $0.number! != $1.number! ? $0.number! < $1.number! : $0.title! < $1.title! })
+
+
+			if (jobs.count == 1 && jobs[0].title?.lowercased() == value.lowercased()) {
+				comboBox.selectItem(at: 0)
+			}
+
+			formIsValid = true
 
 			if (jobs.count > 0) {
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		} else if (comboBox.isEqual(taskSelect)) {
+			delegate?.taskDidChanged()
+
 			let index = jobSelect.indexOfSelectedItem
 
 			tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
-				.filter({ ($0.job?.id == tracking?.job?.id || index >= 0 && $0.job?.id == jobs[index].id) && (value == "" || ($0.title ?? "").lowercased().contains(value)) })
+				.filter({ $0.job?.id != nil && ($0.job?.id == tracking?.job?.id || index >= 0 && $0.job?.id == jobs[index].id) && (value == "" || ($0.title ?? "").lowercased().contains(value)) })
 				.sorted(by: { $0.title! < $1.title! })
+
+			if (tasks.count == 1 && tasks[0].title?.lowercased() == value.lowercased()) {
+				comboBox.selectItem(at: 0)
+			}
+
+			formIsValid = true
 
 			if (tasks.count > 0) {
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		} else if (comboBox.isEqual(activitySelect)) {
+			delegate?.activityDidChanged()
+
 			activities = CoreDataHelper.activities(in: tracking?.managedObjectContext)
 				.filter({
 					if let job = tracking?.job {
@@ -417,11 +455,15 @@ extension QuoJobSelections: NSTextFieldDelegate {
 				.filter({ value == "" || $0.title!.lowercased().contains(value) })
 				.sorted(by: { $0.title! < $1.title! })
 
+			if (activities.count == 1 && activities[0].title?.lowercased() == value.lowercased()) {
+				comboBox.selectItem(at: 0)
+			}
+
+			formIsValid = true
+
 			if (activities.count > 0) {
 				comboBoxCell.perform(Selector(("popUp:")))
 			}
 		}
-
-		comboBox.reloadData()
 	}
 }

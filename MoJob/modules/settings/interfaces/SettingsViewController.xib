@@ -123,7 +123,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7rz-r8-uRV">
-                                        <rect key="frame" x="28" y="664" width="34" height="16"/>
+                                        <rect key="frame" x="28" y="667" width="34" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="nach" id="HJ6-s4-tCn">
                                             <font key="font" metaFont="systemLight" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -137,7 +137,7 @@
                                             <constraint firstAttribute="height" constant="26" id="lP6-UK-B1b"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="30" drawsBackground="YES" id="dMm-YC-O3P">
-                                            <font key="font" metaFont="systemThin" size="20"/>
+                                            <font key="font" metaFont="systemThin" size="17"/>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -146,7 +146,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Myb-pC-Rc0">
-                                        <rect key="frame" x="108" y="664" width="502" height="16"/>
+                                        <rect key="frame" x="108" y="667" width="502" height="16"/>
                                         <textFieldCell key="cell" selectable="YES" title="Minuten Inaktivität erinnern, dass kein Tracking läuft (0 eingeben zum Deaktivieren)" id="jsa-f0-J0r">
                                             <font key="font" metaFont="systemLight" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -154,7 +154,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WWP-Rb-FJj">
-                                        <rect key="frame" x="28" y="628" width="34" height="16"/>
+                                        <rect key="frame" x="28" y="631" width="34" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="nach" id="AhZ-XW-5ha">
                                             <font key="font" metaFont="systemLight" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -168,7 +168,7 @@
                                             <constraint firstAttribute="width" constant="40" id="jmN-r9-xkN"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="30" drawsBackground="YES" id="8h4-7J-UYu">
-                                            <font key="font" metaFont="systemThin" size="20"/>
+                                            <font key="font" metaFont="systemThin" size="17"/>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -177,7 +177,7 @@
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hgA-X8-qTP">
-                                        <rect key="frame" x="108" y="628" width="508" height="16"/>
+                                        <rect key="frame" x="108" y="631" width="508" height="16"/>
                                         <textFieldCell key="cell" selectable="YES" title="Stunden daran erinnern, dass das Tagessoll erfüllt ist (0 eingeben zum Deaktivieren)" id="4ks-Up-jRA">
                                             <font key="font" metaFont="systemLight" size="13"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -254,7 +254,7 @@
                                                                     <constraint firstAttribute="width" constant="40" id="xDn-KK-idb"/>
                                                                 </constraints>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="30" drawsBackground="YES" id="kj7-TN-8q7">
-                                                                    <font key="font" metaFont="systemThin" size="20"/>
+                                                                    <font key="font" metaFont="systemThin" size="17"/>
                                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -392,7 +392,7 @@
                                                                     <constraint firstAttribute="height" constant="26" id="Rsm-VI-eNK"/>
                                                                 </constraints>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="30" drawsBackground="YES" id="SOA-dg-HPB">
-                                                                    <font key="font" metaFont="systemThin" size="20"/>
+                                                                    <font key="font" metaFont="systemThin" size="17"/>
                                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>

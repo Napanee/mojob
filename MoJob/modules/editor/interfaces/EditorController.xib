@@ -18,6 +18,7 @@
                 <outlet property="fromYear" destination="ef2-mf-82k" id="Ls0-7n-cDY"/>
                 <outlet property="jobSelect" destination="Z78-hW-Vo6" id="quu-v7-Yu4"/>
                 <outlet property="saveButton" destination="SJk-dW-6EJ" id="OUY-is-Fy0"/>
+                <outlet property="taskHours" destination="Fkb-uo-2tg" id="suR-SG-IXF"/>
                 <outlet property="taskSelect" destination="PCu-pY-pc0" id="RJ9-X2-mzk"/>
                 <outlet property="untilHour" destination="t3e-Cf-nTC" id="lrk-7Z-8SL"/>
                 <outlet property="untilMinute" destination="hzB-Th-6oG" id="qGC-DF-YGL"/>
@@ -26,14 +27,14 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="546" height="317"/>
+            <rect key="frame" x="0.0" y="0.0" width="546" height="336"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c7j-df-kS2">
-                    <rect key="frame" x="0.0" y="0.0" width="546" height="317"/>
+                    <rect key="frame" x="0.0" y="0.0" width="546" height="336"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="81b-du-VQj">
-                            <rect key="frame" x="0.0" y="254" width="546" height="63"/>
+                            <rect key="frame" x="0.0" y="273" width="546" height="63"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Am-V5-hJa">
                                     <rect key="frame" x="30" y="20" width="131" height="23"/>
@@ -80,7 +81,7 @@
                             </constraints>
                         </customView>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z78-hW-Vo6" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="30" y="216" width="489" height="25"/>
+                            <rect key="frame" x="30" y="235" width="489" height="25"/>
                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="0kg-9s-O1o">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -97,24 +98,45 @@
                                 <outlet property="nextKeyView" destination="PCu-pY-pc0" id="xzH-FV-bOJ"/>
                             </connections>
                         </comboBox>
-                        <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PCu-pY-pc0" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
-                            <rect key="frame" x="30" y="182" width="489" height="25"/>
-                            <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="ff1-Gj-erC">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <objectValues>
-                                    <string>Item 1</string>
-                                    <string>Item 2</string>
-                                    <string>Item 3</string>
-                                </objectValues>
-                            </comboBoxCell>
-                            <connections>
-                                <outlet property="dataSource" destination="-2" id="tzH-uE-hrY"/>
-                                <outlet property="delegate" destination="-2" id="XFh-CL-YfA"/>
-                                <outlet property="nextKeyView" destination="l9U-lW-Fq8" id="A5O-LU-aKt"/>
-                            </connections>
-                        </comboBox>
+                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="25t-MP-RbC">
+                            <rect key="frame" x="30" y="186" width="486" height="38"/>
+                            <subviews>
+                                <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PCu-pY-pc0" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="15" width="489" height="25"/>
+                                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="ff1-Gj-erC">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        <objectValues>
+                                            <string>Item 1</string>
+                                            <string>Item 2</string>
+                                            <string>Item 3</string>
+                                        </objectValues>
+                                    </comboBoxCell>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-2" id="tzH-uE-hrY"/>
+                                        <outlet property="delegate" destination="-2" id="XFh-CL-YfA"/>
+                                        <outlet property="nextKeyView" destination="l9U-lW-Fq8" id="A5O-LU-aKt"/>
+                                    </connections>
+                                </comboBox>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fkb-uo-2tg">
+                                    <rect key="frame" x="-2" y="0.0" width="54" height="14"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" id="fgR-Qo-7od">
+                                        <font key="font" metaFont="systemUltraLight" size="11"/>
+                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <visibilityPriorities>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                            </visibilityPriorities>
+                            <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                            </customSpacing>
+                        </stackView>
                         <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l9U-lW-Fq8" customClass="ComboBox" customModule="MoJob" customModuleProvider="target">
                             <rect key="frame" x="30" y="148" width="489" height="25"/>
                             <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="RC6-TY-Mwp">
@@ -160,7 +182,7 @@
                                                 <constraint firstAttribute="height" constant="26" id="whc-UQ-pLX"/>
                                             </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="18" drawsBackground="YES" id="e4k-lX-VsI">
-                                                <font key="font" metaFont="systemThin" size="20"/>
+                                                <font key="font" metaFont="systemThin" size="17"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -180,7 +202,7 @@
                                         <textField identifier="fromMonth" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imz-oH-pr6" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="41" y="0.0" width="33" height="26"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="05" drawsBackground="YES" id="DdW-Wc-lid">
-                                                <font key="font" metaFont="systemThin" size="20"/>
+                                                <font key="font" metaFont="systemThin" size="17"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -203,7 +225,7 @@
                                                 <constraint firstAttribute="width" constant="52" id="TWR-uf-ftF"/>
                                             </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="1984" drawsBackground="YES" id="tdo-5A-E7w">
-                                                <font key="font" metaFont="systemThin" size="20"/>
+                                                <font key="font" metaFont="systemThin" size="17"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -244,7 +266,7 @@
                                     </customSpacing>
                                 </stackView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tUt-kI-Qil">
-                                    <rect key="frame" x="304" y="9" width="30" height="19"/>
+                                    <rect key="frame" x="304" y="12" width="30" height="19"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="von" id="u1N-zP-gBo">
                                         <font key="font" metaFont="systemUltraLight" size="16"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -260,7 +282,7 @@
                                                 <constraint firstAttribute="width" constant="33" id="kml-Xj-idR"/>
                                             </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="12" drawsBackground="YES" id="Sqw-u9-Any">
-                                                <font key="font" metaFont="systemThin" size="20"/>
+                                                <font key="font" metaFont="systemThin" size="17"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -280,7 +302,7 @@
                                         <textField identifier="fromMinute" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imT-nJ-o00" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="41" y="0.0" width="33" height="26"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="00" drawsBackground="YES" id="Fzy-Ln-Nro">
-                                                <font key="font" metaFont="systemThin" size="20"/>
+                                                <font key="font" metaFont="systemThin" size="17"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -320,7 +342,7 @@
                                                 <constraint firstAttribute="width" constant="33" id="OKI-ik-QyY"/>
                                             </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="15" drawsBackground="YES" id="0T2-JP-YBB">
-                                                <font key="font" metaFont="systemThin" size="20"/>
+                                                <font key="font" metaFont="systemThin" size="17"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -340,7 +362,7 @@
                                         <textField identifier="untilMinute" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hzB-Th-6oG" customClass="NumberField" customModule="MoJob" customModuleProvider="target">
                                             <rect key="frame" x="41" y="0.0" width="33" height="26"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="00" drawsBackground="YES" id="ipR-2d-tea">
-                                                <font key="font" metaFont="systemThin" size="20"/>
+                                                <font key="font" metaFont="systemThin" size="17"/>
                                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
@@ -367,7 +389,7 @@
                                     </customSpacing>
                                 </stackView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lLv-BF-YXg">
-                                    <rect key="frame" x="414" y="9" width="25" height="19"/>
+                                    <rect key="frame" x="414" y="12" width="25" height="19"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="bis" id="WX9-Oz-O4d">
                                         <font key="font" metaFont="systemUltraLight" size="16"/>
                                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -398,16 +420,16 @@
                         </customView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="PCu-pY-pc0" firstAttribute="trailing" secondItem="Z78-hW-Vo6" secondAttribute="trailing" id="18j-G7-hfC"/>
                         <constraint firstItem="81b-du-VQj" firstAttribute="width" secondItem="c7j-df-kS2" secondAttribute="width" id="2KT-zi-hPo"/>
                         <constraint firstItem="Z78-hW-Vo6" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="BaA-ca-Prg"/>
-                        <constraint firstItem="PCu-pY-pc0" firstAttribute="leading" secondItem="Z78-hW-Vo6" secondAttribute="leading" id="IvO-0J-u5l"/>
                         <constraint firstAttribute="trailing" secondItem="XcE-nf-wbv" secondAttribute="trailing" constant="30" id="RMs-RY-D84"/>
+                        <constraint firstItem="25t-MP-RbC" firstAttribute="trailing" secondItem="Z78-hW-Vo6" secondAttribute="trailing" id="Stq-Fj-Kvb"/>
                         <constraint firstItem="l9U-lW-Fq8" firstAttribute="trailing" secondItem="Z78-hW-Vo6" secondAttribute="trailing" id="XFf-El-6vG"/>
                         <constraint firstItem="XcE-nf-wbv" firstAttribute="leading" secondItem="c7j-df-kS2" secondAttribute="leading" constant="30" id="aWU-bK-YUX"/>
                         <constraint firstAttribute="trailing" secondItem="Z78-hW-Vo6" secondAttribute="trailing" constant="30" id="avv-DG-Wa8"/>
                         <constraint firstItem="l9U-lW-Fq8" firstAttribute="leading" secondItem="Z78-hW-Vo6" secondAttribute="leading" id="eIe-tS-hkF"/>
                         <constraint firstItem="D7U-NT-K5Y" firstAttribute="width" secondItem="c7j-df-kS2" secondAttribute="width" id="eLo-D8-IDK"/>
+                        <constraint firstItem="25t-MP-RbC" firstAttribute="leading" secondItem="Z78-hW-Vo6" secondAttribute="leading" id="q6h-Ox-1Op"/>
                     </constraints>
                     <visibilityPriorities>
                         <integer value="1000"/>
