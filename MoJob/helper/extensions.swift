@@ -79,6 +79,7 @@ extension UserDefaults.Keys {
 	static let oddWeekDays = "oddWeekDays"
 	static let evenWeekHours = "evenWeekHours"
 	static let oddWeekHours = "oddWeekHours"
+	static let taskHoursInterval = "taskHoursInterval"
 }
 
 extension NSImage {

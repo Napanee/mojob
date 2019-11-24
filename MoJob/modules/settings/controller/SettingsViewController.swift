@@ -36,6 +36,7 @@ class SettingsViewController: NSViewController {
 	@IBOutlet weak var evenWeekWednesday: NSButton!
 	@IBOutlet weak var evenWeekThursday: NSButton!
 	@IBOutlet weak var evenWeekFriday: NSButton!
+	@IBOutlet weak var tasksHoursCache: TextField!
 	@IBOutlet weak var specialWeekDetailsTopConstraint: NSLayoutConstraint!
 
 	var _specialWeekDetailsTopConstraint = NSLayoutConstraint()
@@ -67,6 +68,9 @@ class SettingsViewController: NSViewController {
 
 		let dayCompleteValue = userDefaults.double(forKey: UserDefaults.Keys.notificationDaycomplete)
 		dayCompleteNotification.stringValue = String(dayCompleteValue)
+
+		let tasksHoursCacheValue = userDefaults.integer(forKey: UserDefaults.Keys.taskHoursInterval)
+		tasksHoursCache.stringValue = String(tasksHoursCacheValue)
 	}
 
 	override func viewDidAppear() {
@@ -252,6 +256,12 @@ extension SettingsViewController: NSTextFieldDelegate {
 			let weekEvenHours = Int(evenWeekHours.stringValue) ?? 30
 			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "WeekEven:Hours:set", "Value": weekEvenHours])
 			userDefaults.set(weekEvenHours, forKey: UserDefaults.Keys.evenWeekHours)
+		}
+
+		if (textField == tasksHoursCache) {
+			let tasksHoursCacheInt = Int(tasksHoursCache.stringValue) ?? 60
+			Answers.logCustomEvent(withName: "Settings", customAttributes: ["Action": "tasksHoursCache:set", "Value": tasksHoursCacheInt])
+			userDefaults.set(tasksHoursCacheInt, forKey: UserDefaults.Keys.taskHoursInterval)
 		}
 	}
 

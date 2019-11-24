@@ -61,7 +61,8 @@ class AppDelegate: NSObject {
 			UserDefaults.Keys.syncOnStart: true,
 			UserDefaults.Keys.crashOnSync: false,
 			UserDefaults.Keys.notificationNotracking: 10,
-			UserDefaults.Keys.notificationDaycomplete: 8.0
+			UserDefaults.Keys.notificationDaycomplete: 8.0,
+			UserDefaults.Keys.taskHoursInterval: 60
 		])
 
 		mainWindowController = MainWindowController()

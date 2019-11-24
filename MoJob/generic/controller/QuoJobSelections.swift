@@ -280,7 +280,7 @@ extension QuoJobSelections: NSComboBoxDelegate {
 		let task = tasks[index]
 
 		if let delegate = delegate {
-			if let id = task.id, Date().timeIntervalSince(task.sync!) > 0 {
+			if let id = task.id, Date().timeIntervalSince(task.sync!) > Double(userDefaults.integer(forKey: UserDefaults.Keys.taskHoursInterval) * 60) {
 				firstly(execute: {
 					return QuoJob.shared.login()
 				}).then({ success in

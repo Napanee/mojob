@@ -32,6 +32,7 @@
                 <outlet property="specialWeekDetails" destination="D4t-2m-XFg" id="xvo-dG-yeE"/>
                 <outlet property="specialWeekDetailsTopConstraint" destination="t94-An-LL3" id="a8U-AC-Iwy"/>
                 <outlet property="syncOnStartCheckbox" destination="mbt-94-YWL" id="13Y-tR-sDa"/>
+                <outlet property="tasksHoursCache" destination="gd0-aP-Aik" id="oQ1-VA-Lz3"/>
                 <outlet property="view" destination="c22-O7-iKe" id="ecX-j3-JiA"/>
             </connections>
         </customObject>
@@ -519,19 +520,53 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C7B-js-6Mt">
+                                        <rect key="frame" x="28" y="249" width="49" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Cache:" id="5AX-Sz-R7B">
+                                            <font key="font" metaFont="systemSemibold" size="13"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gd0-aP-Aik" customClass="TextField" customModule="MoJob" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="218" width="40" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="9sO-MF-lgQ"/>
+                                            <constraint firstAttribute="width" constant="40" id="Wc4-09-D34"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="30" drawsBackground="YES" id="pM8-E5-OnI">
+                                            <font key="font" metaFont="systemThin" size="17"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <outlet property="delegate" destination="-2" id="0Ee-GQ-TvO"/>
+                                        </connections>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qJ6-C8-ivI">
+                                        <rect key="frame" x="73" y="223" width="521" height="16"/>
+                                        <textFieldCell key="cell" selectable="YES" title="Minuten warten, bevor die gebuchten Stunden erneut von QuoJob aktualisiert werden." id="iar-Sv-AFs">
+                                            <font key="font" metaFont="systemLight" size="13"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="D4t-2m-XFg" firstAttribute="leading" secondItem="yEd-lW-MD9" secondAttribute="leading" constant="55" id="0t6-5h-uCV"/>
                                     <constraint firstItem="gpy-Y8-smW" firstAttribute="top" secondItem="mbt-94-YWL" secondAttribute="bottom" constant="30" id="1qY-2T-WG6"/>
                                     <constraint firstItem="eOR-1B-uxd" firstAttribute="top" secondItem="l3b-VH-d2c" secondAttribute="bottom" constant="30" id="2Kc-Ow-q7r"/>
+                                    <constraint firstItem="C7B-js-6Mt" firstAttribute="top" secondItem="D4t-2m-XFg" secondAttribute="bottom" constant="30" id="2nu-bp-mZ7"/>
+                                    <constraint firstItem="C7B-js-6Mt" firstAttribute="top" secondItem="fTb-Tu-2Gk" secondAttribute="bottom" priority="250" constant="30" id="30a-uz-wTO"/>
                                     <constraint firstItem="ld3-AC-m5E" firstAttribute="leading" secondItem="7rz-r8-uRV" secondAttribute="trailing" constant="5" id="3EN-fA-kmZ"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hgA-X8-qTP" secondAttribute="trailing" constant="30" id="3Z6-qH-g2A"/>
                                     <constraint firstItem="avi-ie-qko" firstAttribute="top" secondItem="GdW-Th-2Ts" secondAttribute="bottom" constant="10" id="4h2-tv-mET"/>
                                     <constraint firstItem="GdW-Th-2Ts" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="4qU-TH-jYA"/>
                                     <constraint firstItem="7rz-r8-uRV" firstAttribute="firstBaseline" secondItem="ld3-AC-m5E" secondAttribute="firstBaseline" id="5Zo-aa-LMF"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="D4t-2m-XFg" secondAttribute="bottom" constant="30" id="5xd-Iw-Uo0"/>
                                     <constraint firstItem="gpy-Y8-smW" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="5zn-gP-RNj"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="gd0-aP-Aik" secondAttribute="bottom" constant="30" id="64n-5G-dZP"/>
                                     <constraint firstItem="fTb-Tu-2Gk" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="98Y-t9-7RH"/>
+                                    <constraint firstItem="qJ6-C8-ivI" firstAttribute="firstBaseline" secondItem="gd0-aP-Aik" secondAttribute="firstBaseline" id="9JU-md-nB6"/>
                                     <constraint firstItem="90N-kN-2ot" firstAttribute="leading" secondItem="WWP-Rb-FJj" secondAttribute="trailing" constant="5" id="BaY-K6-nMe"/>
                                     <constraint firstItem="fYu-Rx-c6S" firstAttribute="leading" secondItem="yEd-lW-MD9" secondAttribute="leading" constant="20" id="Bi9-yI-tID"/>
                                     <constraint firstItem="avi-ie-qko" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="CET-yE-xre"/>
@@ -540,8 +575,11 @@
                                     <constraint firstItem="fTb-Tu-2Gk" firstAttribute="top" secondItem="GP3-a2-ByD" secondAttribute="bottom" constant="10" id="Gt9-zs-asy"/>
                                     <constraint firstItem="ld3-AC-m5E" firstAttribute="top" secondItem="gpy-Y8-smW" secondAttribute="bottom" constant="5" id="HVs-hg-Qb1"/>
                                     <constraint firstItem="Aia-UP-W2J" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="KPB-eY-feW"/>
+                                    <constraint firstItem="C7B-js-6Mt" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="LUE-gJ-55o"/>
                                     <constraint firstItem="fYu-Rx-c6S" firstAttribute="top" secondItem="YOK-4o-6wY" secondAttribute="bottom" constant="10" id="OOS-H6-cfK"/>
                                     <constraint firstItem="F4v-ez-mFn" firstAttribute="top" secondItem="fYu-Rx-c6S" secondAttribute="bottom" constant="20" id="R3z-Mf-4t1"/>
+                                    <constraint firstItem="gd0-aP-Aik" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="THq-Oe-nFL"/>
+                                    <constraint firstItem="gd0-aP-Aik" firstAttribute="top" secondItem="C7B-js-6Mt" secondAttribute="bottom" constant="5" id="V6T-4d-PSG"/>
                                     <constraint firstItem="GdW-Th-2Ts" firstAttribute="top" secondItem="Aia-UP-W2J" secondAttribute="bottom" constant="30" id="Vq0-26-yX7"/>
                                     <constraint firstItem="YOK-4o-6wY" firstAttribute="leading" secondItem="yEd-lW-MD9" secondAttribute="leading" constant="30" id="WAd-CX-tnb"/>
                                     <constraint firstItem="7rz-r8-uRV" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="X7k-Pv-Vhc"/>
@@ -549,6 +587,7 @@
                                     <constraint firstItem="WWP-Rb-FJj" firstAttribute="firstBaseline" secondItem="90N-kN-2ot" secondAttribute="firstBaseline" id="cB9-Oz-rtY"/>
                                     <constraint firstAttribute="trailing" secondItem="Aia-UP-W2J" secondAttribute="trailing" constant="30" id="cwm-bR-f48"/>
                                     <constraint firstItem="90N-kN-2ot" firstAttribute="top" secondItem="ld3-AC-m5E" secondAttribute="bottom" constant="10" id="ggZ-5h-obf"/>
+                                    <constraint firstItem="qJ6-C8-ivI" firstAttribute="leading" secondItem="gd0-aP-Aik" secondAttribute="trailing" constant="5" id="gv7-na-1x5"/>
                                     <constraint firstItem="eOR-1B-uxd" firstAttribute="leading" secondItem="YOK-4o-6wY" secondAttribute="leading" id="hR9-96-ajb"/>
                                     <constraint firstAttribute="trailing" secondItem="fYu-Rx-c6S" secondAttribute="trailing" constant="20" id="i1c-nY-XlA"/>
                                     <constraint firstItem="hgA-X8-qTP" firstAttribute="leading" secondItem="ld3-AC-m5E" secondAttribute="trailing" constant="5" id="iVp-nb-L6m"/>
