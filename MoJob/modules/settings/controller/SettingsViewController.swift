@@ -233,21 +233,13 @@ extension SettingsViewController: NSTextFieldDelegate {
 		if (textField == noTrackingNotification) {
 			guard let value = Int(textField.stringValue) else { return }
 
-			if (value > 0) {
-				userDefaults.set(value, forKey: UserDefaults.Keys.notificationNotracking)
-			} else {
-				userDefaults.removeObject(forKey: UserDefaults.Keys.notificationNotracking)
-			}
+			userDefaults.set(value, forKey: UserDefaults.Keys.notificationNotracking)
 		}
 
 		if (textField == dayCompleteNotification) {
 			guard let value = Double(textField.stringValue.replacingOccurrences(of: ",", with: ".")) else { return }
 
-			if (value > 0) {
-				userDefaults.set(value, forKey: UserDefaults.Keys.notificationDaycomplete)
-			} else {
-				userDefaults.removeObject(forKey: UserDefaults.Keys.notificationDaycomplete)
-			}
+			userDefaults.set(value, forKey: UserDefaults.Keys.notificationDaycomplete)
 		}
 
 		if (textField == oddWeekHours) {
