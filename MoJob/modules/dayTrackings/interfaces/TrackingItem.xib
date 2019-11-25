@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,6 +14,7 @@
                 <outlet property="endTimeLabel" destination="ZN9-Kc-rzr" id="daS-Vo-SyV"/>
                 <outlet property="startTimeLabel" destination="NuU-cB-96b" id="zF5-wI-rlu"/>
                 <outlet property="statusImage" destination="s40-uR-V2y" id="9GY-uK-STQ"/>
+                <outlet property="sublineLabel" destination="Joo-in-G1C" id="kke-jr-uDb"/>
                 <outlet property="textView" destination="jzA-X6-Fee" id="hD1-2n-lCB"/>
                 <outlet property="titleLabel" destination="hhO-zs-Pec" id="ILl-Cj-YN0"/>
             </connections>
@@ -20,11 +22,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="osv-QK-7DM">
-            <rect key="frame" x="0.0" y="0.0" width="517" height="84"/>
+            <rect key="frame" x="0.0" y="0.0" width="517" height="102"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NuU-cB-96b">
-                    <rect key="frame" x="8" y="62" width="39" height="17"/>
+                    <rect key="frame" x="8" y="81" width="39" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="08:07" id="R43-j4-Tze">
                         <font key="font" metaFont="systemThin" size="13"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -32,7 +34,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZN9-Kc-rzr">
-                    <rect key="frame" x="8" y="5" width="35" height="17"/>
+                    <rect key="frame" x="8" y="5" width="35" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="10:12" id="ZWI-ME-ZZu">
                         <font key="font" metaFont="systemThin" size="13"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -40,10 +42,10 @@
                     </textFieldCell>
                 </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="jzA-X6-Fee">
-                    <rect key="frame" x="50" y="0.0" width="467" height="84"/>
+                    <rect key="frame" x="50" y="0.0" width="467" height="102"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="hhO-zs-Pec">
-                            <rect key="frame" x="8" y="61" width="219" height="18"/>
+                            <rect key="frame" x="8" y="79" width="219" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="18" id="Rxo-Uq-nCV"/>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="d9e-qt-eN4"/>
@@ -55,7 +57,7 @@
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="xpi-Ck-JzY">
-                            <rect key="frame" x="8" y="5" width="451" height="51"/>
+                            <rect key="frame" x="8" y="12" width="451" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="d0V-cn-9XQ"/>
                             </constraints>
@@ -67,7 +69,7 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s40-uR-V2y">
-                            <rect key="frame" x="432" y="61" width="35" height="18"/>
+                            <rect key="frame" x="432" y="79" width="35" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="35" id="TtP-0R-Vrj"/>
                             </constraints>
@@ -79,19 +81,30 @@
                                 <action selector="statusImage:" target="-2" id="zgP-Si-oCh"/>
                             </connections>
                         </button>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Joo-in-G1C">
+                            <rect key="frame" x="8" y="65" width="33" height="14"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="Q5K-mG-PeV">
+                                <font key="font" metaFont="systemUltraLight" size="11"/>
+                                <color key="textColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
                     </subviews>
                     <constraints>
                         <constraint firstItem="s40-uR-V2y" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="33n-8W-dwT"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="510" constant="60" id="DON-7v-RwG"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="510" constant="65" id="DON-7v-RwG"/>
+                        <constraint firstItem="Joo-in-G1C" firstAttribute="leading" secondItem="hhO-zs-Pec" secondAttribute="leading" id="FGf-dZ-ahq"/>
                         <constraint firstItem="xpi-Ck-JzY" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="FSr-Ab-68D"/>
                         <constraint firstItem="s40-uR-V2y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hhO-zs-Pec" secondAttribute="trailing" constant="10" id="Huo-b1-Vgj"/>
+                        <constraint firstItem="xpi-Ck-JzY" firstAttribute="top" secondItem="Joo-in-G1C" secondAttribute="bottom" constant="5" id="LRb-47-M1n"/>
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="top" secondItem="jzA-X6-Fee" secondAttribute="top" constant="5" id="Spj-k3-dai"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Joo-in-G1C" secondAttribute="trailing" constant="10" id="b4C-6J-GWl"/>
                         <constraint firstItem="hhO-zs-Pec" firstAttribute="leading" secondItem="jzA-X6-Fee" secondAttribute="leading" constant="10" id="cmu-z6-45t"/>
                         <constraint firstItem="s40-uR-V2y" firstAttribute="centerY" secondItem="hhO-zs-Pec" secondAttribute="centerY" id="gPY-tT-02j"/>
-                        <constraint firstAttribute="height" relation="lessThanOrEqual" priority="490" constant="60" id="gRX-25-ubh"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" priority="490" constant="65" id="gRX-25-ubh"/>
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xpi-Ck-JzY" secondAttribute="bottom" constant="5" id="k20-0H-DVn"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xpi-Ck-JzY" secondAttribute="trailing" constant="10" id="npq-tn-Lj0"/>
-                        <constraint firstItem="xpi-Ck-JzY" firstAttribute="top" secondItem="hhO-zs-Pec" secondAttribute="bottom" constant="5" id="sSl-sA-bIY"/>
+                        <constraint firstItem="Joo-in-G1C" firstAttribute="top" secondItem="hhO-zs-Pec" secondAttribute="bottom" id="ppy-wS-feC"/>
                         <constraint firstAttribute="trailing" secondItem="s40-uR-V2y" secondAttribute="trailing" id="tEN-sb-eox"/>
                     </constraints>
                 </customView>
@@ -111,7 +124,7 @@
                     <color key="value" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
-            <point key="canvasLocation" x="234.5" y="1187"/>
+            <point key="canvasLocation" x="234.5" y="1174.5"/>
         </customView>
     </objects>
     <resources>

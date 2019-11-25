@@ -17,6 +17,7 @@ class TrackingItem: NSView {
 	@IBOutlet var startTimeLabel: NSTextField!
 	@IBOutlet var endTimeLabel: NSTextField!
 	@IBOutlet var titleLabel: NSTextField!
+	@IBOutlet var sublineLabel: NSTextField!
 	@IBOutlet var commentLabel: NSTextField!
 	@IBOutlet weak var statusImage: NSButton!
 	@IBOutlet var colorSelect: NSStackView!
@@ -68,6 +69,22 @@ class TrackingItem: NSView {
 			}
 
 			titleLabel.stringValue = title ?? "kein Job!"
+
+			var sublineTexts: [String] = []
+
+			if let activityTitle = tracking.activity?.title {
+				sublineTexts.append(activityTitle)
+			}
+
+			if let taskTitle = tracking.task?.title {
+				sublineTexts.append(taskTitle)
+			}
+
+			if (sublineTexts.count > 0) {
+				sublineLabel?.stringValue = "\(sublineTexts.joined(separator: ", "))"
+			} else {
+				sublineLabel.removeFromSuperview()
+			}
 
 			if let path = Bundle.main.path(forResource: "MoJob", ofType: "clr"),
 				let colors = NSColorList(name: "MoJob", fromFile: path),
