@@ -690,7 +690,7 @@ extension QuoJob {
 						let taskValues: [String: Any] = [
 							"id": id,
 							"title": title,
-							"hours_planed": hoursPlaned,
+							"hours_planned": hoursPlaned,
 							"hours_booked": hoursBooked,
 							"job": job as Any,
 							"activity": activity as Any,
