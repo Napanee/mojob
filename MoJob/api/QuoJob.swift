@@ -677,7 +677,7 @@ extension QuoJob {
 					if let task = tasksBackground?.first(where: { $0.id == id }) {
 //						print("existing")
 						task.title = title
-						task.hours_planed = hoursPlaned
+						task.hours_planned = hoursPlaned
 						task.hours_booked = hoursBooked
 						task.job = job
 						task.activity = activity

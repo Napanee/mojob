@@ -156,7 +156,7 @@ extension EditorController: QuoJobSelectionsDelegate {
 		formatter.allowedUnits = [.hour, .minute]
 		formatter.calendar = calendar
 
-		let secondsPlanned = task.hours_planed * 3600
+		let secondsPlanned = task.hours_planned * 3600
 		let secondsBooked = task.hours_booked * 3600
 
 		let planned = formatter.string(from: secondsPlanned)

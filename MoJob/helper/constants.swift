@@ -9,12 +9,12 @@
 
 #if DEVELOPMENT
 	let RESSOURCE_NAME = "MoJob"
-	let CONTAINER_NAME = "de.martingschneider.mojob-dev"
+	let CONTAINER_NAME = "mojob-dev"
 	let API_URL = "https://mojob-test.moccu/index.php?rpc=1"
 	let KEYCHAIN_NAMESPACE = "de.mojobapp-dev.login"
 #else
 	let RESSOURCE_NAME = "MoJob"
-	let CONTAINER_NAME = "de.martingschneider.mojob"
+	let CONTAINER_NAME = "mojob"
 	let API_URL = "https://mojob.moccu/index.php?rpc=1"
 	let KEYCHAIN_NAMESPACE = "de.mojobapp.login"
 #endif
