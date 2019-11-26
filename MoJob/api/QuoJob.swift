@@ -291,6 +291,13 @@ extension QuoJob {
 		let start = Date()
 
 		return login().done { result -> Void in
+			if (CoreDataHelper.jobs().count == 0) {
+				GlobalNotification.shared.deliverNotification(
+					withTitle: "Initiale Daten werden geladen.",
+					andInformationtext: "Dies kann bis zu einer Minute dauern. Ich sage Bescheid, wenn ich fertig bin ⏳"
+				)
+			}
+
 			return when(fulfilled: self.fetchJobTypes(), self.fetchActivities())
 				.then { (resultTypes, resultActivities) -> Promise<Void> in
 					return when(fulfilled: self.handleJobTypes(with: resultTypes), self.handleActivities(with: resultActivities))

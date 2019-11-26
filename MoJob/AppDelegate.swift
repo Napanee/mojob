@@ -74,15 +74,6 @@ class AppDelegate: NSObject {
 			SMLoginItemSetEnabled(helperBundleName as CFString, true)
 		}
 
-		if (CoreDataHelper.jobs().count == 0) {
-			QuoJob.shared.login().done({ _ in
-				GlobalNotification.shared.deliverNotification(
-					withTitle: "Initiale Daten werden geladen.",
-					andInformationtext: "Dies kann bis zu einer Minute dauern, aber ich sage Bescheid, wenn ich fertig bin 😉"
-				)
-			}).catch({ _ in })
-		}
-
 		if (!userDefaults.bool(forKey: UserDefaults.Keys.crashOnSync) && userDefaults.bool(forKey: UserDefaults.Keys.syncOnStart)) {
 			QuoJob.shared.syncData().catch { error in
 				GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Synchronisieren", andInformationtext: error.localizedDescription)
