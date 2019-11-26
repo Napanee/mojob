@@ -22,7 +22,6 @@ class TodayButton: NSButton {
 		if (isHighlighted) {
 			rectanglePath = NSBezierPath(roundedRect: NSRect(x: 0.5, y: 0.5, width: 79, height: 31), xRadius: 16, yRadius: 16)
 			rectanglePath.lineWidth = 1.0
-			NSColor.black.setStroke()
 		}
 
 		rectanglePath.lineJoinStyle = .round

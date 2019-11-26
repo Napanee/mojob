@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,14 +26,14 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="UUK-2Q-GoT" customClass="PieChartView" customModule="Charts">
-                    <rect key="frame" x="30" y="459" width="250" height="250"/>
+                    <rect key="frame" x="30" y="460" width="250" height="250"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="250" id="kgO-TL-Wfv"/>
                         <constraint firstAttribute="width" constant="250" id="m7I-Yf-xNf"/>
                     </constraints>
                 </customView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUa-pV-Ho1">
-                    <rect key="frame" x="295" y="459" width="300" height="250"/>
+                    <rect key="frame" x="295" y="460" width="300" height="250"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="XaZ-Ad-Ych">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -74,13 +74,13 @@
                     </scroller>
                 </scrollView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Nqk-AM-eb6" customClass="BarChartView" customModule="Charts">
-                    <rect key="frame" x="30" y="30" width="800" height="382"/>
+                    <rect key="frame" x="30" y="30" width="800" height="384"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="800" id="RbA-va-sZi"/>
                     </constraints>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jrk-FA-q4O">
-                    <rect key="frame" x="28" y="724" width="214" height="36"/>
+                    <rect key="frame" x="28" y="725" width="214" height="35"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="210" id="TOS-aY-boZ"/>
                     </constraints>
@@ -90,47 +90,13 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="035-p8-kLY">
-                    <rect key="frame" x="287" y="726" width="32" height="32"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="32" id="4FN-KB-hE3"/>
-                        <constraint firstAttribute="height" constant="32" id="g9S-vb-trl"/>
-                    </constraints>
-                    <buttonCell key="cell" type="bevel" title="prev month" bezelStyle="rounded" image="left-single" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Zj5-wq-QtU">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="prevMonthButton:" target="-2" id="PhT-eV-AXp"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u79-ps-KOj">
-                    <rect key="frame" x="409" y="726" width="36" height="32"/>
-                    <buttonCell key="cell" type="bevel" title="next month" bezelStyle="rounded" image="right-single" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="j0z-Dv-9oX">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="nextMonthButton:" target="-2" id="VaY-R5-gw0"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qWX-rb-rbH">
-                    <rect key="frame" x="450" y="731" width="22" height="22"/>
-                    <buttonCell key="cell" type="bevel" title="next year" bezelStyle="regularSquare" image="right-double" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="pk2-da-sHv">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="nextYearButton:" target="-2" id="qnW-0u-byn"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s2T-Si-jGx">
-                    <rect key="frame" x="260" y="731" width="22" height="22"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s2T-Si-jGx" customClass="DoubleLeftButton" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="260" y="732" width="22" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="6Bi-Hn-pvX"/>
                         <constraint firstAttribute="width" constant="22" id="TUG-as-qPT"/>
                     </constraints>
-                    <buttonCell key="cell" type="bevel" title="prev year" bezelStyle="rounded" image="left-double" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="pT4-df-icg">
+                    <buttonCell key="cell" type="bevel" title="prev year" bezelStyle="rounded" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="pT4-df-icg">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -138,8 +104,42 @@
                         <action selector="prevYearButton:" target="-2" id="JM6-VC-4wz"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BsK-b4-Lgi">
-                    <rect key="frame" x="324" y="726" width="80" height="32"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="035-p8-kLY" customClass="SingleLeftButton" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="287" y="727" width="32" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="32" id="4FN-KB-hE3"/>
+                        <constraint firstAttribute="height" constant="32" id="g9S-vb-trl"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="prev month" bezelStyle="rounded" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Zj5-wq-QtU">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="prevMonthButton:" target="-2" id="PhT-eV-AXp"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u79-ps-KOj" customClass="SingleRightButton" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="409" y="727" width="32" height="32"/>
+                    <buttonCell key="cell" type="bevel" title="next month" bezelStyle="rounded" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="j0z-Dv-9oX">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="nextMonthButton:" target="-2" id="VaY-R5-gw0"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qWX-rb-rbH" customClass="DoubleRightButton" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="446" y="732" width="22" height="22"/>
+                    <buttonCell key="cell" type="bevel" title="next year" bezelStyle="regularSquare" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="pk2-da-sHv">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="nextYearButton:" target="-2" id="qnW-0u-byn"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BsK-b4-Lgi" customClass="TodayButton" customModule="MoJob" customModuleProvider="target">
+                    <rect key="frame" x="324" y="727" width="80" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="80" id="Ser-jO-ww1"/>
                     </constraints>
@@ -152,7 +152,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CTP-9v-QFh">
-                    <rect key="frame" x="28" y="417" width="152" height="27"/>
+                    <rect key="frame" x="28" y="419" width="152" height="26"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Stunden pro Tag" id="wak-of-JNo">
                         <font key="font" metaFont="systemUltraLight" size="22"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -160,7 +160,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o9e-fC-lJz">
-                    <rect key="frame" x="742" y="417" width="90" height="27"/>
+                    <rect key="frame" x="742" y="419" width="90" height="26"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="00h 00m" id="jrh-Az-qMM">
                         <font key="font" metaFont="systemUltraLight" size="22"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -191,6 +191,7 @@
                 <constraint firstItem="s2T-Si-jGx" firstAttribute="leading" secondItem="Jrk-FA-q4O" secondAttribute="trailing" constant="20" id="b2c-LY-yjG"/>
                 <constraint firstItem="035-p8-kLY" firstAttribute="leading" secondItem="s2T-Si-jGx" secondAttribute="trailing" constant="5" id="bPh-8a-sCq"/>
                 <constraint firstItem="UUK-2Q-GoT" firstAttribute="top" secondItem="Jrk-FA-q4O" secondAttribute="bottom" constant="15" id="e7k-5q-SDB"/>
+                <constraint firstItem="u79-ps-KOj" firstAttribute="width" secondItem="035-p8-kLY" secondAttribute="width" id="isK-mM-HPt"/>
                 <constraint firstItem="BsK-b4-Lgi" firstAttribute="height" secondItem="035-p8-kLY" secondAttribute="height" id="puZ-0H-nU7"/>
                 <constraint firstItem="Nqk-AM-eb6" firstAttribute="top" secondItem="CTP-9v-QFh" secondAttribute="bottom" constant="5" id="rkg-lq-pp6"/>
                 <constraint firstItem="o9e-fC-lJz" firstAttribute="trailing" secondItem="Nqk-AM-eb6" secondAttribute="trailing" id="uXM-kK-tAQ"/>
@@ -202,10 +203,4 @@
             <point key="canvasLocation" x="294" y="411"/>
         </customView>
     </objects>
-    <resources>
-        <image name="left-double" width="36" height="36"/>
-        <image name="left-single" width="36" height="36"/>
-        <image name="right-double" width="36" height="36"/>
-        <image name="right-single" width="36" height="36"/>
-    </resources>
 </document>
