@@ -290,7 +290,7 @@ extension QuoJob {
 	func syncData() -> Promise<Void> {
 		let start = Date()
 
-		return login().done { result -> Void in
+		return login().done({ result -> Void in
 			if (CoreDataHelper.jobs().count == 0) {
 				GlobalNotification.shared.deliverNotification(
 					withTitle: "Initiale Daten werden geladen.",
@@ -298,7 +298,7 @@ extension QuoJob {
 				)
 			}
 
-			return when(fulfilled: self.fetchJobTypes(), self.fetchActivities())
+			when(fulfilled: self.fetchJobTypes(), self.fetchActivities())
 				.then { (resultTypes, resultActivities) -> Promise<Void> in
 					return when(fulfilled: self.handleJobTypes(with: resultTypes), self.handleActivities(with: resultActivities))
 				}.then { _ -> Promise<[String: Any]> in
@@ -352,7 +352,7 @@ extension QuoJob {
 				}.catch({ error in
 					print("SyncError: \(error)")
 				})
-		}
+		})
 	}
 
 	func lastSyncDate(for entityName: String) -> Date? {
