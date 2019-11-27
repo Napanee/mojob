@@ -34,7 +34,7 @@ class QuoJobSelections: NSViewController {
 	@IBOutlet weak var fromMinute: NumberField!
 	@IBOutlet weak var untilHour: NumberField!
 	@IBOutlet weak var untilMinute: NumberField!
-	@IBOutlet weak var comment: NSTextField!
+	@IBOutlet weak var comment: TextField!
 
 	let userDefaults = UserDefaults()
 	var delegate: QuoJobSelectionsDelegate?
@@ -147,12 +147,13 @@ class QuoJobSelections: NSViewController {
 	}
 
 	func initCommentText() {
+		comment?.delegate = self
+
 		guard let commentText = tracking?.comment else {
 			comment?.stringValue = ""
 			return
 		}
 
-		comment?.delegate = self
 		comment?.stringValue = commentText
 	}
 
