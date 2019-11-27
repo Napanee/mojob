@@ -65,6 +65,7 @@ class QuoJob: NSObject {
 		NSUserNotificationCenter.default.delegate = self
 
 		dateFormatterFull.dateFormat = "YYYYMMddHHmmss"
+		dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 		dateFormatterTime.dateFormat = "HHmm"
 	}
 
@@ -157,8 +158,6 @@ class QuoJob: NSObject {
 		if let task = tracking.task {
 			taskId = task.id
 		}
-
-		dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 
 		return firstly(execute: {
 			return login()
@@ -379,7 +378,6 @@ extension QuoJob {
 		var params = defaultParams
 
 		if let lastSync = lastSyncDate(for: "Type") {
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -392,7 +390,6 @@ extension QuoJob {
 		var params = defaultParams
 
 		if let lastSync = lastSyncDate(for: "Job") {
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -405,7 +402,6 @@ extension QuoJob {
 		var params = defaultParams
 
 		if let lastSync = lastSyncDate(for: "Activity") {
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -420,7 +416,6 @@ extension QuoJob {
 		if let ids = ids {
 			params["jobtask_ids"] = ids
 		} else if let lastSync = lastSyncDate(for: "Task") {
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -436,7 +431,6 @@ extension QuoJob {
 		]
 
 		if let lastSync = lastSyncDate(for: "Tracking") {
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			params["last_sync"] = dateFormatterFull.string(from: lastSync)
 		}
 
@@ -452,7 +446,6 @@ extension QuoJob {
 				return
 			}
 
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			typeItems = typeItems.filter({
@@ -515,7 +508,6 @@ extension QuoJob {
 				return
 			}
 
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			let newJobs = jobItems.filter({(($0["bookable"] as? Bool) ?? false) && ($0["assigned_user_ids"] as! [String]).contains(self.userId)})
@@ -581,7 +573,6 @@ extension QuoJob {
 				return
 			}
 
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			activityItems = activityItems.filter({ $0["active"] as? Bool ?? false })
@@ -638,7 +629,6 @@ extension QuoJob {
 				return
 			}
 
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			let jobsAll = CoreDataHelper.jobs(in: backgroundContext).filter({ $0.assigned && $0.bookable }).map({ $0.id })
@@ -730,7 +720,6 @@ extension QuoJob {
 			let activitiesBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
 			let trackingsBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Tracking")) as? [Tracking]
 
-			dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 			let syncDate = self.dateFormatterFull.date(from: timestamp)
 
 			if (trackingItems.count > 0) {
@@ -747,7 +736,6 @@ extension QuoJob {
 
 //					print("tracking \(id)")
 
-					self.dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
 					if let timeInterval = self.dateFormatterFull.date(from: date)?.timeIntervalSince1970, timeInterval < 0 {
 						date = item["date_created"] as! String
 					}
