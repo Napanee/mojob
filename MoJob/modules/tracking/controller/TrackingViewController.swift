@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import PromiseKit
 
 class TrackingViewController: QuoJobSelections {
 
@@ -101,25 +100,6 @@ class TrackingViewController: QuoJobSelections {
 
 	override func viewDidAppear() {
 		super.viewDidAppear()
-
-		if let task = tracking?.task {
-			if let id = task.id, Date().timeIntervalSince(task.sync!) > Double(userDefaults.integer(forKey: UserDefaults.Keys.taskHoursInterval) * 60) {
-				firstly(execute: {
-					return QuoJob.shared.login()
-				}).then({ success in
-					return QuoJob.shared.fetchTasks(with: [id])
-				}).then({ resultTasks in
-					return QuoJob.shared.handleTasks(with: resultTasks)
-				}).done({ _ in
-					CoreDataHelper.save()
-				}).catch({ _ in
-				}).finally({
-					self.hoursForTaskDidFetched(task: task)
-				})
-			} else {
-				self.hoursForTaskDidFetched(task: task)
-			}
-		}
 
 		observer = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "counter:tick"), object: nil, queue: nil, using: { notification in
 			guard let totalSeconds = (notification.object as? NSDictionary)?["totalSeconds"] as? Double else { return }
