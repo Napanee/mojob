@@ -294,6 +294,8 @@ extension QuoJob {
 	func syncData() -> Promise<Void> {
 		let start = Date()
 
+		results = []
+
 		return login().done({ result -> Void in
 			if (CoreDataHelper.jobs().count == 0) {
 				GlobalNotification.shared.deliverNotification(
@@ -340,9 +342,11 @@ extension QuoJob {
 						title = "Daten erfolgreich synchronisiert."
 						text = "Es wurden "
 
-						text += self.results.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) }).map({ type in
-							return type["text"] as! String
-						}).joined(separator: ", ")
+						text += self.results
+							.sorted(by: { ($0["order"] as! Int) < ($1["order"] as! Int) })
+							.map({ type in
+								return type["text"] as! String
+							}).joined(separator: ", ")
 
 						if let seconds = formatter.string(from: diff) {
 							text += " in \(seconds)"
@@ -352,7 +356,6 @@ extension QuoJob {
 					}
 
 					GlobalNotification.shared.deliverNotification(withTitle: title, andInformationtext: text)
-					self.results = []
 				}.catch({ error in
 					print("SyncError: \(error)")
 				})
