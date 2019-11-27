@@ -178,8 +178,13 @@ class QuoJob: NSObject {
 			return self.fetch(as: .myTime_putHourbooking, with: params)
 		}).then({ result -> Promise<(id: String, timestamp: Date)> in
 			return Promise { seal in
-				if let hourbooking = result["hourbooking"] as? [String: Any], let id = hourbooking["id"] as? String, let timestamp = hourbooking["date_created"] as? String, let date = self.dateFormatterFull.date(from: timestamp) {
-					seal.fulfill((id: id, timestamp: date))
+				if
+					let hourbooking = result["hourbooking"] as? [String: Any],
+					let id = hourbooking["id"] as? String,
+					let timestamp = result["timestamp"] as? String,
+					let date = self.dateFormatterFull.date(from: timestamp)
+				{
+					seal.fulfill((id: id, timestamp: date.addingTimeInterval(1)))
 				}
 			}
 		})
