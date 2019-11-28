@@ -36,7 +36,8 @@ class QuoJob: NSObject {
 
 	static let shared = QuoJob()
 
-	let dateFormatterFull = DateFormatter()
+	let dateFormatterFullUTC = DateFormatter()
+	let dateFormatterFullLocal = DateFormatter()
 	let dateFormatterTime = DateFormatter()
 	var results: [[String: Any]] = []
 	var defaultParams: [String: Any] {
@@ -64,8 +65,10 @@ class QuoJob: NSObject {
 
 		NSUserNotificationCenter.default.delegate = self
 
-		dateFormatterFull.dateFormat = "YYYYMMddHHmmss"
-		dateFormatterFull.timeZone = TimeZone(abbreviation: "UTC")
+		dateFormatterFullUTC.dateFormat = "YYYYMMddHHmmss"
+		dateFormatterFullUTC.timeZone = TimeZone(abbreviation: "UTC")
+		dateFormatterFullLocal.dateFormat = "YYYYMMddHHmmss"
+
 		dateFormatterTime.dateFormat = "HHmm"
 	}
 
@@ -165,7 +168,7 @@ class QuoJob: NSObject {
 			var params = self.defaultParams
 			params["hourbooking"] = [
 				"id": id,
-				"date": self.dateFormatterFull.string(from: tracking.date_end! as Date),
+				"date": self.dateFormatterFullUTC.string(from: tracking.date_end! as Date),
 				"time_from": self.dateFormatterTime.string(from: tracking.date_start! as Date),
 				"time_until": self.dateFormatterTime.string(from: tracking.date_end! as Date),
 				"job_id": tracking.job?.id,
@@ -181,8 +184,8 @@ class QuoJob: NSObject {
 				if
 					let hourbooking = result["hourbooking"] as? [String: Any],
 					let id = hourbooking["id"] as? String,
-					let timestamp = result["timestamp"] as? String,
-					let date = self.dateFormatterFull.date(from: timestamp)
+					let timestamp = hourbooking["date_created"] as? String,
+					let date = self.dateFormatterFullLocal.date(from: timestamp)
 				{
 					seal.fulfill((id: id, timestamp: date.addingTimeInterval(1)))
 				}
@@ -386,7 +389,7 @@ extension QuoJob {
 		var params = defaultParams
 
 		if let lastSync = lastSyncDate(for: "Type") {
-			params["last_sync"] = dateFormatterFull.string(from: lastSync)
+			params["last_sync"] = dateFormatterFullUTC.string(from: lastSync)
 		}
 
 //		print(params)
@@ -398,7 +401,7 @@ extension QuoJob {
 		var params = defaultParams
 
 		if let lastSync = lastSyncDate(for: "Job") {
-			params["last_sync"] = dateFormatterFull.string(from: lastSync)
+			params["last_sync"] = dateFormatterFullUTC.string(from: lastSync)
 		}
 
 //		print(params)
@@ -410,7 +413,7 @@ extension QuoJob {
 		var params = defaultParams
 
 		if let lastSync = lastSyncDate(for: "Activity") {
-			params["last_sync"] = dateFormatterFull.string(from: lastSync)
+			params["last_sync"] = dateFormatterFullUTC.string(from: lastSync)
 		}
 
 //		print(params)
@@ -424,7 +427,7 @@ extension QuoJob {
 		if let ids = ids {
 			params["jobtask_ids"] = ids
 		} else if let lastSync = lastSyncDate(for: "Task") {
-			params["last_sync"] = dateFormatterFull.string(from: lastSync)
+			params["last_sync"] = dateFormatterFullUTC.string(from: lastSync)
 		}
 
 //		print(params)
@@ -439,7 +442,7 @@ extension QuoJob {
 		]
 
 		if let lastSync = lastSyncDate(for: "Tracking") {
-			params["last_sync"] = dateFormatterFull.string(from: lastSync)
+			params["last_sync"] = dateFormatterFullUTC.string(from: lastSync)
 		}
 
 //		print(params)
@@ -454,7 +457,7 @@ extension QuoJob {
 				return
 			}
 
-			let syncDate = self.dateFormatterFull.date(from: timestamp)
+			let syncDate = self.dateFormatterFullUTC.date(from: timestamp)
 
 			typeItems = typeItems.filter({
 				if let active = $0["active"] as? Bool {
@@ -516,7 +519,7 @@ extension QuoJob {
 				return
 			}
 
-			let syncDate = self.dateFormatterFull.date(from: timestamp)
+			let syncDate = self.dateFormatterFullUTC.date(from: timestamp)
 
 			let newJobs = jobItems.filter({(($0["bookable"] as? Bool) ?? false) && ($0["assigned_user_ids"] as! [String]).contains(self.userId)})
 			if (newJobs.count > 0) {
@@ -581,7 +584,7 @@ extension QuoJob {
 				return
 			}
 
-			let syncDate = self.dateFormatterFull.date(from: timestamp)
+			let syncDate = self.dateFormatterFullUTC.date(from: timestamp)
 
 			activityItems = activityItems.filter({ $0["active"] as? Bool ?? false })
 
@@ -637,7 +640,7 @@ extension QuoJob {
 				return
 			}
 
-			let syncDate = self.dateFormatterFull.date(from: timestamp)
+			let syncDate = self.dateFormatterFullUTC.date(from: timestamp)
 
 			let jobsAll = CoreDataHelper.jobs(in: backgroundContext).filter({ $0.assigned && $0.bookable }).map({ $0.id })
 			let resultTasks = taskItems.filter({ jobsAll.contains($0["job_id"] as? String) && !($0["done"] as? Bool ?? true) })
@@ -728,7 +731,7 @@ extension QuoJob {
 			let activitiesBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")) as? [Activity]
 			let trackingsBackground = try? backgroundContext.fetch(NSFetchRequest<NSFetchRequestResult>(entityName: "Tracking")) as? [Tracking]
 
-			let syncDate = self.dateFormatterFull.date(from: timestamp)
+			let syncDate = self.dateFormatterFullUTC.date(from: timestamp)
 
 			if (trackingItems.count > 0) {
 				results.append(["type": "trackings", "order": 3, "text": "\(String(trackingItems.count)) Trackings"])
@@ -744,13 +747,13 @@ extension QuoJob {
 
 //					print("tracking \(id)")
 
-					if let timeInterval = self.dateFormatterFull.date(from: date)?.timeIntervalSince1970, timeInterval < 0 {
+					if let timeInterval = self.dateFormatterFullUTC.date(from: date)?.timeIntervalSince1970, timeInterval < 0 {
 						date = item["date_created"] as! String
 					}
 
 					let indexTimeFrom = String.Index(utf16Offset: 4, in: "\(timeFrom)0000")
 					let newTimeFrom = String("\(timeFrom)0000"[..<indexTimeFrom])
-					let trackingDate = self.dateFormatterFull.date(from: date)
+					let trackingDate = self.dateFormatterFullUTC.date(from: date)
 					let timeFromDate = Calendar.current.dateComponents([.hour, .minute], from: self.dateFormatterTime.date(from: newTimeFrom)!)
 					let dateStart = Calendar.current.date(bySettingHour: timeFromDate.hour!, minute: timeFromDate.minute!, second: 0, of: trackingDate!)
 					let dateEnd = Calendar.current.date(byAdding: .minute, value: Int(round(quantity * 60)), to: dateStart!)
