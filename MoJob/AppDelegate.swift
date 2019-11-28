@@ -278,6 +278,40 @@ class AppDelegate: NSObject {
 		}
 	}
 
+	@IBAction func resetTrackingsMenuItem(sender: NSMenuItem) {
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Tracking")
+		fetchRequest.predicate = NSPredicate(format: "id != nil")
+		let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+		batchDeleteRequest.resultType = .resultTypeObjectIDs
+
+		do {
+			let result = try CoreDataHelper.mainContext.execute(batchDeleteRequest) as? NSBatchDeleteResult
+			let changes: [AnyHashable: [NSManagedObjectID]] = [NSDeletedObjectsKey: result?.result as! [NSManagedObjectID]]
+			NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [CoreDataHelper.mainContext])
+
+			CoreDataHelper.mainContext.reset()
+
+			GlobalNotification.shared.deliverNotification(withTitle: "Abrufen der Trackings gestartet...")
+
+			firstly(execute: {
+				return QuoJob.shared.login()
+			}).then({ _ -> Promise<[String: Any]> in
+				return QuoJob.shared.fetchTrackings()
+			}).then({ resultTrackings -> Promise<Void> in
+				return QuoJob.shared.handleTrackings(with: resultTrackings)
+			}).done({ _ in
+				CoreDataHelper.save()
+				GlobalNotification.shared.deliverNotification(withTitle: "Erfolgreich synchronisiert.", andInformationtext: "Es wurden alle Trackings neu von QuoJob geladen.")
+			}).catch({ error in
+				sender.isEnabled = false
+				GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um die QuoJob-Daten zu synchronisieren.")
+			})
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+		}
+	}
+
 	// MARK: - Observer
 
 	@objc func managedObjectContextDidSave(notification: NSNotification) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -55,6 +55,12 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="syncDataMenuItemWithSender:" target="Voe-Tx-rLC" id="pwM-Yy-vHq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Zeiterfassung zurücksetzen" id="JKH-Uc-bfc">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="resetTrackingsMenuItemWithSender:" target="Voe-Tx-rLC" id="t6J-ca-m38"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="veJ-j5-2m8"/>
@@ -713,6 +719,7 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="140" y="310"/>
         </menu>
     </objects>
 </document>

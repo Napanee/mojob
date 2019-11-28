@@ -719,7 +719,7 @@ extension QuoJob {
 		}
 	}
 
-	private func handleTrackings(with result: [String: Any]) -> Promise<Void> {
+	func handleTrackings(with result: [String: Any]) -> Promise<Void> {
 		return Promise { seal in
 			guard let trackingItems = result["hourbookings"] as? [[String: Any]], let timestamp = result["timestamp"] as? String, trackingItems.count > 0 else {
 				seal.fulfill_()
