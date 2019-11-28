@@ -267,7 +267,7 @@ extension QuoJobSelections: NSComboBoxDelegate {
 			tracking.task = nil
 
 			if (index < 0 && value != "") {
-				index = jobs.firstIndex(where: { $0.fullTitle == value }) ?? -1
+				index = jobs.firstIndex(where: { $0.fullTitle.lowercased() == value }) ?? -1
 			}
 
 			if (index >= 0) {

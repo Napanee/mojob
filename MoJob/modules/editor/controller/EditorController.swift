@@ -25,7 +25,7 @@ class EditorController: QuoJobSelections {
 
 			if (index >= 0 && activities.count > index) {
 				let activity = activities[index]
-				return jobSelect.stringValue.count > 0 || activity.nfc
+				return jobSelect.stringValue.count > 0 || jobSelect.indexOfSelectedItem >= 0 || activity.nfc
 			}
 
 			return false
@@ -82,9 +82,14 @@ class EditorController: QuoJobSelections {
 		if tracking == nil {
 			guard let tracking = CoreDataHelper.createTracking() else { return }
 
-			let indexJob = jobSelect.indexOfSelectedItem
+			var indexJob = jobSelect.indexOfSelectedItem
+			let valueJob = jobSelect.stringValue.lowercased()
 			let indexTask = taskSelect.indexOfSelectedItem
 			let indexActivity = activitySelect.indexOfSelectedItem
+
+			if (indexJob < 0 && valueJob != "") {
+				indexJob = jobs.firstIndex(where: { $0.fullTitle.lowercased() == valueJob }) ?? -1
+			}
 
 			if (indexJob >= 0 && jobs.count > indexJob) {
 				tracking.job = jobs[indexJob]
