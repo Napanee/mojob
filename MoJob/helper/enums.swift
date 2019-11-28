@@ -7,16 +7,6 @@
 //
 
 
-enum nibNames {
-	static let NavigationController = "NavigationController"
-	static let JobListController = "JobListController"
-	static let FavoritesCollectionItem = "FavoriteItem"
-	static let JobsCollectionItem = "JobItem"
-	static let TrackingViewController = "TrackingViewController"
-	static let DayTrackingsController = "DayTrackingsController"
-	static let EditorController = "EditorController"
-}
-
 enum errorMessages {
 	static let missingRights = "Dein QuoJob-Account ist nicht für die API freigeschaltet. Bitte wende dich an den QuoJob-Verantwortlichen."
 	static let notFound = "User nicht gefunden"

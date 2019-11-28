@@ -440,7 +440,7 @@ extension JobListController: NSCollectionViewDataSource {
 
 	func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
 		if (collectionView == jobsCollectionView) {
-			let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: nibNames.JobsCollectionItem), for: indexPath)
+			let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: .jobsCollectionItemNib), for: indexPath)
 
 			guard let collectionViewItem = item as? JobItem else {return item}
 
@@ -452,7 +452,7 @@ extension JobListController: NSCollectionViewDataSource {
 			return collectionViewItem
 		}
 
-		let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: nibNames.FavoritesCollectionItem), for: indexPath)
+		let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: .favoritesCollectionItemNib), for: indexPath)
 
 		guard let collectionViewItem = item as? FavoriteItem else {return item}
 

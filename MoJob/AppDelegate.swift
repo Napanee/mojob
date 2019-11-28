@@ -321,7 +321,7 @@ class AppDelegate: NSObject {
 		}
 
 		if (currentTracking.duration > 60) {
-			let alertVC = WakeUp(nibName: .wakeUpController, bundle: nil)
+			let alertVC = WakeUp(nibName: .wakeUpControllerNib, bundle: nil)
 			alertVC.sleepTime = timerSleep
 			window.contentViewController?.presentAsModalWindow(alertVC)
 		}
