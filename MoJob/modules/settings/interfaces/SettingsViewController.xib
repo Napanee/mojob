@@ -83,6 +83,7 @@
                                             </objectValues>
                                         </comboBoxCell>
                                         <connections>
+                                            <action selector="activitySelect:" target="-2" id="oGV-Kh-pyT"/>
                                             <outlet property="dataSource" destination="-2" id="7CP-ZB-wb0"/>
                                             <outlet property="delegate" destination="-2" id="qh7-Wr-7Xy"/>
                                         </connections>
