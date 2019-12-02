@@ -231,6 +231,8 @@
 		E8B58A4823300FE900DBCE44 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B58A4723300FE900DBCE44 /* StatsViewController.swift */; };
 		E8B58A4A2330101700DBCE44 /* StatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8B58A492330101700DBCE44 /* StatsViewController.xib */; };
 		E8C07F72230CA74600299DC4 /* MoJob-3.4.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */; };
+		E8C62BFA23952B6100169294 /* MoJob-3.12.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E8C62BF923952B6100169294 /* MoJob-3.12.2.html */; };
+		E8C62BFB23952B6100169294 /* MoJob-3.12.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E8C62BF923952B6100169294 /* MoJob-3.12.2.html */; };
 		E8CACC782211DE6300675688 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CACC772211DE6300675688 /* functions.swift */; };
 		E8CC36982391446F00008926 /* MoJob-3.12.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8CC36972391446F00008926 /* MoJob-3.12.1.html */; };
 		E8D35A1C22FF5B0C0014AFE4 /* CalendarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A1B22FF5B0C0014AFE4 /* CalendarController.xib */; };
@@ -429,6 +431,7 @@
 		E8B58A4723300FE900DBCE44 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		E8B58A492330101700DBCE44 /* StatsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatsViewController.xib; sourceTree = "<group>"; };
 		E8C07F71230CA74600299DC4 /* MoJob-3.4.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.4.0.html"; sourceTree = "<group>"; };
+		E8C62BF923952B6100169294 /* MoJob-3.12.2.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.12.2.html"; sourceTree = "<group>"; };
 		E8CACC772211DE6300675688 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 		E8CC36972391446F00008926 /* MoJob-3.12.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.12.1.html"; sourceTree = "<group>"; };
 		E8D35A1B22FF5B0C0014AFE4 /* CalendarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarController.xib; sourceTree = "<group>"; };
@@ -566,6 +569,7 @@
 				E8AECA6C238AEC4100B48E34 /* MoJob-3.10.0.html */,
 				E8DF8E3B238F1D2A00DB4E4C /* MoJob-3.12.0.html */,
 				E8CC36972391446F00008926 /* MoJob-3.12.1.html */,
+				E8C62BF923952B6100169294 /* MoJob-3.12.2.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1285,6 +1289,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8C62BFA23952B6100169294 /* MoJob-3.12.2.html in Resources */,
 				E8F94906232F9C200084AAFE /* MoJob-3.7.3.html in Resources */,
 				E8F373CB232ECA9500E30D6A /* MoJob-3.7.0.html in Resources */,
 				E8211795220E07B2003D7578 /* Assets.xcassets in Resources */,
@@ -1370,6 +1375,7 @@
 				E853A5BC2333ACED00689F62 /* MoJob-3.5.3.html in Resources */,
 				E853A5BD2333ACED00689F62 /* MoJob-3.7.1.html in Resources */,
 				E853A5BE2333ACED00689F62 /* EditorController.xib in Resources */,
+				E8C62BFB23952B6100169294 /* MoJob-3.12.2.html in Resources */,
 				E853A5BF2333ACED00689F62 /* JobItem.xib in Resources */,
 				E853A5C02333ACED00689F62 /* MoJob-3.0.3.html in Resources */,
 				E853A5C12333ACED00689F62 /* JobListController.xib in Resources */,
