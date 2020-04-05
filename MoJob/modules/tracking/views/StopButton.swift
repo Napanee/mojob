@@ -17,6 +17,16 @@ class StopButton: NSButton {
 
 	var center: CGPoint!
 	var radius: CGFloat!
+    
+	override var isEnabled: Bool {
+		didSet {
+			if (isEnabled) {
+				self.toolTip = "Tracking stoppen."
+			} else {
+				self.toolTip = "Es muss ein Job, eine Aufgabe und eine Tätigkeit ausgewählt werden."
+			}
+		}
+	}
 
 	override func draw(_ dirtyRect: NSRect) {
 		super.draw(dirtyRect)
@@ -28,9 +38,13 @@ class StopButton: NSButton {
 
 		let stop = NSBezierPath(roundedRect: NSRect(x: 10, y: 10, width: 10, height: 10), xRadius: 1.0, yRadius: 1.0)
 		stop.lineWidth = 1.5
-		NSColor.red.setFill()
-		stop.fill()
-		NSColor.white.setStroke()
+		if (isEnabled) {
+			NSColor.red.setFill()
+			stop.fill()
+			NSColor.white.setStroke()
+		} else {
+			NSColor.white.withAlphaComponent(0.5).setStroke()
+		}
 		stop.stroke()
 
 		if let _ = layer?.sublayers?.first(where: { $0.isEqual(timeSecondsShapeLayer) }) {
