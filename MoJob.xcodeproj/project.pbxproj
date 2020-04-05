@@ -315,7 +315,7 @@
 		8DEE71AB16120D7D38EA3D3B /* Pods-MoJob Dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoJob Dev.release.xcconfig"; path = "Target Support Files/Pods-MoJob Dev/Pods-MoJob Dev.release.xcconfig"; sourceTree = "<group>"; };
 		9B546BD82F37EE81306FBEE1 /* Pods_MoJobUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJobUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B360B3B424BBEDBB4F4C601F /* Pods_MoJob_Dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoJob_Dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E800AE8322F9851700E82EBE /* QuoJobSelections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJobSelections.swift; sourceTree = "<group>"; };
+		E800AE8322F9851700E82EBE /* QuoJobSelections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoJobSelections.swift; sourceTree = "<group>"; usesTabs = 1; };
 		E800AE8522F9B68200E82EBE /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		E800AE8722F9B9F400E82EBE /* Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracking.swift; sourceTree = "<group>"; };
 		E800AE8922F9C42900E82EBE /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };

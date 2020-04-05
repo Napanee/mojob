@@ -444,6 +444,8 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 			if (jobs.count > 0) {
 				comboBoxCell.perform(Selector(("popUp:")))
+			} else {
+				comboBox.reloadData()
 			}
 		} else if (comboBox.isEqual(taskSelect)) {
 			delegate?.taskDidChanged()
@@ -462,6 +464,8 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 			if (tasks.count > 0) {
 				comboBoxCell.perform(Selector(("popUp:")))
+			} else {
+				comboBox.reloadData()
 			}
 		} else if (comboBox.isEqual(activitySelect)) {
 			delegate?.activityDidChanged()
@@ -485,6 +489,8 @@ extension QuoJobSelections: NSTextFieldDelegate {
 
 			if (activities.count > 0) {
 				comboBoxCell.perform(Selector(("popUp:")))
+			} else {
+				comboBox.reloadData()
 			}
 		}
 	}
