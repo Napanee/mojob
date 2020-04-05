@@ -20,7 +20,7 @@ extension Tracking {
 	var isValid: Bool {
 		get {
 			return self.activity != nil &&
-				(self.job != nil || self.custom_job != nil)
+				(self.job != nil && self.task != nil || self.custom_job != nil)
 		}
 	}
 
