@@ -512,7 +512,7 @@ extension QuoJob {
 		}
 	}
 
-	private func handleJobs(with result: [String: Any]) -> Promise<Void> {
+	func handleJobs(with result: [String: Any]) -> Promise<Void> {
 		return Promise { seal in
 			guard let jobItems = result["jobs"] as? [[String: Any]], let timestamp = result["timestamp"] as? String, jobItems.count > 0 else {
 				seal.fulfill_()
@@ -577,7 +577,7 @@ extension QuoJob {
 		}
 	}
 
-	private func handleActivities(with result: [String: Any]) -> Promise<Void> {
+	func handleActivities(with result: [String: Any]) -> Promise<Void> {
 		return Promise { seal in
 			guard var activityItems = result["activities"] as? [[String: Any]], let timestamp = result["timestamp"] as? String, activityItems.count > 0 else {
 				seal.fulfill_()

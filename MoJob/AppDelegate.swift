@@ -309,6 +309,105 @@ class AppDelegate: NSObject {
 			fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
 		}
 	}
+	
+	@IBAction func resetJobsMenuItem(sender: NSMenuItem) {
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Job")
+		let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+		batchDeleteRequest.resultType = .resultTypeObjectIDs
+
+		do {
+			let result = try CoreDataHelper.mainContext.execute(batchDeleteRequest) as? NSBatchDeleteResult
+			let changes: [AnyHashable: [NSManagedObjectID]] = [NSDeletedObjectsKey: result?.result as! [NSManagedObjectID]]
+			NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [CoreDataHelper.mainContext])
+
+			CoreDataHelper.mainContext.reset()
+
+			GlobalNotification.shared.deliverNotification(withTitle: "Abrufen der Jobs gestartet...")
+
+			firstly(execute: {
+				return QuoJob.shared.login()
+			}).then({ _ -> Promise<[String: Any]> in
+				return QuoJob.shared.fetchJobs()
+			}).then({ result -> Promise<Void> in
+				return QuoJob.shared.handleJobs(with: result)
+			}).done({ _ in
+				CoreDataHelper.save()
+				GlobalNotification.shared.deliverNotification(withTitle: "Erfolgreich synchronisiert.", andInformationtext: "Es wurden alle Jobs neu von QuoJob geladen.")
+			}).catch({ error in
+				sender.isEnabled = false
+				GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um die QuoJob-Daten zu synchronisieren.")
+			})
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+		}
+	}
+	
+	@IBAction func resetTasksMenuItem(sender: NSMenuItem) {
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+		let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+		batchDeleteRequest.resultType = .resultTypeObjectIDs
+
+		do {
+			let result = try CoreDataHelper.mainContext.execute(batchDeleteRequest) as? NSBatchDeleteResult
+			let changes: [AnyHashable: [NSManagedObjectID]] = [NSDeletedObjectsKey: result?.result as! [NSManagedObjectID]]
+			NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [CoreDataHelper.mainContext])
+
+			CoreDataHelper.mainContext.reset()
+
+			GlobalNotification.shared.deliverNotification(withTitle: "Abrufen der Aufgaben gestartet...")
+
+			firstly(execute: {
+				return QuoJob.shared.login()
+			}).then({ _ -> Promise<[String: Any]> in
+				return QuoJob.shared.fetchTasks()
+			}).then({ result -> Promise<Void> in
+				return QuoJob.shared.handleTasks(with: result)
+			}).done({ _ in
+				CoreDataHelper.save()
+				GlobalNotification.shared.deliverNotification(withTitle: "Erfolgreich synchronisiert.", andInformationtext: "Es wurden alle Aufgaben neu von QuoJob geladen.")
+			}).catch({ error in
+				sender.isEnabled = false
+				GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um die QuoJob-Daten zu synchronisieren.")
+			})
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+		}
+	}
+	
+	@IBAction func resetActivitiesMenuItem(sender: NSMenuItem) {
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Activity")
+		let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+		batchDeleteRequest.resultType = .resultTypeObjectIDs
+
+		do {
+			let result = try CoreDataHelper.mainContext.execute(batchDeleteRequest) as? NSBatchDeleteResult
+			let changes: [AnyHashable: [NSManagedObjectID]] = [NSDeletedObjectsKey: result?.result as! [NSManagedObjectID]]
+			NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [CoreDataHelper.mainContext])
+
+			CoreDataHelper.mainContext.reset()
+
+			GlobalNotification.shared.deliverNotification(withTitle: "Abrufen der Leistungsarten gestartet...")
+
+			firstly(execute: {
+				return QuoJob.shared.login()
+			}).then({ _ -> Promise<[String: Any]> in
+				return QuoJob.shared.fetchActivities()
+			}).then({ result -> Promise<Void> in
+				return QuoJob.shared.handleActivities(with: result)
+			}).done({ _ in
+				CoreDataHelper.save()
+				GlobalNotification.shared.deliverNotification(withTitle: "Erfolgreich synchronisiert.", andInformationtext: "Es wurden alle Leistungsarten neu von QuoJob geladen.")
+			}).catch({ error in
+				sender.isEnabled = false
+				GlobalNotification.shared.deliverNotLoggedIn(withInformationText: "Logge dich ein, um die QuoJob-Daten zu synchronisieren.")
+			})
+		} catch {
+			let nserror = error as NSError
+			fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+		}
+	}
 
 	// MARK: - Observer
 

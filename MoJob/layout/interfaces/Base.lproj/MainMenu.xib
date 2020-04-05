@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -64,6 +64,25 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="veJ-j5-2m8"/>
+                                        <menuItem title="Jobs zurücksetzen" id="YyD-Mu-AXe">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="resetJobsMenuItemWithSender:" target="Voe-Tx-rLC" id="NCY-pA-LtI"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Aufgaben zurücksetzen" id="z0d-ce-bDx">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="resetTasksMenuItemWithSender:" target="Voe-Tx-rLC" id="hE6-XZ-oEZ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Leistungsarten zurücksetzen" id="Vjr-ns-4Ku">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="resetActivitiesMenuItemWithSender:" target="Voe-Tx-rLC" id="ME5-7v-cQX"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="bQA-Tt-ZDU"/>
                                         <menuItem title="MoJob im Browser öffnen" id="rY5-Yk-7f6">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
