@@ -237,6 +237,8 @@
 		E8CC36982391446F00008926 /* MoJob-3.12.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8CC36972391446F00008926 /* MoJob-3.12.1.html */; };
 		E8CECE28243AFB8B0049299D /* MoJob-3.13.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8CECE27243AFB8B0049299D /* MoJob-3.13.0.html */; };
 		E8CECE29243AFB8B0049299D /* MoJob-3.13.0.html in Resources */ = {isa = PBXBuildFile; fileRef = E8CECE27243AFB8B0049299D /* MoJob-3.13.0.html */; };
+		E8CECE2B243B0AE10049299D /* MoJob-3.13.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8CECE2A243B0AE10049299D /* MoJob-3.13.1.html */; };
+		E8CECE2C243B0AE10049299D /* MoJob-3.13.1.html in Resources */ = {isa = PBXBuildFile; fileRef = E8CECE2A243B0AE10049299D /* MoJob-3.13.1.html */; };
 		E8D35A1C22FF5B0C0014AFE4 /* CalendarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8D35A1B22FF5B0C0014AFE4 /* CalendarController.xib */; };
 		E8D35A1E22FF5B3B0014AFE4 /* CalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1D22FF5B3B0014AFE4 /* CalendarController.swift */; };
 		E8D35A2022FF6AC80014AFE4 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D35A1F22FF6AC80014AFE4 /* CalendarDay.swift */; };
@@ -437,6 +439,7 @@
 		E8CACC772211DE6300675688 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 		E8CC36972391446F00008926 /* MoJob-3.12.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.12.1.html"; sourceTree = "<group>"; };
 		E8CECE27243AFB8B0049299D /* MoJob-3.13.0.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.13.0.html"; sourceTree = "<group>"; };
+		E8CECE2A243B0AE10049299D /* MoJob-3.13.1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.13.1.html"; sourceTree = "<group>"; };
 		E8D35A1B22FF5B0C0014AFE4 /* CalendarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarController.xib; sourceTree = "<group>"; };
 		E8D35A1D22FF5B3B0014AFE4 /* CalendarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarController.swift; sourceTree = "<group>"; };
 		E8D35A1F22FF6AC80014AFE4 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
@@ -574,6 +577,7 @@
 				E8CC36972391446F00008926 /* MoJob-3.12.1.html */,
 				E8C62BF923952B6100169294 /* MoJob-3.12.2.html */,
 				E8CECE27243AFB8B0049299D /* MoJob-3.13.0.html */,
+				E8CECE2A243B0AE10049299D /* MoJob-3.13.1.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1299,6 +1303,7 @@
 				E8F373CB232ECA9500E30D6A /* MoJob-3.7.0.html in Resources */,
 				E8211795220E07B2003D7578 /* Assets.xcassets in Resources */,
 				E8B58A41232FD4E200DBCE44 /* MoJob-3.7.4.html in Resources */,
+				E8CECE2B243B0AE10049299D /* MoJob-3.13.1.html in Resources */,
 				E85FFC25231DB646006CA1CB /* MoJob-3.5.2.html in Resources */,
 				E850997A22F708E600068ED8 /* SettingsViewController.xib in Resources */,
 				E8B58A43232FE26400DBCE44 /* MoJob-3.7.5.html in Resources */,
@@ -1404,6 +1409,7 @@
 				E853A5D22333ACED00689F62 /* MoJob-3.6.1.html in Resources */,
 				E853A5D32333ACED00689F62 /* CalendarController.xib in Resources */,
 				E853A5D42333ACED00689F62 /* CalendarDay.xib in Resources */,
+				E8CECE2C243B0AE10049299D /* MoJob-3.13.1.html in Resources */,
 				E853A5D52333ACED00689F62 /* MainMenu.xib in Resources */,
 				E853A5D62333ACED00689F62 /* MoJob-3.6.0.html in Resources */,
 				E853A5D72333ACED00689F62 /* MoJob-3.6.2.html in Resources */,
@@ -1929,7 +1935,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 60;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1944,7 +1950,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.13.0;
+				MARKETING_VERSION = 3.13.1;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1962,7 +1968,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 60;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1976,7 +1982,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.13.0;
+				MARKETING_VERSION = 3.13.1;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martinschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
