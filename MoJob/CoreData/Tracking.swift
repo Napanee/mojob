@@ -98,7 +98,7 @@ extension Tracking {
 
 			return QuoJob.shared.fetchTasks(with: [id])
 		}).then({ resultTasks in
-			return QuoJob.shared.handleTasks(with: resultTasks)
+			return QuoJob.shared.handleTasks(with: resultTasks, updateTimestamp: false)
 		}).catch({ error in
 			GlobalNotification.shared.deliverNotification(withTitle: "Fehler beim Exportieren.", andInformationtext: error.localizedDescription)
 			tracking.exported = SyncStatus.error.rawValue

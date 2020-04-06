@@ -633,14 +633,18 @@ extension QuoJob {
 		}
 	}
 
-	func handleTasks(with result: [String: Any]) -> Promise<Void> {
+	func handleTasks(with result: [String: Any], updateTimestamp: Bool = true) -> Promise<Void> {
 		return Promise { seal in
 			guard let taskItems = result["jobtasks"] as? [[String: Any]], let timestamp = result["timestamp"] as? String, taskItems.count > 0 else {
 				seal.fulfill_()
 				return
 			}
+			
+			var syncDate = self.lastSyncDate(for: "Task")
 
-			let syncDate = self.dateFormatterFullUTC.date(from: timestamp)
+			if (updateTimestamp) {
+				syncDate = self.dateFormatterFullUTC.date(from: timestamp)
+			}
 
 			let jobsAll = CoreDataHelper.jobs(in: backgroundContext).filter({ $0.assigned && $0.bookable }).map({ $0.id })
 			let resultTasks = taskItems.filter({ jobsAll.contains($0["job_id"] as? String) && !($0["done"] as? Bool ?? true) })

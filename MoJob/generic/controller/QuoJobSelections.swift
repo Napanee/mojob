@@ -119,7 +119,7 @@ class QuoJobSelections: NSViewController {
 				}).then({ success in
 					return QuoJob.shared.fetchTasks(with: [id])
 				}).then({ resultTasks in
-					return QuoJob.shared.handleTasks(with: resultTasks)
+					return QuoJob.shared.handleTasks(with: resultTasks, updateTimestamp: false)
 				}).done({ _ in
 					CoreDataHelper.save()
 				}).catch({ _ in
@@ -308,7 +308,7 @@ extension QuoJobSelections: NSComboBoxDelegate {
 				}).then({ success in
 					return QuoJob.shared.fetchTasks(with: [id])
 				}).then({ resultTasks in
-					return QuoJob.shared.handleTasks(with: resultTasks)
+					return QuoJob.shared.handleTasks(with: resultTasks, updateTimestamp: false)
 				}).done({ _ in
 					CoreDataHelper.save()
 				}).catch({ _ in
