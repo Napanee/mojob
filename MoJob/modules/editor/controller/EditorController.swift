@@ -26,7 +26,7 @@ class EditorController: QuoJobSelections {
 			if (index >= 0 && activities.count > index) {
 				let activity = activities[index]
 				let hasJob = jobSelect.stringValue.count > 0 || jobSelect.indexOfSelectedItem >= 0 || activity.nfc
-				let hasTask = taskSelect.indexOfSelectedItem >= 0 || activity.nfc
+				let hasTask = tasks.count == 0 || taskSelect.indexOfSelectedItem >= 0 || activity.nfc
 				return hasJob && hasTask
 			}
 
