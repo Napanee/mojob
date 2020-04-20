@@ -46,8 +46,6 @@ class AddFavorite: QuoJobSelections {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		nfc = false
-
 		initEditor()
 	}
 

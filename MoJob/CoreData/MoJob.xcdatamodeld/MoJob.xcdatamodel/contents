@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Activity" representedClassName="Activity" syncable="YES" codeGenerationType="class">
         <attribute name="external_service" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="internal_service" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="nfc" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="sync" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="favorites" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Favorite" inverseName="activity" inverseEntity="Favorite"/>
@@ -64,7 +63,7 @@
         <relationship name="jobs" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Job" inverseName="type" inverseEntity="Job"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="-63" positionY="-18" width="128" height="178"/>
+        <element name="Activity" positionX="-63" positionY="-18" width="128" height="163"/>
         <element name="Favorite" positionX="-54" positionY="-9" width="128" height="103"/>
         <element name="Job" positionX="-36" positionY="9" width="128" height="208"/>
         <element name="Task" positionX="-18" positionY="27" width="128" height="193"/>

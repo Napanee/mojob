@@ -596,7 +596,6 @@ extension QuoJob {
 					let title = item["name"] as! String
 					let internal_service = item["internal"] as! Bool
 					let external_service = item["external_service"] as! Bool
-					let nfc = item["nfc"] as! Bool
 
 //					print("activity \(id)")
 
@@ -605,7 +604,6 @@ extension QuoJob {
 						activity.title = title
 						activity.internal_service = internal_service
 						activity.external_service = external_service
-						activity.nfc = nfc
 						activity.sync = syncDate
 					} else {
 //						print("neu")
@@ -616,7 +614,6 @@ extension QuoJob {
 							"title": title,
 							"internal_service": internal_service,
 							"external_service": external_service,
-							"nfc": nfc,
 							"sync": syncDate as Any
 						]
 						activity.setValuesForKeys(activityValues)

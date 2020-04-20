@@ -16,6 +16,8 @@
 		E800AE8822F9B9F400E82EBE /* Tracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8722F9B9F400E82EBE /* Tracking.swift */; };
 		E800AE8A22F9C42900E82EBE /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8922F9C42900E82EBE /* Job.swift */; };
 		E800AE8C22FA1A4100E82EBE /* GlobalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E800AE8B22FA1A4100E82EBE /* GlobalTimer.swift */; };
+		E8055935244D726300501AF4 /* MoJob-3.13.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E8055934244D726300501AF4 /* MoJob-3.13.2.html */; };
+		E8055936244D726300501AF4 /* MoJob-3.13.2.html in Resources */ = {isa = PBXBuildFile; fileRef = E8055934244D726300501AF4 /* MoJob-3.13.2.html */; };
 		E8138A2622525BBF008DAA62 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8138A2522525BBF008DAA62 /* extensions.swift */; };
 		E81DEE6222F4A13A004EF977 /* AddFavorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DEE6122F4A13A004EF977 /* AddFavorite.swift */; };
 		E81DEE6422F4A1CD004EF977 /* AddFavorite.xib in Resources */ = {isa = PBXBuildFile; fileRef = E81DEE6322F4A1CD004EF977 /* AddFavorite.xib */; };
@@ -324,6 +326,7 @@
 		E800AE8722F9B9F400E82EBE /* Tracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracking.swift; sourceTree = "<group>"; };
 		E800AE8922F9C42900E82EBE /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		E800AE8B22FA1A4100E82EBE /* GlobalTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTimer.swift; sourceTree = "<group>"; };
+		E8055934244D726300501AF4 /* MoJob-3.13.2.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "MoJob-3.13.2.html"; sourceTree = "<group>"; };
 		E8138A2522525BBF008DAA62 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		E81DEE6122F4A13A004EF977 /* AddFavorite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFavorite.swift; sourceTree = "<group>"; };
 		E81DEE6322F4A1CD004EF977 /* AddFavorite.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFavorite.xib; sourceTree = "<group>"; };
@@ -578,6 +581,7 @@
 				E8C62BF923952B6100169294 /* MoJob-3.12.2.html */,
 				E8CECE27243AFB8B0049299D /* MoJob-3.13.0.html */,
 				E8CECE2A243B0AE10049299D /* MoJob-3.13.1.html */,
+				E8055934244D726300501AF4 /* MoJob-3.13.2.html */,
 			);
 			path = "release-notes";
 			sourceTree = "<group>";
@@ -1318,6 +1322,7 @@
 				E8DF8E3C238F1D2A00DB4E4C /* MoJob-3.12.0.html in Resources */,
 				E86A741C2305E99500C77866 /* MoJob-3.2.1.html in Resources */,
 				E85FFC23231C7300006CA1CB /* MoJob-3.5.0.html in Resources */,
+				E8055935244D726300501AF4 /* MoJob-3.13.2.html in Resources */,
 				E81E75E923033E900071B90C /* ExportOptions.plist in Resources */,
 				E82117CD220E119D003D7578 /* NavigationController.xib in Resources */,
 				E8C07F72230CA74600299DC4 /* MoJob-3.4.0.html in Resources */,
@@ -1377,6 +1382,7 @@
 				E853A5B52333ACED00689F62 /* MoJob-3.7.0.html in Resources */,
 				E853A5B62333ACED00689F62 /* Assets.xcassets in Resources */,
 				E853A5B72333ACED00689F62 /* MoJob-3.7.4.html in Resources */,
+				E8055936244D726300501AF4 /* MoJob-3.13.2.html in Resources */,
 				E853A5B82333ACED00689F62 /* MoJob-3.5.2.html in Resources */,
 				E8DF8E3D238F1D2A00DB4E4C /* MoJob-3.12.0.html in Resources */,
 				E853A5B92333ACED00689F62 /* SettingsViewController.xib in Resources */,
@@ -1932,8 +1938,8 @@
 			baseConfigurationReference = 7847464B34327E7A7CA03419 /* Pods-MoJob.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 61;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1954,7 +1960,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martingschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = MoJob;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MoJob/MoJob-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1965,8 +1971,8 @@
 			baseConfigurationReference = 160E1E44B826B5C303BE90F7 /* Pods-MoJob.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 61;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
@@ -1986,7 +1992,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = de.martingschneider.MoJob;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = MoJob;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MoJob/MoJob-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -2142,8 +2148,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AutoLaunchHelper/AutoLaunchHelper.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				INFOPLIST_FILE = AutoLaunchHelper/Info.plist;
@@ -2154,7 +2160,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = de.martingschneider.AutoLaunchHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = AutoLaunchHelper;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -2165,8 +2171,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AutoLaunchHelper/AutoLaunchHelper.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = CYSY859JZ8;
 				INFOPLIST_FILE = AutoLaunchHelper/Info.plist;
@@ -2177,7 +2183,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = de.martingschneider.AutoLaunchHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = AutoLaunchHelper;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};

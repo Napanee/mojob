@@ -25,8 +25,8 @@ class EditorController: QuoJobSelections {
 
 			if (index >= 0 && activities.count > index) {
 				let activity = activities[index]
-				let hasJob = jobSelect.stringValue.count > 0 || jobSelect.indexOfSelectedItem >= 0 || activity.nfc
-				let hasTask = tasks.count == 0 || taskSelect.indexOfSelectedItem >= 0 || activity.nfc
+				let hasJob = jobSelect.stringValue.count > 0 || jobSelect.indexOfSelectedItem >= 0 || (!activity.external_service && activity.internal_service)
+				let hasTask = tasks.count == 0 || taskSelect.indexOfSelectedItem >= 0 || (!activity.external_service && activity.internal_service)
 				return hasJob && hasTask
 			}
 
@@ -130,7 +130,7 @@ class EditorController: QuoJobSelections {
 
 		CoreDataHelper.save(in: tracking.managedObjectContext)
 
-		if (tracking.job != nil || tracking.activity?.nfc ?? false) {
+		if (tracking.job != nil || (!(tracking.activity?.external_service ?? false) && (tracking.activity?.internal_service ?? false))) {
 			tracking.export()
 		} else if let _ = tracking.id {
 			tracking.deleteFromServer().done({ _ in

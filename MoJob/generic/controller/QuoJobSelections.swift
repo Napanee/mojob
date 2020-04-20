@@ -56,7 +56,6 @@ class QuoJobSelections: NSViewController {
 	var jobs: [Job] = []
 	var tasks: [Task] = []
 	var activities: [Activity] = []
-	var nfc: Bool = true
 
 	var formIsValid: Bool {
 		get { return tracking?.isValid ?? false }
@@ -171,7 +170,7 @@ class QuoJobSelections: NSViewController {
 						(job.type?.productive_service ?? true && $0.external_service)
 				}
 
-				return $0.internal_service || (nfc ? $0.nfc : false)
+				return true
 			})
 			.sorted(by: { $0.title! < $1.title! })
 
@@ -369,7 +368,7 @@ extension QuoJobSelections: NSComboBoxDelegate {
 
 		tracking?.activity = activity
 
-		if (nfc && activity.nfc) {
+		if (!activity.external_service && activity.internal_service) {
 			tracking?.job = nil
 			jobSelect.stringValue = ""
 			jobSelect.deselectItem(at: jobSelect.indexOfSelectedItem)
@@ -504,7 +503,7 @@ extension QuoJobSelections: NSTextFieldDelegate {
 						return (job.type?.internal_service ?? true && $0.internal_service) || (job.type?.productive_service ?? true && $0.external_service)
 					}
 
-					return $0.internal_service || (nfc ? $0.nfc : false)
+					return true
 				})
 				.filter({ value == "" || $0.title!.lowercased().contains(value) })
 				.sorted(by: { $0.title! < $1.title! })

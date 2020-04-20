@@ -69,7 +69,6 @@ class TrackingViewController: QuoJobSelections {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		nfc = false
 		delegate = self
 
 		tracking = CoreDataHelper.currentTracking
