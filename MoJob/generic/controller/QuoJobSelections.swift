@@ -92,10 +92,26 @@ class QuoJobSelections: NSViewController {
 	}
 
 	private func initTaskSelect() {
-		let index = jobSelect.indexOfSelectedItem
+		var selectedJob: Job?
+		var selectedJobIndex = jobSelect.indexOfSelectedItem
+		let selectedJobValue = jobSelect.stringValue.lowercased()
+
+		if (selectedJobIndex < 0 && selectedJobValue != "") {
+			selectedJobIndex = jobs.firstIndex(where: { $0.fullTitle.lowercased() == selectedJobValue }) ?? -1
+		}
+		
+		if (selectedJobIndex >= 0 && jobs.count > selectedJobIndex) {
+			selectedJob = jobs[selectedJobIndex]
+		}
 
 		tasks = CoreDataHelper.tasks(in: tracking?.managedObjectContext)
-			.filter({ $0.job?.id != nil && ($0.job?.id == tracking?.job?.id || index >= 0 && $0.job?.id == jobs[index].id) })
+			.filter({
+				if let id = $0.job?.id, let job = tracking?.job ?? selectedJob {
+					return id == job.id
+				}
+				
+				return false
+			})
 			.sorted(by: { $0.title! < $1.title! })
 
 		taskSelect.reloadData()
@@ -134,10 +150,22 @@ class QuoJobSelections: NSViewController {
 
 	private func initActivitySelect() {
 		activitySelect.placeholderString = "Leistungsart wählen oder eingeben"
+		
+		var selectedJob: Job?
+		var selectedJobIndex = jobSelect.indexOfSelectedItem
+		let selectedJobValue = jobSelect.stringValue.lowercased()
+
+		if (selectedJobIndex < 0 && selectedJobValue != "") {
+			selectedJobIndex = jobs.firstIndex(where: { $0.fullTitle.lowercased() == selectedJobValue }) ?? -1
+		}
+		
+		if (selectedJobIndex >= 0 && jobs.count > selectedJobIndex) {
+			selectedJob = jobs[selectedJobIndex]
+		}
 
 		activities = CoreDataHelper.activities(in: tracking?.managedObjectContext)
 			.filter({
-				if let job = tracking?.job {
+				if let job = tracking?.job ?? selectedJob {
 					return
 						(job.type?.internal_service ?? true && $0.internal_service) ||
 						(job.type?.productive_service ?? true && $0.external_service)
@@ -281,7 +309,7 @@ extension QuoJobSelections: NSComboBoxDelegate {
 				tracking.custom_job = value
 			}
 		}
-
+		
 		delegate?.taskDidChanged()
 		taskSelect.deselectItem(at: taskSelect.indexOfSelectedItem)
 		taskSelect.stringValue = ""
