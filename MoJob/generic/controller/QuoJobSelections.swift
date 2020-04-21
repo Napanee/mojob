@@ -170,7 +170,7 @@ class QuoJobSelections: NSViewController {
 						(job.type?.productive_service ?? true && $0.external_service)
 				}
 
-				return true
+				return $0.internal_service || $0.external_service
 			})
 			.sorted(by: { $0.title! < $1.title! })
 
