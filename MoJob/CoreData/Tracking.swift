@@ -20,7 +20,7 @@ extension Tracking {
 	var isValid: Bool {
 		get {
 			return self.activity != nil &&
-				(self.job != nil && self.task != nil || self.custom_job != nil)
+				(self.job != nil || self.custom_job != nil)
 		}
 	}
 
@@ -58,6 +58,16 @@ extension Tracking {
 			}
 		}
 
+		GlobalTimer.shared.startNoTrackingTimer()
+		GlobalTimer.shared.stopTimer()
+		((NSApp.delegate as? AppDelegate)?.window.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()
+	}
+	
+	func discard() {
+		managedObjectContext?.reset()
+
+		NotificationCenter.default.post(name: NSNotification.Name(rawValue: "counter:tick"), object: nil)
+		
 		GlobalTimer.shared.startNoTrackingTimer()
 		GlobalTimer.shared.stopTimer()
 		((NSApp.delegate as? AppDelegate)?.window.windowController as? MainWindowController)?.mainSplitViewController?.removeTracking()

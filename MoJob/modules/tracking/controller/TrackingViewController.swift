@@ -52,11 +52,6 @@ class TrackingViewController: QuoJobSelections {
 		}
 	}
 
-	override var formIsValid: Bool {
-		get { return super.formIsValid }
-		set { stopTracking.isEnabled = newValue && super.formIsValid }
-	}
-
 	@IBOutlet weak var timeLabel: NSTextField!
 	@IBOutlet weak var stopTracking: StopButton!
 	@IBOutlet weak var favoriteTracking: NSButton!
@@ -146,7 +141,43 @@ class TrackingViewController: QuoJobSelections {
 	@IBAction func stopTracking(_ sender: NSButton) {
 		guard let tracking = tracking else { return }
 
-		tracking.stop()
+		if (!formIsValid) {
+			let question = "Fehlende Datan"
+			let info = "Für ein valides Tracking muss ein Job-Titel und eine Leistungsart ausgewählt werden."
+			let confirmButton = "Okay"
+			let deleteButton = "Tracking verwerfen"
+			let alert = NSAlert()
+			alert.messageText = question
+			alert.informativeText = info
+			alert.addButton(withTitle: confirmButton)
+			alert.addButton(withTitle: deleteButton)
+
+			let answer = alert.runModal()
+			if answer == .alertSecondButtonReturn {
+				tracking.discard()
+			}
+		} else if (formIsValid && tracking.job != nil && tracking.task == nil) {
+			let question = "Tracking wird ohne Aufgabe gespeichert. Möchtest du fortfahren?"
+			let info = "Wenn ein Job ausgewählt ist, sollte auch zwingend eine Aufgabe ausgewählt werden."
+			let confirmButton = "Ohne Aufgabe speichern"
+			let deleteButton = "Tracking verwerfen"
+			let cancelButton = "Abbrechen"
+			let alert = NSAlert()
+			alert.messageText = question
+			alert.informativeText = info
+			alert.addButton(withTitle: confirmButton)
+			alert.addButton(withTitle: cancelButton)
+			alert.addButton(withTitle: deleteButton)
+
+			let answer = alert.runModal()
+			if answer == .alertFirstButtonReturn {
+				tracking.stop()
+			} else if answer == .alertThirdButtonReturn {
+				tracking.discard()
+			}
+		} else if (formIsValid) {
+			tracking.stop()
+		}
 	}
 
 	@IBAction func favoriteTracking(_ sender: NSButton) {
